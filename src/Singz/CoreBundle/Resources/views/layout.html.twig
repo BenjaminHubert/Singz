@@ -5,15 +5,33 @@
         {# DYNAMIC CANONICAL URL #}
         <link rel="canonical" href="{{ url(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')) }}" />
         
+        {# DESCRIPTION TAG #}
+        <meta name="description" content="{% block description_tag %}{% endblock %}">
+        
         {# TITLE TAG#}
         <title>
-            {% block title %}Welcome!{% endblock %}
+            {% block title %}
+            	{{ appname }}
+            {% endblock %}
         </title>
-        {% block stylesheets %}{% endblock %}
+        
+        {# STYLESHEETS #}
+        {% block stylesheets %}
+        {% endblock %}
+        
+        {# JAVASCRIPT TO ENABLE FROM THE HEAD TAG #}
+        {% block head_javascripts %}{% endblock %}
+        
+        {# OTHERS HEAD TAGS #}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
     <body>
-        {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
+    	{# BODY BLOCK #}
+        {% block body %}
+        {% endblock %}
+        
+        {# JAVASCRIPT TO ENABLE BEFORE CLOSING THE BODY TAG #}
+        {% block end_javascripts %}
+        {% endblock %}
     </body>
 </html>
