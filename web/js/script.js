@@ -1,3 +1,3 @@
 $(function() {
-    $.backstretch(assetsBaseDir +'background2.jpg');
+    $.backstretch(assetsBaseDir +'/images/background2.jpg');
 });
