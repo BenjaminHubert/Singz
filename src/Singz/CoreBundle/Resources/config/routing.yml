@@ -1,0 +1,4 @@
+singz_index:
+    path:     /
+    defaults:
+        _controller: SingzCoreBundle:Core:index
