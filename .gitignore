@@ -51,3 +51,6 @@
 /.settings/
 /.project
 /.buildpath
+
+#IDEA
+/.idea/
