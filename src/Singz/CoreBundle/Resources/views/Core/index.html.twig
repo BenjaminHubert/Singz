@@ -1,5 +1,14 @@
 {% extends "SingzCoreBundle::layout.html.twig" %}
 
+{% block stylesheets %}
+	<link rel="stylesheet" href="{{ asset('bundles/framework/css/theme.css') }}">
+{% endblock %}
+
 {% block body %}
-	<h1>Welcome to the Core:index page</h1>
+	<div class="text">SINGZ IS COMING SOON ♫</div>
+	{% block end_javascripts %}
+		<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-backstretch/2.0.4/jquery.backstretch.min.js"></script>
+		<script src="{{ asset('bundles/framework/js/script.js') }}"></script>
+	{% endblock %}
 {% endblock %}

@@ -4,24 +4,24 @@
         <meta charset="UTF-8">
         {# DYNAMIC CANONICAL URL #}
         <link rel="canonical" href="{{ url(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')) }}" />
-        
+
         {# DESCRIPTION TAG #}
         <meta name="description" content="{% block description_tag %}{% endblock %}">
-        
+
         {# TITLE TAG#}
         <title>
             {% block title %}
             	{{ appname }}
             {% endblock %}
         </title>
-        
+
         {# STYLESHEETS #}
         {% block stylesheets %}
         {% endblock %}
-        
+
         {# JAVASCRIPT TO ENABLE FROM THE HEAD TAG #}
         {% block head_javascripts %}{% endblock %}
-        
+
         {# OTHERS HEAD TAGS #}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
@@ -29,8 +29,11 @@
     	{# BODY BLOCK #}
         {% block body %}
         {% endblock %}
-        
+
         {# JAVASCRIPT TO ENABLE BEFORE CLOSING THE BODY TAG #}
+        <script>
+            var assetsBaseDir = "{{ asset('/') }}";
+        </script>
         {% block end_javascripts %}
         {% endblock %}
     </body>
