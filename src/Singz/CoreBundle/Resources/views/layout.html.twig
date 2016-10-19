@@ -1,8 +1,14 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta charset="UTF-8" />
-        <title>{% block title %}Welcome!{% endblock %}</title>
+        <meta charset="UTF-8">
+        {# DYNAMIC CANONICAL URL #}
+        <link rel="canonical" href="{{ url(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')) }}" />
+        
+        {# TITLE TAG#}
+        <title>
+            {% block title %}Welcome!{% endblock %}
+        </title>
         {% block stylesheets %}{% endblock %}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
