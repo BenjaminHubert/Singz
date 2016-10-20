@@ -1,68 +1,55 @@
-Symfony Standard Edition
+SINGZ
 ========================
 
-Welcome to the Symfony Standard Edition - a fully-functional Symfony
-application that you can use as the skeleton for your new applications.
 
-For details on how to download and get started with Symfony, see the
-[Installation][1] chapter of the Symfony Documentation.
 
 What's inside?
 --------------
+Singz permet de poster des vidéos de soi chantant ou jouant d’un instrument ou bien les deux en même temps pour les plus 
+doués, pour une durée maximum de 30 secondes. En tant que Singzer (membre), vous avez la possibilité d’être suivi par des 
+fans, lesquels peuvent vous donner une note allant de 1 à 5. Ainsi, votre notoriété augmente et vous aurez plus de chance 
+d’apparaître en tête parmi les posts de la page d’accueil de vos fans. En plus de cette note, les fans ont la possibilité 
+de commenter et le partager du contenu.
 
-The Symfony Standard Edition is configured with the following defaults:
+Une autre catégorie en plus des Singzer existe sur Singz: Starz. Les Starz sont des artistes reconnu dans le domaine de 
+la musique ou bien validés par la communauté Singz et en aval validés par le staff Singz. Finalement, Bruno Mars, Beyoncé 
+ou bien un Singzer aimé des fans Singz, pourront se retrouver sur la même page Starz.
 
-  * An AppBundle you can use to start coding;
+En plus de cette interface utilisateur il sera possible aux artistes de demander à se faire supporter via des dons. 
+Ainsi de nouvelles étoiles pourront parcourir les cieux en quête de célébrité et les adeptes de talents musicaux en 
+auront pour leur argent et leurs oreilles.  
 
-  * Twig as the only configured template engine;
+How to?
+-------
 
-  * Doctrine ORM/DBAL;
+* Works with[**Symfony 3**][7]
+* git clone https://github.com/BenjaminHubert/Singz.git  
+* cd Singz  
+* install composer[**here**][8]
+* composer install  
+* create Database  
+* php bin/console server:run
 
-  * Swiftmailer;
 
-  * Annotations enabled for everything.
+Credits
+-------
 
-It comes pre-configured with the following bundles:
+Created with Love in[**Paris**][6] 
 
-  * **FrameworkBundle** - The core Symfony framework bundle
+By order of maturity:  
+* [**Bertrand Freylin**][1]
+* [**Younes Sadmi**][2]
+* [**Benjamin Hubert**][3]
+* [**Thibault Lenormand**][4]
+* [**Axel Delannay**][5]
 
-  * [**SensioFrameworkExtraBundle**][6] - Adds several enhancements, including
-    template and routing annotation capability
+[1]:  https://github.com/BertrandFreylin
+[2]:  https://github.com/younessadmi
+[3]:  https://github.com/BenjaminHubert
+[4]:  https://github.com/ThibaultLenormand
+[5]:  https://github.com/axeldelannay/
+[6]:  https://en.wikipedia.org/wiki/Paris
+[7]:  http://symfony.com/
+[8]:  https://getcomposer.org/download/
 
-  * [**DoctrineBundle**][7] - Adds support for the Doctrine ORM
 
-  * [**TwigBundle**][8] - Adds support for the Twig templating engine
-
-  * [**SecurityBundle**][9] - Adds security by integrating Symfony's security
-    component
-
-  * [**SwiftmailerBundle**][10] - Adds support for Swiftmailer, a library for
-    sending emails
-
-  * [**MonologBundle**][11] - Adds support for Monolog, a logging library
-
-  * **WebProfilerBundle** (in dev/test env) - Adds profiling functionality and
-    the web debug toolbar
-
-  * **SensioDistributionBundle** (in dev/test env) - Adds functionality for
-    configuring and working with Symfony distributions
-
-  * [**SensioGeneratorBundle**][13] (in dev/test env) - Adds code generation
-    capabilities
-
-  * **DebugBundle** (in dev/test env) - Adds Debug and VarDumper component
-    integration
-
-All libraries and bundles included in the Symfony Standard Edition are
-released under the MIT or BSD license.
-
-Enjoy!
-
-[1]:  https://symfony.com/doc/3.0/book/installation.html
-[6]:  https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/index.html
-[7]:  https://symfony.com/doc/3.0/book/doctrine.html
-[8]:  https://symfony.com/doc/3.0/book/templating.html
-[9]:  https://symfony.com/doc/3.0/book/security.html
-[10]: https://symfony.com/doc/3.0/cookbook/email.html
-[11]: https://symfony.com/doc/3.0/cookbook/logging/monolog.html
-[13]: https://symfony.com/doc/3.0/bundles/SensioGeneratorBundle/index.html
