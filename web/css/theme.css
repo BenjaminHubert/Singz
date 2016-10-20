@@ -1,7 +1,7 @@
 body{
     color: white;
-    font-size: 56px;
-    font-family: Helvetica Neue,Helvetica,Arial,sans-serif;
+    font-size: 96px;
+    font-family: 'Amatic SC', cursive;
 }
 
 .text{
@@ -11,4 +11,11 @@ body{
     text-align: center;
     margin-top: 50vh; /* poussé de la moitié de hauteur de viewport */
     transform: translateY(-50%); /* tiré de la moitié de sa propre hauteur */
+}
+
+.social{
+    position: absolute;
+    left: 50%;
+    text-align: center;
+    bottom: 5%;
 }
