@@ -31,7 +31,7 @@ How to?
 * php bin/console server:run
 
 
-Credits
+Creditss
 -------
 
 Created with Love in[**Paris**][6] 
