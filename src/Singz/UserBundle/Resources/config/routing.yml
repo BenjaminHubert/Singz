@@ -1,0 +1,3 @@
+singz_user_homepage:
+    path:     /
+    defaults: { _controller: SingzUserBundle:Default:index }
