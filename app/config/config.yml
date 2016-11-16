@@ -7,6 +7,7 @@ imports:
 # http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: fr
+    appname: Singz
 
 framework:
     #esi:             ~
@@ -37,7 +38,7 @@ twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
     globals:
-        appname: Singz
+        appname: "%appname%"
 
 # Doctrine Configuration
 doctrine:
@@ -67,6 +68,8 @@ swiftmailer:
     host:      "%mailer_host%"
     username:  "%mailer_user%"
     password:  "%mailer_password%"
+    auth_mode: "%mailer_auth_mode%"
+    port:      "%mailer_port%"
     spool:     { type: memory }
 
 #FOS User configuration
@@ -74,3 +77,9 @@ fos_user:
     db_driver: orm
     firewall_name: main
     user_class: Singz\UserBundle\Entity\User
+    registration:
+        confirmation:
+            enabled:    true
+    from_email:
+        address:        noreply@singz.fr
+        sender_name:    "%appname%"
