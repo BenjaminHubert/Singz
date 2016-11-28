@@ -1,4 +1,0 @@
-services:
-#    singz_social.example:
-#        class: Singz\SocialBundle\Example
-#        arguments: ["@service_id", "plain_value", "%parameter%"]
