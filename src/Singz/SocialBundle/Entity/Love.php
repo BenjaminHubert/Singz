@@ -35,12 +35,20 @@ class Love
      * @ORM\JoinColumn(nullable=false)
      */
     private $user;
-
+    
+    /**
+     * @var Publication
+     *
+     * @ORM\ManyToOne(targetEntity="Singz\SocialBundle\Entity\Publication", inversedBy="loves")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $publication;
+    
 
     /**
      * Get id
      *
-     * @return int
+     * @return integer
      */
     public function getId()
     {
@@ -93,5 +101,29 @@ class Love
     public function getUser()
     {
         return $this->user;
+    }
+
+    /**
+     * Set publication
+     *
+     * @param \Singz\SocialBundle\Entity\Publication $publication
+     *
+     * @return Love
+     */
+    public function setPublication(\Singz\SocialBundle\Entity\Publication $publication)
+    {
+        $this->publication = $publication;
+
+        return $this;
+    }
+
+    /**
+     * Get publication
+     *
+     * @return \Singz\SocialBundle\Entity\Publication
+     */
+    public function getPublication()
+    {
+        return $this->publication;
     }
 }

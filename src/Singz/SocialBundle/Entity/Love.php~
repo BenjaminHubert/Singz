@@ -35,40 +35,13 @@ class Love
      * @ORM\JoinColumn(nullable=false)
      */
     private $user;
-
-
+    
     /**
-     * Get id
+     * @var Publication
      *
-     * @return int
+     * @ORM\ManyToOne(targetEntity="Singz\SocialBundle\Entity\Publication", inversedBy="loves")
+     * @ORM\JoinColumn(nullable=false)
      */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * Set date
-     *
-     * @param \DateTime $date
-     *
-     * @return Love
-     */
-    public function setDate($date)
-    {
-        $this->date = $date;
-
-        return $this;
-    }
-
-    /**
-     * Get date
-     *
-     * @return \DateTime
-     */
-    public function getDate()
-    {
-        return $this->date;
-    }
+    private $publication;
+    
 }
-

@@ -32,9 +32,10 @@ class User extends BaseUser
     /**
      * @var Love
      * 
-     * @ORM\OneToMany(targetEntity="Singz\SocialBudle\Entity\Love", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="Singz\SocialBundle\Entity\Love", mappedBy="user")
      */
     private $loves;
+    
 
     /**
      * Add publication
@@ -73,11 +74,11 @@ class User extends BaseUser
     /**
      * Add love
      *
-     * @param \Singz\SocialBudle\Entity\Love $love
+     * @param \Singz\SocialBundle\Entity\Love $love
      *
      * @return User
      */
-    public function addLove(\Singz\SocialBudle\Entity\Love $love)
+    public function addLove(\Singz\SocialBundle\Entity\Love $love)
     {
         $this->loves[] = $love;
 
@@ -87,9 +88,9 @@ class User extends BaseUser
     /**
      * Remove love
      *
-     * @param \Singz\SocialBudle\Entity\Love $love
+     * @param \Singz\SocialBundle\Entity\Love $love
      */
-    public function removeLove(\Singz\SocialBudle\Entity\Love $love)
+    public function removeLove(\Singz\SocialBundle\Entity\Love $love)
     {
         $this->loves->removeElement($love);
     }

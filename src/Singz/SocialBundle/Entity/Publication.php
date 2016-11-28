@@ -42,6 +42,21 @@ class Publication
      * @ORM\JoinColumn(nullable=false)
      */
     private $user;
+    
+    /**
+     * @var Love
+     * 
+     * @ORM\OneToMany(targetEntity="Singz\SocialBundle\Entity\Love", mappedBy="publication")
+     */
+    private $loves;
+    
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->loves = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     /**
      * Get id
@@ -123,5 +138,39 @@ class Publication
     public function getUser()
     {
         return $this->user;
+    }
+
+    /**
+     * Add love
+     *
+     * @param \Singz\SocialBundle\Entity\Love $love
+     *
+     * @return Publication
+     */
+    public function addLove(\Singz\SocialBundle\Entity\Love $love)
+    {
+        $this->loves[] = $love;
+
+        return $this;
+    }
+
+    /**
+     * Remove love
+     *
+     * @param \Singz\SocialBundle\Entity\Love $love
+     */
+    public function removeLove(\Singz\SocialBundle\Entity\Love $love)
+    {
+        $this->loves->removeElement($love);
+    }
+
+    /**
+     * Get loves
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getLoves()
+    {
+        return $this->loves;
     }
 }
