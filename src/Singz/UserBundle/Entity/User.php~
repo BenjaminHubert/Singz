@@ -274,28 +274,4 @@ class User extends BaseUser
     {
         return $this->followers;
     }
-
-    /**
-     * Set image
-     *
-     * @param \Singz\UserBundle\Entity\Image $image
-     *
-     * @return User
-     */
-    public function setImage(\Singz\UserBundle\Entity\Image $image = null)
-    {
-        $this->image = $image;
-
-        return $this;
-    }
-
-    /**
-     * Get image
-     *
-     * @return \Singz\UserBundle\Entity\Image
-     */
-    public function getImage()
-    {
-        return $this->image;
-    }
 }

@@ -63,3 +63,4 @@ class Image
         return $this->path;
     }
 }
+
