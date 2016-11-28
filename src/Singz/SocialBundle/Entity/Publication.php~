@@ -1,0 +1,45 @@
+<?php
+
+namespace Singz\SocialBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Publication
+ *
+ * @ORM\Table(name="publication")
+ * @ORM\Entity(repositoryClass="Singz\SocialBundle\Repository\PublicationRepository")
+ */
+class Publication
+{
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="description", type="text", nullable=true)
+     */
+    private $description;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="date", type="datetime")
+     */
+    private $date;
+    
+    /**
+     * @var User
+     * 
+     * @ORM\ManyToOne(targetEntity="Singz\UserBundle\Entity\User", inversedBy="publications")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $user;
+}

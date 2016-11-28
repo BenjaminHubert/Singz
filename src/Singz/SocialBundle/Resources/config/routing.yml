@@ -1,3 +1,0 @@
-singz_social_homepage:
-    path:     /
-    defaults: { _controller: SingzSocialBundle:Default:index }

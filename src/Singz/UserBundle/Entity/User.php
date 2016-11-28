@@ -21,16 +21,45 @@ class User extends BaseUser
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
-
+    
+    /**
+     * @var Publication
+     * 
+     * @ORM\OneToMany(targetEntity="Singz\SocialBundle\Entity\Publication", mappedBy="user")
+     */
+    private $publications;
 
     /**
-     * Get id
+     * Add publication
      *
-     * @return int
+     * @param \Singz\SocialBundle\Entity\Publication $publication
+     *
+     * @return User
      */
-    public function getId()
+    public function addPublication(\Singz\SocialBundle\Entity\Publication $publication)
     {
-        return $this->id;
+        $this->publications[] = $publication;
+
+        return $this;
+    }
+
+    /**
+     * Remove publication
+     *
+     * @param \Singz\SocialBundle\Entity\Publication $publication
+     */
+    public function removePublication(\Singz\SocialBundle\Entity\Publication $publication)
+    {
+        $this->publications->removeElement($publication);
+    }
+
+    /**
+     * Get publications
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPublications()
+    {
+        return $this->publications;
     }
 }
-
