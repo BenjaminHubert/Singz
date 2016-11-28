@@ -1,4 +1,0 @@
-services:
-#    singz_user.example:
-#        class: Singz\UserBundle\Example
-#        arguments: ["@service_id", "plain_value", "%parameter%"]
