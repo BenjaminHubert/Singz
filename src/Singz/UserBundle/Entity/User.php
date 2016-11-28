@@ -70,6 +70,33 @@ class User extends BaseUser
      */
     private $image;
     
+    /**
+     * @var text
+     * @ORM\Column(name="biography", type="text", nullable=true)
+     */
+    private $biography;
+    
+    /**
+     * @var boolean
+     * @ORM\Column(name="is_private", type="boolean", nullable=false)
+     */
+    private $isPrivate = 0;
+    
+    /**
+     * @var boolean
+     * @ORM\Column(name="is_starz", type="boolean", nullable=false)
+     */
+    private $isStarz = 0;
+    
+    public function __construct(){
+    	// comportement par défaut
+    	parent::construct;
+    	//utilisatuer lambda par défaut
+    	if(empty($this->roles)){
+    		$this->roles[] = 'ROLE_USER';
+    	}
+    }
+    
 
     /**
      * Add publication
