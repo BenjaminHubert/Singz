@@ -1,0 +1,4 @@
+services:
+#    singz_video.example:
+#        class: Singz\VideoBundle\Example
+#        arguments: ["@service_id", "plain_value", "%parameter%"]
