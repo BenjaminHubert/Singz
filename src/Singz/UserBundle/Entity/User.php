@@ -50,6 +50,20 @@ class User extends BaseUser
      */
     private $notifications;
     
+    /**
+     * @var User
+     * 
+     * @ORM\OneToMany(targetEntity="Singz\SocialBundle\Entity\Follow", mappedBy="leader")
+     */
+    private $leaders;
+    
+    /**
+     * @var User
+     * 
+     * @ORM\OneToMany(targetEntity="Singz\SocialBundle\Entity\Follow", mappedBy="follower")
+     */
+    private $followers;
+    
 
     /**
      * Add publication
@@ -185,5 +199,73 @@ class User extends BaseUser
     public function getNotifications()
     {
         return $this->notifications;
+    }
+
+    /**
+     * Add leader
+     *
+     * @param \Singz\SocialBundle\Entity\Follow $leader
+     *
+     * @return User
+     */
+    public function addLeader(\Singz\SocialBundle\Entity\Follow $leader)
+    {
+        $this->leaders[] = $leader;
+
+        return $this;
+    }
+
+    /**
+     * Remove leader
+     *
+     * @param \Singz\SocialBundle\Entity\Follow $leader
+     */
+    public function removeLeader(\Singz\SocialBundle\Entity\Follow $leader)
+    {
+        $this->leaders->removeElement($leader);
+    }
+
+    /**
+     * Get leaders
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getLeaders()
+    {
+        return $this->leaders;
+    }
+
+    /**
+     * Add follower
+     *
+     * @param \Singz\SocialBundle\Entity\Follow $follower
+     *
+     * @return User
+     */
+    public function addFollower(\Singz\SocialBundle\Entity\Follow $follower)
+    {
+        $this->followers[] = $follower;
+
+        return $this;
+    }
+
+    /**
+     * Remove follower
+     *
+     * @param \Singz\SocialBundle\Entity\Follow $follower
+     */
+    public function removeFollower(\Singz\SocialBundle\Entity\Follow $follower)
+    {
+        $this->followers->removeElement($follower);
+    }
+
+    /**
+     * Get followers
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getFollowers()
+    {
+        return $this->followers;
     }
 }
