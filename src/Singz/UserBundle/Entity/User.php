@@ -28,6 +28,13 @@ class User extends BaseUser
      * @ORM\OneToMany(targetEntity="Singz\SocialBundle\Entity\Publication", mappedBy="user")
      */
     private $publications;
+    
+    /**
+     * @var Love
+     * 
+     * @ORM\OneToMany(targetEntity="Singz\SocialBudle\Entity\Love", mappedBy="user")
+     */
+    private $loves;
 
     /**
      * Add publication
@@ -61,5 +68,39 @@ class User extends BaseUser
     public function getPublications()
     {
         return $this->publications;
+    }
+
+    /**
+     * Add love
+     *
+     * @param \Singz\SocialBudle\Entity\Love $love
+     *
+     * @return User
+     */
+    public function addLove(\Singz\SocialBudle\Entity\Love $love)
+    {
+        $this->loves[] = $love;
+
+        return $this;
+    }
+
+    /**
+     * Remove love
+     *
+     * @param \Singz\SocialBudle\Entity\Love $love
+     */
+    public function removeLove(\Singz\SocialBudle\Entity\Love $love)
+    {
+        $this->loves->removeElement($love);
+    }
+
+    /**
+     * Get loves
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getLoves()
+    {
+        return $this->loves;
     }
 }
