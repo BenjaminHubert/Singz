@@ -51,6 +51,13 @@ class Publication
     private $loves;
     
     /**
+     * @var Comment
+     * 
+     * @ORM\OneToMany(targetEntity="Singz\SocialBundle\Entity\Comment", mappedBy="publication")
+     */
+    private $comments;
+    
+    /**
      * Constructor
      */
     public function __construct()
@@ -172,5 +179,39 @@ class Publication
     public function getLoves()
     {
         return $this->loves;
+    }
+
+    /**
+     * Add comment
+     *
+     * @param \Singz\SocialBundle\Entity\Comment $comment
+     *
+     * @return Publication
+     */
+    public function addComment(\Singz\SocialBundle\Entity\Comment $comment)
+    {
+        $this->comments[] = $comment;
+
+        return $this;
+    }
+
+    /**
+     * Remove comment
+     *
+     * @param \Singz\SocialBundle\Entity\Comment $comment
+     */
+    public function removeComment(\Singz\SocialBundle\Entity\Comment $comment)
+    {
+        $this->comments->removeElement($comment);
+    }
+
+    /**
+     * Get comments
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getComments()
+    {
+        return $this->comments;
     }
 }

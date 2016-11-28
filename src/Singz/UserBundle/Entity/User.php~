@@ -36,4 +36,79 @@ class User extends BaseUser
      */
     private $loves;
     
+    /**
+     * @var Comment
+     * 
+     * @ORM\OneToMany(targetEntity="Singz\SocialBundle\Entity\Comment", mappedBy="user")
+     */
+    private $comments;
+    
+
+    /**
+     * Add publication
+     *
+     * @param \Singz\SocialBundle\Entity\Publication $publication
+     *
+     * @return User
+     */
+    public function addPublication(\Singz\SocialBundle\Entity\Publication $publication)
+    {
+        $this->publications[] = $publication;
+
+        return $this;
+    }
+
+    /**
+     * Remove publication
+     *
+     * @param \Singz\SocialBundle\Entity\Publication $publication
+     */
+    public function removePublication(\Singz\SocialBundle\Entity\Publication $publication)
+    {
+        $this->publications->removeElement($publication);
+    }
+
+    /**
+     * Get publications
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPublications()
+    {
+        return $this->publications;
+    }
+
+    /**
+     * Add love
+     *
+     * @param \Singz\SocialBundle\Entity\Love $love
+     *
+     * @return User
+     */
+    public function addLove(\Singz\SocialBundle\Entity\Love $love)
+    {
+        $this->loves[] = $love;
+
+        return $this;
+    }
+
+    /**
+     * Remove love
+     *
+     * @param \Singz\SocialBundle\Entity\Love $love
+     */
+    public function removeLove(\Singz\SocialBundle\Entity\Love $love)
+    {
+        $this->loves->removeElement($love);
+    }
+
+    /**
+     * Get loves
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getLoves()
+    {
+        return $this->loves;
+    }
 }
