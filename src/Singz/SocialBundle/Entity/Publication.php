@@ -65,6 +65,14 @@ class Publication
     private $notifications;
     
     /**
+     * @var Video
+     * 
+     * @ORM\ManyToOne(targetEntity="Singz\VideoBundle\Entity\Video", inversedBy="publications")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $video;
+    
+    /**
      * Constructor
      */
     public function __construct()
@@ -254,5 +262,29 @@ class Publication
     public function getNotifications()
     {
         return $this->notifications;
+    }
+
+    /**
+     * Set video
+     *
+     * @param \Singz\VideoBundle\Entity\Video $video
+     *
+     * @return Publication
+     */
+    public function setVideo(\Singz\VideoBundle\Entity\Video $video)
+    {
+        $this->video = $video;
+
+        return $this;
+    }
+
+    /**
+     * Get video
+     *
+     * @return \Singz\VideoBundle\Entity\Video
+     */
+    public function getVideo()
+    {
+        return $this->video;
     }
 }
