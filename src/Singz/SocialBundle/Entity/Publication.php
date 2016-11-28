@@ -58,6 +58,13 @@ class Publication
     private $comments;
     
     /**
+     * @var Notification
+     * 
+     * @ORM\OneToMany(targetEntity="Singz\SocialBundle\Entity\Notification", mappedBy="publication")
+     */
+    private $notifications;
+    
+    /**
      * Constructor
      */
     public function __construct()
@@ -213,5 +220,39 @@ class Publication
     public function getComments()
     {
         return $this->comments;
+    }
+
+    /**
+     * Add notification
+     *
+     * @param \Singz\SocialBundle\Entity\Notification $notification
+     *
+     * @return Publication
+     */
+    public function addNotification(\Singz\SocialBundle\Entity\Notification $notification)
+    {
+        $this->notifications[] = $notification;
+
+        return $this;
+    }
+
+    /**
+     * Remove notification
+     *
+     * @param \Singz\SocialBundle\Entity\Notification $notification
+     */
+    public function removeNotification(\Singz\SocialBundle\Entity\Notification $notification)
+    {
+        $this->notifications->removeElement($notification);
+    }
+
+    /**
+     * Get notifications
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getNotifications()
+    {
+        return $this->notifications;
     }
 }
