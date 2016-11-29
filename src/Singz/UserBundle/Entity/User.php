@@ -90,7 +90,7 @@ class User extends BaseUser
     
     public function __construct(){
     	// comportement par défaut
-    	parent::construct;
+    	parent::__construct();
     	//utilisatuer lambda par défaut
     	if(empty($this->roles)){
     		$this->roles[] = 'ROLE_USER';
