@@ -82,18 +82,12 @@ class User extends BaseUser
      */
     private $isPrivate = 0;
     
-    /**
-     * @var boolean
-     * @ORM\Column(name="is_starz", type="boolean", nullable=false)
-     */
-    private $isStarz = 0;
-    
     public function __construct(){
-    	// comportement par défaut
+    	//comportement par défaut de FOS User
     	parent::__construct();
-    	//utilisatuer lambda par défaut
+    	//role utilisateur par défaut
     	if(empty($this->roles)){
-    		$this->roles[] = 'ROLE_USER';
+    		$this->roles[] = 'ROLE_SINGZER';
     	}
     }
     
@@ -324,5 +318,53 @@ class User extends BaseUser
     public function getImage()
     {
         return $this->image;
+    }
+
+    /**
+     * Set biography
+     *
+     * @param string $biography
+     *
+     * @return User
+     */
+    public function setBiography($biography)
+    {
+        $this->biography = $biography;
+
+        return $this;
+    }
+
+    /**
+     * Get biography
+     *
+     * @return string
+     */
+    public function getBiography()
+    {
+        return $this->biography;
+    }
+
+    /**
+     * Set isPrivate
+     *
+     * @param boolean $isPrivate
+     *
+     * @return User
+     */
+    public function setIsPrivate($isPrivate)
+    {
+        $this->isPrivate = $isPrivate;
+
+        return $this;
+    }
+
+    /**
+     * Get isPrivate
+     *
+     * @return boolean
+     */
+    public function getIsPrivate()
+    {
+        return $this->isPrivate;
     }
 }
