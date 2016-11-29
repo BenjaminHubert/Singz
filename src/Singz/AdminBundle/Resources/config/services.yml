@@ -1,0 +1,4 @@
+services:
+#    singz_admin.example:
+#        class: Singz\AdminBundle\Example
+#        arguments: ["@service_id", "plain_value", "%parameter%"]
