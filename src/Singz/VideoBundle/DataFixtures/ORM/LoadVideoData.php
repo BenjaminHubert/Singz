@@ -17,7 +17,7 @@ class LoadVideoData  extends AbstractFixture implements OrderedFixtureInterface
 		for($i=0; $i<$this->nb; $i++){
 			// Create our video and set details
 			$video = new Video();
-			$video->setPath($faker->url);				
+			$video->setPath($faker->sha1.'.mp4');				
 			$manager->persist($video);
 			//keep the object
 			$this->addReference('video '.$i, $video);
