@@ -7,3 +7,9 @@ singz_admin_index:
     path:     /
     defaults:
         _controller: SingzAdminBundle:Admin:index
+        
+singz_social_comments:
+    resource: "@SingzAdminBundle/Resources/config/comment.yml"
+    prefix:   /comments
+
+

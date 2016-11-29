@@ -1,0 +1,24 @@
+comments_index:
+    path:     /
+    defaults: { _controller: "SingzAdminBundle:Comment:index" }
+    methods:  GET
+
+comments_show:
+    path:     /{id}/show
+    defaults: { _controller: "SingzAdminBundle:Comment:show" }
+    methods:  GET
+
+comments_new:
+    path:     /new
+    defaults: { _controller: "SingzAdminBundle:Comment:new" }
+    methods:  [GET, POST]
+
+comments_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "SingzAdminBundle:Comment:edit" }
+    methods:  [GET, POST]
+
+comments_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "SingzAdminBundle:Comment:delete" }
+    methods:  DELETE
