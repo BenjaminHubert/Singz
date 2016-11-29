@@ -20,6 +20,7 @@ class AppKernel extends Kernel
         	new FOS\UserBundle\FOSUserBundle(),
             new Singz\SocialBundle\SingzSocialBundle(),
             new Singz\VideoBundle\SingzVideoBundle(),
+            new Singz\AdminBundle\SingzAdminBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

@@ -1,3 +1,7 @@
+singz_admin:
+    resource: "@SingzAdminBundle/Resources/config/routing.yml"
+    prefix:   /admin/
+
 fos_user:
     resource: "@FOSUserBundle/Resources/config/routing/all.xml"
 
