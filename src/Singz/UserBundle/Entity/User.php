@@ -39,7 +39,7 @@ class User extends BaseUser
     /**
      * @var Comment
      * 
-     * @ORM\OneToMany(targetEntity="Singz\SocialBundle\Entity\Comment", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="Singz\SocialBundle\Entity\Comment", mappedBy="author")
      */
     private $comments;
     
