@@ -50,6 +50,13 @@ class Notification
      * @ORM\JoinColumn(nullable=false)
      */
     private $publication;
+    
+    /**
+     * @var text
+     * 
+     * @ORM\Column(name="message", type="text", nullable=false)
+     */
+    private $message;
 
 
     /**
@@ -156,5 +163,29 @@ class Notification
     public function getPublication()
     {
         return $this->publication;
+    }
+
+    /**
+     * Set message
+     *
+     * @param string $message
+     *
+     * @return Notification
+     */
+    public function setMessage($message)
+    {
+        $this->message = $message;
+
+        return $this;
+    }
+
+    /**
+     * Get message
+     *
+     * @return string
+     */
+    public function getMessage()
+    {
+        return $this->message;
     }
 }

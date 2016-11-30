@@ -21,6 +21,7 @@ class LoadNotificationData  extends AbstractFixture implements OrderedFixtureInt
 			$notification->setPublication($this->getReference('publication '.rand(0, $this->nb-1)));
 			$notification->setUser($this->getReference('user '.rand(0, $this->nb-1)));
 			$notification->setIsRead($faker->boolean);
+			$notification->setMessage($faker->text(250));
 			$manager->persist($notification);
 		}
 		$manager->flush();
