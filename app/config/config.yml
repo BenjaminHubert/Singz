@@ -83,3 +83,11 @@ fos_user:
     from_email:
         address:        noreply@singz.fr
         sender_name:    "%appname%"
+
+#FOS Comment Configuration
+fos_comment:
+    db_driver: orm
+    class:
+        model:
+            comment: Singz\SocialBundle\Entity\Comment
+            thread: Singz\SocialBundle\Entity\Thread

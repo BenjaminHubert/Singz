@@ -3,14 +3,15 @@
 namespace Singz\SocialBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-
+use FOS\CommentBundle\Entity\Comment as BaseComment;
 /**
  * Comment
  *
  * @ORM\Table(name="comment")
  * @ORM\Entity(repositoryClass="Singz\SocialBundle\Repository\CommentRepository")
+ * @ORM\ChangeTrackingPolicy("DEFERRED_EXPLICIT")
  */
-class Comment
+class Comment extends BaseComment
 {
     /**
      * @var int
@@ -19,7 +20,7 @@ class Comment
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
     /**
      * @var \DateTime
@@ -51,6 +52,13 @@ class Comment
      */
     private $content;
 
+    /**
+     * Thread of this comment
+     *
+     * @var Thread
+     * @ORM\ManyToOne(targetEntity="Singz\SocialBundle\Entity\Thread")
+     */
+    protected $thread;
 
     /**
      * Get id
@@ -132,5 +140,29 @@ class Comment
     public function getPublication()
     {
         return $this->publication;
+    }
+
+    /**
+     * Set content
+     *
+     * @param string $content
+     *
+     * @return Comment
+     */
+    public function setContent($content)
+    {
+        $this->content = $content;
+
+        return $this;
+    }
+
+    /**
+     * Get content
+     *
+     * @return string
+     */
+    public function getContent()
+    {
+        return $this->content;
     }
 }

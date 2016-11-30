@@ -21,6 +21,10 @@ class AppKernel extends Kernel
             new Singz\SocialBundle\SingzSocialBundle(),
             new Singz\VideoBundle\SingzVideoBundle(),
             new Singz\AdminBundle\SingzAdminBundle(),
+            new FOS\RestBundle\FOSRestBundle(),
+            new FOS\CommentBundle\FOSCommentBundle(),
+            new JMS\SerializerBundle\JMSSerializerBundle($this),
+
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

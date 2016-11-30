@@ -3,14 +3,15 @@
 namespace Singz\SocialBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-
+use FOS\CommentBundle\Entity\Comment as BaseComment;
 /**
  * Comment
  *
  * @ORM\Table(name="comment")
  * @ORM\Entity(repositoryClass="Singz\SocialBundle\Repository\CommentRepository")
+ * @ORM\ChangeTrackingPolicy("DEFERRED_EXPLICIT")
  */
-class Comment
+class Comment extends BaseComment
 {
     /**
      * @var int
@@ -19,14 +20,7 @@ class Comment
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
-
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="date", type="datetime")
-     */
-    private $date;
+    protected $id;
     
     /**
      * @var User
@@ -43,14 +37,15 @@ class Comment
      * @ORM\JoinColumn(nullable=false)
      */
     private $publication;
-    
-    /**
-     * @var text
-     * 
-     * @ORM\Column(name="content", type="text", nullable=false)
-     */
-    private $content;
 
+
+    /**
+     * Thread of this comment
+     *
+     * @var Thread
+     * @ORM\ManyToOne(targetEntity="Singz\SocialBundle\Entity\Thread")
+     */
+    protected $thread;
 
     /**
      * Get id
@@ -60,30 +55,6 @@ class Comment
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set date
-     *
-     * @param \DateTime $date
-     *
-     * @return Comment
-     */
-    public function setDate($date)
-    {
-        $this->date = $date;
-
-        return $this;
-    }
-
-    /**
-     * Get date
-     *
-     * @return \DateTime
-     */
-    public function getDate()
-    {
-        return $this->date;
     }
 
     /**
@@ -132,29 +103,5 @@ class Comment
     public function getPublication()
     {
         return $this->publication;
-    }
-
-    /**
-     * Set content
-     *
-     * @param string $content
-     *
-     * @return Comment
-     */
-    public function setContent($content)
-    {
-        $this->content = $content;
-
-        return $this;
-    }
-
-    /**
-     * Get content
-     *
-     * @return string
-     */
-    public function getContent()
-    {
-        return $this->content;
     }
 }

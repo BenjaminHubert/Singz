@@ -8,3 +8,9 @@ fos_user:
 singz_core:
     resource: "@SingzCoreBundle/Resources/config/routing.yml"
     prefix:   /
+
+fos_comment_api:
+    type: rest
+    resource: "@FOSCommentBundle/Resources/config/routing.yml"
+    prefix: /api
+    defaults: { _format: html }
