@@ -16,11 +16,16 @@ class LoadImageData  extends AbstractFixture implements OrderedFixtureInterface
 		
 		//Create a data faker
 		$faker = \Faker\Factory::create();
-		//Clear tmp/ 
-		$files = glob($uploadDir.'*'); // get all file names
-		foreach($files as $file){ // iterate files
-			if(is_file($file))
-				unlink($file); // delete file
+		// if upload dir does not exist
+		if(!is_dir($uploadDir)){
+			mkdir($uploadDir, 0777, true);
+		}else{
+			//Clear upload directory 
+			$files = glob($uploadDir.'*'); // get all file names
+			foreach($files as $file){ // iterate files
+				if(is_file($file))
+					unlink($file); // delete file
+			}
 		}
 		// Fake data generation
 		for($i=0; $i<$this->nb; $i++){
