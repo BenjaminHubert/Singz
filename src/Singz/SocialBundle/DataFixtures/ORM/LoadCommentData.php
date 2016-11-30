@@ -20,6 +20,7 @@ class LoadCommentData  extends AbstractFixture implements OrderedFixtureInterfac
 			$comment->setDate($faker->dateTime);
 			$comment->setPublication($this->getReference('publication '.rand(0, $this->nb-1)));
 			$comment->setUser($this->getReference('user '.rand(0, $this->nb-1)));
+			$comment->setContent($faker->text(250));
 			$manager->persist($comment);
 		}
 		$manager->flush();
