@@ -1,0 +1,10 @@
+{% extends "SingzCoreBundle::layout.html.twig" %}
+
+{% block title %}SingzSocialBundle:Publication:index{% endblock %}
+
+{% block body %}
+<h1>Welcome to the Publication:index page</h1>
+    {% for publication in publications %}
+        {{ publication.description }}<br>
+    {% endfor %}
+{% endblock %}
