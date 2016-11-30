@@ -10,4 +10,5 @@ namespace Singz\SocialBundle\Repository;
  */
 class PublicationRepository extends \Doctrine\ORM\EntityRepository
 {
+
 }

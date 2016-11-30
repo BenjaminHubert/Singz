@@ -9,6 +9,10 @@ singz_core:
     resource: "@SingzCoreBundle/Resources/config/routing.yml"
     prefix:   /
 
+singz_social:
+    resource: "@SingzSocialBundle/Resources/config/routing.yml"
+    prefix:   /
+
 fos_comment_api:
     type: rest
     resource: "@FOSCommentBundle/Resources/config/routing.yml"
