@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "52d50428095141cfe2fe8304a3ff2e6c",
-    "content-hash": "ea6071e7e05c28d9d9b882c58312cbf5",
+    "hash": "30c0f9040a65268381dcfd5ebf846104",
+    "content-hash": "c39a640786ba533f88fc66a972536042",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -962,12 +962,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfSymfony/FOSUserBundle.git",
-                "reference": "4957dbb3731f9fb0276d7a480a1aa1150263ee7c"
+                "reference": "28151dcb25de663c05ce26917fd6a0b5cb2787cf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSUserBundle/zipball/4957dbb3731f9fb0276d7a480a1aa1150263ee7c",
-                "reference": "4957dbb3731f9fb0276d7a480a1aa1150263ee7c",
+                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSUserBundle/zipball/28151dcb25de663c05ce26917fd6a0b5cb2787cf",
+                "reference": "28151dcb25de663c05ce26917fd6a0b5cb2787cf",
                 "shasum": ""
             },
             "require": {
@@ -1028,7 +1028,7 @@
             "keywords": [
                 "User management"
             ],
-            "time": "2016-11-28 12:01:11"
+            "time": "2016-11-29 14:53:27"
         },
         {
             "name": "incenteev/composer-parameter-handler",
@@ -2349,16 +2349,16 @@
         },
         {
             "name": "symfony/symfony",
-            "version": "v3.1.7",
+            "version": "v3.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/symfony.git",
-                "reference": "db1c32c7237a6594e5e1974524c973d18066b141"
+                "reference": "b96a144bc875684f3338f697687147a2696d73eb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/symfony/zipball/db1c32c7237a6594e5e1974524c973d18066b141",
-                "reference": "db1c32c7237a6594e5e1974524c973d18066b141",
+                "url": "https://api.github.com/repos/symfony/symfony/zipball/b96a144bc875684f3338f697687147a2696d73eb",
+                "reference": "b96a144bc875684f3338f697687147a2696d73eb",
                 "shasum": ""
             },
             "require": {
@@ -2426,6 +2426,7 @@
                 "symfony/validator": "self.version",
                 "symfony/var-dumper": "self.version",
                 "symfony/web-profiler-bundle": "self.version",
+                "symfony/workflow": "self.version",
                 "symfony/yaml": "self.version"
             },
             "require-dev": {
@@ -2435,7 +2436,7 @@
                 "doctrine/dbal": "~2.4",
                 "doctrine/doctrine-bundle": "~1.4",
                 "doctrine/orm": "~2.4,>=2.4.5",
-                "egulias/email-validator": "~1.2,>=1.2.1",
+                "egulias/email-validator": "~1.2,>=1.2.8|~2.0",
                 "monolog/monolog": "~1.11",
                 "ocramius/proxy-manager": "~0.4|~1.0|~2.0",
                 "phpdocumentor/reflection-docblock": "^3.0",
@@ -2447,7 +2448,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "3.1-dev"
+                    "dev-master": "3.2-dev"
                 }
             },
             "autoload": {
@@ -2486,7 +2487,7 @@
             "keywords": [
                 "framework"
             ],
-            "time": "2016-11-21 02:44:44"
+            "time": "2016-11-30 08:46:24"
         },
         {
             "name": "twig/twig",
@@ -2859,16 +2860,16 @@
         },
         {
             "name": "symfony/phpunit-bridge",
-            "version": "v3.1.7",
+            "version": "v3.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/phpunit-bridge.git",
-                "reference": "c80098acb81e604eb18030c5e444032ef948f9e7"
+                "reference": "a56acfdb96be7c82f4bcf16b7c77f1960690b0e2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/phpunit-bridge/zipball/c80098acb81e604eb18030c5e444032ef948f9e7",
-                "reference": "c80098acb81e604eb18030c5e444032ef948f9e7",
+                "url": "https://api.github.com/repos/symfony/phpunit-bridge/zipball/a56acfdb96be7c82f4bcf16b7c77f1960690b0e2",
+                "reference": "a56acfdb96be7c82f4bcf16b7c77f1960690b0e2",
                 "shasum": ""
             },
             "require": {
@@ -2877,10 +2878,13 @@
             "suggest": {
                 "symfony/debug": "For tracking deprecated interfaces usages at runtime with DebugClassLoader"
             },
+            "bin": [
+                "bin/simple-phpunit"
+            ],
             "type": "symfony-bridge",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "3.1-dev"
+                    "dev-master": "3.2-dev"
                 }
             },
             "autoload": {
@@ -2910,7 +2914,7 @@
             ],
             "description": "Symfony PHPUnit Bridge",
             "homepage": "https://symfony.com",
-            "time": "2016-11-17 10:59:24"
+            "time": "2016-11-25 22:54:21"
         }
     ],
     "aliases": [],
