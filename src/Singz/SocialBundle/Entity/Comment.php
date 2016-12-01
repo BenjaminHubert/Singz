@@ -96,4 +96,13 @@ class Comment extends BaseComment implements SignedCommentInterface
     {
         return $this->author;
     }
+    
+    public function getAuthorName()
+    {
+    	if (null === $this->getAuthor()) {
+    		return 'Anonymous';
+    	}
+    
+    	return $this->getAuthor()->getUsername();
+    }
 }
