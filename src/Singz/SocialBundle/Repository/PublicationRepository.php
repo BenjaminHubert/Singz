@@ -11,11 +11,5 @@ namespace Singz\SocialBundle\Repository;
 class PublicationRepository extends \Doctrine\ORM\EntityRepository
 {
 
-    public function findTrending(){
-        return $this->getEntityManager()
-            ->createQuery(
-                'SELECT * FROM publication'
-            )
-            ->getResult();
-    }
+
 }

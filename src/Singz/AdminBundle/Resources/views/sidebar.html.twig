@@ -15,8 +15,19 @@
             <li>
                 <a href="{{ path('singz_admin_dashboard') }}"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
             </li>
+            <style>
+                .sidebar .arrow {
+                    content: "\f105";
+                }
+                .fa.arrow:before {
+                    content: "\f105";
+                }
+                .sidebar .fa.arrow:before {
+                    content: "\f105";
+                }
+            </style>
             <li>
-                <a href="#"><i class="fa fa-comments-o fa-fw"></i> Commentaires<span class="fa arrow"></span></a>
+                <a href="#"><i class="fa fa-comments-o fa-fw"></i> Commentaires<span style="" class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
                     <li>
                         <a href="#">Liste des commentaires</a>
