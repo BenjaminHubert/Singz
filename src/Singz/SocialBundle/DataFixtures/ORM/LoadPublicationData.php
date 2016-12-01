@@ -8,7 +8,7 @@ use Singz\SocialBundle\Entity\Publication;
 
 class LoadPublicationData  extends AbstractFixture implements OrderedFixtureInterface
 {
-	private $nb = 2;
+	private $nb = 20;
 	
 	public function load(ObjectManager $manager)
 	{
@@ -18,7 +18,7 @@ class LoadPublicationData  extends AbstractFixture implements OrderedFixtureInte
 			// Create our video and set details
 			$publication = new Publication();
 			$publication->setDescription($faker->text);
-			$publication->setDate($faker->dateTime);
+			$publication->setDate($faker->dateTimeBetween('-30 days', 'now'));
 			$publication->setVideo($this->getReference('video '.rand(0, $this->nb-1)));
 			$publication->setUser($this->getReference('user '.rand(0, $this->nb-1)));
 			$manager->persist($publication);

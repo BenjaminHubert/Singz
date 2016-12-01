@@ -13,7 +13,7 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface, C
 	 * @var ContainerInterface
 	 */
 	private $container; 
-	private $nb = 2;
+	private $nb = 20;
 	
 	public function load(ObjectManager $manager)
 	{

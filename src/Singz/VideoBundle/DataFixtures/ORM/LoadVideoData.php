@@ -8,7 +8,7 @@ use Singz\VideoBundle\Entity\Video;
 
 class LoadVideoData  extends AbstractFixture implements OrderedFixtureInterface
 {
-	private $nb = 2;
+	private $nb = 20;
 
 	public function load(ObjectManager $manager)
 	{

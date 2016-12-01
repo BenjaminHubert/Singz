@@ -8,7 +8,7 @@ use Singz\SocialBundle\Entity\Love;
 
 class LoadLoveData  extends AbstractFixture implements OrderedFixtureInterface
 {
-	private $nb = 2;
+	private $nb = 20;
 
 	public function load(ObjectManager $manager)
 	{
@@ -17,7 +17,7 @@ class LoadLoveData  extends AbstractFixture implements OrderedFixtureInterface
 		for($i=0; $i<$this->nb; $i++){
 			// Create our video and set details
 			$love = new Love();
-			$love->setDate($faker->dateTime);
+			$love->setDate($faker->dateTimeBetween('-30 days', 'now'));
 			$love->setPublication($this->getReference('publication '.rand(0, $this->nb-1)));
 			$love->setUser($this->getReference('user '.rand(0, $this->nb-1)));
 			$manager->persist($love);
