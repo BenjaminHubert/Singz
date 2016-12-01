@@ -90,4 +90,20 @@ fos_comment:
     class:
         model:
             comment: Singz\SocialBundle\Entity\Comment
-            thread: Singz\SocialBundle\Entity\Thread
+            thread: Singz\SocialBundle\Entity\Thread    
+    acl_roles:
+        comment:
+            create: ROLE_USER
+            view: ROLE_USER
+            edit: ROLE_USER
+            delete: ROLE_USER
+        thread:
+            create: ROLE_USER
+            view: ROLE_USER
+            edit: ROLE_USER
+            delete: ROLE_USER
+        vote:
+            create: ROLE_USER
+            view: ROLE_USER
+            edit: ROLE_USER
+            delete: ROLE_USER

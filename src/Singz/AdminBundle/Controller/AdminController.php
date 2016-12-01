@@ -17,5 +17,4 @@ class AdminController extends Controller
     {
     	return $this->redirectToRoute('singz_admin_dashboard');
     }
-
 }

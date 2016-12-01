@@ -32,14 +32,6 @@ class Comment extends BaseComment implements SignedCommentInterface
      * @ORM\JoinColumn(nullable=false)
      */
     protected $author;
-    
-    /**
-     * @var Publication
-     *
-     * @ORM\ManyToOne(targetEntity="Singz\SocialBundle\Entity\Publication", inversedBy="comments")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $publication;
 
 
     /**
