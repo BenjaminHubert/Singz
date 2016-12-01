@@ -1,7 +1,5 @@
 <?php
-
 namespace Singz\SocialBundle\Repository;
-
 /**
  * PublicationRepository
  *
@@ -22,7 +20,6 @@ class PublicationRepository extends \Doctrine\ORM\EntityRepository
             ->getQuery()
             ->getResult();
     }
-
     public function getPublicationById($id) {
         return $this->createQueryBuilder('p')
             ->innerJoin('p.user', 'u')->addSelect('u')
@@ -31,7 +28,6 @@ class PublicationRepository extends \Doctrine\ORM\EntityRepository
             ->getQuery()
             ->getOneOrNullResult();
     }
-
     public function getBrowseAll($offset, $limit, $interval, $user) {
         return $this->createQueryBuilder('p')
             ->innerJoin('p.user', 'u')->addSelect('u')
@@ -50,7 +46,6 @@ class PublicationRepository extends \Doctrine\ORM\EntityRepository
             ->getQuery()
             ->getResult();
     }
-
     public function getBrowseStarz($offset, $limit, $interval) {
         return $this->createQueryBuilder('p')
             ->innerJoin('p.user', 'u')->addSelect('u')
@@ -64,7 +59,6 @@ class PublicationRepository extends \Doctrine\ORM\EntityRepository
             ->getQuery()
             ->getResult();
     }
-
     public function getBrowseSingzers($offset, $limit, $interval, $user) {
         return $this->createQueryBuilder('p')
             ->innerJoin('p.user', 'u')->addSelect('u')
@@ -83,6 +77,4 @@ class PublicationRepository extends \Doctrine\ORM\EntityRepository
             ->getQuery()
             ->getResult();
     }
-
-
 }
