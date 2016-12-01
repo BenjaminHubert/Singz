@@ -84,4 +84,5 @@ class PublicationRepository extends \Doctrine\ORM\EntityRepository
             ->getResult();
     }
 
+
 }
