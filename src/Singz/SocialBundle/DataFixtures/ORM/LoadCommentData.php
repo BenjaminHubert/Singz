@@ -5,30 +5,51 @@ use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Singz\SocialBundle\Entity\Comment;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 
-//class LoadCommentData  extends AbstractFixture implements OrderedFixtureInterface
-//{
-//	private $nb = 2;
-//
-//	public function load(ObjectManager $manager)
-//	{
-//		//Create a data faker
-//		$faker = \Faker\Factory::create();
-//		for($i=0; $i<$this->nb; $i++){
-//			// Create our video and set details
-//			$comment = new Comment();
-//			$comment->setDate($faker->dateTime);
-//			$comment->setPublication($this->getReference('publication '.rand(0, $this->nb-1)));
-//			$comment->setUser($this->getReference('user '.rand(0, $this->nb-1)));
-//			$comment->setContent($faker->text(250));
-//			$manager->persist($comment);
-//		}
-//		$manager->flush();
-//	}
-//
-//	public function getOrder()
-//	{
-//		return 3;
-//	}
-//}
+class LoadCommentData extends AbstractFixture implements OrderedFixtureInterface, ContainerAwareInterface
+{
+	private $nb = 20;
+
+	public function load(ObjectManager $manager)
+	{
+		//First depth comments array
+		$comments = [];
+		//Create a data faker
+		$faker = \Faker\Factory::create();
+		//FOS Comment manager
+		$commentManager = $this->container->get('fos_comment.manager.comment');
+		//First depth comments creation
+		for($i=0; $i<$this->nb; $i++){
+			$comment = $commentManager->createComment($this->getReference('thread '.rand(0, $this->nb-1)));
+			$comment->setAuthor($this->getReference('user '.rand(0, $this->nb-1)));
+			$comment->setBody($faker->text(250));
+			$manager->persist($comment);
+			$comments[] = $comment;			
+		}
+		$manager->flush();
+		//Second depth comments creation
+		foreach($comments as $firstComment){
+			if($faker->boolean){
+				$parent = $firstComment;
+			}else $parent = null;
+			$comment = $commentManager->createComment($this->getReference('thread '.rand(0, $this->nb-1)), $parent);
+			$comment->setAuthor($this->getReference('user '.rand(0, $this->nb-1)));
+			$comment->setBody($faker->text(250));
+			$manager->persist($comment);
+		}
+		$manager->flush();
+	}
+
+	public function getOrder()
+	{
+		return 4;
+	}
+	
+	public function setContainer(ContainerInterface $container = null)
+	{
+		$this->container = $container;
+	}
+}
 
