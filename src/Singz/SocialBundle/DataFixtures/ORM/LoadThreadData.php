@@ -32,8 +32,6 @@ class LoadThreadData  extends AbstractFixture implements OrderedFixtureInterface
 				$threadManager->saveThread($thread);
 			}			
 			$this->setReference('thread '.$i, $thread);
-			
-			$manager->persist($thread);
 		}
 		$manager->flush();
 	}

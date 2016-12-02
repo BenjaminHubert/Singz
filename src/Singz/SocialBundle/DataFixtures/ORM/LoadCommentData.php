@@ -25,19 +25,19 @@ class LoadCommentData extends AbstractFixture implements OrderedFixtureInterface
 			$comment = $commentManager->createComment($this->getReference('thread '.rand(0, $this->nb-1)));
 			$comment->setAuthor($this->getReference('user '.rand(0, $this->nb-1)));
 			$comment->setBody($faker->text(250));
-			$manager->persist($comment);
-			$comments[] = $comment;			
+			$commentManager->saveComment($comment);
+			$comments[] = $comment;
 		}
 		$manager->flush();
 		//Second depth comments creation
 		foreach($comments as $firstComment){
 			if($faker->boolean){
 				$parent = $firstComment;
-			}else $parent = null;
-			$comment = $commentManager->createComment($this->getReference('thread '.rand(0, $this->nb-1)), $parent);
-			$comment->setAuthor($this->getReference('user '.rand(0, $this->nb-1)));
-			$comment->setBody($faker->text(250));
-			$manager->persist($comment);
+				$comment = $commentManager->createComment($parent->getThread(), $parent);
+				$comment->setAuthor($this->getReference('user '.rand(0, $this->nb-1)));
+				$comment->setBody($faker->text(250));
+				$commentManager->saveComment($comment);
+			}
 		}
 		$manager->flush();
 	}
