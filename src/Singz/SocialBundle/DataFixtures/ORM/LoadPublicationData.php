@@ -15,7 +15,6 @@ class LoadPublicationData  extends AbstractFixture implements OrderedFixtureInte
 		//Create a data faker
 		$faker = \Faker\Factory::create();
 		for($i=0; $i<$this->nb; $i++){
-			// Create our video and set details
 			$publication = new Publication();
 			$publication->setDescription($faker->text);
 			$publication->setDate($faker->dateTimeBetween('-30 days', 'now'));

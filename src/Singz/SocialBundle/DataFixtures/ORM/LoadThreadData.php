@@ -17,16 +17,19 @@ class LoadThreadData  extends AbstractFixture implements OrderedFixtureInterface
 	private $nb = 20;
 	
 	public function load(ObjectManager $manager)
-	{		
+	{
+		//Getting the thread manager
+		$threadManager = $this->container->get('fos_comment.manager.thread');
+		//Adding fixtures
 		for($i=0; $i<$this->nb; $i++){
 			$id = $this->getReference('publication '.$i)->getId();
-			$thread = $this->container->get('fos_comment.manager.thread')->findThreadById($id);
+			$thread = $threadManager->findThreadById($id);
 			if (null === $thread) {
-				$thread = $this->container->get('fos_comment.manager.thread')->createThread();
+				$thread = $threadManager->createThread();
 				$thread->setId($id);
 				$thread->setPermalink('http://singz.local/publication/show/'.$id);
 				// Add the thread
-				$this->container->get('fos_comment.manager.thread')->saveThread($thread);
+				$threadManager->saveThread($thread);
 			}			
 			$this->setReference('thread '.$i, $thread);
 			

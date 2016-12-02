@@ -12,10 +12,12 @@ class LoadImageData  extends AbstractFixture implements OrderedFixtureInterface
 
 	public function load(ObjectManager $manager)
 	{
+		//Upload directory
 		$uploadDir = 'web/uploads/userImage/';
 		
 		//Create a data faker
 		$faker = \Faker\Factory::create();
+		
 		// if upload dir does not exist
 		if(!is_dir($uploadDir)){
 			mkdir($uploadDir, 0777, true);
@@ -27,14 +29,13 @@ class LoadImageData  extends AbstractFixture implements OrderedFixtureInterface
 					unlink($file); // delete file
 			}
 		}
-		// Fake data generation
+		// Adding Image fixtures
 		for($i=0; $i<$this->nb; $i++){
-			// Create our video and set details
 			$image = new Image();
-			$imagePath = $faker->image($uploadDir, 640, 480, 'cats', false);
-			while(empty($imagePath)){
+			//Getting image while it does not work
+			do{
 				$imagePath = $faker->image($uploadDir, 640, 480, 'cats', false);
-			}
+			}while(empty($imagePath));
 			$image->setPath($imagePath);
 			$manager->persist($image);
 			//keep the object
