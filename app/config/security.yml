@@ -6,6 +6,7 @@ security:
         FOS\UserBundle\Model\UserInterface: bcrypt
         
     role_hierarchy:
+        ROLE_USER:        [ROLE_SINGZER, ROLE_STARZ]
         ROLE_ADMIN:       ROLE_USER
         ROLE_SUPER_ADMIN: ROLE_ADMIN
     

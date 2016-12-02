@@ -15,7 +15,6 @@ class LoadFollowData  extends AbstractFixture implements OrderedFixtureInterface
 		//Create a data faker
 		$faker = \Faker\Factory::create();
 		for($i=0; $i<$this->nb; $i++){
-			// Create our video and set details
 			$follow = new Follow();
 			$follow->setLeader($this->getReference('user '.rand(0, $this->nb-1)));
 			$follow->setFollower($this->getReference('user '.rand(0, $this->nb-1)));

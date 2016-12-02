@@ -32,14 +32,6 @@ class Comment extends BaseComment implements SignedCommentInterface
      * @ORM\JoinColumn(nullable=false)
      */
     protected $author;
-    
-    /**
-     * @var Publication
-     *
-     * @ORM\ManyToOne(targetEntity="Singz\SocialBundle\Entity\Publication", inversedBy="comments")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $publication;
 
 
     /**
@@ -103,5 +95,14 @@ class Comment extends BaseComment implements SignedCommentInterface
     public function getAuthor()
     {
         return $this->author;
+    }
+    
+    public function getAuthorName()
+    {
+    	if (null === $this->getAuthor()) {
+    		return 'Anonymous';
+    	}
+    
+    	return $this->getAuthor()->getUsername();
     }
 }

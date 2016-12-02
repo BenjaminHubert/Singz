@@ -4,6 +4,9 @@ namespace Singz\SocialBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use FOS\CommentBundle\Entity\Comment as BaseComment;
+use FOS\CommentBundle\Model\SignedCommentInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
+
 /**
  * Comment
  *
@@ -11,7 +14,7 @@ use FOS\CommentBundle\Entity\Comment as BaseComment;
  * @ORM\Entity(repositoryClass="Singz\SocialBundle\Repository\CommentRepository")
  * @ORM\ChangeTrackingPolicy("DEFERRED_EXPLICIT")
  */
-class Comment extends BaseComment
+class Comment extends BaseComment implements SignedCommentInterface
 {
     /**
      * @var int
@@ -21,13 +24,6 @@ class Comment extends BaseComment
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
-
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="date", type="datetime")
-     */
-    private $date;
     
     /**
      * @var User
@@ -35,22 +31,8 @@ class Comment extends BaseComment
      * @ORM\ManyToOne(targetEntity="Singz\UserBundle\Entity\User", inversedBy="comments")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $user;
-    
-    /**
-     * @var Publication
-     *
-     * @ORM\ManyToOne(targetEntity="Singz\SocialBundle\Entity\Publication", inversedBy="comments")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $publication;
-    
-    /**
-     * @var text
-     * 
-     * @ORM\Column(name="content", type="text", nullable=false)
-     */
-    private $content;
+    protected $author;
+
 
     /**
      * Thread of this comment
@@ -68,54 +50,6 @@ class Comment extends BaseComment
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set date
-     *
-     * @param \DateTime $date
-     *
-     * @return Comment
-     */
-    public function setDate($date)
-    {
-        $this->date = $date;
-
-        return $this;
-    }
-
-    /**
-     * Get date
-     *
-     * @return \DateTime
-     */
-    public function getDate()
-    {
-        return $this->date;
-    }
-
-    /**
-     * Set user
-     *
-     * @param \Singz\UserBundle\Entity\User $user
-     *
-     * @return Comment
-     */
-    public function setUser(\Singz\UserBundle\Entity\User $user)
-    {
-        $this->user = $user;
-
-        return $this;
-    }
-
-    /**
-     * Get user
-     *
-     * @return \Singz\UserBundle\Entity\User
-     */
-    public function getUser()
-    {
-        return $this->user;
     }
 
     /**
@@ -143,26 +77,23 @@ class Comment extends BaseComment
     }
 
     /**
-     * Set content
+     * Sets the author of the Comment
      *
-     * @param string $content
-     *
-     * @return Comment
+     * @param UserInterface $author
      */
-    public function setContent($content)
+    public function setAuthor(UserInterface $author)
     {
-        $this->content = $content;
-
+        $this->author = $author;
         return $this;
     }
 
     /**
-     * Get content
+     * Gets the author of the Comment
      *
-     * @return string
+     * @return UserInterface
      */
-    public function getContent()
+    public function getAuthor()
     {
-        return $this->content;
+        return $this->author;
     }
 }

@@ -17,13 +17,14 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface, C
 	
 	public function load(ObjectManager $manager)
 	{
-		// Get our userManager, you must implement `ContainerAwareInterface`
+		// Get our userManager
 		$userManager = $this->container->get('fos_user.user_manager');
 
 		//Create a data faker
 		$faker = \Faker\Factory::create();
+		
+		//Adding User fixtures
 		for($i=0; $i<$this->nb; $i++){
-			// Create our user and set details
 			$user = $userManager->createUser();
 			$user->setUsername($faker->name);
 			$user->setEmail($faker->email);
@@ -33,8 +34,7 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface, C
 				$user->setRoles(['ROLE_SINGZER']);
 			}else{
 				$user->setRoles(['ROLE_STARZ']);
-			}
-			
+			}			
 			$user->setImage($this->getReference('image '.rand(0, $this->nb-1)));
 			$user->setBiography($faker->text);
 			

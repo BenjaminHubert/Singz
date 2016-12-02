@@ -15,7 +15,6 @@ class LoadNotificationData  extends AbstractFixture implements OrderedFixtureInt
 		//Create a data faker
 		$faker = \Faker\Factory::create();
 		for($i=0; $i<$this->nb; $i++){
-			// Create our video and set details
 			$notification = new Notification();
 			$notification->setDate($faker->dateTime);
 			$notification->setPublication($this->getReference('publication '.rand(0, $this->nb-1)));

@@ -7,6 +7,3 @@ singz_admin_index:
     path:     /
     defaults:
         _controller: SingzAdminBundle:Admin:index
-
-
-

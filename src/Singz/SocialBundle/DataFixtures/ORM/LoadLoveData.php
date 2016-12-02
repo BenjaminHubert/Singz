@@ -15,7 +15,6 @@ class LoadLoveData  extends AbstractFixture implements OrderedFixtureInterface
 		//Create a data faker
 		$faker = \Faker\Factory::create();
 		for($i=0; $i<$this->nb; $i++){
-			// Create our video and set details
 			$love = new Love();
 			$love->setDate($faker->dateTimeBetween('-30 days', 'now'));
 			$love->setPublication($this->getReference('publication '.rand(0, $this->nb-1)));
