@@ -25,6 +25,7 @@ class LoadCommentData extends AbstractFixture implements OrderedFixtureInterface
 			$comment = $commentManager->createComment($this->getReference('thread '.rand(0, $this->nb-1)));
 			$comment->setAuthor($this->getReference('user '.rand(0, $this->nb-1)));
 			$comment->setBody($faker->text(250));
+			$comment->setState($faker->boolean);
 			$commentManager->saveComment($comment);
 			$comments[] = $comment;
 		}
@@ -36,6 +37,7 @@ class LoadCommentData extends AbstractFixture implements OrderedFixtureInterface
 				$comment = $commentManager->createComment($parent->getThread(), $parent);
 				$comment->setAuthor($this->getReference('user '.rand(0, $this->nb-1)));
 				$comment->setBody($faker->text(250));
+				$comment->setState($faker->boolean);
 				$commentManager->saveComment($comment);
 			}
 		}
