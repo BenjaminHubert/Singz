@@ -2,18 +2,29 @@
 
 {% block body %}
 	<h1>Explorer</h1>
-	<ul>
-		{% for item in publications %}
-			{% set publication = item.0 %}
-			{% set nb_likes = item.l_count %}
-			<li>
-				<img src="{{ asset('uploads/userImage/') }}{{ publication.user.image.path }}">
-				<a href="#"> User {{ publication.user.id }}</a><br/>
-				{{ publication.video.path }}<br/>
-				{{ publication.description }}<br/>
-				Le {{ publication.date|date("d/m/Y")}}<br/>
-				{{ nb_likes }} personne{% if(nb_likes != 1) %}s{% endif %} aime{% if(nb_likes != 1) %}nt{% endif %} cette publication<br/>
-			</li>
-	{% endfor %}
-	</ul>
+	{% block list %}
+		<ul class="browse-list">
+			{% for item in publications %}
+				{% set publication = item.0 %}
+				{% set nb_likes = item.l_count %}
+				{% set role = item.roles.0 %}
+				<li>
+					<img src="{{ asset('uploads/userImage/') }}{{ publication.user.image.path }}">
+					<a href="#"> User {{ publication.user.id }}</a><br/>
+					{% if(role == 'ROLE_STARZ') %} Utilisateur STARZ <br/>{% endif %}
+					{{ publication.video.path }}<br/>
+					{{ publication.description }}<br/>
+					Le {{ publication.date|date("d/m/Y")}}<br/>
+					{{ nb_likes }} personne{% if(nb_likes != 1) %}s{% endif %} aime{% if(nb_likes != 1) %}nt{% endif %} cette publication<br/>
+				</li>
+			{% endfor %}
+		</ul>
+		<ul class="broswe-list empty"></ul>
+	{% endblock %}
+	{% block end_javascripts %}
+		<script>
+			var path = "{{ path('singz_index') }}";
+		</script>
+		<script src="{{ asset("bundles/singzcore/js/IScroll.js") }}"></script>
+	{% endblock %}
 {% endblock %}

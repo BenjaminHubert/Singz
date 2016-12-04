@@ -2,3 +2,10 @@ singz_index:
     path:     /
     defaults:
         _controller: SingzCoreBundle:Core:index
+
+singz_browse:
+    path:    /browse/{filter}
+    requirements:
+        filter: 'all|singzer|starz'
+    defaults:
+        _controller: SingzCoreBundle:Core:browse
