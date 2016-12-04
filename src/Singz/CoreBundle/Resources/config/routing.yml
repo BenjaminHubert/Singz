@@ -9,3 +9,4 @@ singz_browse:
         filter: 'all|singzer|starz'
     defaults:
         _controller: SingzCoreBundle:Core:browse
+        filter: 'all'

@@ -2,6 +2,10 @@
 
 {% block body %}
 	<h1>Explorer</h1>
+	<a href="{{ path('singz_browse', { 'filter': 'all' }) }}">All</a>
+	<a href="{{ path('singz_browse', { 'filter': 'singzer' }) }}">Singzers</a>
+	<a href="{{ path('singz_browse', { 'filter': 'starz' }) }}">Starz</a>
+
 	{% block list %}
 		<ul class="browse-list">
 			{% for item in publications %}
