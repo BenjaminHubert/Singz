@@ -1,0 +1,33 @@
+{% extends "SingzCoreBundle::layout.html.twig" %}
+
+{% block title %}SingzSocialBundle:Publication:show{% endblock %}
+
+{% block stylesheets  %}
+    <link rel="stylesheet" href="{{ asset('bundles/foscomment/css/comments.css') }}" type="text/css" />
+{% endblock %}
+
+{% block head_javascripts %}
+    <script src="{{ asset('bundles/foscomment/js/comments.js') }}"></script>
+    <!-- jQuery -->
+    <script src="{{ asset('bundles/singzadmin/js/jquery.min.js') }}"></script>
+{% endblock %}
+
+{% block body %}
+    <h1>Welcome to the Publication:show page</h1>
+
+    <img src="{{ asset('uploads/userImage/') }}{{ publication.user.image.path }}">
+    <a href="#"> User {{ publication.user.id }}</a><br/>
+    {{ publication.video.path }}<br/>
+    {{ publication.description }}<br/>
+    Le {{ publication.date|date("d/m/Y")}}<br/>
+
+    {% set nb_likes = loves|length %}
+    {{ nb_likes }} personne{% if(nb_likes != 1) %}s{% endif %} aime{% if(nb_likes != 1) %}nt{% endif %} cette publication<br/>
+
+    <div id="fos_comment_thread" data-thread="{{ thread.id }}">
+
+        {% include 'FOSCommentBundle:Thread:comments.html.twig' with {
+            'comments': comments,
+            'thread': thread
+        } %}
+{% endblock %}

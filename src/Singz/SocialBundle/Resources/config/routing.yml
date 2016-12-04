@@ -10,3 +10,9 @@ singz_social_bundle_publication_add:
 singz_social_bundle_publication_list:
     path:     /publication/list/
     defaults: { _controller: SingzSocialBundle:Publication:list }
+
+singz_social_bundle_publication_show:
+    path:     /publication/{id}
+    defaults: { _controller: SingzSocialBundle:Publication:show }
+    requirements:
+        id: \d+
