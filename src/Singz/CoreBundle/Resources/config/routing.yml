@@ -4,9 +4,15 @@ singz_index:
         _controller: SingzCoreBundle:Core:index
 
 singz_browse:
-    path:    /browse/{filter}
+    path: /browse/{filter}
     requirements:
-        filter: 'all|singzer|starz'
+        filter: '(all|singzer|starz)'
     defaults:
         _controller: SingzCoreBundle:Core:browse
-        filter: 'all'
+
+singz_browse_all:
+    path: /browse
+    defaults:
+        _controller: FrameworkBundle:Redirect:urlRedirect
+        path: /browse/all
+        permanent: true
