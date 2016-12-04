@@ -1,0 +1,45 @@
+{% extends "SingzAdminBundle::layout.html.twig" %}
+{% block title_tag %}Liste des commentaires - {{ parent() }} {% endblock %}
+
+{% block title_page %}
+	Liste des commentaires
+{% endblock %}
+
+{% block body %}
+	<table>
+		<thead>
+			<tr>
+				<th>Auteur</th>
+				<th>Date</th>
+				<th>Commentaire</th>
+				<th>Publication</th>
+				<th>Etat</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for comment in comments %}
+				<tr>
+					<td>{{ comment.username }}</td>
+					<td>{{ comment.createdAt|date('d/m/Y') }}</td>
+					<td>{{ comment.body }}</td>
+					<td><a href="#">{{ comment.thread_id }}</a></td>
+					<td>
+						{% if comment.state == 0 %}
+    						<span class="label label-primary">
+    					        En ligne
+    					    </span>
+						{% elseif comment.state == 1 %}
+    						<span class="label label-danger">
+    					        Hors ligne
+    					    </span>
+    					{% else %}
+    						<span class="label label-default">
+    					        Etat inconnu
+    					    </span>
+					    {% endif %}
+					</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+{% endblock %}
