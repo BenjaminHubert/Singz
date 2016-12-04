@@ -31,4 +31,32 @@ class PublicationController extends Controller
         ));
     }
 
+    public function showAction($id)
+    {
+        $repository = $this->getDoctrine()->getManager()->getRepository('SingzSocialBundle:Publication');
+        $publication = $repository->find($id);
+
+        $repository = $this->getDoctrine()->getManager()->getRepository('SingzSocialBundle:Love');
+        $loves = $repository->findBy(array('publication' => $id));
+
+        $thread = $this->container->get('fos_comment.manager.thread')->findThreadById($id);
+        if (null === $thread) {
+            $thread = $this->container->get('fos_comment.manager.thread')->createThread();
+            $thread->setId($id);
+            $thread->setPermalink($request->getUri());
+
+            // Add the thread
+            $this->container->get('fos_comment.manager.thread')->saveThread($thread);
+        }
+
+        $comments = $this->container->get('fos_comment.manager.comment')->findCommentTreeByThread($thread);
+
+        return $this->render('SingzSocialBundle:Publication:show.html.twig', array(
+            'publication' => $publication,
+            'loves' => $loves,
+            'thread' => $thread,
+            'comments' => $comments
+        ));
+    }
+
 }

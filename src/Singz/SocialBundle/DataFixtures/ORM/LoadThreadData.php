@@ -27,7 +27,7 @@ class LoadThreadData  extends AbstractFixture implements OrderedFixtureInterface
 			if (null === $thread) {
 				$thread = $threadManager->createThread();
 				$thread->setId($id);
-				$thread->setPermalink('http://singz.local/publication/show/'.$id);
+				$thread->setPermalink('http://singz.local/publication/'.$id);
 				// Add the thread
 				$threadManager->saveThread($thread);
 			}			
