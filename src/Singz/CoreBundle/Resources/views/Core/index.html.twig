@@ -14,7 +14,7 @@
 				{% set role = item.roles.0 %}
 				<li>
 					<img src="{{ asset('uploads/userImage/') }}{{ publication.user.image.path }}">
-					<a href="#"> User {{ publication.user.id }}</a><br/>
+					<a href="#">{{ publication.user.username }}</a><br/>
 					{% if(role == 'ROLE_STARZ') %} Utilisateur STARZ <br/>{% endif %}
 					{{ publication.video.path }}<br/>
 					{{ publication.description }}<br/>
