@@ -27,7 +27,11 @@
 				<tr>
 					<td>{{ comment.createdAt|date('d/m/Y H:i:s') }}</td>
 					<td>{{ comment.username }}</td>
-					<td><a href="#">{{ comment.thread_id }}</a></td>
+					<td>
+						<a href="{{ path('singz_social_bundle_publication_show', {'id': comment.thread_id}) }}" target="_blank">
+							Voir
+						</a>
+					</td>
 					<td>{{ comment.body }}</td>
 					<td>
 						{% if comment.state == 0 %}
