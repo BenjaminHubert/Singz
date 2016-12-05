@@ -19,6 +19,8 @@
         {% block stylesheets %}
         {% endblock %}
 
+        <!-- jQuery -->
+        <script src="{{ asset('bundles/singzadmin/js/jquery.min.js') }}"></script>
         {# JAVASCRIPT TO ENABLE FROM THE HEAD TAG #}
         {% block head_javascripts %}{% endblock %}
 
@@ -34,7 +36,10 @@
         <script>
             var assetsBaseDir = "{{ asset('/') }}";
         </script>
+
+
         {% block end_javascripts %}
+
         {% endblock %}
     </body>
 </html>

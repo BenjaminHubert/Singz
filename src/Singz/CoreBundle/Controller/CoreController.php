@@ -2,30 +2,65 @@
 
 namespace Singz\CoreBundle\Controller;
 
-use Singz\SocialBundle\Entity\Publication;
-use Singz\SocialBundle\SingzSocialBundle;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Request;
 
 class CoreController extends Controller
 {
-    public function indexAction(Request $request)
-    {
+    public function indexAction() {
+        return $this->render('SingzCoreBundle:Core:comingsoon.html.twig');
+    }
 
+    public function browseAction($filter) {
         $repository = $this->getDoctrine()->getManager()->getRepository('SingzSocialBundle:Publication');
 
-        $now = new \DateTime();
-        $threedaysago = $now->sub(new \DateInterval("P3D"));
+        $nbPub = 20;
 
-        $query = $repository->createQueryBuilder('p')
-            ->select('p, COUNT(l.publication) as l_count')
-            ->leftjoin('SingzSocialBundle:Love', 'l', 'WITH', 'p.id = l.publication')
-            //->where('p.date > :tda ')
-            //->setParameter('tda', $threedaysago)
-            ->groupBy('p')
-            ->orderBy('l_count', 'DESC')
-            ->addOrderBy('p.date', 'DESC')
-            ->getQuery();
+        $now = new \DateTime();
+        $thirtyDaysAgo = $now->sub(new \DateInterval("P30D"));
+
+        switch($filter) {
+            case 'all':
+                $query = $repository->createQueryBuilder('p')
+                    ->select('p, COUNT(l.publication) as l_count, u.roles')
+                    ->leftjoin('SingzSocialBundle:Love', 'l', 'WITH', 'p.id = l.publication')
+                    ->leftjoin('SingzUserBundle:User', 'u', 'WITH', 'p.user = u.id')
+                    ->where('p.date > :tda ')
+                    ->setParameter('tda', $thirtyDaysAgo)
+                    ->groupBy('p')
+                    ->orderBy('l_count', 'DESC')
+                    ->addOrderBy('p.date', 'DESC')
+                    ->setMaxResults($nbPub)
+                    ->getQuery();
+                break;
+            case 'singzer':
+                $query = $repository->createQueryBuilder('p')
+                    ->select('p, COUNT(l.publication) as l_count, u.roles')
+                    ->leftjoin('SingzSocialBundle:Love', 'l', 'WITH', 'p.id = l.publication')
+                    ->leftjoin('SingzUserBundle:User', 'u', 'WITH', 'p.user = u.id')
+                    ->where('p.date > :tda AND u.roles NOT LIKE :roles')
+                    ->setParameter('roles', '%"ROLE_STARZ"%')
+                    ->setParameter('tda', $thirtyDaysAgo)
+                    ->groupBy('p')
+                    ->orderBy('l_count', 'DESC')
+                    ->addOrderBy('p.date', 'DESC')
+                    ->setMaxResults($nbPub)
+                    ->getQuery();
+                break;
+            case 'starz':
+                $query = $repository->createQueryBuilder('p')
+                    ->select('p, COUNT(l.publication) as l_count, u.roles')
+                    ->leftjoin('SingzSocialBundle:Love', 'l', 'WITH', 'p.id = l.publication')
+                    ->leftjoin('SingzUserBundle:User', 'u', 'WITH', 'p.user = u.id')
+                    ->where('p.date > :tda AND u.roles LIKE :roles')
+                    ->setParameter('roles', '%"ROLE_STARZ"%')
+                    ->setParameter('tda', $thirtyDaysAgo)
+                    ->groupBy('p')
+                    ->orderBy('l_count', 'DESC')
+                    ->addOrderBy('p.date', 'DESC')
+                    ->setMaxResults($nbPub)
+                    ->getQuery();
+                break;
+        }
 
         $publications = $query->getResult();
 
@@ -33,5 +68,4 @@ class CoreController extends Controller
             "publications" => $publications
         ));
     }
-
 }
