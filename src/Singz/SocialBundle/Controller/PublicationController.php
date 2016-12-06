@@ -3,6 +3,7 @@
 namespace Singz\SocialBundle\Controller;
 
 use Singz\SocialBundle\Entity\Love;
+use Singz\SocialBundle\Entity\Notification;
 use Singz\SocialBundle\Entity\Publication;
 use Singz\SocialBundle\SingzSocialBundle;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -68,7 +69,7 @@ class PublicationController extends Controller
             $idUser = $request->request->get('idUser');
             $idPub = $request->request->get('idPub');
 
-            $em = $this->getDoctrine()->getEntityManager();
+            $em = $this->getDoctrine()->getManager();
             $repository = $em->getRepository('SingzSocialBundle:Love');
             $love = $repository->findBy(array('user' => $idUser, 'publication' => $idPub));
 
@@ -77,12 +78,24 @@ class PublicationController extends Controller
                 $user = $em->getRepository('SingzUserBundle:User')->find($idUser);
                 $pub = $em->getRepository('SingzSocialBundle:Publication')->find($idPub);
 
+                // New love
                 $love = new Love();
                 $love->setUser($user);
                 $love->setPublication($pub);
                 $love->setDate(new \DateTime());
 
                 $em->persist($love);
+
+                // New notification
+                if($user != $pub->getUser()) {
+                    $notif = new Notification();
+                    $notif->setUser($user);
+                    $notif->setPublication($pub);
+                    $notif->setDate(new \DateTime());
+                    $notif->setMessage($user->getUsername()." love votre publication !");
+
+                    $em->persist($notif);
+                }
             } else {
                 $didLove = true;
                 $em->remove(array_pop($love));
