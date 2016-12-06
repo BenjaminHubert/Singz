@@ -2,9 +2,11 @@
 
 namespace Singz\SocialBundle\Controller;
 
+use Singz\SocialBundle\Entity\Love;
 use Singz\SocialBundle\Entity\Publication;
 use Singz\SocialBundle\SingzSocialBundle;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 class PublicationController extends Controller
@@ -57,6 +59,42 @@ class PublicationController extends Controller
             'thread' => $thread,
             'comments' => $comments
         ));
+    }
+
+    public function loveAction(Request $request){
+
+        if($request->isXmlHttpRequest()) {
+
+            $idUser = $request->request->get('idUser');
+            $idPub = $request->request->get('idPub');
+
+            $em = $this->getDoctrine()->getEntityManager();
+            $repository = $em->getRepository('SingzSocialBundle:Love');
+            $love = $repository->findBy(array('user' => $idUser, 'publication' => $idPub));
+
+            if(empty($love)) {
+                $didLove = false;
+                $user = $em->getRepository('SingzUserBundle:User')->find($idUser);
+                $pub = $em->getRepository('SingzSocialBundle:Publication')->find($idPub);
+
+                $love = new Love();
+                $love->setUser($user);
+                $love->setPublication($pub);
+                $love->setDate(new \DateTime());
+
+                $em->persist($love);
+            } else {
+                $didLove = true;
+                $em->remove(array_pop($love));
+            }
+            $em->flush();
+
+            $loves = $repository->findBy(array('publication' => $idPub));
+
+            return new JsonResponse(array('loves' => $loves, 'didLove' => $didLove));
+        }
+
+        return new Response('Error', 400);
     }
 
 }

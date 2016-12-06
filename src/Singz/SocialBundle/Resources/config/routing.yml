@@ -16,3 +16,7 @@ singz_social_bundle_publication_show:
     defaults: { _controller: SingzSocialBundle:Publication:show }
     requirements:
         id: \d+
+
+singz_social_bundle_publication_love:
+    path:     /publication/love/
+    defaults: { _controller: SingzSocialBundle:Publication:love }
