@@ -25,9 +25,15 @@
 	margin: 0;
 }
 
+
 .grid-gallery figure img {
 	display: block;
 	width: 100%;
+}
+
+.grid-gallery figure img.starz {
+	box-shadow: 0px 0px 5px #fab649;
+    border: solid 5px #fff;
 }
 
 .grid-gallery figcaption h3 {
