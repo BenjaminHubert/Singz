@@ -2,18 +2,27 @@
 
 {% block body %}
 	<h1>Explorer</h1>
-	<ul>
-		{% for item in publications %}
-			{% set publication = item.0 %}
-			{% set nb_likes = item.l_count %}
-			<li>
-				<img src="{{ asset('uploads/userImage/') }}{{ publication.user.image.path }}">
-				<a href="#"> User {{ publication.user.id }}</a><br/>
-				{{ publication.video.path }}<br/>
-				{{ publication.description }}<br/>
-				Le {{ publication.date|date("d/m/Y")}}<br/>
-				{{ nb_likes }} personne{% if(nb_likes != 1) %}s{% endif %} aime{% if(nb_likes != 1) %}nt{% endif %} cette publication<br/>
-			</li>
-	{% endfor %}
-	</ul>
+	<a href="{{ path('singz_browse', { 'filter': 'all' }) }}">All</a>
+	<a href="{{ path('singz_browse', { 'filter': 'singzer' }) }}">Singzers</a>
+	<a href="{{ path('singz_browse', { 'filter': 'starz' }) }}">Starz</a>
+
+	{% block list %}
+		<ul class="browse-list">
+			{% for item in publications %}
+				{% set publication = item.0 %}
+				{% set nb_likes = item.l_count %}
+				{% set role = item.roles.0 %}
+				<li>
+					<img src="{{ asset('uploads/userImage/') }}{{ publication.user.image.path }}">
+					<a href="#">{{ publication.user.username }}</a><br/>
+					{% if(role == 'ROLE_STARZ') %} Utilisateur STARZ <br/>{% endif %}
+					{{ publication.video.path }}<br/>
+					{{ publication.description }}<br/>
+					Le {{ publication.date|date("d/m/Y")}}<br/>
+					{{ nb_likes }} personne{% if(nb_likes != 1) %}s{% endif %} aime{% if(nb_likes != 1) %}nt{% endif %} cette publication<br/>
+				</li>
+			{% endfor %}
+		</ul>
+		<ul class="broswe-list empty"></ul>
+	{% endblock %}
 {% endblock %}
