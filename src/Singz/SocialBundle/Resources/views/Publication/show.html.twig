@@ -10,9 +10,15 @@
     <script src="{{ asset('bundles/foscomment/js/comments.js') }}"></script>
     <!-- jQuery -->
     <script src="{{ asset('bundles/singzadmin/js/jquery.min.js') }}"></script>
+    <!-- Bundle script -->
+    <script src="{{ asset('bundles/singzsocial/js/script.js') }}"></script>
 {% endblock %}
 
 {% block body %}
+    <script>
+        var path = '{{ path('singz_social_bundle_publication_love') }}';
+    </script>
+
     <h1>Welcome to the Publication:show page</h1>
 
     <img src="{{ asset('uploads/userImage/') }}{{ publication.user.image.path }}">
@@ -22,12 +28,27 @@
     Le {{ publication.date|date("d/m/Y")}}<br/>
 
     {% set nb_likes = loves|length %}
-    {{ nb_likes }} personne{% if(nb_likes != 1) %}s{% endif %} aime{% if(nb_likes != 1) %}nt{% endif %} cette publication<br/>
+    <div id="nb_loves">
+        {{ nb_likes }} love{% if nb_likes != 1 %}s{% endif %}
+    </div>
+    <button id="love" onclick="lovethis(path, {{ publication.id }}, {{ app.user.id }})">
+    {% set ilove = 0 %}
+    {% for love in loves %}
+        {% if love.user.id == app.user.id %}
+            {% set ilove = 1 %}
+            Je ne love plus
+        {% endif %}
+    {% endfor %}
+    {% if ilove == 0 %}
+        Je love !
+    {% endif %}
+    </button>
 
     <div id="fos_comment_thread" data-thread="{{ thread.id }}">
-
         {% include 'FOSCommentBundle:Thread:comments.html.twig' with {
             'comments': comments,
             'thread': thread
         } %}
+    </div>
+
 {% endblock %}
