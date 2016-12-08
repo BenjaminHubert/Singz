@@ -28,10 +28,10 @@
     Le {{ publication.date|date("d/m/Y")}}<br/>
 
     {% set nb_likes = loves|length %}
-    <div id="nb_loves">
+    <div id="nbloves-{{ publication.id }}">
         {{ nb_likes }} love{% if nb_likes != 1 %}s{% endif %}
     </div>
-    <button id="love" onclick="lovethis(path, {{ publication.id }}, {{ app.user.id }})">
+    <button id="love-{{ publication.id }}" onclick="lovethis(path, {{ publication.id }}, {{ app.user.id }})">
     {% set ilove = 0 %}
     {% for love in loves %}
         {% if love.user.id == app.user.id %}
