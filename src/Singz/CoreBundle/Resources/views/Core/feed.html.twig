@@ -1,0 +1,41 @@
+{% extends "SingzCoreBundle::layout.html.twig" %}
+
+{% block title %}
+    Fil d'actualité - {{ parent() }}
+{% endblock %}
+
+{% block head_javascripts %}
+    <script>
+        var path = '{{ path('singz_social_bundle_publication_love') }}';
+    </script>
+{% endblock %}
+
+{% block stylesheets %}
+    <link href="{{ asset('bundles/foscomment/css/comments.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block body %}
+    <ul class="browse-list">
+            {% for publication in publications %}
+                <li>
+                    {% include 'SingzSocialBundle:Publication:publication.html.twig' with {
+                        'publication': publication,
+                        'comments': comments[publication.id],
+                        'thread': threads[publication.id],
+                        'view': 'tree'
+                    } %}
+                </li>
+                {% else %}
+                Aucune publication à afficher
+            {% endfor %}
+    </ul>
+{% endblock %}
+
+{% block end_javascripts %}
+    <!-- jQuery -->
+    <script src="{{ asset('bundles/singzadmin/js/jquery.min.js') }}"></script>
+    <!-- Comments -->
+    <script src="{{ asset('bundles/foscomment/js/comments.js') }}"></script>
+    <!-- Bundle script -->
+    <script src="{{ asset('bundles/singzsocial/js/script.js') }}"></script>
+{% endblock %}

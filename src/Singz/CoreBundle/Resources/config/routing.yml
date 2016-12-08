@@ -16,3 +16,8 @@ singz_browse_all:
         _controller: FrameworkBundle:Redirect:urlRedirect
         path: /browse/all/
         permanent: true
+
+singz_feed:
+    path: /feed/
+    defaults:
+        _controller: SingzCoreBundle:Core:feed
