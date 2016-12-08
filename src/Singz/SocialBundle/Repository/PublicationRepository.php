@@ -11,7 +11,6 @@ namespace Singz\SocialBundle\Repository;
 class PublicationRepository extends \Doctrine\ORM\EntityRepository
 {
     public function getNewsFeed($user) {
-
         return $this->createQueryBuilder('p')
             ->innerJoin('p.user', 'u')->addSelect('u')
             ->leftJoin('u.followers', 'f')->addSelect('f')
@@ -22,6 +21,15 @@ class PublicationRepository extends \Doctrine\ORM\EntityRepository
             ->orderBy('p.date', 'DESC')
             ->getQuery()
             ->getResult();
+    }
+
+    public function getPublicationById($id) {
+        return $this->createQueryBuilder('p')
+            ->innerJoin('p.user', 'u')->addSelect('u')
+            ->leftJoin('p.loves', 'l')->addSelect('l')
+            ->where('p.id = :id')->setParameter('id', $id)
+            ->getQuery()
+            ->getSingleResult();
     }
 
 }

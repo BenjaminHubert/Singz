@@ -3,7 +3,7 @@
 namespace Singz\CoreBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\BrowserKit\Request;
+use Symfony\Component\HttpFoundation\Request;
 
 class CoreController extends Controller
 {
@@ -70,7 +70,7 @@ class CoreController extends Controller
         ));
     }
 
-    public function feedAction(){
+    public function feedAction(Request $request){
         $user = $this->getUser();
 
         $em = $this->getDoctrine()->getManager();

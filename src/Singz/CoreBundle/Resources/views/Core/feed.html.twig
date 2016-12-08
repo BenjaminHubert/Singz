@@ -5,7 +5,9 @@
 {% endblock %}
 
 {% block head_javascripts %}
-
+    <script>
+        var path = '{{ path('singz_social_bundle_publication_love') }}';
+    </script>
 {% endblock %}
 
 {% block stylesheets %}
@@ -13,13 +15,7 @@
 {% endblock %}
 
 {% block body %}
-    <script>
-        var path = '{{ path('singz_social_bundle_publication_love') }}';
-    </script>
-    Bonjour
-
-    {% block list %}
-        <ul class="browse-list">
+    <ul class="browse-list">
             {% for publication in publications %}
                 <li>
                     {% include 'SingzSocialBundle:Publication:publication.html.twig' with {
@@ -29,10 +25,12 @@
                         'view': 'tree'
                     } %}
                 </li>
+                {% else %}
+                Aucune publication à afficher
             {% endfor %}
-        </ul>
-    {% endblock %}
+    </ul>
 {% endblock %}
+
 {% block end_javascripts %}
     <!-- jQuery -->
     <script src="{{ asset('bundles/singzadmin/js/jquery.min.js') }}"></script>

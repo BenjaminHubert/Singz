@@ -16,6 +16,13 @@
 
 {% block body %}
 
+    {% include 'SingzSocialBundle:Publication:publication.html.twig' with {
+        'publication': publication,
+        'comments': comments,
+        'thread': thread,
+        'view': 'tree'
+    } %}
+    {#
     <img width="50px" src="{{ asset('uploads/userImage/') ~ publication.user.image.path }}">
     <a href="#">{{ publication.user.username }}</a><br/>
 
@@ -49,7 +56,7 @@
             'thread': thread
         } %}
     </div>
-
+#}
 {% endblock %}
 
 {% block end_javascripts %}

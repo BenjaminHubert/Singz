@@ -34,14 +34,15 @@ class PublicationController extends Controller
         ));
     }
 
-    public function showAction($id)
+    public function showAction(Request $request, $id)
     {
-        $repository = $this->getDoctrine()->getManager()->getRepository('SingzSocialBundle:Publication');
-        $publication = $repository->find($id);
-
-        $repository = $this->getDoctrine()->getManager()->getRepository('SingzSocialBundle:Love');
-        $loves = $repository->findBy(array('publication' => $id));
-
+        // Get publication
+        $publication = $this->getDoctrine()->getManager()->getRepository('SingzSocialBundle:Publication')->getPublicationById($id);
+        if($publication == null) {
+            throw $this->createNotFoundException('Publication inexistante');
+        }
+        
+        // Get thread
         $thread = $this->container->get('fos_comment.manager.thread')->findThreadById($id);
         if (null === $thread) {
             $thread = $this->container->get('fos_comment.manager.thread')->createThread();
@@ -52,11 +53,11 @@ class PublicationController extends Controller
             $this->container->get('fos_comment.manager.thread')->saveThread($thread);
         }
 
+        // Get comments
         $comments = $this->container->get('fos_comment.manager.comment')->findCommentTreeByThread($thread);
 
         return $this->render('SingzSocialBundle:Publication:show.html.twig', array(
             'publication' => $publication,
-            'loves' => $loves,
             'thread' => $thread,
             'comments' => $comments
         ));
