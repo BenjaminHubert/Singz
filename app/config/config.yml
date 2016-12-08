@@ -107,3 +107,29 @@ fos_comment:
             view: ROLE_USER
             edit: ROLE_USER
             delete: ROLE_USER
+
+#Social Buttons Bundle
+nomaya_social:
+    buttons:
+        facebook:
+            url:            null
+            locale:         "fr_FR"
+            send:           false
+            width:          300
+            showFaces:      false
+            layout:         "button_count"
+        twitter:
+            url:            null
+            locale:         "fr"
+            message:        "Ecoutez mon nouveau morceau !"
+            text:           "Tweet"
+            via:            "Singz.fr"
+            tag:            "ttot"
+        googleplus:
+            url:            null
+            locale :        "fr"
+            size :          "medium"
+            annotation :    "bubble"
+            width :         300
+        pinterest:
+            url:            null
