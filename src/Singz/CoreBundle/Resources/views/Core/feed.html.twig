@@ -1,11 +1,15 @@
 {% extends "SingzCoreBundle::layout.html.twig" %}
 
+{% block title %}
+    Fil d'actualité - {{ parent() }}
+{% endblock %}
+
 {% block head_javascripts %}
-    <script src="{{ asset('bundles/foscomment/js/comments.js') }}"></script>
-    <!-- jQuery -->
-    <script src="{{ asset('bundles/singzadmin/js/jquery.min.js') }}"></script>
-    <!-- Bundle script -->
-    <script src="{{ asset('bundles/singzsocial/js/script.js') }}"></script>
+
+{% endblock %}
+
+{% block stylesheets %}
+    <link href="{{ asset('bundles/foscomment/css/comments.css') }}" rel="stylesheet">
 {% endblock %}
 
 {% block body %}
@@ -16,40 +20,24 @@
 
     {% block list %}
         <ul class="browse-list">
-            {% for item in publications %}
-                {% set idP = item.id %}
+            {% for publication in publications %}
                 <li>
-                    <img src="{{ asset('uploads/userImage/') }}{{ item.user.image.path }}">
-                    <a href="#">{{ item.user.id }}</a><br/>
-                    {{ item.video.path }}<br/>
-                    {{ item.description }}<br/>
-                    Le {{ item.date|date("d/m/Y")}}<br/>
-
-                    {% set nb_likes = loves[idP]|length %}
-                    <div id="nbloves-{{ idP }}">
-                        {{ nb_likes }} love{% if nb_likes != 1 %}s{% endif %}
-                    </div>
-                    <button id="love-{{ idP }}" onclick="lovethis(path, {{ idP }}, {{ app.user.id }})">
-                        {% set ilove = 0 %}
-                        {% for love in loves[idP] %}
-                            {% if love.user.id == app.user.id %}
-                                {% set ilove = 1 %}
-                                Je ne love plus
-                            {% endif %}
-                        {% endfor %}
-                        {% if ilove == 0 %}
-                            Je love !
-                        {% endif %}
-                    </button>
-
-                    <div id="fos_comment_thread" data-thread="{{ threads[idP].id }}">
-                        {% include 'FOSCommentBundle:Thread:comments.html.twig' with {
-                            'comments': comments[idP],
-                            'thread': threads[idP]
-                        } %}
-                    </div>
+                    {% include 'SingzSocialBundle:Publication:publication.html.twig' with {
+                        'publication': publication,
+                        'comments': comments[publication.id],
+                        'thread': threads[publication.id],
+                        'view': 'tree'
+                    } %}
                 </li>
             {% endfor %}
         </ul>
     {% endblock %}
+{% endblock %}
+{% block end_javascripts %}
+    <!-- jQuery -->
+    <script src="{{ asset('bundles/singzadmin/js/jquery.min.js') }}"></script>
+    <!-- Comments -->
+    <script src="{{ asset('bundles/foscomment/js/comments.js') }}"></script>
+    <!-- Bundle script -->
+    <script src="{{ asset('bundles/singzsocial/js/script.js') }}"></script>
 {% endblock %}

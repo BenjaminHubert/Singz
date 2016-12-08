@@ -1,29 +1,28 @@
 {% extends "SingzCoreBundle::layout.html.twig" %}
 
-{% block title %}SingzSocialBundle:Publication:show{% endblock %}
+{% block title %}
+    {{ publication.user.username ~' - '~ parent() }}
+{% endblock %}
 
 {% block stylesheets  %}
     <link rel="stylesheet" href="{{ asset('bundles/foscomment/css/comments.css') }}" type="text/css" />
 {% endblock %}
 
 {% block head_javascripts %}
-    <script src="{{ asset('bundles/foscomment/js/comments.js') }}"></script>
-    <!-- jQuery -->
-    <script src="{{ asset('bundles/singzadmin/js/jquery.min.js') }}"></script>
-    <!-- Bundle script -->
-    <script src="{{ asset('bundles/singzsocial/js/script.js') }}"></script>
-{% endblock %}
-
-{% block body %}
     <script>
         var path = '{{ path('singz_social_bundle_publication_love') }}';
     </script>
+{% endblock %}
 
-    <h1>Welcome to the Publication:show page</h1>
+{% block body %}
 
-    <img src="{{ asset('uploads/userImage/') }}{{ publication.user.image.path }}">
-    <a href="#"> User {{ publication.user.id }}</a><br/>
-    {{ publication.video.path }}<br/>
+    <img width="50px" src="{{ asset('uploads/userImage/') ~ publication.user.image.path }}">
+    <a href="#">{{ publication.user.username }}</a><br/>
+
+    <video title="Ceci est une vidéo" style="border:solid black">
+        <source src="{{ publication.video.path }}" type="video/mp4">
+    </video><br/>
+
     {{ publication.description }}<br/>
     Le {{ publication.date|date("d/m/Y")}}<br/>
 
@@ -33,7 +32,7 @@
     </div>
     <button id="love-{{ publication.id }}" onclick="lovethis(path, {{ publication.id }}, {{ app.user.id }})">
     {% set ilove = 0 %}
-    {% for love in loves %}
+    {% for love in loves if ilove == 0 %}
         {% if love.user.id == app.user.id %}
             {% set ilove = 1 %}
             Je ne love plus
@@ -51,6 +50,13 @@
         } %}
     </div>
 
-    {{ socialButtons({'pinterest':false}) }}
+{% endblock %}
 
+{% block end_javascripts %}
+    <!-- jQuery -->
+    <script src="{{ asset('bundles/singzadmin/js/jquery.min.js') }}"></script>
+    <!-- Comments -->
+    <script src="{{ asset('bundles/foscomment/js/comments.js') }}"></script>
+    <!-- Bundle script -->
+    <script src="{{ asset('bundles/singzsocial/js/script.js') }}"></script>
 {% endblock %}

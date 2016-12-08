@@ -75,39 +75,15 @@ class CoreController extends Controller
 
         $em = $this->getDoctrine()->getManager();
 
-        $folRepo = $em->getRepository('SingzSocialBundle:Follow');
-        $pubRepo = $em->getRepository('SingzSocialBundle:Publication');
-        $lovRepo = $em->getRepository('SingzSocialBundle:Love');
-
         ///// TEMPO :
         $user = $em->getRepository('SingzUserBundle:User')->find(54);
         /////////////
+        $publications = $em->getRepository('SingzSocialBundle:Publication')->getNewsFeed($user);
 
-        // Get user's subscriptions
-        $query = $folRepo->createQueryBuilder('f')
-            ->where('f.follower = :follower AND f.isPending = :pending')
-            ->setParameter('follower', $user)
-            ->setParameter('pending', false)
-            ->getQuery();
-        $follows = $query->getResult();
 
-        $leaders = array();
-        foreach ($follows as $f) {
-            array_push($leaders, $f->getLeader());
-        }
-
-        // Get subscriptions' publications
-        $query = $pubRepo->createQueryBuilder('p')
-            ->where('p.user in (:follows)')
-            ->setParameter('follows', $leaders)
-            ->orderBy('p.date', 'DESC')
-            ->getQuery();
-        $publications = $query->getResult();
-
-        // Get publications' threads, comments and loves
+        // Get publications' threads, comments
         $threads = array();
-        $allcomments = array();
-        $loves = array();
+        $allComments = array();
 
         foreach($publications as $pub){
             $id = $pub->getId();
@@ -122,18 +98,15 @@ class CoreController extends Controller
             }
 
             $comments = $this->container->get('fos_comment.manager.comment')->findCommentTreeByThread($thread);
-            $love = $lovRepo->findBy(array('publication' => $id));
 
             $threads[$id] = $thread;
-            $allcomments[$id] = $comments;
-            $loves[$id] = $love;
+            $allComments[$id] = $comments;
         }
 
         return $this->render('SingzCoreBundle:Core:feed.html.twig', array(
             "publications" => $publications,
             "threads" => $threads,
-            "comments" => $allcomments,
-            "loves" => $loves
+            "comments" => $allComments
         ));
     }
 }
