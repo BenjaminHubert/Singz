@@ -23,6 +23,7 @@
         <link href="{{ asset('bundles/singzcore/css/ns-default.css') }}" rel="stylesheet">
         <link href="{{ asset('bundles/singzcore/css/ns-style-other.css') }}" rel="stylesheet">
         <link href="{{ asset('bundles/singzcore/css/ns-style-other.css') }}" rel="stylesheet">
+        <link href="{{ asset('bundles/foscomment/css/comments.css') }}" rel="stylesheet">
         <link href="http://vjs.zencdn.net/5.8.8/video-js.css" rel="stylesheet">
         <link href="{{ asset('bundles/singzcore/css/style.css') }}" rel="stylesheet">
         {% block stylesheets %}{% endblock %}
@@ -133,10 +134,7 @@
         <script src="{{ asset('bundles/singzcore/js/page-load.js') }}"></script>
         <script src="http://vjs.zencdn.net/5.8.8/video.js"></script>
         <script src="{{ asset('bundles/singzcore/js/main.js') }}"></script>
-        <script>
-        var assetsBaseDir = "{{ asset('/') }}";
-        </script>
-
+        <script>var assetsBaseDir = "{{ asset('/') }}";</script>
         {% block end_javascripts %}{% endblock %}
 
     </body>
