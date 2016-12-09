@@ -2,8 +2,6 @@
 
 namespace Singz\CoreBundle\Controller;
 
-use Singz\SocialBundle\Entity\Publication;
-use Singz\SocialBundle\SingzSocialBundle;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
