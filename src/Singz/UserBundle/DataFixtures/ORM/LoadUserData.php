@@ -28,7 +28,7 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface, C
 			$user = $userManager->createUser();
 			$user->setUsername($faker->name);
 			$user->setEmail($faker->email);
-			$user->setPlainPassword($faker->password);
+			$user->setPlainPassword('password');
 			$user->setEnabled(true);
 			if($faker->boolean){
 				$user->setRoles(['ROLE_SINGZER']);
