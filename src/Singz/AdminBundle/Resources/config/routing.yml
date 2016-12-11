@@ -17,3 +17,10 @@ singz_admin_comment_list:
     path:     /comment/list/
     defaults:
         _controller: SingzAdminBundle:Comment:list
+singz_admin_comment_show:
+    path:     /comment/show/{id}
+    defaults:
+        _controller: SingzAdminBundle:Comment:show
+    requirements:
+        id: \d+
+        

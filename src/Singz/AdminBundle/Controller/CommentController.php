@@ -19,4 +19,16 @@ class CommentController extends Controller
             'comments' => $comments
         ));
     }
+
+    public function showAction($id)
+    {
+    	$comment = $this->getDoctrine()->getManager()->getRepository('Singz\SocialBundle\Entity\Comment')->find($id);
+    	if($comment == null){
+    		throw $this->createNotFoundException('Commentaire inexistant.');
+    	}
+
+    	return $this->render('SingzAdminBundle:Comment:show.html.twig', array(
+            'comment' => $comment
+        ));
+    }
 }

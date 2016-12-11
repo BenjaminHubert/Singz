@@ -32,7 +32,11 @@
 							Voir
 						</a>
 					</td>
-					<td>{{ comment.body }}</td>
+					<td>
+						<a href="{{ path('singz_admin_comment_show', {'id': comment.id}) }}">
+							{{ comment.body }}
+						</a>
+					</td>
 					<td>
 						{% if comment.state == 0 %}
     						<span class="label label-primary">

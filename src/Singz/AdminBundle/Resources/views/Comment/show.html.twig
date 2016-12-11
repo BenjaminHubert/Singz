@@ -1,0 +1,42 @@
+{% extends "SingzAdminBundle::layout.html.twig" %}
+{% block title_tag %}{{ comment.body|truncate(15, true) }}  - Commentaire - {{ parent() }} {% endblock %}
+
+
+
+{% block title_page %}
+	Commentaire
+{% endblock %}
+
+{% block body %}
+    <div class="panel panel-default">
+        <div class="panel-heading">
+        	<b><i class="fa fa-comment-o fa-fw"></i> {{ comment.author.username }}</b> a dit:
+        	<div class="pull-right">
+                <div class="btn-group">
+                    {% if comment.state == 0 %}
+                    	<button type="button" class="btn btn-primary btn-xs dropdown-toggle" data-toggle="dropdown">
+					        En ligne
+					{% elseif comment.state == 1 %}
+                    	<button type="button" class="btn btn-danger btn-xs dropdown-toggle" data-toggle="dropdown">
+					        Hors ligne
+					{% else %}
+                    	<button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+					        Etat inconnu
+				    {% endif %}
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu pull-right" role="menu">
+                        <li {% if comment.state == 0 %} class="disabled" {% endif %}><a href="#">Désactiver le commentaire</a></li>
+                        <li {% if comment.state == 1 %} class="disabled" {% endif %}><a href="#">Activer le commentaire</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="panel-body">
+        	{{ comment.body }}
+        </div>
+        <div class="panel-footer" style="text-align:right">
+        	{{ comment.createdAt|date('d/m/Y H:i:s') }}
+        </div>
+    </div>
+{% endblock %}
