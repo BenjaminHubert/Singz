@@ -1,5 +1,7 @@
 <img width="50px" src="{{ asset('uploads/userImage/') }}{{ publication.user.image.path }}">
-<a href="#">{{ publication.user.username }}</a><br/>
+<a href="{{ path('singz_user_bundle_homepage') }}">{{ publication.user.username }}</a>
+{% if 'ROLE_STARZ' in publication.user.roles %} &#9733; {% endif %}
+<br/>
 
 <video title="Ceci est une vidéo" style="border:solid black">
     <source src="{{ publication.video.path }}" type="video/mp4">
