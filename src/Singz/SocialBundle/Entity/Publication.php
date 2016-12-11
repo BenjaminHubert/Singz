@@ -277,4 +277,14 @@ class Publication
     {
         return $this->numLoves;
     }
+    
+    public function increaseNumLoves(){
+    	$this->numLoves++;
+    	return $this;
+    }
+    
+    public function decreaseNumLoves(){
+    	$this->numLoves--;
+    	return $this;
+    }
 }

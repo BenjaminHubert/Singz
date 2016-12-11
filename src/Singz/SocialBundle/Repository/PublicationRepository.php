@@ -29,7 +29,7 @@ class PublicationRepository extends \Doctrine\ORM\EntityRepository
             ->leftJoin('p.loves', 'l')->addSelect('l')
             ->where('p.id = :id')->setParameter('id', $id)
             ->getQuery()
-            ->getSingleResult();
+            ->getOneOrNullResult();
     }
 
 }
