@@ -38,11 +38,11 @@
 						</a>
 					</td>
 					<td>
-						{% if comment.state == 0 %}
+						{% if comment.state == 1 %}
     						<span class="label label-primary">
     					        En ligne
     					    </span>
-						{% elseif comment.state == 1 %}
+						{% elseif comment.state == 0 %}
     						<span class="label label-danger">
     					        Hors ligne
     					    </span>

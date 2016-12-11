@@ -1,0 +1,28 @@
+{% extends "SingzAdminBundle::layout.html.twig" %}
+{% block title_tag %}{{ comment.body|truncate(15, true) }}  - Commentaire - {{ parent() }} {% endblock %}
+
+{% block title_page %}
+	Changement de status
+{% endblock %}
+
+{% block body %}
+	{% if comment.state == 0 %}
+		{% if comment.state != nextState %}
+    		<p>Vous êtes sur le point d'activer le commentaire. Êtes-vous sûr de vous?</p>
+    		<a class="btn btn-success" href="{{ path('singz_admin_comment_state', {'id':comment.id, 'state':1}) }}?confirmed=true" role="button">Activer</a>
+    		<a class="btn btn-default" href="{{ path('singz_admin_comment_show', {'id':comment.id}) }}" role="button">Annuler</a>
+		{% else %}
+			<p>Le commentaire est déjà désactivé</p>
+    		<a class="btn btn-default" href="{{ path('singz_admin_comment_show', {'id':comment.id}) }}" role="button">Retour</a>
+		{% endif %}
+	{% elseif comment.state == 1 %}
+		{% if comment.state != nextState %}
+    		<p>Vous êtes sur le point de désactiver le commentaire. Êtes-vous sûr de vous?</p>
+    		<a class="btn btn-danger" href="{{ path('singz_admin_comment_state', {'id':comment.id, 'state':0}) }}?confirmed=true" role="button">Désactiver</a>
+    		<a class="btn btn-default" href="{{ path('singz_admin_comment_show', {'id':comment.id}) }}" role="button">Annuler</a>
+		{% else %}
+			<p>Le commentaire est déjà activé</p>
+    		<a class="btn btn-default" href="{{ path('singz_admin_comment_show', {'id':comment.id}) }}" role="button">Retour</a>
+		{% endif %}
+    {% endif %}
+{% endblock %}

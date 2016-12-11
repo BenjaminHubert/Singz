@@ -8,15 +8,23 @@
 {% endblock %}
 
 {% block body %}
+	{% for label, flashes in app.session.flashbag.all %}
+        {% for flash in flashes %}
+            <div class="alert alert-{{ label }} alert-dismissable">
+				<button type="button" class="close" data-dismiss="alert" aria-label="Close">&times;</button>
+                {{ flash }}
+            </div>
+        {% endfor %}
+    {% endfor %}
     <div class="panel panel-default">
         <div class="panel-heading">
         	<b><i class="fa fa-comment-o fa-fw"></i> {{ comment.author.username }}</b> a dit:
         	<div class="pull-right">
                 <div class="btn-group">
-                    {% if comment.state == 0 %}
+                    {% if comment.state == 1 %}
                     	<button type="button" class="btn btn-primary btn-xs dropdown-toggle" data-toggle="dropdown">
 					        En ligne
-					{% elseif comment.state == 1 %}
+					{% elseif comment.state == 0 %}
                     	<button type="button" class="btn btn-danger btn-xs dropdown-toggle" data-toggle="dropdown">
 					        Hors ligne
 					{% else %}
@@ -26,8 +34,8 @@
                         <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu pull-right" role="menu">
-                        <li {% if comment.state == 0 %} class="disabled" {% endif %}><a href="#">Désactiver le commentaire</a></li>
-                        <li {% if comment.state == 1 %} class="disabled" {% endif %}><a href="#">Activer le commentaire</a></li>
+                        <li {% if comment.state == 0 %} class="disabled" {% endif %}><a href="{{ path('singz_admin_comment_state', {'id':comment.id, 'state':0}) }}">Désactiver le commentaire</a></li>
+                        <li {% if comment.state == 1 %} class="disabled" {% endif %}><a href="{{ path('singz_admin_comment_state', {'id':comment.id, 'state':1}) }}">Activer le commentaire</a></li>
                     </ul>
                 </div>
             </div>

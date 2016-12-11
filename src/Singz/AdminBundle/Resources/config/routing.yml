@@ -23,4 +23,11 @@ singz_admin_comment_show:
         _controller: SingzAdminBundle:Comment:show
     requirements:
         id: \d+
+singz_admin_comment_state:
+    path:     /comment/edit/state/{id}/{state}
+    defaults:
+        _controller: SingzAdminBundle:Comment:state
+    requirements:
+        id: \d+
+        state: \d{1}
         
