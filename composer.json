@@ -24,7 +24,8 @@
         "incenteev/composer-parameter-handler": "^2.0",
         "friendsofsymfony/user-bundle": "~2.0@dev",
         "friendsofsymfony/comment-bundle": "^2.0",
-        "nomaya/social-bundle": "dev-master"
+        "nomaya/social-bundle": "dev-master",
+        "twig/extensions": "^1.4"
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",

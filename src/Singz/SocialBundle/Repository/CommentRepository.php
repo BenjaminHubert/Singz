@@ -10,4 +10,19 @@ namespace Singz\SocialBundle\Repository;
  */
 class CommentRepository extends \Doctrine\ORM\EntityRepository
 {
+	public function findAllCommentsInfo(){
+		$qb = $this->createQueryBuilder('c')
+			->select('c.id', 'u.username', 'c.createdAt', 'c.body', 'IDENTITY(c.thread) AS thread_id', 'c.ancestors', 'c.depth', 'c.state')
+			->innerJoin('SingzUserBundle:User', 	'u', 'WITH', 'c.author = u.id')
+		;
+		
+		
+		// On peut ajouter ce qu'on veut après
+		//$qb->orderBy('a.date', 'DESC');
+		
+		return $qb
+			->getQuery()
+			->getResult()
+		;
+	}
 }

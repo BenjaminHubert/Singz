@@ -1,0 +1,73 @@
+{% extends "SingzAdminBundle::layout.html.twig" %}
+{% block title_tag %}Liste des commentaires - {{ parent() }} {% endblock %}
+
+{% block stylesheets %}
+	 {{ parent() }}
+	 <link href="{{ asset('bundles/singzadmin/css/dataTables.bootstrap.css') }}" rel="stylesheet">
+	 <link href="{{ asset('bundles/singzadmin/css/dataTables.responsive.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block title_page %}
+	Liste des commentaires
+{% endblock %}
+
+{% block body %}
+	<table width="100%" class="table table-bordered table-hover dataTable">
+		<thead>
+			<tr>
+				<th>Date</th>
+				<th>Auteur</th>
+				<th>Publication</th>
+				<th>Commentaire</th>
+				<th>Etat</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for comment in comments %}
+				<tr>
+					<td>{{ comment.createdAt|date('d/m/Y H:i:s') }}</td>
+					<td>{{ comment.username }}</td>
+					<td>
+						<a href="{{ path('singz_social_bundle_publication_show', {'id': comment.thread_id}) }}" target="_blank">
+							Voir
+						</a>
+					</td>
+					<td>
+						<a href="{{ path('singz_admin_comment_show', {'id': comment.id}) }}">
+							{{ comment.body }}
+						</a>
+					</td>
+					<td>
+						{% if comment.state == 1 %}
+    						<span class="label label-primary">
+    					        En ligne
+    					    </span>
+						{% elseif comment.state == 0 %}
+    						<span class="label label-danger">
+    					        Hors ligne
+    					    </span>
+    					{% else %}
+    						<span class="label label-default">
+    					        Etat inconnu
+    					    </span>
+					    {% endif %}
+					</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+	<script src="{{ asset('bundles/singzadmin/js/jquery.dataTables.min.js') }}"></script>
+	<script src="{{ asset('bundles/singzadmin/js/dataTables.bootstrap.min.js') }}"></script>
+	<script src="{{ asset('bundles/singzadmin/js/dataTables.responsive.js') }}"></script>
+	<script>
+    $(document).ready(function() {
+        $('.dataTable').DataTable({
+            responsive: true
+        });
+    });
+    </script>
+{% endblock %}
