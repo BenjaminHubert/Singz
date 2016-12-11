@@ -17,15 +17,15 @@ function lovethis(path, idPub, idUser) {
             didLove = response.didLove;
 
             if(nbLove != 1) {
-                $("#nb_loves").text(nbLove + ' loves');
+                $("#nbloves-"+idPub).text(nbLove + ' loves');
             } else {
-                $("#nb_loves").text(nbLove + ' love');
+                $("#nbloves-"+idPub).text(nbLove + ' love');
             }
 
             if(didLove){
-                $("#love").text('Je love !');
+                $("#love-"+idPub).text('Je love !');
             } else {
-                $("#love").text('Je ne love plus');
+                $("#love-"+idPub).text('Je ne love plus');
             }
         }
     });

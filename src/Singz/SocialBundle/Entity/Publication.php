@@ -66,6 +66,13 @@ class Publication
     private $video;
     
     /**
+     * @var int
+     * 
+     * @ORM\Column(name="num_loves", type="integer")
+     */
+    private $numLoves = 0;
+    
+    /**
      * Constructor
      */
     public function __construct()
@@ -245,5 +252,39 @@ class Publication
     public function getVideo()
     {
         return $this->video;
+    }
+
+    /**
+     * Set numLoves
+     *
+     * @param integer $numLoves
+     *
+     * @return Publication
+     */
+    public function setNumLoves($numLoves)
+    {
+        $this->numLoves = $numLoves;
+
+        return $this;
+    }
+
+    /**
+     * Get numLoves
+     *
+     * @return integer
+     */
+    public function getNumLoves()
+    {
+        return $this->numLoves;
+    }
+    
+    public function increaseNumLoves(){
+    	$this->numLoves++;
+    	return $this;
+    }
+    
+    public function decreaseNumLoves(){
+    	$this->numLoves--;
+    	return $this;
     }
 }

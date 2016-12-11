@@ -1,0 +1,34 @@
+<img width="50px" src="{{ asset('uploads/userImage/') }}{{ publication.user.image.path }}">
+<a href="#">{{ publication.user.username }}</a><br/>
+
+<video title="Ceci est une vidéo" style="border:solid black">
+    <source src="{{ publication.video.path }}" type="video/mp4">
+</video><br/>
+
+{{ publication.description }}<br/>
+Le {{ publication.date|date("d/m/Y")}}<br/>
+
+{% set nb_likes = publication.loves|length %}
+<div id="nbloves-{{ publication.id }}">
+    {{ nb_likes }} love{% if nb_likes != 1 %}s{% endif %}
+</div>
+<button id="love-{{ publication.id }}" onclick="lovethis(path, {{ publication.id }}, {{ app.user.id }})">
+    {% set ilove = 0 %}
+    {% for love in publication.loves if ilove == 0 %}
+        {% if love.user.id == app.user.id %}
+            {% set ilove = 1 %}
+            Je ne love plus
+        {% endif %}
+    {% endfor %}
+    {% if ilove == 0 %}
+        Je love !
+    {% endif %}
+</button>
+
+<div id="fos_comment_thread" data-thread="{{ thread.id }}">
+    {% include 'FOSCommentBundle:Thread:comments.html.twig' with {
+    'comments': comments,
+    'thread': thread,
+    'view': 'tree'
+    } %}
+</div>
