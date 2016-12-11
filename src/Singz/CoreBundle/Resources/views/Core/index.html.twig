@@ -1,28 +1,46 @@
 {% extends "SingzCoreBundle::layout.html.twig" %}
 
+{% block title %}
+	Explorer - {{ parent() }}
+{% endblock %}
+
+{% block head_javascripts %}
+	<script>
+		var path = '{{ path('singz_social_bundle_publication_love') }}';
+	</script>
+{% endblock %}
+
+{% block stylesheets %}
+	<link href="{{ asset('bundles/foscomment/css/comments.css') }}" rel="stylesheet">
+{% endblock %}
+
 {% block body %}
 	<h1>Explorer</h1>
 	<a href="{{ path('singz_browse', { 'filter': 'all' }) }}">All</a>
 	<a href="{{ path('singz_browse', { 'filter': 'singzer' }) }}">Singzers</a>
 	<a href="{{ path('singz_browse', { 'filter': 'starz' }) }}">Starz</a>
 
-	{% block list %}
-		<ul class="browse-list">
-			{% for item in publications %}
-				{% set publication = item.0 %}
-				{% set nb_likes = item.l_count %}
-				{% set role = item.roles.0 %}
-				<li>
-					<img src="{{ asset('uploads/userImage/') }}{{ publication.user.image.path }}">
-					<a href="#">{{ publication.user.username }}</a><br/>
-					{% if(role == 'ROLE_STARZ') %} Utilisateur STARZ <br/>{% endif %}
-					{{ publication.video.path }}<br/>
-					{{ publication.description }}<br/>
-					Le {{ publication.date|date("d/m/Y")}}<br/>
-					{{ nb_likes }} personne{% if(nb_likes != 1) %}s{% endif %} aime{% if(nb_likes != 1) %}nt{% endif %} cette publication<br/>
-				</li>
-			{% endfor %}
-		</ul>
-		<ul class="broswe-list empty"></ul>
-	{% endblock %}
+	<ul class="browse-list">
+		{% for publication in publications %}
+			<li>
+				{% include 'SingzSocialBundle:Publication:publication.html.twig' with {
+				'publication': publication,
+				'comments': comments[publication.id],
+				'thread': threads[publication.id],
+				'view': 'tree'
+				} %}
+			</li>
+		{% else %}
+			Aucune publication à afficher
+		{% endfor %}
+	</ul>
+{% endblock %}
+
+{% block end_javascripts %}
+	<!-- jQuery -->
+	<script src="{{ asset('bundles/singzadmin/js/jquery.min.js') }}"></script>
+	<!-- Comments -->
+	<script src="{{ asset('bundles/foscomment/js/comments.js') }}"></script>
+	<!-- Bundle script -->
+	<script src="{{ asset('bundles/singzsocial/js/script.js') }}"></script>
 {% endblock %}
