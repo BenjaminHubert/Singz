@@ -11,62 +11,59 @@ class CoreController extends Controller
         return $this->render('SingzCoreBundle:Core:comingsoon.html.twig');
     }
 
-    public function browseAction($filter) {
-        $repository = $this->getDoctrine()->getManager()->getRepository('SingzSocialBundle:Publication');
+    public function browseAction(Request $request, $filter) {
 
-        $nbPub = 20;
+        $user = $this->getUser();
 
+        $offset = 0;
+        $limit = 20;
         $now = new \DateTime();
-        $thirtyDaysAgo = $now->sub(new \DateInterval("P30D"));
+        $interval = $now->sub(new \DateInterval("P30D"));
 
+        $em = $this->getDoctrine()->getManager();
+
+        // Get publications
         switch($filter) {
             case 'all':
-                $query = $repository->createQueryBuilder('p')
-                    ->select('p, COUNT(l.publication) as l_count, u.roles')
-                    ->leftjoin('SingzSocialBundle:Love', 'l', 'WITH', 'p.id = l.publication')
-                    ->leftjoin('SingzUserBundle:User', 'u', 'WITH', 'p.user = u.id')
-                    ->where('p.date > :tda ')
-                    ->setParameter('tda', $thirtyDaysAgo)
-                    ->groupBy('p')
-                    ->orderBy('l_count', 'DESC')
-                    ->addOrderBy('p.date', 'DESC')
-                    ->setMaxResults($nbPub)
-                    ->getQuery();
-                break;
-            case 'singzer':
-                $query = $repository->createQueryBuilder('p')
-                    ->select('p, COUNT(l.publication) as l_count, u.roles')
-                    ->leftjoin('SingzSocialBundle:Love', 'l', 'WITH', 'p.id = l.publication')
-                    ->leftjoin('SingzUserBundle:User', 'u', 'WITH', 'p.user = u.id')
-                    ->where('p.date > :tda AND u.roles NOT LIKE :roles')
-                    ->setParameter('roles', '%"ROLE_STARZ"%')
-                    ->setParameter('tda', $thirtyDaysAgo)
-                    ->groupBy('p')
-                    ->orderBy('l_count', 'DESC')
-                    ->addOrderBy('p.date', 'DESC')
-                    ->setMaxResults($nbPub)
-                    ->getQuery();
+                $publications = $em->getRepository('SingzSocialBundle:Publication')->getBrowseAll($offset, $limit, $interval, $user);
                 break;
             case 'starz':
-                $query = $repository->createQueryBuilder('p')
-                    ->select('p, COUNT(l.publication) as l_count, u.roles')
-                    ->leftjoin('SingzSocialBundle:Love', 'l', 'WITH', 'p.id = l.publication')
-                    ->leftjoin('SingzUserBundle:User', 'u', 'WITH', 'p.user = u.id')
-                    ->where('p.date > :tda AND u.roles LIKE :roles')
-                    ->setParameter('roles', '%"ROLE_STARZ"%')
-                    ->setParameter('tda', $thirtyDaysAgo)
-                    ->groupBy('p')
-                    ->orderBy('l_count', 'DESC')
-                    ->addOrderBy('p.date', 'DESC')
-                    ->setMaxResults($nbPub)
-                    ->getQuery();
+                $publications = $em->getRepository('SingzSocialBundle:Publication')->getBrowseStarz($offset, $limit, $interval);
+                break;
+            case 'singzer':
+                $publications = $em->getRepository('SingzSocialBundle:Publication')->getBrowseSingzers($offset, $limit, $interval, $user);
+                break;
+            default:
+                $publications = null;
                 break;
         }
 
-        $publications = $query->getResult();
+        // Get threads and comments
+        $threads = array();
+        $allComments = array();
+
+        foreach ($publications as $pub) {
+            $id = $pub->getId();
+            $thread = $this->container->get('fos_comment.manager.thread')->findThreadById($id);
+            if (null === $thread) {
+                $thread = $this->container->get('fos_comment.manager.thread')->createThread();
+                $thread->setId($id);
+                $thread->setPermalink($request->getUri());
+
+                // Add the thread
+                $this->container->get('fos_comment.manager.thread')->saveThread($thread);
+            }
+
+            $comments = $this->container->get('fos_comment.manager.comment')->findCommentTreeByThread($thread);
+
+            $threads[$id] = $thread;
+            $allComments[$id] = $comments;
+        }
 
         return $this->render('SingzCoreBundle:Core:index.html.twig', array(
-            "publications" => $publications
+            "publications" => $publications,
+            "threads" => $threads,
+            "comments" => $allComments
         ));
     }
 
@@ -75,9 +72,6 @@ class CoreController extends Controller
 
         $em = $this->getDoctrine()->getManager();
 
-        ///// TEMPO :
-        $user = $em->getRepository('SingzUserBundle:User')->find(54);
-        /////////////
         $publications = $em->getRepository('SingzSocialBundle:Publication')->getNewsFeed($user);
 
 
