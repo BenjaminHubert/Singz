@@ -28,6 +28,7 @@
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
     <body>
+    	{{ include('SingzCoreBundle::flash-messages.html.twig') }}
     	{# BODY BLOCK #}
         {% block body %}
         {% endblock %}

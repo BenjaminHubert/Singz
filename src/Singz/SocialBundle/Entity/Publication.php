@@ -60,7 +60,7 @@ class Publication
     /**
      * @var Video
      * 
-     * @ORM\ManyToOne(targetEntity="Singz\VideoBundle\Entity\Video", inversedBy="publications")
+     * @ORM\ManyToOne(targetEntity="Singz\VideoBundle\Entity\Video", inversedBy="publications", cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $video;
@@ -77,7 +77,9 @@ class Publication
      */
     public function __construct()
     {
+    	$this->date = new \DateTime();
         $this->loves = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->notifications = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
