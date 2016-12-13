@@ -30,3 +30,23 @@ function lovethis(path, idPub, idUser) {
         }
     });
 }
+
+/**
+ * Follow & Unfollow an user
+ * @param path
+ * @param idLeader
+ * @param idUser
+ */
+function followUser(path, idLeader, idUser) {
+    $.ajax({
+        type: "POST",
+        url: path,
+        data: {
+            idLeader: idLeader, idUser: idUser
+        },
+        dataType: "json",
+        success: function (response) {
+            console.log("Vous suivez l'utilisateur "+idLeader);
+        }
+    });
+}

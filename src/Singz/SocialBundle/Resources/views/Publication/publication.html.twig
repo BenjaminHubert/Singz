@@ -1,5 +1,5 @@
 <img width="50px" src="{{ asset('uploads/userImage/') }}{{ publication.user.image.path }}">
-<a href="{{ path('singz_user_bundle_homepage') }}">{{ publication.user.username }}</a>
+<a href="{{ path('singz_user_bundle_homepage', {'id':user.id}) }}">{{ publication.user.username }}</a>
 {% if 'ROLE_STARZ' in publication.user.roles %} &#9733; {% endif %}
 <br/>
 
@@ -10,7 +10,7 @@
 {{ publication.description }}<br/>
 Le {{ publication.date|date("d/m/Y")}}<br/>
 
-{% set nb_likes = publication.loves|length %}
+{% set nb_likes = publication.numLoves %}
 <div id="nbloves-{{ publication.id }}">
     {{ nb_likes }} love{% if nb_likes != 1 %}s{% endif %}
 </div>

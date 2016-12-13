@@ -5,6 +5,10 @@ singz_admin:
 fos_user:
     resource: "@FOSUserBundle/Resources/config/routing/all.xml"
 
+singz_profile:
+    resource: "@SingzUserBundle/Resources/config/routing.yml"
+    prefix:   /user/
+
 singz_core:
     resource: "@SingzCoreBundle/Resources/config/routing.yml"
     prefix:   /
