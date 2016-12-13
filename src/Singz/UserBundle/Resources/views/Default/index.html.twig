@@ -1,1 +1,74 @@
-Hello World!
+{% extends "SingzCoreBundle::layout.html.twig" %}
+
+{% block title %}
+    {{ user.username }} - Vidéos Singz
+{% endblock %}
+
+{% block head_javascripts %}
+    <script>
+        var lovePath = '{{ path('singz_social_bundle_follow_user') }}';
+        var followPath = '{{ path('singz_social_bundle_publication_love') }}';
+    </script>
+{% endblock %}
+
+{% block stylesheets %}
+    <link href="{{ asset('bundles/foscomment/css/comments.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block body %}
+    {% if user.image.path is defined %}
+        <img width="50px" src="{{ asset('uploads/userImage/') }}{{ user.image.path }}">
+    {% endif %}
+    {{ user.username }} {% if 'ROLE_STARZ' in user.roles %} &#9733; {% endif %}<br/>
+
+    {% if user == app.user %}
+        <a href={{ path('fos_user_profile_show') }}>Modifier mon profil</a><br>
+    {% else %}
+    {% set iFollow = 0 %}
+    {% for f in leader if iFollow == 0%}
+        {% if f.follower == app.user %}
+            {% set iFollow = 1 %}
+            <button id="follow-{{ user.id }}" onclick="followUser(lovePath, {{ user.id }}, {{ app.user.id }})">Se désabonner</button>
+{#
+            {% if not f.isPending %}
+                <button id="follow-{{ user.id }}" onclick="followUser(lovePath, {{ user.id }}, {{ app.user.id }})">Se désabonner</button>
+            {% else %}
+                Demande d'abonnement en attente.
+            {% endif %}
+#}
+        {% endif %}
+    {% endfor %}
+    {% if iFollow == 0 %}
+        <button id="follow-{{ user.id }}" onclick="followUser(followPath, {{ user.id }}, {{ app.user.id }})">S'abonner</button>
+    {% endif %}
+    </button>
+
+    {% endif %}
+    <br>{{ publications|length }} Publications {{ leader|length }} Abonnements {{ followers|length }} Abonnés
+    <br>{{ user.biography }}
+
+    <ul class="publication-list">
+        {% for publication in publications %}
+            <li>
+                {% include 'SingzSocialBundle:Publication:publication.html.twig' with {
+                'publication': publication,
+                'comments': comments[publication.id],
+                'thread': threads[publication.id],
+                'view': 'tree'
+                } %}
+            </li>
+        {% else %}
+            Aucune publication à afficher
+        {% endfor %}
+    </ul>
+
+{% endblock %}
+
+{% block end_javascripts %}
+    <!-- jQuery -->
+    <script src="{{ asset('bundles/singzadmin/js/jquery.min.js') }}"></script>
+    <!-- Comments -->
+    <script src="{{ asset('bundles/foscomment/js/comments.js') }}"></script>
+    <!-- Bundle script -->
+    <script src="{{ asset('bundles/singzsocial/js/script.js') }}"></script>
+{% endblock %}
