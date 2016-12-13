@@ -9,6 +9,7 @@ use Singz\SocialBundle\SingzSocialBundle;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class PublicationController extends Controller
 {
@@ -17,9 +18,9 @@ class PublicationController extends Controller
         return $this->redirectToRoute('singz_social_bundle_publication_list');
     }
 
-    public function addAction()
+    public function newAction()
     {
-        return $this->render('SingzSocialBundle:Publication:add.html.twig', array(
+        return $this->render('SingzSocialBundle:Publication:new.html.twig', array(
             // ...
         ));
     }
