@@ -29,6 +29,11 @@ class Video
      * @ORM\OneToMany(targetEntity="Singz\SocialBundle\Entity\Publication", mappedBy="video")
      */
     private $publications;
+
+    /**
+     * @var string
+     */
+    private $path;
     
     /**
      * @var UploadedFile
@@ -66,7 +71,7 @@ class Video
      */
     public function getPath()
     {
-        return $this->getUploadDir().'/'.$this->id.'.'.$this->extension;
+        return $this->path;
     }
     /**
      * Constructor
@@ -109,58 +114,26 @@ class Video
     {
         return $this->publications;
     }
-
-    /**
-     * Set extension
-     *
-     * @param string $extension
-     *
-     * @return Video
-     */
-    public function setExtension($extension)
-    {
-    	$this->extension = $extension;
     
-    	return $this;
-    }
-    
-    /**
-     * Get extension
-     *
-     * @return string
-     */
-    public function getExtension()
-    {
-    	return $this->extension;
-    }
-    
-    /**
-     * Get File
-     *
-     * @return UploadedFile
-     */
     public function getFile()
     {
     	return $this->file;
     }
     
-    /**
-     * Set file
-     *
-     * @param UploadedFile $live
-     *
-     * @return Video
-     */
     public function setFile(UploadedFile $file)
     {
     	$this->file = $file;
     	// On vérifie si on avait déjà un fichier pour cette entité
-    	if (null !== $this->id) {
+    	if (null !== $this->path) {
     		// On sauvegarde le nom du fichier pour le supprimer plus tard
-    		$this->tempFilename = $this->getUploadRootDir().'/'.$this->id.'.'.$this->extension;	    	
+    		$this->tempFilename = $this->path;
+    		// On réinitialise les valeurs de l'attribut path
+	    	//$this->path = $this->getUploadDir().'/'.$this->id.'.'.$this->extension;
+	    	
+    	}else{
+    		$this->path = '';
     	}
     	
-    	return $this;    	
     }
     
     /**
@@ -189,16 +162,20 @@ class Video
     		return;
     	}
     	//si on avait un ancien fichier, on le supprime
-    	if (null !== $this->tempFilename) {
-    		if (file_exists($this->tempFilename)) {
-    			unlink($this->tempFilename);
-    		}
-    	}
+//     	if (null !== $this->tempFilename) {
+//     		$oldFile = $this->getUploadRootDir().'/'.$this->id.'.'.$this->tempFilename;
+//     		if (file_exists($oldFile)) {
+//     			unlink($oldFile);
+//     		}
+//     	}
     	//on déplace le fichier dans notre dossier
     	$this->file->move(
     			$this->getUploadRootDir(), 
     			$this->id.'.'.$this->extension
     	);
+    	
+    	//on redéfinit path
+    	$this->setPath($this->getUploadDir().'/'.$this->id.'.'.$this->extension);
     }
     
     /**
