@@ -3,6 +3,7 @@
 namespace Singz\SocialBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Publication
@@ -62,6 +63,7 @@ class Publication
      * 
      * @ORM\ManyToOne(targetEntity="Singz\VideoBundle\Entity\Video", inversedBy="publications", cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=false)
+     * @Assert\Valid()
      */
     private $video;
     

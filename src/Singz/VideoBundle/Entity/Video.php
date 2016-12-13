@@ -4,6 +4,7 @@ namespace Singz\VideoBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Video
@@ -32,7 +33,19 @@ class Video
     
     /**
      * @var UploadedFile
-     *
+     * @Assert\File(
+     *     maxSize = "10M",
+     *     mimeTypes = {
+	 *			"video/mpeg",
+	 *			"video/mp4",
+	 *			"video/quicktime",
+	 *			"video/x-ms-wmv",
+	 *			"video/x-msvideo",
+	 *			"video/x-flv",
+	 *			"video/webm"
+     *     },
+     *     mimeTypesMessage = "Le type de vidéo ({{ type }}) n'est pas correct. Les types autorisés sont uniquement des fichiers vidéos."
+     * )
      */
     private $file;
     
