@@ -2,7 +2,9 @@
 
 namespace Singz\UserBundle\Controller;
 
+use Singz\SocialBundle\Entity\Follow;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 class DefaultController extends Controller
@@ -38,12 +40,53 @@ class DefaultController extends Controller
             $allComments[$id] = $comments;
         }
 
+        $followers = $em->getRepository('SingzSocialBundle:Follow')->findBy(array('follower' => $user));
+        $leader   = $em->getRepository('SingzSocialBundle:Follow')->findBy(array('leader' => $user));
+
         return $this->render('SingzUserBundle:Default:index.html.twig', array(
                 "publications" => $publications,
                 "threads" => $threads,
                 "comments" => $allComments,
-                "user" => $user
+                "user" => $user,
+                "followers" => $followers,
+                "leader" => $leader
             )
         );
+    }
+
+    public function followAction(Request $request){
+
+        if($request->isXmlHttpRequest()) {
+            $idUser = $request->get('idUser');
+            $idLeader = $request->get('idLeader');
+
+            $em = $this->getDoctrine()->getManager();
+            $repository = $em->getRepository('SingzSocialBundle:Follow');
+            $follow = $repository->findBy(array('user' => $idUser, 'leader' => $idLeader));
+
+            if (empty($follow)) {
+                $didFollow = false;
+                $user = $em->getRepository('SingzUserBundle:User');
+                $leader = $em->getRepository('SingzUserBundle:User');
+
+                //New follow
+                $follow = new Follow();
+                $follow->setLeader($leader);
+                $follow->setFollower($user);
+                if ($leader->isPrivate) {
+                    $follow->setIsPending(1);
+                }
+
+                $em->persist($follow);
+            } else {
+                $didFollow = false;
+                $em->remove(array_pop($follow));
+            }
+            $em->flush();
+
+            return new JsonResponse(array('didFollow' => $didFollow));
+        }
+
+        return new Response('Error', 400);
     }
 }

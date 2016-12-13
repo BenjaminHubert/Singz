@@ -6,7 +6,8 @@
 
 {% block head_javascripts %}
     <script>
-        var path = '{{ path('singz_social_bundle_publication_love') }}';
+        var lovePath = '{{ path('singz_social_bundle_follow_user') }}';
+        var followPath = '{{ path('singz_social_bundle_publication_love') }}';
     </script>
 {% endblock %}
 
@@ -15,14 +16,36 @@
 {% endblock %}
 
 {% block body %}
-    <img width="50px" src="{{ asset('uploads/userImage/') }}{{ user.image.path }}">
-    <a href="{{ path('singz_user_bundle_homepage', {'id' : user.id}) }}">{{ user.username }}</a><br/>
+    {% if user.image.path is defined %}
+        <img width="50px" src="{{ asset('uploads/userImage/') }}{{ user.image.path }}">
+    {% endif %}
+    {{ user.username }} {% if 'ROLE_STARZ' in user.roles %} &#9733; {% endif %}<br/>
 
-    <a href="#">Suivre</a>
-    <a href="#">Faire un don</a><br>
-    {{ user.username }}
-    {{ publications|length }} Publications  Abonnements  Abonnés<br/>
-    {{ user.biography }}
+    {% if user == app.user %}
+        <a href={{ path('fos_user_profile_show') }}>Modifier mon profil</a><br>
+    {% else %}
+    {% set iFollow = 0 %}
+    {% for f in leader if iFollow == 0%}
+        {% if f.follower == app.user %}
+            {% set iFollow = 1 %}
+            <button id="follow-{{ user.id }}" onclick="followUser(lovePath, {{ user.id }}, {{ app.user.id }})">Se désabonner</button>
+{#
+            {% if not f.isPending %}
+                <button id="follow-{{ user.id }}" onclick="followUser(lovePath, {{ user.id }}, {{ app.user.id }})">Se désabonner</button>
+            {% else %}
+                Demande d'abonnement en attente.
+            {% endif %}
+#}
+        {% endif %}
+    {% endfor %}
+    {% if iFollow == 0 %}
+        <button id="follow-{{ user.id }}" onclick="followUser(followPath, {{ user.id }}, {{ app.user.id }})">S'abonner</button>
+    {% endif %}
+    </button>
+
+    {% endif %}
+    <br>{{ publications|length }} Publications {{ leader|length }} Abonnements {{ followers|length }} Abonnés
+    <br>{{ user.biography }}
 
     <ul class="publication-list">
         {% for publication in publications %}
