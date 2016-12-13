@@ -45,11 +45,4 @@
             } %}
         </div>
     </div>
-{{ publication.description }}<br/>
-Le {{ publication.date|date("d/m/Y")}}<br/>
-
-{% set nb_likes = publication.numLoves %}
-<div id="nbloves-{{ publication.id }}">
-    {{ nb_likes }} love{% if nb_likes != 1 %}s{% endif %}
-</div>
 </div>
