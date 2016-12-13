@@ -71,7 +71,7 @@ class PublicationController extends Controller
         if($publication == null) {
             throw $this->createNotFoundException('Publication inexistante');
         }
-        
+        $user = $publication->getUser();
         // Get thread
         $thread = $this->container->get('fos_comment.manager.thread')->findThreadById($id);
         if (null === $thread) {
@@ -87,6 +87,7 @@ class PublicationController extends Controller
         $comments = $this->container->get('fos_comment.manager.comment')->findCommentTreeByThread($thread);
 
         return $this->render('SingzSocialBundle:Publication:show.html.twig', array(
+            'user' => $user,
             'publication' => $publication,
             'thread' => $thread,
             'comments' => $comments
