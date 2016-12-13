@@ -1,15 +1,12 @@
 {% extends "SingzCoreBundle::layout.html.twig" %}
 
 {% block stylesheets %}
-	<link rel="stylesheet" href="{{ asset('css/theme.css') }}">
-	<link href="https://fonts.googleapis.com/css?family=Amatic+SC" rel="stylesheet">
 {% endblock %}
 
 {% block body %}
 	<div class="text">SINGZ IS COMING SOON</div>
 	<div class="social"><a href="https://www.facebook.com/SingzFrance/" target="_blank"><img src="{{ asset('images/facebook-32.png')}}"></a></div>
 	{% block end_javascripts %}
-		<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-backstretch/2.0.4/jquery.backstretch.min.js"></script>
 		<script src="{{ asset('js/script.js') }}"></script>
 	{% endblock %}

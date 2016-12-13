@@ -54,3 +54,7 @@
 
 #IDEA
 /.idea/
+
+#MAC hidden files
+.DS_Store
+*/.DS_Store

@@ -3,34 +3,46 @@
 {% if 'ROLE_STARZ' in publication.user.roles %} &#9733; {% endif %}
 <br/>
 
-<video title="Ceci est une vidéo" style="border:solid black">
-    <source src="{{ publication.video.path }}" type="video/mp4">
-</video><br/>
+<video id="my-video" class="video-js vjs-default-skin" controls preload="auto" width="640" height="264" poster="{{ asset('uploads/userImage/') }}{{ publication.user.image.path }}" data-setup="{}">
+<!-- <source src="{{ publication.video.path }}" type='video/mov'> -->
+<!-- <source src="{{ publication.video.path }}" type='video/webm'> -->
+<source src="{{ publication.video.path }}" type='video/mp4'>
+    <p class="vjs-no-js">
+        To view this video please enable JavaScript, and consider upgrading to a web browser that
+        <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+    </p>
+</video>
+<div class="video-side-block">
+    <div class="video-user-infos">
+        <img src="{{ asset('uploads/userImage/') }}{{ publication.user.image.path }}">
+        <a href="" class="user-name">{{ publication.user.username }}</a>
+        {% if 'ROLE_STARZ' in publication.user.roles %} &#9733; {% endif %}<br>
+        Le {{ publication.date|date("d/m/Y")}}<br><br>
 
-{{ publication.description }}<br/>
-Le {{ publication.date|date("d/m/Y")}}<br/>
-
-{% set nb_likes = publication.numLoves %}
-<div id="nbloves-{{ publication.id }}">
-    {{ nb_likes }} love{% if nb_likes != 1 %}s{% endif %}
-</div>
-<button id="love-{{ publication.id }}" onclick="lovethis(path, {{ publication.id }}, {{ app.user.id }})">
-    {% set ilove = 0 %}
-    {% for love in publication.loves if ilove == 0 %}
-        {% if love.user.id == app.user.id %}
-            {% set ilove = 1 %}
-            Je ne love plus
-        {% endif %}
-    {% endfor %}
-    {% if ilove == 0 %}
-        Je love !
-    {% endif %}
-</button>
-
-<div id="fos_comment_thread" data-thread="{{ thread.id }}">
-    {% include 'FOSCommentBundle:Thread:comments.html.twig' with {
-    'comments': comments,
-    'thread': thread,
-    'view': 'tree'
-    } %}
+        {% set nb_likes = publication.loves|length %}
+        <div id="nbloves-{{ publication.id }}">
+            {{ nb_likes }} love{% if nb_likes != 1 %}s{% endif %}
+        </div>
+        <button id="love-{{ publication.id }}" onclick="lovethis(path, {{ publication.id }}, {{ 1 }})">
+            {% set ilove = 0 %}
+            {% for love in publication.loves if ilove == 0 %}
+                {% if love.user.id == 1 %}
+                    {% set ilove = 1 %}
+                    Je ne love plus
+                {% endif %}
+            {% endfor %}
+            {% if ilove == 0 %}
+                Je love !
+            {% endif %}
+        </button>
+    </div>
+    <div class="video-comments">
+        <div id="fos_comment_thread" data-thread="{{ thread.id }}">
+            {% include 'FOSCommentBundle:Thread:comments.html.twig' with {
+            'comments': comments,
+            'thread': thread,
+            'view': 'tree'
+            } %}
+        </div>
+    </div>
 </div>
