@@ -1,3 +1,7 @@
+<img width="50px" src="{{ asset('uploads/userImage/') }}{{ publication.user.image.path }}">
+<a href="{{ path('singz_user_bundle_homepage', {'id':user.id}) }}">{{ publication.user.username }}</a>
+{% if 'ROLE_STARZ' in publication.user.roles %} &#9733; {% endif %}
+<br/>
 
 <video id="my-video" class="video-js vjs-default-skin" controls preload="auto" width="640" height="264" poster="{{ asset('uploads/userImage/') }}{{ publication.user.image.path }}" data-setup="{}">
 <!-- <source src="{{ publication.video.path }}" type='video/mov'> -->
@@ -41,4 +45,11 @@
             } %}
         </div>
     </div>
+{{ publication.description }}<br/>
+Le {{ publication.date|date("d/m/Y")}}<br/>
+
+{% set nb_likes = publication.numLoves %}
+<div id="nbloves-{{ publication.id }}">
+    {{ nb_likes }} love{% if nb_likes != 1 %}s{% endif %}
+</div>
 </div>

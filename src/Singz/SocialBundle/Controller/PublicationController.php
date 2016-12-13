@@ -9,6 +9,8 @@ use Singz\SocialBundle\SingzSocialBundle;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Singz\SocialBundle\Form\PublicationType;
 
 class PublicationController extends Controller
 {
@@ -17,10 +19,38 @@ class PublicationController extends Controller
         return $this->redirectToRoute('singz_social_bundle_publication_list');
     }
 
-    public function addAction()
+    public function newAction(Request $request)
     {
-        return $this->render('SingzSocialBundle:Publication:add.html.twig', array(
-            // ...
+    	//on crée notre publication 
+    	$publication = new Publication();
+    	
+    	// on récupère le formulaire
+    	$form = $this->createForm(PublicationType::class, $publication);
+    	    	
+    	// si le formulaire est soumis
+    	if($request->isMethod('POST')){
+    		//on met dans notre objet $publication les valeurs du formulaire
+    		$form->handleRequest($request);
+    		
+    		// on vérifie la validation du formulaire
+    		if($form->isValid()){
+    			//on définit alors l'user comme le current user
+    			$publication->setUser($this->getUser());
+    			//on insère en base de données
+    			$em = $this->getDoctrine()->getManager();
+    			$em->persist($publication);
+    			$em->flush();
+    			
+    			//on affiche un message
+    			$request->getSession()->getFlashBag()->add('notice', 'Publication bien enregistrée.');
+    			
+    			// On redirige vers la page de visualisation de la publication nouvellement créée
+    			return $this->redirectToRoute('singz_social_bundle_publication_show', array('id' => $publication->getId()));
+    		}
+    	}
+    	
+        return $this->render('SingzSocialBundle:Publication:new.html.twig', array(
+            'form' => $form->createView()
         ));
     }
 
@@ -41,7 +71,7 @@ class PublicationController extends Controller
         if($publication == null) {
             throw $this->createNotFoundException('Publication inexistante');
         }
-        
+        $user = $publication->getUser();
         // Get thread
         $thread = $this->container->get('fos_comment.manager.thread')->findThreadById($id);
         if (null === $thread) {
@@ -57,6 +87,7 @@ class PublicationController extends Controller
         $comments = $this->container->get('fos_comment.manager.comment')->findCommentTreeByThread($thread);
 
         return $this->render('SingzSocialBundle:Publication:show.html.twig', array(
+            'user' => $user,
             'publication' => $publication,
             'thread' => $thread,
             'comments' => $comments

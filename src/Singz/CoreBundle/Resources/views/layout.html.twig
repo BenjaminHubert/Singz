@@ -105,6 +105,7 @@
                 </div>
             </header>
 
+
             <!-- main content -->
             <div class="ip-main">
                 <h2>SHARE YOUR MUSIC</h2>
@@ -114,7 +115,10 @@
                         <span><input type="text" class="search rounded" placeholder="Search..."></span>
                     </form>
                 </div>
-
+                
+                {# Error message #}
+				{{ include('SingzCoreBundle::flash-messages.html.twig') }}
+				
                 {# BODY BLOCK #}
                 {% block body %}{% endblock %}
 

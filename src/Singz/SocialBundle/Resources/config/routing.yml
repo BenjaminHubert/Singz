@@ -3,9 +3,9 @@ singz_social_bundle_publication_index:
     path:     /publication/
     defaults: { _controller: SingzSocialBundle:Publication:index }
 
-singz_social_bundle_publication_add:
-    path:     /publication/add/
-    defaults: { _controller: SingzSocialBundle:Publication:add }
+singz_social_bundle_publication_new:
+    path:     /publication/new/
+    defaults: { _controller: SingzSocialBundle:Publication:new }
 
 singz_social_bundle_publication_list:
     path:     /publication/list/

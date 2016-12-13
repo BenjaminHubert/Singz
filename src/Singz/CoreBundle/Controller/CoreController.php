@@ -61,6 +61,7 @@ class CoreController extends Controller
         }
 
         return $this->render('SingzCoreBundle:Core:index.html.twig', array(
+            "user" => $user,
             "publications" => $publications,
             "threads" => $threads,
             "comments" => $allComments
@@ -98,6 +99,7 @@ class CoreController extends Controller
         }
 
         return $this->render('SingzCoreBundle:Core:feed.html.twig', array(
+            "user" => $user,
             "publications" => $publications,
             "threads" => $threads,
             "comments" => $allComments
