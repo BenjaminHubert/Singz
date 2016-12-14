@@ -1,8 +1,3 @@
-<img width="50px" src="{{ asset('uploads/userImage/') }}{{ publication.user.image.path }}">
-<a href="{{ path('singz_user_bundle_homepage', {'id':user.id}) }}">{{ publication.user.username }}</a>
-{% if 'ROLE_STARZ' in publication.user.roles %} &#9733; {% endif %}
-<br/>
-
 <video id="my-video" class="video-js vjs-default-skin" controls preload="auto" width="640" height="264" poster="{{ asset('uploads/userImage/') }}{{ publication.user.image.path }}" data-setup="{}">
 <!-- <source src="{{ publication.video.path }}" type='video/mov'> -->
 <!-- <source src="{{ publication.video.path }}" type='video/webm'> -->
@@ -15,7 +10,7 @@
 <div class="video-side-block">
     <div class="video-user-infos">
         <img src="{{ asset('uploads/userImage/') }}{{ publication.user.image.path }}">
-        <a href="" class="user-name">{{ publication.user.username }}</a>
+        <a href="{{ path('singz_user_bundle_homepage', {'id': publication.user.id}) }}" class="user-name">{{ publication.user.username }}</a>
         {% if 'ROLE_STARZ' in publication.user.roles %} &#9733; {% endif %}<br>
         Le {{ publication.date|date("d/m/Y")}}<br><br>
 
