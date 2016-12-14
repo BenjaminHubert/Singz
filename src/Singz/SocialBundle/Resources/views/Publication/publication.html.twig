@@ -23,10 +23,10 @@
         <div id="nbloves-{{ publication.id }}">
             {{ nb_likes }} love{% if nb_likes != 1 %}s{% endif %}
         </div>
-        <button id="love-{{ publication.id }}" onclick="lovethis(path, {{ publication.id }}, {{ 1 }})">
+        <button id="love-{{ publication.id }}" onclick="lovethis(path, {{ publication.id }}, {{ app.user.id }})">
             {% set ilove = 0 %}
             {% for love in publication.loves if ilove == 0 %}
-                {% if love.user.id == 1 %}
+                {% if love.user.id == app.user.id  %}
                     {% set ilove = 1 %}
                     Je ne love plus
                 {% endif %}
