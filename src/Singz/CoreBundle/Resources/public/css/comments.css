@@ -1,0 +1,34 @@
+.fos_comment_comment_show {
+    padding: 0 20px;
+}
+
+.fos_comment_comment_show .fos_comment_comment_metas {
+    border-radius: 0;
+    background: none;
+    border: none;
+    padding: 0;
+}
+
+.fos_comment_comment_body {
+    color: #717070;
+    font-weight: lighter;
+}
+
+.fos_comment_comment_replies .fos_comment_comment_show {
+    padding-left: 10px;
+    padding-right: 0;
+}
+
+.fos_comment_comment_reply_show_form {
+    border: solid 1px #ccc;
+}
+
+.fos_comment_comment_form_holder form {
+    width: auto;
+    margin: 0 20px;
+}
+
+.fos_comment_comment_form_holder form textarea {
+    width: 100%;
+    height: 70px;
+}

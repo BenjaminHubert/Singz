@@ -113,7 +113,7 @@ input[type=button], input[type=button]:hover {
 
 .video-comments {
     width: 100%;
-    height: calc(100% - 90px);
+    height: calc(100% - 120px);
     padding: 0px 10px;
     overflow-wrap: break-word;
     font-size: 12px;
