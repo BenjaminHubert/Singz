@@ -21,6 +21,9 @@ security:
         
 
     firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
         main:
             pattern: ^/
             form_login:
@@ -37,4 +40,4 @@ security:
         # Besoin d'être connecté et admin pour le back
         - { path: ^/admin,         role: ROLE_ADMIN }
         # Besoin d'être connecté pour naviguer sur le site #provisoire
-        - { path: ^/,               role: ROLE_USER }
+        #- { path: ^/,               role: ROLE_USER }
