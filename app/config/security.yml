@@ -6,7 +6,9 @@ security:
         FOS\UserBundle\Model\UserInterface: bcrypt
         
     role_hierarchy:
-        ROLE_USER:        [ROLE_SINGZER, ROLE_STARZ]
+        # ROLE_X : ROLE_Y # Cela signifie qu'un utilisateur ayant le ROLE_X a aussi le ROLE_Y
+        ROLE_SINGZER:     ROLE_USER
+        ROLE_STARZ:       ROLE_USER
         ROLE_ADMIN:       ROLE_USER
         ROLE_SUPER_ADMIN: ROLE_ADMIN
     
@@ -19,16 +21,25 @@ security:
         
 
     firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
         main:
             pattern: ^/
             form_login:
                 provider: fos_userbundle
                 csrf_token_generator: security.csrf.token_manager
+                use_referer: true
+                post_only:      true
             logout:       true
             anonymous:    true
 
     access_control:
-        - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        #- { path: ^/admin/, role: ROLE_ADMIN }
+        # Tout le monde
+        - { path: ^/login$,         role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/register,       role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/resetting,      role: IS_AUTHENTICATED_ANONYMOUSLY }
+        # Besoin d'être connecté et admin pour le back
+        - { path: ^/admin,         role: ROLE_ADMIN }
+        # Besoin d'être connecté pour naviguer sur le site #provisoire
+        #- { path: ^/,               role: ROLE_USER }

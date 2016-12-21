@@ -16,7 +16,7 @@ class PublicationController extends Controller
 {
     public function indexAction(Request $request)
     {
-        return $this->redirectToRoute('singz_social_bundle_publication_list');
+    	throw $this->createNotFoundException();
     }
 
     public function newAction(Request $request)

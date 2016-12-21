@@ -1,7 +1,9 @@
 singz_index:
     path:     /
     defaults:
-        _controller: SingzCoreBundle:Core:index
+        _controller: FrameworkBundle:Redirect:urlRedirect
+        path: /feed/
+        permanent: true
 
 singz_browse:
     path: /browse/{filter}/

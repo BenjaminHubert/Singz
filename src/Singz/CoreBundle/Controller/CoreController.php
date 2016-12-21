@@ -4,13 +4,11 @@ namespace Singz\CoreBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 class CoreController extends Controller
 {
-    public function indexAction() {
-        return $this->render('SingzCoreBundle:Core:comingsoon.html.twig');
-    }
-
+	
     public function browseAction(Request $request, $filter) {
 
         $user = $this->getUser();
@@ -60,7 +58,7 @@ class CoreController extends Controller
             $allComments[$id] = $comments;
         }
 
-        return $this->render('SingzCoreBundle:Core:index.html.twig', array(
+        return $this->render('SingzCoreBundle:Core:browse.html.twig', array(
             "user" => $user,
             "publications" => $publications,
             "threads" => $threads,
@@ -68,6 +66,9 @@ class CoreController extends Controller
         ));
     }
 
+    /**
+     * @Security("has_role('ROLE_USER')")
+     */
     public function feedAction(Request $request){
         $user = $this->getUser();
 
@@ -97,7 +98,6 @@ class CoreController extends Controller
             $threads[$id] = $thread;
             $allComments[$id] = $comments;
         }
-
         return $this->render('SingzCoreBundle:Core:feed.html.twig', array(
             "user" => $user,
             "publications" => $publications,

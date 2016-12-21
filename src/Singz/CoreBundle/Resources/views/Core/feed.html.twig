@@ -16,18 +16,18 @@
 
 {% block body %}
     <ul class="browse-list">
-            {% for publication in publications %}
-                <li>
-                    {% include 'SingzSocialBundle:Publication:publication.html.twig' with {
-                        'publication': publication,
-                        'comments': comments[publication.id],
-                        'thread': threads[publication.id],
-                        'view': 'tree'
-                    } %}
-                </li>
-                {% else %}
-                Aucune publication à afficher
-            {% endfor %}
+        {% for publication in publications %}
+            <li>
+                {% include 'SingzSocialBundle:Publication:publication.html.twig' with {
+                    'publication': publication,
+                    'comments': comments[publication.id],
+                    'thread': threads[publication.id],
+                    'view': 'tree'
+                } %}
+            </li>
+        {% else %}
+            Aucune publication à afficher
+        {% endfor %}
     </ul>
 {% endblock %}
 

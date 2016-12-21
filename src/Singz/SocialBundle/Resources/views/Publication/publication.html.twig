@@ -18,18 +18,23 @@
         <div id="nbloves-{{ publication.id }}">
             {{ nb_likes }} love{% if nb_likes != 1 %}s{% endif %}
         </div>
-        <button id="love-{{ publication.id }}" onclick="lovethis(path, {{ publication.id }}, {{ app.user.id }})">
-            {% set ilove = 0 %}
-            {% for love in publication.loves if ilove == 0 %}
-                {% if love.user.id == app.user.id  %}
-                    {% set ilove = 1 %}
-                    Je ne love plus
+        {# check if the user is logged #}
+        {% if app.user %}
+            <button id="love-{{ publication.id }}" onclick="lovethis(path, {{ publication.id }}, {{ app.user.id }})">
+                {% set ilove = 0 %}
+                {% for love in publication.loves if ilove == 0 %}
+                    {% if love.user.id == app.user.id  %}
+                        {% set ilove = 1 %}
+                        Je ne love plus
+                    {% endif %}
+                {% endfor %}
+                {% if ilove == 0 %}
+                    Je love !
                 {% endif %}
-            {% endfor %}
-            {% if ilove == 0 %}
-                Je love !
-            {% endif %}
-        </button>
+            </button>
+		{% else %}
+			<a href="{{ path('fos_user_security_login') }}">Se connecter</a>
+		{% endif %}
     </div>
     <div class="video-comments">
         <div id="fos_comment_thread" data-thread="{{ thread.id }}">
