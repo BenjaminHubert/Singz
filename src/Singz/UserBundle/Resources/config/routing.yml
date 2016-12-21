@@ -3,6 +3,7 @@ singz_user_bundle_homepage:
     defaults:
         _controller: SingzUserBundle:Default:index
 
+#ajax
 singz_social_bundle_follow_user:
     path:    /follow/
     defaults:
