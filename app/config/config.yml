@@ -105,18 +105,18 @@ fos_comment:
         comment:
             create: ROLE_USER
             view: IS_AUTHENTICATED_ANONYMOUSLY
-            edit: ROLE_USER
-            delete: ROLE_USER
+            edit: ROLE_ADMIN
+            delete: ROLE_ADMIN
         thread:
             create: ROLE_USER
             view: IS_AUTHENTICATED_ANONYMOUSLY
-            edit: ROLE_USER
-            delete: ROLE_USER
+            edit: ROLE_ADMIN
+            delete: ROLE_ADMIN
         vote:
             create: ROLE_USER
             view: IS_AUTHENTICATED_ANONYMOUSLY
-            edit: ROLE_USER
-            delete: ROLE_USER
+            edit: ROLE_ADMIN
+            delete: ROLE_ADMIN
 
 #Social Buttons Bundle
 nomaya_social:
