@@ -4,9 +4,11 @@ namespace Singz\CoreBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 class CoreController extends Controller
 {
+	
     public function browseAction(Request $request, $filter) {
 
         $user = $this->getUser();
@@ -64,6 +66,9 @@ class CoreController extends Controller
         ));
     }
 
+    /**
+     * @Security("has_role('ROLE_USER')")
+     */
     public function feedAction(Request $request){
         $user = $this->getUser();
 
