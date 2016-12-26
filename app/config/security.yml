@@ -22,17 +22,18 @@ security:
 
     firewalls:
         dev:
-            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            pattern:  ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
             pattern: ^/
+            anonymous:    true
             form_login:
                 provider: fos_userbundle
+                remember_me: true
                 csrf_token_generator: security.csrf.token_manager
                 use_referer: true
                 post_only:      true
             logout:       true
-            anonymous:    true
 
     access_control:
         # Tout le monde
@@ -41,5 +42,5 @@ security:
         - { path: ^/resetting,      role: IS_AUTHENTICATED_ANONYMOUSLY }
         # Besoin d'être connecté et admin pour le back
         - { path: ^/admin,         role: ROLE_ADMIN }
-        # Besoin d'être connecté pour naviguer sur le site #provisoire
-        #- { path: ^/,               role: ROLE_USER }
+        # Default
+        - { path: ^/,               role: IS_AUTHENTICATED_ANONYMOUSLY }

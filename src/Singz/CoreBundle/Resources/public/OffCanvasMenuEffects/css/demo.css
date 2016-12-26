@@ -15,7 +15,6 @@
 .clearfix:after { clear: both; }
 
 body {
-	background: #b4bad2;
 	color: #fffce1;
 	font-weight: 400;
 	font-size: 1em;
@@ -204,4 +203,15 @@ body #cdawrap {
 		display: none;
 	}
 
+}
+
+/* added by younes */
+body > .container-global > .content-wrap .content {
+	padding-bottom: 50px;	
+}
+.menu-top .profile span{
+	color: #fffce1;
+}
+.menu-wrap a:hover {
+	text-decoration: none;
 }

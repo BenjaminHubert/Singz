@@ -1,0 +1,24 @@
+<div class="menu-wrap">
+	<nav class="menu-top">
+		<div class="profile">
+			{% if app.user %}
+				<img style="width:42px;height:42px" src="{{ asset('uploads/userImage/') }}{{ app.user.image.path }}" alt="{{ app.user.username }}">
+				<a href="{{ path('singz_user_bundle_homepage', {'id': app.user.id}) }}"><span>{{ app.user.username }}</span></a>
+			{% else %}
+				<a href="{{ path('fos_user_security_login') }}"><button class="btn btn-default">Se connecter</button></a>
+				<a href="{{ path('fos_user_registration_register') }}"><button class="btn btn-default">S'enregistrer</button></a>
+			{% endif %}
+		</div>
+		<div class="icon-list">
+			<a href="{{ path('fos_user_security_logout') }}"><button class="btn btn-default">Se déconnecter</button></a>
+			<a href="#"><i class="fa fa-fw fa-star-o"></i></a>
+			<a href="#"><i class="fa fa-fw fa-bell-o"></i></a>
+			<a href="#"><i class="fa fa-fw fa-envelope-o"></i></a>
+			<a href="#"><i class="fa fa-fw fa-comment-o"></i></a>
+		</div>
+	</nav>
+	<nav class="menu-side">
+		<a href="{{ path('singz_feed') }}">Fil d'actualité</a>
+		<a href="{{ path('singz_browse_all') }}">Browse</a>
+	</nav>
+</div>

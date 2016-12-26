@@ -19,52 +19,44 @@
             <link href="{{ asset('bundles/singzcore/OffCanvasMenuEffects/css/demo.css') }}" rel="stylesheet">
             <link href="{{ asset('bundles/singzcore/OffCanvasMenuEffects/fonts/font-awesome-4.7.0/css/font-awesome.min.css') }}" rel="stylesheet">
             <link href="{{ asset('bundles/singzcore/OffCanvasMenuEffects/css/menu_topside.css') }}" rel="stylesheet">
-        	{# Others #}
+        	{# Bootstrap #}
+            <link rel="stylesheet" href="{{ asset('bundles/singzcore/bootstrap-3.3.7/css/bootstrap.min.css') }}">
+            {# Others #}
             <link href="{{ asset('bundles/singzcore/css/style.css') }}" rel="stylesheet">
         {% block stylesheets %}{% endblock %}
         {# JAVASCRIPTS #}
         {% block head_javascripts %}{% endblock %}
         {# OTHERS HEAD TAGS #}
-        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
     </head>
     <body>
-        <div class="container">
-			<div class="menu-wrap">
-				<nav class="menu-top">
-					<div class="profile">
-						{% if app.user %}
-    						<img style="width:42px;height:42px" src="{{ asset('uploads/userImage/') }}{{ app.user.image.path }}" alt="{{ app.user.username }}">
-    						<span>{{ app.user.username }}</span>
-    					{% endif %}
-					</div>
-					<div class="icon-list">
-						<a href="#"><i class="fa fa-fw fa-star-o"></i></a>
-						<a href="#"><i class="fa fa-fw fa-bell-o"></i></a>
-						<a href="#"><i class="fa fa-fw fa-envelope-o"></i></a>
-						<a href="#"><i class="fa fa-fw fa-comment-o"></i></a>
-					</div>
-				</nav>
-				<nav class="menu-side">
-					<a href="#">Recent Stories</a>
-					<a href="#">Reading List</a>
-					<a href="#">My Stories</a>
-					<a href="#">Categories</a>
-				</nav>
-			</div>
+        <div class="container-global">
+        	{# Menu #}
+			{{ include('SingzCoreBundle::menu.html.twig') }}
 			<button class="menu-button" id="open-button">Open Menu</button>
 			<div class="content-wrap">
 				<div class="content">
-					<img src="{{ asset('bundles/singzcore/img/logo-singz.png') }}"/>
-
-					{# Error message #}
-					{{ include('SingzCoreBundle::flash-messages.html.twig') }}
-
-					{# BODY BLOCK #}
-					{% block body %}{% endblock %}
+					<div class="row">
+						<div class="container">
+						    {# Logo #}
+    						<div class="col-md-12">
+    							<a href="{{ path('singz_index') }}">
+    								<img class="center-block" style="width:30%" src="{{ asset('bundles/singzcore/img/logo-singz.png') }}"/>
+    							</a>
+    						</div>
+                            {# Error message #}
+    						<div class="col-md-12">
+    							{{ include('SingzCoreBundle::flash-messages.html.twig') }}
+    						</div>
+                            {# Body #}
+    						<div class="col-md-12">
+                                {% block body %}{% endblock %}
+                            </div>
+						</div>
+					</div>
 				</div>
-			</div><!-- /content-wrap -->
-		</div><!-- /container -->
-
+			</div>
+		</div>
         {# JAVASCRIPTS #}
             {# General #}
         	<script src="{{ asset('bundles/singzadmin/js/jquery.min.js') }}"></script>
@@ -72,6 +64,8 @@
         	{# Menu #}
         	<script src="{{ asset('bundles/singzcore/OffCanvasMenuEffects/js/classie.js') }}"></script>
         	<script src="{{ asset('bundles/singzcore/OffCanvasMenuEffects/js/main.js') }}"></script>
+        	{# Bootstrap #}
+        	<script src="{{ asset('bundles/singzcore/bootstrap-3.3.7/js/bootstrap.min.js') }}"></script>
         {% block end_javascripts %}{% endblock %}
     </body>
 </html>

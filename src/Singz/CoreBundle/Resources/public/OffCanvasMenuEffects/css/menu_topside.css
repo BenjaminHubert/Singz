@@ -1,13 +1,18 @@
 html, 
 body, 
-.container, 
+.container-global, 
 .content-wrap {
-	overflow: hidden;
 	width: 100%;
 	height: 100%;
+	overflow-x: hidden;
 }
 
-.container {
+body, .container-global{
+	
+	overflow-y: hidden;
+}
+
+.container-global {
 	background: #373a47;
 }
 
@@ -21,8 +26,6 @@ body,
 }
 
 .content-wrap {
-	overflow-y: scroll;
-	-webkit-overflow-scrolling: touch;
 	-webkit-transition: -webkit-transform 0.3s;
 	transition: transform 0.3s;
 }
