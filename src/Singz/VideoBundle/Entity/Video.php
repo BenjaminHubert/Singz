@@ -62,9 +62,9 @@ class Video
     private $extension;
     
     /**
-     * @var string
+     * @var int
      *
-     ** @ORM\Column(name="duration", type="string", length=10, nullable=true)
+     ** @ORM\Column(name="duration", type="integer", nullable=true)
      */
     private $duration;
 
@@ -268,7 +268,7 @@ class Video
     /**
      * Set duration
      *
-     * @param string $duration
+     * @param integer $duration
      *
      * @return Video
      */
@@ -282,7 +282,7 @@ class Video
     /**
      * Get duration
      *
-     * @return string
+     * @return integer
      */
     public function getDuration()
     {

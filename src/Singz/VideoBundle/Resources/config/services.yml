@@ -1,8 +1,8 @@
 services:
     singz.doctrine.upload:
-        class: Singz\VideoBundle\DoctrineListener\VideoUpload
+        class: Singz\VideoBundle\EventListener\VideoUploadSubscriber
         arguments:
             - "@dubture_ffmpeg.ffprobe"
             - "@dubture_ffmpeg.ffmpeg"
         tags:
-            - { name: doctrine.event_listener, event: prePersist }
+            - { name: doctrine.event_subscriber, connection: default }
