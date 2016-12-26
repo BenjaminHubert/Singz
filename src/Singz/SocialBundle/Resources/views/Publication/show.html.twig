@@ -15,10 +15,8 @@
 {% endblock %}
 
 {% block body %}
-    {{ dump(publication) }}
     {% include 'SingzSocialBundle:Publication:publication.html.twig' with {
-        'publication': publication,
-        'view': 'tree'
+        'publication': publication
     } %}
 
 {% endblock %}

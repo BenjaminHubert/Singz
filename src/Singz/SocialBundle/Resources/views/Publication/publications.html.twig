@@ -4,68 +4,72 @@
 <div class="sz_video_003_wrapper">
 	<div class="sz_video_003_trig">
 		<div class="row">
-			<div class="col-xs-12 col-sm-6 col-md-3">
-				<div class="sz_video_003_trig_wrap">
-					<div class="sz_video_003_trig_img">
-						<img src="{{ asset(publication.video.previewPath) }}" alt="PREVIEW ERROR">
-						<div class="sz_video_003_trig_btn">
-							<a href="#sz_video_003_4_col" data-toggle="modal" data-slide-to="0" data-backdrop="true">
-								<span class="fa fa-play"></span>
-							</a>
-						</div>
-						<span>{{ publication.video.duration }} s</span>
-					</div>
-					<div class="sz_video_003_trig_txt">
-						<span>
-							<i class="fa fa-fw fa-user-circle-o" aria-hidden="true"></i>
-							<a href="{{ path('singz_user_bundle_homepage', {'id': publication.user.id}) }}">
-							    {{ publication.user.username }}
-							</a>
-						</span>
-						<ul>
-							<li>
-								{#<a href="#">category</a>#}
-							</li>
-						</ul>
-					</div>
-				</div>
-			</div>
+			{% for publication in publications %}
+    			<div class="col-xs-12 col-sm-6 col-md-3">
+    				<div class="sz_video_003_trig_wrap">
+    					<div class="sz_video_003_trig_img">
+    						<img src="{{ asset(publication.video.previewPath) }}" alt="PREVIEW ERROR">
+    						<div class="sz_video_003_trig_btn">
+    							<a href="#sz_video_003_4_col" data-toggle="modal" data-slide-to="{{ loop.index0 }}" data-backdrop="true">
+    								<span class="fa fa-play"></span>
+    							</a>
+    						</div>
+    						<span>{{ publication.video.duration }} s</span>
+    					</div>
+    					<div class="sz_video_003_trig_txt">
+    						<span>
+    							<i class="fa fa-fw fa-user-circle-o" aria-hidden="true"></i>
+    							<a href="{{ path('singz_user_bundle_homepage', {'id': publication.user.id}) }}">
+    							    {{ publication.user.username }}
+    							</a>
+    						</span>
+    						<ul>
+    							<li>
+    								{#<a href="#">category</a>#}
+    							</li>
+    						</ul>
+    					</div>
+    				</div>
+    			</div>
+    		{% endfor %}
 		</div>
 		<div id="sz_video_003_4_col" class="modal fade sz_vid_003_mod_sld sz_bd_black carousel sz_video_003_controls sz_video_003_indicators thumb_scroll_y selfPauseVids selfPauseVidm onlinePauseVideos onlinePauseVideom" data-ride="carousel" data-duration="2000" data-interval="false" role="dialog">
 			<div class="modal-dialog">
 				<div class="modal-content">
 					<a href="#" class="sz_video_003_close" data-dismiss="modal"><span class="fa fa-times"></span></a>
 					<div class="carousel-indicators">
-						<p>test</p>
+						
 					</div>
 
 					<div class="carousel-inner" role="listbox">
-						<div class="item active">
-							<div class="sz_video_003_slide_txt">
-								<a href="{{ path('singz_user_bundle_homepage', {'id': publication.user.id}) }}">
-								    <i class="fa fa-fw fa-user-circle-o" aria-hidden="true"></i> {{ publication.user.username }}
-								</a>
-							</div>
-							<div class="sz_sldr_vid_003_image">
-								<img src="{{ asset(publication.video.previewPath) }}" alt="PREVIEW ERROR">
-							</div>
-							<div class="sz_video_003_slf_host">
-								<video controls>
-									<source src="{{ asset(publication.video.videoPath) }}">
-									Your browser does not support HTML5 video.
-								</video>
-							</div>
-							{#
-							<!-- Social Media Icons -->
-							<ul class="sz_video_003_slide_social">
-								<li><a href="#"><span class="fa fa-facebook"></span></a></li>
-								<li><a href="#"><span class="fa fa-twitter"></span></a></li>
-								<li><a href="#"><span class="fa fa-google-plus"></span></a></li>
-								<li><a href="#"><span class="fa fa-youtube"></span></a></li>
-								<li><a href="#"><span class="fa fa-vimeo"></span></a></li>
-							</ul>
-							#}
-						</div>
+						{% for publication in publications %}
+    						<div class="item {% if loop.first %}active{% endif %}">
+    							<div class="sz_video_003_slide_txt">
+    								<a href="{{ path('singz_user_bundle_homepage', {'id': publication.user.id}) }}">
+    								    <i class="fa fa-fw fa-user-circle-o" aria-hidden="true"></i> {{ publication.user.username }}
+    								</a>
+    							</div>
+    							<div class="sz_sldr_vid_003_image">
+    								<img src="{{ asset(publication.video.previewPath) }}" alt="PREVIEW ERROR">
+    							</div>
+    							<div class="sz_video_003_slf_host">
+    								<video controls>
+    									<source src="{{ asset(publication.video.videoPath) }}">
+    									Your browser does not support HTML5 video.
+    								</video>
+    							</div>
+    							{#
+    							<!-- Social Media Icons -->
+    							<ul class="sz_video_003_slide_social">
+    								<li><a href="#"><span class="fa fa-facebook"></span></a></li>
+    								<li><a href="#"><span class="fa fa-twitter"></span></a></li>
+    								<li><a href="#"><span class="fa fa-google-plus"></span></a></li>
+    								<li><a href="#"><span class="fa fa-youtube"></span></a></li>
+    								<li><a href="#"><span class="fa fa-vimeo"></span></a></li>
+    							</ul>
+    							#}
+    						</div>
+    		            {% endfor %}
 					</div>
 					<a class="left carousel-control" href="#sz_video_003_4_col" role="button" data-slide="prev">
 						<span class="fa fa-angle-left"></span>

@@ -11,52 +11,18 @@
 {% endblock %}
 
 {% block body %}
-
 	<p>
 		<a class="filter-button" href="{{ path('singz_browse', { 'filter': 'all' }) }}">All</a>
 		<a class="filter-button" href="{{ path('singz_browse', { 'filter': 'singzer' }) }}">Singzers</a>
 		<a class="filter-button" href="{{ path('singz_browse', { 'filter': 'starz' }) }}">Starz</a>
 	</p>
-
-	<div id="grid-gallery" class="grid-gallery">
-		<section class="grid-wrap">
-			<ul class="grid">
-				<li class="grid-sizer"></li><!-- for Masonry column width -->
-				{% for publication in publications %}
-					<li>
-						<figure>
-							<img class="{% if 'ROLE_STARZ' in publication.user.roles %}starz{% endif %}"src="{{ asset('uploads/userImage/') }}{{ publication.user.image.path }}" alt="img01"/>
-						</figure>
-					</li>
-				{% endfor %}
-			</ul>
-		</section>
-		<section class="slideshow">
-			<ul>
-				{% for publication in publications %}
-					<li>
-						<figure>
-							{% include 'SingzSocialBundle:Publication:publication.html.twig' with {
-							'publication': publication,
-							'comments': comments[publication.id],
-							'thread': threads[publication.id],
-							'view': 'tree'
-							} %}
-						</figure>
-					</li>
-				{% else %}
-					Aucune publication à afficher
-				{% endfor %}
-			</ul>
-			<nav>
-				<span class="icon nav-prev"></span>
-				<span class="icon nav-next"></span>
-				<span class="icon nav-close"></span>
-			</nav>
-			<div class="info-keys icon">Navigate with arrow keys</div>
-		</section>
-	</div>
-
+	{% if publications %}
+		{% include 'SingzSocialBundle:Publication:publications.html.twig' with {
+			'publications': publications
+		} %}
+	{% else %}
+		Aucune publication à afficher
+	{% endif %}
 {% endblock %}
 
 {% block end_javascripts %}
@@ -64,6 +30,4 @@
 	<script src="{{ asset('bundles/foscomment/js/comments.js') }}"></script>
 	<!-- Bundle script -->
 	<script src="{{ asset('bundles/singzsocial/js/script.js') }}"></script>
-
-	<script>new CBPGridGallery( document.getElementById( 'grid-gallery' ) );</script>
 {% endblock %}
