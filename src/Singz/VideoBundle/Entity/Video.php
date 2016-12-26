@@ -80,14 +80,25 @@ class Video
     }
 
     /**
-     * Get path
+     * Get the video path
      *
      * @return string
      */
-    public function getPath()
+    public function getVideoPath()
     {
         return $this->getUploadDir().'/'.$this->id.'.'.$this->extension;
     }
+
+    /**
+     * Get the video path
+     *
+     * @return string
+     */
+    public function getPreviewPath()
+    {
+        return $this->getUploadDir().'/'.$this->id.'.jpg';
+    }
+    
     /**
      * Constructor
      */

@@ -3,5 +3,6 @@ services:
         class: Singz\VideoBundle\DoctrineListener\VideoUpload
         arguments:
             - "@dubture_ffmpeg.ffprobe"
+            - "@dubture_ffmpeg.ffmpeg"
         tags:
             - { name: doctrine.event_listener, event: prePersist }
