@@ -327,7 +327,7 @@ a.sz_video_003_close{
 }
 .sz_vid_003_mod_sld .carousel-inner{
   left: 1%;
-  width: 73%;
+  width: 60%;
 }
 .sz_vid_003_mod_sld .carousel-inner,
 .sz_vid_003_mod_sld .carousel-inner > .item{
@@ -441,7 +441,7 @@ a.sz_video_003_close{
   left: 2%;
 }
 .sz_video_003_controls .carousel-control.right{
-  right: 27%;
+  right: 41%;
 }
 .sz_video_003_controls .carousel-control:hover{
   color: #ff6a00;

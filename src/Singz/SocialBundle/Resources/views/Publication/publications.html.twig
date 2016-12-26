@@ -5,7 +5,7 @@
 	<div class="sz_video_003_trig">
 		<div class="row">
 			{% for publication in publications %}
-    			<div class="col-xs-12 col-sm-6 col-md-3">
+    			<div class="col-xs-12 col-sm-6 col-md-3" data-small-publication="{{ publication.id }}">
     				<div class="sz_video_003_trig_wrap">
     					<div class="sz_video_003_trig_img">
     						<img src="{{ asset(publication.video.previewPath) }}" alt="PREVIEW ERROR">
@@ -17,17 +17,25 @@
     						<span>{{ publication.video.duration }} s</span>
     					</div>
     					<div class="sz_video_003_trig_txt">
-    						<span>
-    							<i class="fa fa-fw fa-user-circle-o" aria-hidden="true"></i>
-    							<a href="{{ path('singz_user_bundle_homepage', {'id': publication.user.id}) }}">
-    							    {{ publication.user.username }}
-    							</a>
-    						</span>
-    						<ul>
+							<div class="media">
+                                <div class="media-left">
+                                	<a href="{{ path('singz_user_bundle_homepage', {'id': publication.user.id}) }}">	
+                                		<img class="media-object img-circle" style="width:42px;height:42px"  src="{{ asset(publication.user.image.realPath) }}" alt="{{ publication.user.username }}">
+                                	</a>
+                                </div>
+                                <div class="media-body">
+    							    <a href="{{ path('singz_user_bundle_homepage', {'id': publication.user.id}) }}">
+    							    	{{ publication.user.username }}
+    							    </a>
+    							    <p><i class="fa fa-fw fa-heart" aria-hidden="true"></i> {{ publication.numLoves }}</p>
+                         	   </div>
+                            </div>
+                            
+    						{#<ul>
     							<li>
-    								{#<a href="#">category</a>#}
+    								<a href="#">category</a>
     							</li>
-    						</ul>
+    						</ul>#}
     					</div>
     				</div>
     			</div>
@@ -40,14 +48,23 @@
 					<div class="carousel-indicators">
 						
 					</div>
-
 					<div class="carousel-inner" role="listbox">
 						{% for publication in publications %}
-    						<div class="item {% if loop.first %}active{% endif %}">
-    							<div class="sz_video_003_slide_txt">
-    								<a href="{{ path('singz_user_bundle_homepage', {'id': publication.user.id}) }}">
-    								    <i class="fa fa-fw fa-user-circle-o" aria-hidden="true"></i> {{ publication.user.username }}
-    								</a>
+    						<div class="item {% if loop.first %}active{% endif %}" data-big-publication="{{ publication.id }}">
+    							<div class="sz_video_003_slide_txt" style="color: white;">
+        							<div class="media">
+                                        <div class="media-left">
+                                        	<a href="{{ path('singz_user_bundle_homepage', {'id': publication.user.id}) }}">	
+                                        		<img class="media-object img-circle" style="width:42px;height:42px"  src="{{ asset(publication.user.image.realPath) }}" alt="{{ publication.user.username }}">
+                                        	</a>
+                                        </div>
+                                        <div class="media-body">
+            							    <a href="{{ path('singz_user_bundle_homepage', {'id': publication.user.id}) }}">
+            							    	{{ publication.user.username }}
+            							    </a>
+            							    <p><i class="fa fa-fw fa-heart" aria-hidden="true"></i> {{ publication.numLoves }}</p>
+                                 	   </div>
+                                    </div>
     							</div>
     							<div class="sz_sldr_vid_003_image">
     								<img src="{{ asset(publication.video.previewPath) }}" alt="PREVIEW ERROR">
