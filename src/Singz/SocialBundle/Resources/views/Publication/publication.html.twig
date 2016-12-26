@@ -1,3 +1,152 @@
+<!-------------------------------------------------
+	Responsive Bootstrap Portfolio And Lightbox
+-------------------------------------------------->
+<div class="sz_video_003_wrapper">
+		<!---------------- 
+		   Trigger Part
+		----------------->
+		<div class="sz_video_003_trig">
+			<!-- 1st Row -->
+			<div class="row">
+				<!-- 1st Box -->
+				<div class="col-xs-12 col-sm-6 col-md-3">
+					<div class="sz_video_003_trig_wrap">
+						<!-- Image -->
+						<div class="sz_video_003_trig_img">
+							<img src="lightbox/images/sz_video_003_01.jpg" alt="sz_video_003_01">
+							<!-- Trigger Button -->
+							<div class="sz_video_003_trig_btn">
+								<a href="#sz_video_003_4_col" data-toggle="modal" data-slide-to="0" data-backdrop="true">
+									<span class="fa fa-play"></span>
+								</a>
+							</div>
+							<span>02:15</span>
+						</div>
+						<!-- Trigger Text -->
+						<div class="sz_video_003_trig_txt">
+							<a href="#">complete title and description of the video</a>
+							<span>
+								by:<a href="#">Author's Name</a>
+							</span>
+							<ul>
+								<li>
+									<a href="#">category</a>
+								</li>
+							</ul>
+						</div>
+					</div> <!-- /.sz_video_003_trig_wrap -->
+				</div> <!-- /1st Box -->
+			</div> <!-- /End of 1st Row -->
+		<!------------------ 
+		  End Trigger Part
+		------------------->
+		
+		<!----------------------------
+		   Light Box And Slider Part
+		----------------------------->
+		<div id="sz_video_003_4_col" class="modal fade sz_vid_003_mod_sld sz_bd_black carousel sz_video_003_controls sz_video_003_indicators thumb_scroll_y selfPauseVids selfPauseVidm onlinePauseVideos onlinePauseVideom" data-ride="carousel" data-duration="2000" data-interval="false" role="dialog">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<!-- Close Button -->
+					<a href="#" class="sz_video_003_close" data-dismiss="modal"><span class="fa fa-times"></span></a>
+
+					<!-- Indicators -->
+					<ol class="carousel-indicators">
+						<!-- 1st Indicator -->
+						<li data-target="#sz_video_003_4_col" data-slide-to="0" class="active">
+							<!-- 1st Indicator Image -->
+							<img src="lightbox/images/sz_video_003_01.jpg" alt="sz_video_003_01">
+							<!-- 1st Indicator Text -->
+							<div>
+								<p>complete title and description of the video</p>
+								<span>50,053 view</span>
+							</div>
+						</li>
+					</ol> <!-- /Indicators -->
+
+					<!-- Slider Inner -->
+					<div class="carousel-inner" role="listbox">
+						<!-- 3rd Slide -->
+						<div class="item">
+							<!-- Description -->
+							<div class="sz_video_003_slide_txt">
+								<!-- Title -->
+								<a href="#">complete title and description of the video</a>
+							</div> <!-- /.sz_video_003_slide_txt -->
+
+							<!-- Self Hosted Video -->
+							<!-- Image For Mobiles. HTML5 Video Tag does not support the mobiles -->
+							<div class="sz_sldr_vid_003_image">
+								<img src="lightbox/images/sz_video_003_03.jpg" alt="sz_video_003_03">
+							</div>
+							<!-- Background Image For Mobiles. HTML Video Tag does not support the mobiles -->
+							<div class="sz_video_003_slf_host">
+								<video controls>
+									<source src="lightbox/images/sz_video_003_01.mp4" type="video/mp4">
+									Your browser does not support HTML5 video.
+								</video>
+							</div>
+							<!-- /Self Hosted Video -->
+							
+							<!-- Social Media Icons -->
+							<ul class="sz_video_003_slide_social">
+								<li><a href="#"><span class="fa fa-facebook"></span></a></li>
+								<li><a href="#"><span class="fa fa-twitter"></span></a></li>
+								<li><a href="#"><span class="fa fa-google-plus"></span></a></li>
+								<li><a href="#"><span class="fa fa-youtube"></span></a></li>
+								<li><a href="#"><span class="fa fa-vimeo"></span></a></li>
+							</ul>
+							<!-- /Social Media Icons -->
+
+						</div> <!-- /3rd Slide -->
+					</div>
+					<!-- /Slider Inner -->
+
+					<!-- Left Control Button -->
+					<a class="left carousel-control" href="#sz_video_003_4_col" role="button" data-slide="prev">
+						<span class="fa fa-angle-left"></span>
+					</a>
+					<!-- Right Control Button -->
+					<a class="right carousel-control" href="#sz_video_003_4_col" role="button" data-slide="next">
+						<span class="fa fa-angle-right"></span>
+					</a>
+
+				</div> <!-- /.modal-content -->
+			</div> <!-- /.modal-dialog -->
+		</div> <!-- /.modal & .carousel -->
+		<!-------------------------------
+		  End Light Box And Slider Part
+		-------------------------------->
+
+</div>
+<!-------------------------------------------------
+  End Responsive Bootstrap Portfolio And Lightbox
+-------------------------------------------------->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{#
 <video id="my-video" class="video-js vjs-default-skin" controls preload="auto" width="640" height="264" poster="{{ asset('uploads/userImage/') }}{{ publication.user.image.path }}" data-setup="{}">
 <!-- <source src="{{ publication.video.path }}" type='video/mov'> -->
 <!-- <source src="{{ publication.video.path }}" type='video/webm'> -->
@@ -18,7 +167,7 @@
         <div id="nbloves-{{ publication.id }}">
             {{ nb_likes }} love{% if nb_likes != 1 %}s{% endif %}
         </div>
-        {# check if the user is logged #}
+        {# check if the user is logged #}{#
         {% if app.user %}
             <button id="love-{{ publication.id }}" onclick="lovethis(path, {{ publication.id }}, {{ app.user.id }})">
                 {% set ilove = 0 %}
@@ -46,3 +195,4 @@
         </div>
     </div>
 </div>
+#}
