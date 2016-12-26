@@ -21,8 +21,11 @@
             <link href="{{ asset('bundles/singzcore/OffCanvasMenuEffects/css/menu_topside.css') }}" rel="stylesheet">
         	{# Bootstrap #}
             <link rel="stylesheet" href="{{ asset('bundles/singzcore/bootstrap-3.3.7/css/bootstrap.min.css') }}">
+            {# Responsive Bootstrap Portfolio And Lightbox Main Style Sheet #}
+            <link href="{{ asset('bundles/singzcore/lightbox/css/sz_video_003.css') }}" rel="stylesheet">
             {# Others #}
             <link href="{{ asset('bundles/singzcore/css/style.css') }}" rel="stylesheet">
+        {# Custom style one shot #}
         {% block stylesheets %}{% endblock %}
         {# JAVASCRIPTS #}
         {% block head_javascripts %}{% endblock %}
@@ -59,13 +62,17 @@
 		</div>
         {# JAVASCRIPTS #}
             {# General #}
-        	<script src="{{ asset('bundles/singzadmin/js/jquery.min.js') }}"></script>
+        	<script src="{{ asset('bundles/singzcore/lightbox/js/jquery-1.12.4.min.js') }}"></script>
         	<script>var assetsBaseDir = "{{ asset('/') }}";</script>
+        	{# Bootstrap #}
+        	<script src="{{ asset('bundles/singzcore/bootstrap-3.3.7/js/bootstrap.min.js') }}"></script>
+        	{# TouchSwipe JS file #}
+        	<script src="{{ asset('bundles/singzcore/lightbox/js/jquery.touchSwipe.js') }}"></script>
+        	{# Responsive Bootstrap Portfolio And Lightbox Main JS File #}
+        	<script src="{{ asset('bundles/singzcore/lightbox/js/sz_portfolio_lightbox_min.js') }}"></script>
         	{# Menu #}
         	<script src="{{ asset('bundles/singzcore/OffCanvasMenuEffects/js/classie.js') }}"></script>
         	<script src="{{ asset('bundles/singzcore/OffCanvasMenuEffects/js/main.js') }}"></script>
-        	{# Bootstrap #}
-        	<script src="{{ asset('bundles/singzcore/bootstrap-3.3.7/js/bootstrap.min.js') }}"></script>
         {% block end_javascripts %}{% endblock %}
     </body>
 </html>
