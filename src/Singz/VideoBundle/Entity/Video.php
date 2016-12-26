@@ -60,6 +60,13 @@ class Video
      ** @ORM\Column(name="extension", type="string", length=255, nullable=true)
      */
     private $extension;
+    
+    /**
+     * @var string
+     *
+     ** @ORM\Column(name="duration", type="string", length=10, nullable=true)
+     */
+    private $duration;
 
 
     /**
@@ -241,9 +248,33 @@ class Video
     	return 'uploads/video';
     }
     
-    protected function getUploadRootDir()
+    public function getUploadRootDir()
     {
     	// On retourne le chemin relatif vers l'image pour notre code PHP
     	return __DIR__.'/../../../../web/'.$this->getUploadDir();
+    }
+
+    /**
+     * Set duration
+     *
+     * @param string $duration
+     *
+     * @return Video
+     */
+    public function setDuration($duration)
+    {
+        $this->duration = $duration;
+
+        return $this;
+    }
+
+    /**
+     * Get duration
+     *
+     * @return string
+     */
+    public function getDuration()
+    {
+        return $this->duration;
     }
 }

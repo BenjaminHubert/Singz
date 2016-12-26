@@ -1,4 +1,7 @@
 services:
-#    singz_video.example:
-#        class: Singz\VideoBundle\Example
-#        arguments: ["@service_id", "plain_value", "%parameter%"]
+    singz.doctrine.upload:
+        class: Singz\VideoBundle\DoctrineListener\VideoUpload
+        arguments:
+            - "@dubture_ffmpeg.ffprobe"
+        tags:
+            - { name: doctrine.event_listener, event: prePersist }

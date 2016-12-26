@@ -25,6 +25,7 @@ class AppKernel extends Kernel
             new FOS\CommentBundle\FOSCommentBundle(),
             new JMS\SerializerBundle\JMSSerializerBundle($this),
             new Nomaya\SocialBundle\NomayaSocialBundle(),
+        	new Dubture\FFmpegBundle\DubtureFFmpegBundle(),
 
         ];
 
