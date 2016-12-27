@@ -43,6 +43,33 @@
 			<div class="modal-dialog">
 				<div class="modal-content">
 					<a href="#" class="sz_video_003_close" data-dismiss="modal"><span class="fa fa-times"></span></a>
+					<div class="carousel-inner" role="listbox">
+						<div class="item active" data-big-publication="{{ publication.id }}">
+							{#
+							<div class="sz_video_003_slide_txt">
+							</div>
+							#}
+							<div class="sz_sldr_vid_003_image">
+								<img src="{{ asset(publication.video.previewPath) }}" alt="PREVIEW ERROR">
+							</div>
+							<div class="sz_video_003_slf_host">
+								<video controls>
+									<source src="{{ asset(publication.video.videoPath) }}">
+									Your browser does not support HTML5 video.
+								</video>
+							</div>
+							{#
+							<!-- Social Media Icons -->
+							<ul class="sz_video_003_slide_social">
+								<li><a href="#"><span class="fa fa-facebook"></span></a></li>
+								<li><a href="#"><span class="fa fa-twitter"></span></a></li>
+								<li><a href="#"><span class="fa fa-google-plus"></span></a></li>
+								<li><a href="#"><span class="fa fa-youtube"></span></a></li>
+								<li><a href="#"><span class="fa fa-vimeo"></span></a></li>
+							</ul>
+							#}
+						</div>
+					</div>
 					<div class="right-side">
 						<img class="loading-comments" src="{{ asset('bundles/singzcore/img/loading-comments.svg') }}" style="display:block;margin-left: auto;margin-right: auto;padding: 35% 0;">
 						<div class="extra-publication">
@@ -51,33 +78,6 @@
     							button to love and comments will be generated after clicking on the publication
     						#}						
 						</div>
-					</div>
-					<div class="carousel-inner" role="listbox">
-    						<div class="item active" data-big-publication="{{ publication.id }}">
-    							{#
-    							<div class="sz_video_003_slide_txt">
-    							</div>
-    							#}
-    							<div class="sz_sldr_vid_003_image">
-    								<img src="{{ asset(publication.video.previewPath) }}" alt="PREVIEW ERROR">
-    							</div>
-    							<div class="sz_video_003_slf_host">
-    								<video controls>
-    									<source src="{{ asset(publication.video.videoPath) }}">
-    									Your browser does not support HTML5 video.
-    								</video>
-    							</div>
-    							{#
-    							<!-- Social Media Icons -->
-    							<ul class="sz_video_003_slide_social">
-    								<li><a href="#"><span class="fa fa-facebook"></span></a></li>
-    								<li><a href="#"><span class="fa fa-twitter"></span></a></li>
-    								<li><a href="#"><span class="fa fa-google-plus"></span></a></li>
-    								<li><a href="#"><span class="fa fa-youtube"></span></a></li>
-    								<li><a href="#"><span class="fa fa-vimeo"></span></a></li>
-    							</ul>
-    							#}
-    						</div>
 					</div>
 				</div>
 			</div>

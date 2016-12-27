@@ -256,7 +256,7 @@
 @media (min-width: 1201px){
   .sz_vid_003_mod_sld > .modal-dialog{
     width: 85%;
-    height: 90%;
+    height: 67%;
 	margin: auto;
   }
 }
@@ -473,153 +473,55 @@ ul.sz_video_003_slide_social > li > a > .fa-youtube{
 ul.sz_video_003_slide_social > li > a > .fa-vimeo{
   background: #aad450;
 }
+
 /*-----------------------------------------*/
 /* RESPONSIVE
 /*-----------------------------------------*/
-/*---------- MEDIA 480px ----------*/
-@media only screen and (max-width: 480px){
-  /*----- HEADER -----*/
-  .sz_video_003_header{
-    width: 95%;
-  }
-  .sz_video_003_header > h1{
-    font-size: 20px;
-  }
-  /*----- TRIGGER -----*/
-  .sz_video_003_trig{
-    padding: 25px;
-  }
-  /*----- 2 COLUMNS -----*/
-  .sz_video_003_trig_col_2{
-    padding: 25px;
-  }
-  /*----- INDICATORS THUMBNAIL CONTROL -----*/
-  .sz_video_003_indicators .right-side{
-    height: 265px;
-  }
-  
-  /*----- MODAL SIZES -----*/
-  .sz_vid_003_mod_sld > .modal-dialog > .modal-content{
-    padding: 30px 5px 5px 5px;
-  }
-  /*----- LEFT/RIGHT CONTROL -----*/
-  .sz_video_003_controls .carousel-control{
-    top: 5px;
-  }
-  .sz_video_003_controls .carousel-control.left{
-    left: 5px;
-    right: auto;
-  }
-  .sz_video_003_controls .carousel-control.right{
-    left: 41px;
-    right: auto;
-  }
-  .sz_sldr_vid_003_image{
-    display: block;
-  }
-  .sz_video_003_slide_txt > a{
-    font-size: 10px;
-  }
-}
-/*---------- MEDIA 481px - 600px ----------*/
-@media (min-width: 481px) and (max-width: 600px){
-  /*----- HEADER -----*/
-  .sz_video_003_header{
-    width: 75%;
-  }
-  /*----- TRIGGER -----*/
-  .sz_video_003_trig{
-    padding: 25px 50px;
-  }
-  .sz_video_003_trig_txt > a{
-    font-size: 18px;
-  }
-  .sz_video_003_trig_txt > span{
-    font-size: 14px;
-  }
-  /*----- INDICATORS THUMBNAIL CONTROL -----*/
-  .sz_video_003_indicators .right-side{
-    height: 325px;
-  }
-  /*----- MODAL SIZES -----*/
-  .sz_vid_003_mod_sld > .modal-dialog > .modal-content{
-    padding: 30px 5px 5px 5px;
-  }
-  /*----- LEFT/RIGHT CONTROL -----*/
-  .sz_video_003_controls .carousel-control{
-    top: 5px;
-  }
-  .sz_video_003_controls .carousel-control.left{
-    left: 5px;
-    right: auto;
-  }
-  .sz_video_003_controls .carousel-control.right{
-    left: 41px;
-    right: auto;
-  }
-  .sz_sldr_vid_003_image{
-    top: 65px;
-    display: block;
-  }
-}
-/*---------- MEDIA 601px - 767px ----------*/
-@media (min-width: 601px) and (max-width: 767px){
-  /*----- HEADER -----*/
-  .sz_video_003_header{
-    width: 60%;
-  }
-  /*----- TRIGGER -----*/
-  .sz_video_003_trig{
-    padding: 25px 100px;
-  }
-  .sz_video_003_trig_txt > a{
-    font-size: 18px;
-  }
-  .sz_video_003_trig_txt > span{
-    font-size: 14px;
-  }
-  /*----- MODAL SIZES -----*/
-  .sz_vid_003_mod_sld > .modal-dialog > .modal-content{
-    padding: 0;
-  }
-  /*----- INDICATORS THUMBNAIL CONTROL -----*/
-  .sz_video_003_indicators .right-side{
-    height: 375px;
-  }
-  /*----- LEFT/RIGHT CONTROL -----*/
-  .sz_video_003_controls .carousel-control{
-    top: 5px;
-  }
-  .sz_video_003_controls .carousel-control.left{
-    left: 5px;
-    right: auto;
-  }
-  .sz_video_003_controls .carousel-control.right{
-    left: 41px;
-    right: auto;
-  }
-  .sz_sldr_vid_003_image{
-    top: 50px;
-    display: block;
-  }
-}
-/*---------- MEDIA 768px - 900px ----------*/
-@media (min-width: 768px) and (max-width: 900px){
+/*---------- MEDIA 1px - 900px ----------*/
+@media (min-width: 1px) and (max-width: 900px){
   /*----- 2 COLUMNS -----*/
   .sz_video_003_trig_col_2{
     padding: 25px 50px;
   }
   .sz_vid_003_mod_sld > .modal-dialog{
-    width: 100%;
+    width: 75%;
     height: 100%;
   }
+  .sz_vid_003_mod_sld .carousel-inner {
+    width: 100%;
+    margin-bottom: 10px;
+}
   /*----- INDICATORS THUMBNAIL CONTROL -----*/
   .sz_video_003_indicators .right-side{
-    height: 375px;
+	width: 100%;
+	position: relative;
   }
   /*----- LEFT/RIGHT CONTROL -----*/
   .sz_video_003_controls .carousel-control{
     top: 25%;
+  }
+  .modal.fade.sz_vid_003_mod_sld .modal-dialog{
+  	margin-top: 10px;
+  	margin-bottom: 10px;
+  }
+  
+}
+/*---------- MEDIA 480px ----------*/
+@media only screen and (max-width: 480px){
+  .sz_vid_003_mod_sld > .modal-dialog{
+    width: 100%;
+  }
+}
+/*---------- MEDIA 481px - 600px ----------*/
+@media (min-width: 481px) and (max-width: 600px){
+  .sz_vid_003_mod_sld > .modal-dialog{
+    width: 100%;
+  }
+}
+/*---------- MEDIA 601px - 767px ----------*/
+@media (min-width: 601px) and (max-width: 767px){
+  .sz_vid_003_mod_sld > .modal-dialog{
+    width: 90%;
   }
 }
 /*---------- MEDIA 901px - 991px ----------*/
