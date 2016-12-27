@@ -4,7 +4,7 @@
 <div class="sz_video_003_wrapper">
 	<div class="sz_video_003_trig">
 		<div class="row">
-			<div class="col-xs-12 col-sm-6 col-md-3">
+			<div class="col-xs-12 col-sm-6 col-sm-offset-3 col-md-6 col-md-offset-3" data-small-publication="{{ publication.id }}">
 				<div class="sz_video_003_trig_wrap">
 					<div class="sz_video_003_trig_img">
 						<img src="{{ asset(publication.video.previewPath) }}" alt="PREVIEW ERROR">
@@ -16,17 +16,25 @@
 						<span>{{ publication.video.duration }} s</span>
 					</div>
 					<div class="sz_video_003_trig_txt">
-						<span>
-							<i class="fa fa-fw fa-user-circle-o" aria-hidden="true"></i>
-							<a href="{{ path('singz_user_bundle_homepage', {'id': publication.user.id}) }}">
-							    {{ publication.user.username }}
-							</a>
-						</span>
-						<ul>
+						<div class="media">
+                            <div class="media-left">
+                            	<a href="{{ path('singz_user_bundle_homepage', {'id': publication.user.id}) }}">	
+                            		<img class="media-object img-circle" style="width:42px;height:42px"  src="{{ asset(publication.user.image.realPath) }}" alt="{{ publication.user.username }}">
+                            	</a>
+                            </div>
+                            <div class="media-body">
+							    <a href="{{ path('singz_user_bundle_homepage', {'id': publication.user.id}) }}">
+							    	{{ publication.user.username }}
+							    </a>
+							    <p><i class="fa fa-fw fa-heart" aria-hidden="true"></i> {{ publication.numLoves }}</p>
+                     	   </div>
+                        </div>
+                        
+						{#<ul>
 							<li>
-								{#<a href="#">category</a>#}
+								<a href="#">category</a>
 							</li>
-						</ul>
+						</ul>#}
 					</div>
 				</div>
 			</div>
@@ -35,49 +43,49 @@
 			<div class="modal-dialog">
 				<div class="modal-content">
 					<a href="#" class="sz_video_003_close" data-dismiss="modal"><span class="fa fa-times"></span></a>
-					<div class="carousel-indicators">
-						<p>test</p>
-					</div>
-
-					<div class="carousel-inner" role="listbox">
-						<div class="item active">
-							<div class="sz_video_003_slide_txt">
-								<a href="{{ path('singz_user_bundle_homepage', {'id': publication.user.id}) }}">
-								    <i class="fa fa-fw fa-user-circle-o" aria-hidden="true"></i> {{ publication.user.username }}
-								</a>
-							</div>
-							<div class="sz_sldr_vid_003_image">
-								<img src="{{ asset(publication.video.previewPath) }}" alt="PREVIEW ERROR">
-							</div>
-							<div class="sz_video_003_slf_host">
-								<video controls>
-									<source src="{{ asset(publication.video.videoPath) }}">
-									Your browser does not support HTML5 video.
-								</video>
-							</div>
-							{#
-							<!-- Social Media Icons -->
-							<ul class="sz_video_003_slide_social">
-								<li><a href="#"><span class="fa fa-facebook"></span></a></li>
-								<li><a href="#"><span class="fa fa-twitter"></span></a></li>
-								<li><a href="#"><span class="fa fa-google-plus"></span></a></li>
-								<li><a href="#"><span class="fa fa-youtube"></span></a></li>
-								<li><a href="#"><span class="fa fa-vimeo"></span></a></li>
-							</ul>
-							#}
+					<div class="right-side">
+						<img class="loading-comments" src="{{ asset('bundles/singzcore/img/loading-comments.svg') }}" style="display:block;margin-left: auto;margin-right: auto;padding: 35% 0;">
+						<div class="extra-publication">
+    						{#
+    							User picture, username, number of loves, publish time, publication description,
+    							button to love and comments will be generated after clicking on the publication
+    						#}						
 						</div>
 					</div>
-					<a class="left carousel-control" href="#sz_video_003_4_col" role="button" data-slide="prev">
-						<span class="fa fa-angle-left"></span>
-					</a>
-					<a class="right carousel-control" href="#sz_video_003_4_col" role="button" data-slide="next">
-						<span class="fa fa-angle-right"></span>
-					</a>
+					<div class="carousel-inner" role="listbox">
+    						<div class="item active" data-big-publication="{{ publication.id }}">
+    							{#
+    							<div class="sz_video_003_slide_txt">
+    							</div>
+    							#}
+    							<div class="sz_sldr_vid_003_image">
+    								<img src="{{ asset(publication.video.previewPath) }}" alt="PREVIEW ERROR">
+    							</div>
+    							<div class="sz_video_003_slf_host">
+    								<video controls>
+    									<source src="{{ asset(publication.video.videoPath) }}">
+    									Your browser does not support HTML5 video.
+    								</video>
+    							</div>
+    							{#
+    							<!-- Social Media Icons -->
+    							<ul class="sz_video_003_slide_social">
+    								<li><a href="#"><span class="fa fa-facebook"></span></a></li>
+    								<li><a href="#"><span class="fa fa-twitter"></span></a></li>
+    								<li><a href="#"><span class="fa fa-google-plus"></span></a></li>
+    								<li><a href="#"><span class="fa fa-youtube"></span></a></li>
+    								<li><a href="#"><span class="fa fa-vimeo"></span></a></li>
+    							</ul>
+    							#}
+    						</div>
+					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
+
+
 
 {#
 <video id="my-video" class="video-js vjs-default-skin" controls preload="auto" width="640" height="264" poster="{{ asset('uploads/userImage/') }}{{ publication.user.image.path }}" data-setup="{}">
