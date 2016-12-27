@@ -141,5 +141,41 @@ class PublicationController extends Controller
 
         return new Response('Error', 400);
     }
+    
+    /**
+     * Retrieve publication description, date and comments through Ajax
+     * @param Request $request
+     */
+    public function getPublicationExtraAction(Request $request){
+    	if($request->isXmlHttpRequest()) {
+    		$id = $request->request->get('idPublication');
+    		
+    		// Get publication
+    		$publication = $this->getDoctrine()->getManager()->getRepository('SingzSocialBundle:Publication')->getPublicationById($id);
+    		if($publication == null) {
+    			throw $this->createNotFoundException('Publication inexistante');
+    		}
+    		// Get thread
+    		$thread = $this->container->get('fos_comment.manager.thread')->findThreadById($id);
+    		if (null === $thread) {
+    			$thread = $this->container->get('fos_comment.manager.thread')->createThread();
+    			$thread->setId($id);
+    			$thread->setPermalink($request->getUri());
+    		
+    			// Add the thread
+    			$this->container->get('fos_comment.manager.thread')->saveThread($thread);
+    		}
+    		
+    		// Get comments
+    		$comments = $this->container->get('fos_comment.manager.comment')->findCommentTreeByThread($thread);
+    		
+    		return $this->render('SingzSocialBundle:Publication:extra.html.twig', array(
+    			'publication' => $publication,
+    			'comments' => $comments,
+    			'thread' => $thread
+    		));
+    	}
+    	return new Response('Error', 400);
+    }
 
 }

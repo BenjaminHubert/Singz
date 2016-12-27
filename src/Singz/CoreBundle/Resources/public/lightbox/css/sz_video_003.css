@@ -1,14 +1,6 @@
 /*-----------------------------------------*/
 /* VIDEO 003
 /*-----------------------------------------*/
-.carousel:hover{
-  cursor: -moz-grab;
-  cursor: -webkit-grab;
-}
-.carousel:active{
-  cursor: -moz-grabbing;
-  cursor: -webkit-grabbing;
-}
 /*----- MAIN WRAPPER -----*/
 .sz_video_003_wrapper{
   overflow: hidden;
@@ -260,7 +252,6 @@
   overflow-y: auto;
   overflow-x: hidden;
   position: absolute;
-  background: #333333;
 }
 @media (min-width: 1201px){
   .sz_vid_003_mod_sld > .modal-dialog{
@@ -274,7 +265,6 @@
   width: 100%;
   border: none;
   margin: auto;
-  height: 100%;
   background-color: transparent;
   -webkit-box-shadow: none;
   box-shadow: none;
@@ -296,7 +286,7 @@ a.sz_video_003_close{
   width: 35px;
   z-index: 100;
   height: 35px;
-  color: #ffffff;
+  color: #ccc;
   font-size: 20px;
   font-weight: 100;
   line-height: 30px;
@@ -316,9 +306,7 @@ a.sz_video_003_close{
 /* SLIDER
 /*-----------------------------------------*/
 .sz_video_003_slide_txt > a,
-.sz_video_003_controls .carousel-control,
-.sz_video_003_indicators .carousel-indicators > li > div > p,
-.sz_video_003_indicators .carousel-indicators > li > div > span{
+.sz_video_003_controls .carousel-control{
   margin: 0;
   text-decoration: none;
   text-shadow: none;
@@ -326,90 +314,33 @@ a.sz_video_003_close{
   -webkit-font-smoothing: antialiased;
 }
 .sz_vid_003_mod_sld .carousel-inner{
-  left: 1%;
-  width: 60%;
+  left: 0%;
+  width: 62%;
 }
 .sz_vid_003_mod_sld .carousel-inner,
 .sz_vid_003_mod_sld .carousel-inner > .item{
   overflow: hidden;
 }
 /*---------- INDICATORS THUMBNAIL CONTROL ----------*/
-.sz_video_003_indicators .carousel-indicators{
+.sz_video_003_indicators .right-side{
   right: 0;
-  top: 35px;
+  top: 0;
   bottom: 0;
   margin: 0;
   padding: 0;
   left: auto;
-  width: 25%;
-  height: 94%;
-  font-size: 0;
+  width: 38%;
   overflow: auto;
   position: absolute;
+  background-color: white;
+  padding: 10px;
 }
-.sz_video_003_indicators .carousel-indicators li{
-  width: 100%;
-  height: auto;
-  border: none;
-  margin: 5px 0;
-  padding: 5px 0;
-  display: block;
-  text-indent: 0;
-  overflow: hidden;
-  border-bottom: 1px solid #999999;
-  background: transparent;
-  -webkit-border-radius: 0;
-  border-radius: 0;
-}
-.sz_video_003_indicators .carousel-indicators .active{
-  width: 100%;
-  height: auto;
-  border: none;
-  opacity: 0.5;
-  margin: 5px 0;
-  display: block;
-  text-indent: 0;
-  overflow: hidden;
-  border-bottom: 1px solid #999999;
-  background: transparent;
-  -webkit-border-radius: 0;
-  border-radius: 0;
-}
-.sz_video_003_indicators .carousel-indicators li img{
-  width: 30%;
-  float: left;
-  display: block;
-  -webkit-border-radius: 0;
-  border-radius: 0;
-}
-.sz_video_003_indicators .carousel-indicators > li > div{
-  margin: 0;
-  width: 70%;
-  float: right;
-  overflow: hidden;
-  text-align: left;
-  padding: 0 5px 0 10px;
-}
-.sz_video_003_indicators .carousel-indicators > li > div > p{
-  margin: 0;
-  padding: 0;
-  color: #999999;
-  font-size: 12px;
-  font-weight: 300;
-  text-transform: capitalize;
-}
-.sz_video_003_indicators .carousel-indicators > li > div > span{
-  padding: 0;
-  display: block;
-  color: #ffffff;
-  font-size: 11px;
-  margin: 5px 0 0 0;
-}
-.sz_video_003_indicators .carousel-indicators::-webkit-scrollbar{
+
+.sz_video_003_indicators .right-side::-webkit-scrollbar{
   width: 2px;
   background: transparent;
 }
-.sz_video_003_indicators .carousel-indicators::-webkit-scrollbar-thumb{
+.sz_video_003_indicators .right-side::-webkit-scrollbar-thumb{
   background: #999999;
   -webkit-border-radius: 0;
   border-radius: 0;
@@ -423,7 +354,6 @@ a.sz_video_003_close{
   z-index: 100;
   color: #ffffff;
   font-size: 35px;
-  cursor: pointer;
   overflow: hidden;
   line-height: 35px;
   text-shadow: none;
@@ -564,27 +494,10 @@ ul.sz_video_003_slide_social > li > a > .fa-vimeo{
     padding: 25px;
   }
   /*----- INDICATORS THUMBNAIL CONTROL -----*/
-  .sz_video_003_indicators .carousel-indicators{
+  .sz_video_003_indicators .right-side{
     height: 265px;
   }
-  .sz_video_003_indicators .carousel-indicators li{
-    border: none;
-    margin: 1px 0;
-    padding: 1px 0;
-  }
-  .sz_video_003_indicators .carousel-indicators .active{
-    border: none;
-    margin: 1px 0;
-    padding: 1px 0;
-  }
-  .sz_video_003_indicators .carousel-indicators li img{
-    width: 100%;
-	margin: auto;
-	display: block;
-  }
-  .sz_video_003_indicators .carousel-indicators > li > div{
-    display: none;
-  }
+  
   /*----- MODAL SIZES -----*/
   .sz_vid_003_mod_sld > .modal-dialog > .modal-content{
     padding: 30px 5px 5px 5px;
@@ -625,26 +538,8 @@ ul.sz_video_003_slide_social > li > a > .fa-vimeo{
     font-size: 14px;
   }
   /*----- INDICATORS THUMBNAIL CONTROL -----*/
-  .sz_video_003_indicators .carousel-indicators{
+  .sz_video_003_indicators .right-side{
     height: 325px;
-  }
-  .sz_video_003_indicators .carousel-indicators li{
-    border: none;
-    margin: 1px 0;
-    padding: 1px 0;
-  }
-  .sz_video_003_indicators .carousel-indicators .active{
-    border: none;
-    margin: 1px 0;
-    padding: 1px 0;
-  }
-  .sz_video_003_indicators .carousel-indicators li img{
-    width: 100%;
-	margin: auto;
-	display: block;
-  }
-  .sz_video_003_indicators .carousel-indicators > li > div{
-    display: none;
   }
   /*----- MODAL SIZES -----*/
   .sz_vid_003_mod_sld > .modal-dialog > .modal-content{
@@ -685,31 +580,11 @@ ul.sz_video_003_slide_social > li > a > .fa-vimeo{
   }
   /*----- MODAL SIZES -----*/
   .sz_vid_003_mod_sld > .modal-dialog > .modal-content{
-    padding: 40px 0 0 0;
+    padding: 0;
   }
   /*----- INDICATORS THUMBNAIL CONTROL -----*/
-  .sz_video_003_indicators .carousel-indicators{
+  .sz_video_003_indicators .right-side{
     height: 375px;
-  }
-  .sz_video_003_indicators .carousel-indicators li{
-    border: none;
-    margin: 1px 0;
-    padding: 1px 0;
-  }
-  .sz_video_003_indicators .carousel-indicators .active{
-    border: none;
-    margin: 1px 0;
-    padding: 1px 0;
-  }
-  .sz_video_003_indicators .carousel-indicators > li > div{
-    padding: 0 1px 0 2px;
-  }
-  .sz_video_003_indicators .carousel-indicators > li > div > p{
-    font-size: 9px;
-  }
-  .sz_video_003_indicators .carousel-indicators > li > div > span{
-    font-size: 8px;
-	margin: 2px 0 0 0;
   }
   /*----- LEFT/RIGHT CONTROL -----*/
   .sz_video_003_controls .carousel-control{
@@ -739,28 +614,8 @@ ul.sz_video_003_slide_social > li > a > .fa-vimeo{
     height: 100%;
   }
   /*----- INDICATORS THUMBNAIL CONTROL -----*/
-  .sz_video_003_indicators .carousel-indicators{
+  .sz_video_003_indicators .right-side{
     height: 375px;
-  }
-  .sz_video_003_indicators .carousel-indicators li{
-    border: none;
-    margin: 1px 0;
-    padding: 1px 0;
-  }
-  .sz_video_003_indicators .carousel-indicators .active{
-    border: none;
-    margin: 1px 0;
-    padding: 1px 0;
-  }
-  .sz_video_003_indicators .carousel-indicators > li > div{
-    padding: 0 1px 0 2px;
-  }
-  .sz_video_003_indicators .carousel-indicators > li > div > p{
-    font-size: 9px;
-  }
-  .sz_video_003_indicators .carousel-indicators > li > div > span{
-    font-size: 8px;
-	margin: 2px 0 0 0;
   }
   /*----- LEFT/RIGHT CONTROL -----*/
   .sz_video_003_controls .carousel-control{
@@ -778,11 +633,7 @@ ul.sz_video_003_slide_social > li > a > .fa-vimeo{
     height: 70%;
   }
   /*----- INDICATORS THUMBNAIL CONTROL -----*/
-  .sz_video_003_indicators .carousel-indicators{
-    height: 400px;
-  }
-  .sz_video_003_indicators .carousel-indicators > li > div{
-    padding: 0 1px 0 2px;
+  .sz_video_003_indicators .right-side{
   }
   /*----- LEFT/RIGHT CONTROL -----*/
   .sz_video_003_controls .carousel-control{
@@ -810,8 +661,7 @@ ul.sz_video_003_slide_social > li > a > .fa-vimeo{
     height: 70%;
   }
   /*----- INDICATORS THUMBNAIL CONTROL -----*/
-  .sz_video_003_indicators .carousel-indicators{
-    height: 400px;
+  .sz_video_003_indicators .right-side{
   }
 }
 /*-----------------------------------------*/

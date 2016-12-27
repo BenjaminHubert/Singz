@@ -17,9 +17,9 @@ function lovethis(path, idPub, idUser) {
             didLove = response.didLove;
 
             if(nbLove != 1) {
-                $("#nbloves-"+idPub).text(nbLove + ' loves');
+                $("#nbloves-"+idPub).text(nbLove);
             } else {
-                $("#nbloves-"+idPub).text(nbLove + ' love');
+                $("#nbloves-"+idPub).text(nbLove);
             }
 
             if(didLove){

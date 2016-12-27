@@ -11,9 +11,6 @@
 		{# TITLE TAG #}
         <title>{% block title %}{{ appname }}{% endblock %}</title>
         {# STYLESHEETS #}
-        	{# General #}
-            <link href="{{ asset('bundles/foscomment/css/comments.css') }}" rel="stylesheet">
-            <link href="{{ asset('bundles/singzcore/css/comments.css') }}" rel="stylesheet">
             {# Font awesome icons #}
             <link href="{{ asset('bundles/singzcore/font-awesome-4.7.0/css/font-awesome.min.css') }}" rel="stylesheet">
             {# Menu library #}
@@ -29,6 +26,10 @@
         {# Custom style one shot #}
         {% block stylesheets %}{% endblock %}
         {# JAVASCRIPTS #}
+    	<script
+          src="https://code.jquery.com/jquery-3.1.1.min.js"
+          integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+          crossorigin="anonymous"></script>
         {% block head_javascripts %}{% endblock %}
         {# OTHERS HEAD TAGS #}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
@@ -63,14 +64,13 @@
 		</div>
         {# JAVASCRIPTS #}
             {# General #}
-        	<script src="{{ asset('bundles/singzcore/lightbox/js/jquery-1.12.4.min.js') }}"></script>
         	<script>var assetsBaseDir = "{{ asset('/') }}";</script>
         	{# Bootstrap #}
         	<script src="{{ asset('bundles/singzcore/bootstrap-3.3.7/js/bootstrap.min.js') }}"></script>
         	{# TouchSwipe JS file #}
         	<script src="{{ asset('bundles/singzcore/lightbox/js/jquery.touchSwipe.js') }}"></script>
         	{# Responsive Bootstrap Portfolio And Lightbox Main JS File #}
-        	<script src="{{ asset('bundles/singzcore/lightbox/js/sz_portfolio_lightbox_min.js') }}"></script>
+        	<script src="{{ asset('bundles/singzcore/lightbox/js/sz_portfolio_lightbox.js') }}"></script>
         	{# Menu #}
         	<script src="{{ asset('bundles/singzcore/OffCanvasMenuEffects/js/classie.js') }}"></script>
         	<script src="{{ asset('bundles/singzcore/OffCanvasMenuEffects/js/main.js') }}"></script>

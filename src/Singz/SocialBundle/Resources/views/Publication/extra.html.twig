@@ -1,0 +1,52 @@
+<div class="media">
+    <div class="media-left">
+    	<a href="{{ path('singz_user_bundle_homepage', {'id': publication.user.id}) }}">	
+    		<img class="media-object img-circle" style="width:42px;height:42px"  src="{{ asset(publication.user.image.realPath) }}" alt="{{ publication.user.username }}">
+    	</a>
+    </div>
+    <div class="media-body">
+        <a href="{{ path('singz_user_bundle_homepage', {'id': publication.user.id}) }}">
+            {{ publication.user.username }}
+        </a>
+        <p>{{ publication.date|time_diff }}</p>
+        <p><i class="fa fa-fw fa-heart" aria-hidden="true"></i> <span id="nbloves-{{ publication.id }}">{{ publication.numLoves }}</span></p>
+    </div>
+</div>
+
+
+<p>{{ publication.description }}</p>
+
+{# check if the user is logged #}
+{% if app.user %}
+    <button id="love-{{ publication.id }}" onclick="lovethis(path, {{ publication.id }}, {{ app.user.id }})">
+        {% set ilove = 0 %}
+        {% for love in publication.loves if ilove == 0 %}
+            {% if love.user.id == app.user.id  %}
+                {% set ilove = 1 %}
+                Je ne love plus
+            {% endif %}
+        {% endfor %}
+        {% if ilove == 0 %}
+            Je love !
+        {% endif %}
+    </button>
+{% else %}
+	<a href="{{ path('fos_user_security_login') }}">Se connecter</a>
+{% endif %}
+<div class="comments-container">
+	{# 
+    	Insert:
+    		- Date
+    		- Description
+    		- Love or Login
+    		- Comments
+    #}
+    <div data-thread="{{ thread.id }}">
+        {% include 'FOSCommentBundle:Thread:comments.html.twig' with {
+            'comments': comments,
+            'thread': thread,
+            'view': 'tree'
+        } %}
+    </div>
+</div>
+
