@@ -1,3 +1,6 @@
+<link href="{{ asset('bundles/foscomment/css/comments.css') }}" rel="stylesheet">
+<link href="{{ asset('bundles/singzcore/css/comments.css') }}" rel="stylesheet">
+
 <div class="media">
     <div class="media-left">
     	<a href="{{ path('singz_user_bundle_homepage', {'id': publication.user.id}) }}">	
@@ -41,7 +44,7 @@
     		- Love or Login
     		- Comments
     #}
-    <div data-thread="{{ thread.id }}">
+    <div id="fos_comment_thread" data-thread="{{ thread.id }}">
         {% include 'FOSCommentBundle:Thread:comments.html.twig' with {
             'comments': comments,
             'thread': thread,
@@ -50,3 +53,12 @@
     </div>
 </div>
 
+
+<script>
+    var path = '{{ path('singz_social_bundle_publication_love') }}';
+    var pathExtraPublication = '{{ path('singz_social_bundle_publication_extra_info') }}';
+</script>
+<!-- Bundle script -->
+<script src="{{ asset('bundles/singzsocial/js/script.js') }}"></script>
+<!-- Comments -->
+<script src="{{ asset('bundles/foscomment/js/comments.js') }}"></script>

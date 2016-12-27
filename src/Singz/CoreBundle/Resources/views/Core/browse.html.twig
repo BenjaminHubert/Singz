@@ -6,14 +6,8 @@
 
 {% block head_javascripts %}
 	<script>
-		var path = '{{ path('singz_social_bundle_publication_love') }}';
         var pathExtraPublication = '{{ path('singz_social_bundle_publication_extra_info') }}';
 	</script>
-{% endblock %}
-
-{% block stylesheets %}
-    <link href="{{ asset('bundles/foscomment/css/comments.css') }}" rel="stylesheet">
-    <link href="{{ asset('bundles/singzcore/css/comments.css') }}" rel="stylesheet">
 {% endblock %}
 
 {% block body %}
@@ -32,10 +26,6 @@
 {% endblock %}
 
 {% block end_javascripts %}
-	<!-- Comments -->
-	<script src="{{ asset('bundles/foscomment/js/comments.js') }}"></script>
-	<!-- Bundle script -->
-	<script src="{{ asset('bundles/singzsocial/js/script.js') }}"></script>
     <!-- To load extra publication (right side when opening publication modal) -->
     <script src="{{ asset('bundles/singzsocial/js/loadExtraPublication.js') }}"></script>
 {% endblock %}
