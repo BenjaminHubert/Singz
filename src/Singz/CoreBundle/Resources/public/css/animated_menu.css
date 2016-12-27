@@ -1,0 +1,154 @@
+.menu {
+	line-height: 1;
+	margin: 0 auto 3em;
+}
+
+.menu__list {
+	position: relative;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-flex-wrap: wrap;
+	flex-wrap: wrap;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.menu__item {
+	display: block;
+	margin: 1em 0;
+}
+
+.menu__link {
+	font-size: 1.05em;
+	font-weight: bold;
+	display: block;
+	padding: 1em;
+	cursor: pointer;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	-webkit-touch-callout: none;
+	-khtml-user-select: none;
+	-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+.menu__link:hover,
+.menu__link:focus {
+	outline: none;
+}
+
+/* Individual styles */
+
+/* Valentine */
+.menu--valentine .menu__item {
+	position: relative;
+	margin: 0 1em;
+}
+
+.menu--valentine .menu__link {
+	position: relative;
+	display: block;
+	min-width: 105px;
+	text-align: center;
+	color: #000000;
+	-webkit-transition: color 0.3s;
+	transition: color 0.3s;
+}
+
+.menu--valentine .menu__link:hover,
+.menu--valentine .menu__link:focus {
+	color: #4d4d4d;
+    text-decoration: none;
+}
+
+.menu--valentine .menu__item--current .menu__link {
+	color: #d94f5c;
+}
+
+.menu--valentine .menu__item::before,
+.menu--valentine .menu__item::after,
+.menu--valentine .menu__link::before,
+.menu--valentine .menu__link::after {
+	content: '';
+	position: absolute;
+	background: #d94f5c;
+	-webkit-transform-origin: 350% 350%;
+	transform-origin: 350% 350%;
+	-webkit-transition: -webkit-transform 0.5s;
+	transition: transform 0.5s;
+	-webkit-transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
+	transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
+}
+
+.menu--valentine .menu__item::before,
+.menu--valentine .menu__item::after {
+	top: 0;
+	width: 2px;
+	height: 100%;
+	-webkit-transform: scale3d(1, 0, 1);
+	transform: scale3d(1, 0, 1);
+}
+
+/* left line */
+.menu--valentine .menu__item::before {
+	left: 0;
+	-webkit-transition-delay: 0.05s;
+	transition-delay: 0.05s;
+}
+
+/* right line */
+.menu--valentine .menu__item::after {
+	right: 0;
+	-webkit-transition-delay: 0.15s;
+	transition-delay: 0.15s;
+}
+
+.menu--valentine .menu__link::before,
+.menu--valentine .menu__link::after {
+	left: 0;
+	width: 100%;
+	height: 2px;
+	-webkit-transform: scale3d(0, 1, 1);
+	transform: scale3d(0, 1, 1);
+}
+
+/* top line */
+.menu--valentine .menu__link::before {
+	top: 0;
+	-webkit-transition-delay: 0.1s;
+	transition-delay: 0.1s;
+}
+
+/* bottom line */
+.menu--valentine .menu__link::after {
+	bottom: 0;
+}
+
+.menu--valentine .menu__item--current::before,
+.menu--valentine .menu__item--current::after,
+.menu--valentine .menu__item--current .menu__link::before,
+.menu--valentine .menu__item--current .menu__link::after {
+	-webkit-transform: scale3d(1, 1, 1);
+	transform: scale3d(1, 1, 1);
+}
+
+/* Stack items for smaller screens */
+@media screen and (max-width:55em) {
+	.menu__list {
+		display: block;
+		margin: 0 auto;
+	}
+}
+
+section.menu-container{
+	display: -webkit-flex;
+	display: flex;
+	-webkit-flex-direction: column;
+	flex-direction: column;
+	-webkit-justify-content: center;
+	justify-content: center;
+	-webkit-align-items: center;
+	align-items: center;
+}

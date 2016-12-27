@@ -3,7 +3,9 @@
 {% block title %}
 	Explorer - {{ parent() }}
 {% endblock %}
-
+{% block stylesheets %}
+	<link rel="stylesheet" href="{{ asset('bundles/singzcore/css/animated_menu.css') }}">
+{% endblock %}
 {% block head_javascripts %}
 	<script>
         var pathExtraPublication = '{{ path('singz_social_bundle_publication_extra_info') }}';
@@ -11,11 +13,28 @@
 {% endblock %}
 
 {% block body %}
-	<p>
-		<a class="filter-button" href="{{ path('singz_browse', { 'filter': 'all' }) }}">All</a>
-		<a class="filter-button" href="{{ path('singz_browse', { 'filter': 'singzer' }) }}">Singzers</a>
-		<a class="filter-button" href="{{ path('singz_browse', { 'filter': 'starz' }) }}">Starz</a>
-	</p>
+	{% set currentPath = path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')) %}
+	<section class="menu-container">
+    	<nav class="menu menu--valentine">
+    		<ul class="menu__list">
+    			<li class="menu__item {% if currentPath == path('singz_browse', { 'filter': 'all' }) %}menu__item--current{% endif %}">
+    				<a href="{{ path('singz_browse', { 'filter': 'all' }) }}" class="menu__link">
+    					All
+    				</a>
+    			</li>
+    			<li class="menu__item {% if currentPath == path('singz_browse', { 'filter': 'singzer' }) %}menu__item--current{% endif %}">
+    				<a href="{{ path('singz_browse', { 'filter': 'singzer' }) }}" class="menu__link">
+    					Singzers
+    				</a>
+    			</li>
+    			<li class="menu__item {% if currentPath == path('singz_browse', { 'filter': 'starz' }) %}menu__item--current{% endif %}">
+    				<a href="{{ path('singz_browse', { 'filter': 'starz' }) }}" class="menu__link">
+    					Starz
+    				</a>
+    			</li>
+    		</ul>
+    	</nav>
+    </section>
 	{% if publications %}
 		{% include 'SingzSocialBundle:Publication:publications.html.twig' with {
 			'publications': publications
@@ -28,4 +47,5 @@
 {% block end_javascripts %}
     <!-- To load extra publication (right side when opening publication modal) -->
     <script src="{{ asset('bundles/singzsocial/js/loadExtraPublication.js') }}"></script>
+    <script src="{{ asset('bundles/singzcore/js/animated_menu.js') }}"></script>
 {% endblock %}
