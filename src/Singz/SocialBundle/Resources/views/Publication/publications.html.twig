@@ -45,11 +45,14 @@
 			<div class="modal-dialog">
 				<div class="modal-content">
 					<a href="#" class="sz_video_003_close" data-dismiss="modal"><span class="fa fa-times"></span></a>
-					<div class="right-side" style="text-align: left;">
-						{#
-							User picture, username, number of loves, publish time, publication description,
-							button to love and comments will be generated after clicking on the publication
-						#}
+					<div class="right-side">
+						<img class="loading-comments" src="{{ asset('bundles/singzcore/img/loading-comments.svg') }}" style="display:block;margin-left: auto;margin-right: auto;padding: 35% 0;">
+						<div class="extra-publication">
+    						{#
+    							User picture, username, number of loves, publish time, publication description,
+    							button to love and comments will be generated after clicking on the publication
+    						#}						
+						</div>
 					</div>
 					<div class="carousel-inner" role="listbox">
 						{% for publication in publications %}
@@ -92,24 +95,7 @@
 	</div>
 </div>
 
-<script>
-	$(document).ready(function(){
-		$('#sz_video_003_4_col').on('show.bs.modal', function (e) {
-			//add loading
-    		var idPublication = $('.carousel-inner .item.active').attr('data-big-publication');
 
-    		$.ajax({
-    	        url: "{{ path('singz_social_bundle_publication_extra_info') }}",
-    	        method: 'POST',
-    	        data: { 'idPublication': idPublication }
-    	    }).done(function(data, textStatus, jqXHR){
-    		    $('.modal-content .right-side').html(data);
-    	    }).fail(function(jqXHR, textStatus, errorThrown){
-    		    $('.modal-content .right-side').html(textStatus);
-    	    });
-		})
-	});
-</script>
 
 {#
 <video id="my-video" class="video-js vjs-default-skin" controls preload="auto" width="640" height="264" poster="{{ asset('uploads/userImage/') }}{{ publication.user.image.path }}" data-setup="{}">
