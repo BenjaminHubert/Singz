@@ -5,6 +5,7 @@ namespace Singz\VideoBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\HttpFoundation\File\File;
 
 /**
  * Video
@@ -32,7 +33,7 @@ class Video
     private $publications;
     
     /**
-     * @var UploadedFile
+     * @var File
      * @Assert\File(
      *     maxSize = "10M",
      *     mimeTypes = {
@@ -168,7 +169,7 @@ class Video
     /**
      * Get File
      *
-     * @return UploadedFile
+     * @return File
      */
     public function getFile()
     {
@@ -178,11 +179,11 @@ class Video
     /**
      * Set file
      *
-     * @param UploadedFile $live
+     * @param File $live
      *
      * @return Video
      */
-    public function setFile(UploadedFile $file)
+    public function setFile(File $file)
     {
     	$this->file = $file;
     	// On vérifie si on avait déjà un fichier pour cette entité
@@ -207,29 +208,6 @@ class Video
     
     	// Le nom du fichier est son id, on doit juste stocker également son extension
     	$this->extension = $this->file->guessExtension();
-    }
-    
-    /**
-     * @ORM\PostPersist()
-     * @ORM\PostUpdate()
-     */
-    public function upload()
-    {
-    	//s'il n'y a pas de fichier, on ne fait pas d'upload
-    	if (null === $this->file) {
-    		return;
-    	}
-    	//si on avait un ancien fichier, on le supprime
-    	if (null !== $this->tempFilename) {
-    		if (file_exists($this->tempFilename)) {
-    			unlink($this->tempFilename);
-    		}
-    	}
-    	//on déplace le fichier dans notre dossier
-    	$this->file->move(
-    			$this->getUploadRootDir(), 
-    			$this->id.'.'.$this->extension
-    	);
     }
     
     /**
@@ -263,5 +241,29 @@ class Video
     {
     	// On retourne le chemin relatif vers l'image pour notre code PHP
     	return __DIR__.'/../../../../web/'.$this->getUploadDir();
+    }
+
+    /**
+     * Set duration
+     *
+     * @param integer $duration
+     *
+     * @return Video
+     */
+    public function setDuration($duration)
+    {
+        $this->duration = $duration;
+
+        return $this;
+    }
+
+    /**
+     * Get duration
+     *
+     * @return integer
+     */
+    public function getDuration()
+    {
+        return $this->duration;
     }
 }

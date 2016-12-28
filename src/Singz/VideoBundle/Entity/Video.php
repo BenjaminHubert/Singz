@@ -3,15 +3,14 @@
 namespace Singz\VideoBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\HttpFoundation\File\File;
 
 /**
  * Video
  *
  * @ORM\Table(name="video")
  * @ORM\Entity(repositoryClass="Singz\VideoBundle\Repository\VideoRepository")
- * @ORM\HasLifecycleCallbacks
  */
 class Video
 {
@@ -32,7 +31,7 @@ class Video
     private $publications;
     
     /**
-     * @var UploadedFile
+     * @var File
      * @Assert\File(
      *     maxSize = "10M",
      *     mimeTypes = {
@@ -168,7 +167,7 @@ class Video
     /**
      * Get File
      *
-     * @return UploadedFile
+     * @return File
      */
     public function getFile()
     {
@@ -178,11 +177,11 @@ class Video
     /**
      * Set file
      *
-     * @param UploadedFile $live
+     * @param File $live
      *
      * @return Video
      */
-    public function setFile(UploadedFile $file)
+    public function setFile(File $file)
     {
     	$this->file = $file;
     	// On vérifie si on avait déjà un fichier pour cette entité
@@ -192,65 +191,6 @@ class Video
     	}
     	
     	return $this;    	
-    }
-    
-    /**
-     * @ORM\PrePersist()
-     * @ORM\PreUpdate()
-     */
-    public function preUpload()
-    {
-    	//s'il n'y a pas de fichier, on ne fait pas d'upload
-    	if (null === $this->file) {
-    		return;
-    	}
-    
-    	// Le nom du fichier est son id, on doit juste stocker également son extension
-    	$this->extension = $this->file->guessExtension();
-    }
-    
-    /**
-     * @ORM\PostPersist()
-     * @ORM\PostUpdate()
-     */
-    public function upload()
-    {
-    	//s'il n'y a pas de fichier, on ne fait pas d'upload
-    	if (null === $this->file) {
-    		return;
-    	}
-    	//si on avait un ancien fichier, on le supprime
-    	if (null !== $this->tempFilename) {
-    		if (file_exists($this->tempFilename)) {
-    			unlink($this->tempFilename);
-    		}
-    	}
-    	//on déplace le fichier dans notre dossier
-    	$this->file->move(
-    			$this->getUploadRootDir(), 
-    			$this->id.'.'.$this->extension
-    	);
-    }
-    
-    /**
-     * @ORM\PreRemove()
-     */
-    public function preRemoveUpload()
-    {
-    	// On sauvegarde temporairement le nom du fichier, car il dépend de l'id
-    	$this->tempFilename = $this->getUploadRootDir().'/'.$this->id.'.'.$this->extension;
-    }
-    
-    /**
-     * @ORM\PostRemove()
-     */
-    public function removeUpload()
-    {
-    	// En PostRemove, on n'a pas accès à l'id, on utilise notre nom sauvegardé
-    	if (file_exists($this->tempFilename)) {
-    		// On supprime le fichier
-    		unlink($this->tempFilename);
-    	}
     }
     
     public function getUploadDir()
@@ -287,5 +227,29 @@ class Video
     public function getDuration()
     {
         return $this->duration;
+    }
+
+    /**
+     * Set tempFilename
+     *
+     * @param string $tempFilename
+     *
+     * @return Video
+     */
+    public function setTempFilename($tempFilename)
+    {
+    	$this->tempFilename = $tempFilename;
+    	
+    	return $this;
+    }
+
+    /**
+     * Get tempFilename
+     *
+     * @return string
+     */
+    public function getTempFilename()
+    {
+        return $this->tempFilename;
     }
 }
