@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Singz\SocialBundle\Form\PublicationType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 class PublicationController extends Controller
 {
@@ -19,6 +20,10 @@ class PublicationController extends Controller
     	throw $this->createNotFoundException();
     }
 
+
+    /**
+     * @Security("has_role('ROLE_USER')")
+     */
     public function newAction(Request $request)
     {
     	//on crée notre publication 
