@@ -26,9 +26,18 @@
     {% endif %}
 
     {% set count = thread.numComments %}
+    {% if is_granted('ROLE_ADMIN') != true %}
+    	{% for commentinfo in comments %}
+			{% if commentinfo.comment.state != 0 %}
+				{% set count = count -1 %}
+			{% endif %}
+        {% endfor %}
+    {% endif %}
     <h3>{% transchoice count with {'%count%': count} from "FOSCommentBundle" %}fos_comment_thread_comment_count{% endtranschoice %}</h3>
 {% endif %}
 
 {% for commentinfo in comments %}
-    {% include "FOSCommentBundle:Thread:comment.html.twig" with { "children": commentinfo.children, "comment": commentinfo.comment, "depth": depth, "view": view } %}
+	{% if (commentinfo.comment.state == 0 or (commentinfo.comment.state != 0 and is_granted('ROLE_ADMIN'))) %}
+        {% include "FOSCommentBundle:Thread:comment.html.twig" with { "children": commentinfo.children, "comment": commentinfo.comment, "depth": depth, "view": view } %}
+    {% endif %}
 {% endfor %}
