@@ -1,4 +1,6 @@
+/***************/
 /** HEAD LOGO **/
+/***************/
 img.app-logo{
 	width:30%;
 	display: block;
@@ -12,5 +14,27 @@ img.app-logo{
 @media (min-width: 480px) and (max-width: 600px){
 	img.app-logo{
 		width:60%;
+	}
+}
+/*********************/
+/** RESPONSIVE MENU **/
+/*********************/
+.menu-wrap .small-screen{
+	display: none;
+}
+.icon-list {
+    display: block;
+    position: absolute;
+    top: 0;
+    right: 0;
+    line-height: 58px;
+    width: auto;
+}
+.show-menu .menu-wrap {
+    width: 100%;
+}
+@media screen and (max-width: 720px){
+	.menu-wrap .menu-top .profile a span{
+		opacity: 0;
 	}
 }
