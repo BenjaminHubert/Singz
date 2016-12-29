@@ -1,4 +1,8 @@
 services:
-#    singz_video.example:
-#        class: Singz\VideoBundle\Example
-#        arguments: ["@service_id", "plain_value", "%parameter%"]
+    singz.doctrine.upload:
+        class: Singz\VideoBundle\EventListener\VideoUploadSubscriber
+        arguments:
+            - "@dubture_ffmpeg.ffprobe"
+            - "@dubture_ffmpeg.ffmpeg"
+        tags:
+            - { name: doctrine.event_subscriber, connection: default }

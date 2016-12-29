@@ -1,0 +1,36 @@
+<div class="menu-wrap">
+	<nav class="menu-top">
+		<div class="profile">
+			{% if app.user %}
+				<a href="{{ path('singz_user_bundle_homepage', {'id': app.user.id}) }}">
+					<img style="width:42px;height:42px" class="img-circle" src="{{ asset(app.user.image.realPath) }}" alt="{{ app.user.username }}">
+					<span>{{ app.user.username }}</span>
+				</a>
+			{% else %}
+				<a href="{{ path('fos_user_security_login') }}"><button class="btn btn-default">Se connecter</button></a>
+				<a href="{{ path('fos_user_registration_register') }}"><button class="btn btn-default">S'enregistrer</button></a>
+			{% endif %}
+		</div>
+	</nav>
+	<div class="icon-list">
+		{% if app.user %}
+			<a title="Ajouter une vidéo" data-placement="bottom" data-toggle="tooltip" href="{{ path('singz_social_bundle_publication_new') }}"><i class="fa fa-fw fa-plus"></i></a>
+			<a title="" data-placement="bottom" data-toggle="tooltip" href="#"><i class="fa fa-fw fa-bell-o"></i></a>
+			<a title="" data-placement="bottom" data-toggle="tooltip" href="#"><i class="fa fa-fw fa-envelope-o"></i></a>
+			<a title="" data-placement="bottom" data-toggle="tooltip" href="#"><i class="fa fa-fw fa-comment-o"></i></a>
+			<a href="{{ path('fos_user_security_logout') }}">
+				<button title="Se déconnecter" data-placement="bottom" data-toggle="tooltip" class="btn btn-danger">
+					<i class="fa fa-sign-out" aria-hidden="true"></i>
+				</button>
+			</a>
+		{% endif %}
+	</div>
+	<nav class="menu-side">
+		<a href="{{ path('singz_feed') }}">
+			<i class="fa fa-fw fa-newspaper-o" aria-hidden="true"></i> Fil d'actualité
+		</a>
+		<a href="{{ path('singz_browse_all') }}">
+			<i class="fa fa-fw fa-globe" aria-hidden="true"></i> Browse
+		</a>
+	</nav>
+</div>

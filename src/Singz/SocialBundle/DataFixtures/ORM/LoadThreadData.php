@@ -18,7 +18,7 @@ class LoadThreadData  extends AbstractFixture implements OrderedFixtureInterface
 	
 	public function load(ObjectManager $manager)
 	{
-		//Getting the thread manager
+		/*//Getting the thread manager
 		$threadManager = $this->container->get('fos_comment.manager.thread');
 		//Adding fixtures
 		for($i=0; $i<$this->nb; $i++){
@@ -33,7 +33,7 @@ class LoadThreadData  extends AbstractFixture implements OrderedFixtureInterface
 			}			
 			$this->setReference('thread '.$i, $thread);
 		}
-		$manager->flush();
+		$manager->flush();*/
 	}
 
 	public function getOrder()

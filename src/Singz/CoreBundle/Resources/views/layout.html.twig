@@ -2,145 +2,81 @@
 <html>
     <head>
         <meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge"> 
+		<meta name="viewport" content="width=device-width, initial-scale=1"> 
         {# DYNAMIC CANONICAL URL #}
         <link rel="canonical" href="{{ url(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')) }}" />
-
         {# DESCRIPTION TAG #}
         <meta name="description" content="{% block description_tag %}{% endblock %}">
-
-        <title>
-            {% block title %}
-            {{ appname }}
-            {% endblock %}
-        </title>
-
+		{# TITLE TAG #}
+        <title>{% block title %}{{ appname }}{% endblock %}</title>
         {# STYLESHEETS #}
-        <link href="{{ asset('bundles/singzcore/css/normalize.css') }}" rel="stylesheet">
-        <link href="{{ asset('bundles/singzcore/css/demo.css') }}" rel="stylesheet">
-        <link href="{{ asset('bundles/singzcore/css/effect1.css') }}" rel="stylesheet">
-        <link href="{{ asset('bundles/singzcore/css/grid-gallery.css') }}" rel="stylesheet">
-        <link href="{{ asset('bundles/singzcore/css/component.css') }}" rel="stylesheet">
-        <link href="{{ asset('bundles/singzcore/css/ns-default.css') }}" rel="stylesheet">
-        <link href="{{ asset('bundles/singzcore/css/ns-style-other.css') }}" rel="stylesheet">
-        <link href="{{ asset('bundles/singzcore/css/ns-style-other.css') }}" rel="stylesheet">
-        <link href="{{ asset('bundles/foscomment/css/comments.css') }}" rel="stylesheet">
-        <link href="{{ asset('bundles/singzcore/css/comments.css') }}" rel="stylesheet">
-        <link href="http://vjs.zencdn.net/5.8.8/video-js.css" rel="stylesheet">
-        <link href="{{ asset('bundles/singzcore/css/style.css') }}" rel="stylesheet">
+            {# Font awesome icons #}
+            <link href="{{ asset('bundles/singzcore/font-awesome-4.7.0/css/font-awesome.min.css') }}" rel="stylesheet">
+            {# Menu library #}
+            <link href="{{ asset('bundles/singzcore/OffCanvasMenuEffects/css/normalize.css') }}" rel="stylesheet">
+            <link href="{{ asset('bundles/singzcore/OffCanvasMenuEffects/css/demo.css') }}" rel="stylesheet">
+            <link href="{{ asset('bundles/singzcore/OffCanvasMenuEffects/css/menu_topside.css') }}" rel="stylesheet">
+        	{# Bootstrap #}
+            <link rel="stylesheet" href="{{ asset('bundles/singzcore/bootstrap-3.3.7/css/bootstrap.min.css') }}">
+            {# Responsive Bootstrap Portfolio And Lightbox Main Style Sheet #}
+            <link href="{{ asset('bundles/singzcore/lightbox/css/sz_video_003.css') }}" rel="stylesheet">
+            {# Others #}
+            <link href="{{ asset('bundles/singzcore/css/style.css') }}" rel="stylesheet">
+        {# Custom style one shot #}
         {% block stylesheets %}{% endblock %}
-
-        {# JAVASCRIPT TO ENABLE FROM THE HEAD TAG #}
-        <script src="{{ asset('bundles/singzadmin/js/jquery.min.js') }}"></script>
-        <script src="{{ asset('bundles/singzcore/js/modernizr.custom.js') }}"></script>
-        <script src="http://vjs.zencdn.net/ie8/1.1.2/videojs-ie8.min.js"></script>
+        {# JAVASCRIPTS #}
+    	<script src="{{ asset('bundles/singzcore/js/jquery-3.1.1.min.js') }}"></script>
         {% block head_javascripts %}{% endblock %}
-
         {# OTHERS HEAD TAGS #}
-        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
     </head>
-    <body class="page-loading">
-        <div id="ip-container" class="ip-container">
-            <!-- initial header -->
-            <header class="ip-header">
-                <h1 class="ip-logo">
-                    <svg class="ip-inner" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="920px" height="200px" viewBox="180 200 920 400" style="enable-background:new 0 0 1280 800;" xml:space="preserve">
-                        <title id="logo_title">Singz logo</title>
-                        <g>
-                            <g>
-                                <g>
-                                    <path class="st0" d="M542.6,290.2c4.9,3.6,16.3,0.1,19.9-2c3.6-2,5.3-5.3,6.3-9.1c0.4-1.8-0.1-3.4-1.7-4.3
-                                    c-1.6-0.9-3.2-1.9-5-2.3c-7.6-2-17.9,2.9-21.3,10.1c-0.2,0.5-0.5,1-0.6,1.5C539.4,286.7,540.4,288.6,542.6,290.2z"/>
-                                </g>
-                                <g>
-                                    <path class="st0" d="M885,451c-1.2-0.4-2.4-0.8-3.7-1.1c-5.8-1.2-11.5-2.4-17.3-3.5c-7.3-1.4-14.6-2.5-22-3
-                                    c-11.7-0.8-23.4-1.4-35-2.2c-9.3-0.7-18.5-1.5-27.7-2.3c-2-0.2-15.9-0.3-17.9-0.6c0,0-0.4-20.5,1.2-22.3
-                                    c1.9-2,67.5-28.3,97.5-19.7c6.3,1.8,8.7-9.8,6.3-15.9c-1-2.4-2.8-4-5.3-4.5c-1.1-0.2-2.1-0.4-3.2-0.5c-5.4-0.6-20.4,0.2-39.8,4.1
-                                    c-2.2,0.5,21.4-12.8,17.7-26.7c-2.6-9.7-33.6-30.8-47.3-37c-6.3-2.9-11.6-2.1-13.1,1.2c-2.2,4.8-3.4,9.7,6.3,16.5
-                                    c2,1.4,31.9,19.5,30.1,25.2c-2.4,7.6-39.6,38.8-47.4,38.5c-2.5-0.1,2.4-40.4,3.7-47.3c0.8-4,1.4-8,1.3-12.1
-                                    c-0.2-4.8-1.8-8.9-5.5-12c-4.3-3.7-8.5-7.4-12.8-11.1c-4.5-3.9-9.5-6.8-15.4-8.3c-6.3-1.6-19.3,0.4-32.3,18.5
-                                    c-8.4,11.8-14,24.7-15.3,39.3c-0.5,5.9-0.3,16.1,1.1,22c0.8,3.3-14.8,14.2-17.5,15.4c-3.3,1.4-13.9,2.4-10.7-7
-                                    c0.5-1.4,1-2.7,1.6-4.1c2.7-6.2,5.4-12.3,8-18.5c0.6-1.5,4.8-13.2,5.2-15.3c0.8-3.9,0.9-7.8,0.9-11.8c0-4.6-2.2-8.1-6.2-10.5
-                                    c-2.2-1.3-4.6-2-7.1-2c-2.9,0.1-5.8,0.1-8.7,0.4c-9.4,1.2-11.5,3.8-33.7,23.3c-2.8,2.5-2.6-8.4-2.7-12.1c0-1.7,0-3.4-0.1-5.1
-                                    c-0.3-4.2-2.4-7-6-7.8c-12.6-2.7-19.7,4.8-23.8,8.6c-4.1,3.7-25.6,38.9-32.7,45.1c-15.4,17.8-14.1-3.1-13.3-7.5
-                                    c0.6-3.3,11.8-51.5,15.2-59.5c0.7-1.8,1.5-4.8-0.4-5.2c-13.5-2.6-22.9,9.4-23.4,10c-4,5.1-6.8,10.8-8.7,16.9
-                                    c-2.7,8.7-5.2,17.5-7.7,26.3c-2,7.1-5.8,54.7,29.1,47.1c5.2-1.5,9.6-4.4,13.6-7.8c8.2-6.9,32.2-36.8,33.1-36.4
-                                    c2.5,1,0.7,10.5,0.1,13.1c-1.2,4.7-2.5,9.4-3.7,14c-0.6,2.3-1,4.6-0.9,7c0.3,5.5,4,10.1,9.3,11.5c3.3,0.9,6.6,1,9.9,0.6
-                                    c3.1-0.4,5.8-1.8,7.4-4.7c1.3-2.3,2.7-4.6,3.9-7c6.4-12.5,12.6-25,19-37.5c1.9-3.7,15.1-17.9,17.2-6.3
-                                    c-0.2,1.6-9.7,30.2-10.8,32.9c-1.8,4.4-2.6,9.1-2.1,13.9c3.6,20.8,29.6,12.2,38.1,6.2c3.7-2.6,19-13.5,19-13.5
-                                    c3.7,2.9,15.6,5.1,20.3,5.2c9.8,0.2,20.7-8.7,23.4-8.1c0,0,3.9,10.4-6.3,18.7c-7.9,6.4-15.3,13.3-23,19.9c-2,1.7-4,3.4-6.1,4.9
-                                    c-2.5,1.8-153.9,15-216.6,29.4c-3.7,0.9-26.5,6.9-34.1,9.4c-1.7,0.5-3,1.7-3.7,3.3c-0.5,1.2-0.7,2.3,0.1,3.5c1,1.6,2.2,3,3.8,4.1
-                                    c1.6,1.1,3.5,1.7,5.4,1.2c18.3-5.3,227.1-27.7,227.1-27.7s-6.3,15.4-6.8,17.6c-1,4.5-2,9-2.9,13.5c-1.8,8.6-2.3,17.3-0.5,26
-                                    c2.2,10.5,6,20.3,12.4,29c4,5.5,8.8,10.2,14.8,13.5c5.9,3.3,31.2,10.9,46.5-13.9c8.4-13.7,7.2-80.7,7.6-81.5c0,0,44,3.6,50.3,4
-                                    c4.9,0.3,9.8,0.5,14.7,0.8c6.8,0.4,13.6,0.9,20.3,1.3c6.5,0.4,12.9,0.8,19.4,1.2c3.9,0.2,7.7,0.3,11.6,1c1.8,0.3,3.8,0.3,5.6-0.2
-                                    c5.6-1.4,9.6-4.8,11.5-10.3c0-1.7,0-3.4,0-5.1C893,455.1,889.4,452.6,885,451z M744.8,428.2c0.3,2.7,0,11.1,0,11.1h-14.3
-                                    C740.8,425.5,744.3,423.7,744.8,428.2z M739.3,515.8c-5.6,9.8-19.9,19.9-31.1,4.5c-8.3-33.8,3.7-53.9,5.8-55.7l29.6,1.3
-                                    C743.7,466,744.1,507.4,739.3,515.8z M745.8,369c-0.1,6.1-2.6,6.7-7,8.3c-4.4,1.6-9,2.6-13.7,2c-2.1-0.3-4.2-0.8-6.1-1.6
-                                    c-2.9-1.2-4.5-3.6-4.7-6.8c-0.8-8.8,1.5-16.8,7.1-23.8c3.5-4.3,6.8-8.7,11-12.3c0.8-0.7,1.6-1.4,2.5-2.1c2.4-2,5.1-1.8,7.7-0.6
-                                    c2.6,1.2,6.2,7.7,6.2,10.8C748.6,347.5,745.8,364.2,745.8,369z"/>
-                                </g>
-                                <g>
-                                    <path class="st0" d="M493.2,414.4c5.9-6.6,8.9-19.7,10-23.2c2.8-9,4.4-18.3,3.1-27.8c-1.7-12.2-6.4-23-14.8-32.2
-                                    c-4.4-4.9-9.4-9.1-14.3-13.4c-3.2-2.8-6.3-5.7-9.2-8.7c-3.5-3.8-15.7-11.8-17.8-20.1c-0.2-0.9-3.8-9.4,1.2-16.4
-                                    c3.3-4.7,8.1-5.7,14-6.7c18.3-3.1,31.1,18.2,32.5,19.1c2.5,1.8,5.3,2.1,8.1,1.1c2.4-0.8,4.6-1.9,6.6-3.4c4-2.9,6.4-6.8,7.3-11.7
-                                    c0.6-3.3,0.2-6.6-0.5-9.9c-1.1-5.1-14.2-16.5-17.1-18.8c-5.4-4.4-11.4-7.5-18.1-9.5c-9.9-2.9-20-3.1-29.7-0.4
-                                    c-9.6,2.7-17.6,12.9-19.8,16c-3,4.3-9,15.2-8.8,37.9c0.1,9.5,1.4,18.3,6.3,26.4c2,3.3,4,6.7,5.9,10c2.2,3.9,4.6,7.7,7.4,11.2
-                                    c2.1,2.7,4.2,5.5,6.1,8.4c5.8,8.3,16.8,24.3,19.2,34.2c1.4,5.7,1.2,11.3-1.7,16.4c-4.1,7.2-10.2,12-18.1,14.3
-                                    c-5.8,1.7-17.7,0.1-21.6-4.5c-1.4-1.6-2.5-3.4-3.5-5.3c-2.4-4.6-3.2-9.6-3.6-14.7c-0.3-3.6-1.1-7.1-1.1-10.7
-                                    c0-18.1-29.9-26.7-33.5,1.2c-0.1,0.8-1.9,16.6,15.5,36.5c6.5,7.4,14.9,13.6,24.2,16.7c10,3.4,28.9,3.6,33.3,3.1
-                                    C464.8,428.9,483.1,425.8,493.2,414.4z"/>
-                                </g>
-                            </g>
-                            <g>
-                                <path class="st0" d="M776.8,377.1c-0.6,0-1.2-0.1-1.7-0.4c-1.3-0.7-2-2-1.9-3.5l1.8-23.9c0.1-1.4,0.9-2.5,2.2-3.1
-                                c1.3-0.5,2.7-0.3,3.8,0.6l14.2,11.3c0.9,0.8,1.4,1.8,1.3,2.9c0,1.1-0.6,2.1-1.5,2.8l-16,12.5C778.4,376.8,777.6,377.1,776.8,377.1
-                                z M779.9,352.5l-1.3,17.8l12-9.3L779.9,352.5z"/>
-                            </g>
-                        </g>
-                    </svg>
-                </h1>
-                <div class="ip-loader">
-                    <svg class="ip-inner" width="60px" height="60px" viewBox="0 0 80 80">
-                        <path class="ip-loader-circlebg" d="M40,10C57.351,10,71,23.649,71,40.5S57.351,71,40.5,71 S10,57.351,10,40.5S23.649,10,40.5,10z"/>
-                        <path id="ip-loader-circle" class="ip-loader-circle" d="M40,10C57.351,10,71,23.649,71,40.5S57.351,71,40.5,71 S10,57.351,10,40.5S23.649,10,40.5,10z"/>
-                    </svg>
-                </div>
-            </header>
-
-
-            <!-- main content -->
-            <div class="ip-main">
-                <h2>SHARE YOUR MUSIC</h2>
-                <div class="lighter">
-                    <img class="fixed-nav-logo" src="{{ asset('bundles/singzcore/img/logo-singz.png') }}"/>
-                    <form>
-                        <span><input type="text" class="search rounded" placeholder="Search..."></span>
-                    </form>
-                </div>
-
-                {# Error message #}
-				{{ include('SingzCoreBundle::flash-messages.html.twig') }}
-
-                {# BODY BLOCK #}
-                {% block body %}{% endblock %}
-
-            </div>
-        </div>
-
-        {# JAVASCRIPT TO ENABLE BEFORE CLOSING THE BODY TAG #}
-
-        <script src="{{ asset('bundles/singzcore/js/classie.js') }}"></script>
-        <script src="{{ asset('bundles/singzcore/js/pathLoader.js') }}"></script>
-        <script src="{{ asset('bundles/singzcore/js/imagesloaded.pkgd.min.js') }}"></script>
-        <script src="{{ asset('bundles/singzcore/js/masonry.pkgd.min.js') }}"></script>
-        <script src="{{ asset('bundles/singzcore/js/notificationFx.js') }}"></script>
-        <script src="{{ asset('bundles/singzcore/js/grid-gallery.js') }}"></script>
-        <script src="{{ asset('bundles/singzcore/js/notify.js') }}"></script>
-        <script src="{{ asset('bundles/singzcore/js/notification.js') }}"></script>
-        <script src="{{ asset('bundles/singzcore/js/page-load.js') }}"></script>
-        <script src="http://vjs.zencdn.net/5.8.8/video.js"></script>
-        <script src="{{ asset('bundles/singzcore/js/main.js') }}"></script>
-        <script>var assetsBaseDir = "{{ asset('/') }}";</script>
+    <body>
+        <div class="container-global">
+        	{# Menu #}
+			{{ include('SingzCoreBundle::menu.html.twig') }}
+			<button class="menu-button" id="open-button">Open Menu</button>
+			<div class="content-wrap">
+				<div class="content">
+					<div class="row">
+						<div class="container">
+						    {# Logo #}
+    						<div class="col-md-12">
+    							<a href="{{ path('singz_index') }}">
+    								<img class="app-logo" src="{{ asset('bundles/singzcore/img/logo-singz.png') }}"/>
+    							</a>
+    						</div>
+                            {# Error message #}
+    						<div class="col-md-12">
+    							{{ include('SingzCoreBundle::flash-messages.html.twig') }}
+    						</div>
+                            {# Body #}
+    						<div class="col-md-12">
+                                {% block body %}{% endblock %}
+                            </div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+        {# JAVASCRIPTS #}
+            {# General #}
+        	<script>var assetsBaseDir = "{{ asset('/') }}";</script>
+        	{# Bootstrap #}
+        	<script src="{{ asset('bundles/singzcore/bootstrap-3.3.7/js/bootstrap.min.js') }}"></script>
+        	{# TouchSwipe JS file #}
+        	<script src="{{ asset('bundles/singzcore/lightbox/js/jquery.touchSwipe.js') }}"></script>
+        	{# Responsive Bootstrap Portfolio And Lightbox Main JS File #}
+        	<script src="{{ asset('bundles/singzcore/lightbox/js/sz_portfolio_lightbox.js') }}"></script>
+        	{# Menu #}
+        	<script src="{{ asset('bundles/singzcore/OffCanvasMenuEffects/js/classie.js') }}"></script>
+        	<script src="{{ asset('bundles/singzcore/OffCanvasMenuEffects/js/main.js') }}"></script>
+        	<script>
+        		$(function () {
+					$('[data-toggle="tooltip"]').tooltip();
+					$('[data-toggle="popover"]').popover();
+        		})
+        	</script>
         {% block end_javascripts %}{% endblock %}
-
     </body>
 </html>

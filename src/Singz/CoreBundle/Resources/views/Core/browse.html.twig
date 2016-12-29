@@ -3,70 +3,42 @@
 {% block title %}
 	Explorer - {{ parent() }}
 {% endblock %}
-
-{% block head_javascripts %}
-	<script>
-		var path = '{{ path('singz_social_bundle_publication_love') }}';
-	</script>
+{% block stylesheets %}
+	<link rel="stylesheet" href="{{ asset('bundles/singzcore/css/animated_menu.css') }}">
 {% endblock %}
 
 {% block body %}
-
-	<p>
-		<a class="filter-button" href="{{ path('singz_browse', { 'filter': 'all' }) }}">All</a>
-		<a class="filter-button" href="{{ path('singz_browse', { 'filter': 'singzer' }) }}">Singzers</a>
-		<a class="filter-button" href="{{ path('singz_browse', { 'filter': 'starz' }) }}">Starz</a>
-	</p>
-
-	<div id="grid-gallery" class="grid-gallery">
-		<section class="grid-wrap">
-			<ul class="grid">
-				<li class="grid-sizer"></li><!-- for Masonry column width -->
-				{% for publication in publications %}
-					<li>
-						<figure>
-							<img class="{% if 'ROLE_STARZ' in publication.user.roles %}starz{% endif %}"src="{{ asset('uploads/userImage/') }}{{ publication.user.image.path }}" alt="img01"/>
-						</figure>
-					</li>
-				{% endfor %}
-			</ul>
-		</section>
-		<section class="slideshow">
-			<ul>
-				{% for publication in publications %}
-					<li>
-						<figure>
-							{% include 'SingzSocialBundle:Publication:publication.html.twig' with {
-							'publication': publication,
-							'comments': comments[publication.id],
-							'thread': threads[publication.id],
-							'view': 'tree'
-							} %}
-						</figure>
-					</li>
-				{% else %}
-					Aucune publication à afficher
-				{% endfor %}
-			</ul>
-			<nav>
-				<span class="icon nav-prev"></span>
-				<span class="icon nav-next"></span>
-				<span class="icon nav-close"></span>
-			</nav>
-			<div class="info-keys icon">Navigate with arrow keys</div>
-		</section>
-	</div>
-
+	{% set currentPath = path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')) %}
+	<section class="menu-container">
+    	<nav class="menu menu--valentine">
+    		<ul class="menu__list">
+    			<li class="menu__item {% if currentPath == path('singz_browse', { 'filter': 'all' }) %}menu__item--current{% endif %}">
+    				<a href="{{ path('singz_browse', { 'filter': 'all' }) }}" class="menu__link">
+    					All
+    				</a>
+    			</li>
+    			<li class="menu__item {% if currentPath == path('singz_browse', { 'filter': 'singzer' }) %}menu__item--current{% endif %}">
+    				<a href="{{ path('singz_browse', { 'filter': 'singzer' }) }}" class="menu__link">
+    					Singzers
+    				</a>
+    			</li>
+    			<li class="menu__item {% if currentPath == path('singz_browse', { 'filter': 'starz' }) %}menu__item--current{% endif %}">
+    				<a href="{{ path('singz_browse', { 'filter': 'starz' }) }}" class="menu__link">
+    					Starz
+    				</a>
+    			</li>
+    		</ul>
+    	</nav>
+    </section>
+	{% if publications %}
+		{% include 'SingzSocialBundle:Publication:publications.html.twig' with {
+			'publications': publications
+		} %}
+	{% else %}
+		Aucune publication à afficher
+	{% endif %}
 {% endblock %}
 
 {% block end_javascripts %}
-	<!-- jQuery -->
-	<script src="{{ asset('bundles/singzadmin/js/jquery.min.js') }}"></script>
-	<!-- Comments -->
-	<script src="{{ asset('bundles/foscomment/js/comments.js') }}"></script>
-    <script src="{{ asset('bundles/singzsocial/js/jquery.form.min.js') }}"></script>
-	<!-- Bundle script -->
-	<script src="{{ asset('bundles/singzsocial/js/script.js') }}"></script>
-
-	<script>new CBPGridGallery( document.getElementById( 'grid-gallery' ) );</script>
+    <script src="{{ asset('bundles/singzcore/js/animated_menu.js') }}"></script>
 {% endblock %}

@@ -14,7 +14,7 @@ class LoadCommentData extends AbstractFixture implements OrderedFixtureInterface
 
 	public function load(ObjectManager $manager)
 	{
-		//First depth comments array
+		/*//First depth comments array
 		$comments = [];
 		//Create a data faker
 		$faker = \Faker\Factory::create();
@@ -41,7 +41,7 @@ class LoadCommentData extends AbstractFixture implements OrderedFixtureInterface
 				$commentManager->saveComment($comment);
 			}
 		}
-		$manager->flush();
+		$manager->flush();*/
 	}
 
 	public function getOrder()

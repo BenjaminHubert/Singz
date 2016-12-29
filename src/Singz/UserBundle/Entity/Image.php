@@ -62,4 +62,8 @@ class Image
     {
         return $this->path;
     }
+    
+    public function getRealPath(){
+    	return 'uploads/userImage/'.$this->path;
+    }
 }

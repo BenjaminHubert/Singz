@@ -1,4 +1,5 @@
 {% block flash_messages %}
+	{# Global message #}
     {% for type, messages in app.session.flashbag.all() %}
         {% for message in messages %}
             <div class="alert alert-{{ type }} alert-dismissible" role="alert">
@@ -7,4 +8,13 @@
             </div>
         {% endfor %}
     {% endfor %}
+    
+    {# Login message #}
+    {% if error is defined and error != null %}
+    	<div class="alert alert-danger alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+           {{ error.messageKey|trans(error.messageData, 'security') }}
+        </div>
+    {% endif %}
+    
 {% endblock %}

@@ -20,3 +20,10 @@ singz_social_bundle_publication_love:
     path:     /publication/love/
     defaults:
         _controller: SingzSocialBundle:Publication:love
+
+# ajax
+singz_social_bundle_publication_extra_info:
+    path:     /publication/extra/
+    defaults:
+        _controller: SingzSocialBundle:Publication:getPublicationExtra
+        

@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Singz\SocialBundle\Form\PublicationType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 class PublicationController extends Controller
 {
@@ -19,6 +20,10 @@ class PublicationController extends Controller
     	throw $this->createNotFoundException();
     }
 
+
+    /**
+     * @Security("has_role('ROLE_USER')")
+     */
     public function newAction(Request $request)
     {
     	//on crée notre publication 
@@ -42,7 +47,7 @@ class PublicationController extends Controller
     			$em->flush();
     			
     			//on affiche un message
-    			$request->getSession()->getFlashBag()->add('notice', 'Publication bien enregistrée.');
+    			$request->getSession()->getFlashBag()->add('success', 'Publication bien enregistrée.');
     			
     			// On redirige vers la page de visualisation de la publication nouvellement créée
     			return $this->redirectToRoute('singz_social_bundle_publication_show', array('id' => $publication->getId()));
@@ -140,6 +145,42 @@ class PublicationController extends Controller
         }
 
         return new Response('Error', 400);
+    }
+    
+    /**
+     * Retrieve publication description, date and comments through Ajax
+     * @param Request $request
+     */
+    public function getPublicationExtraAction(Request $request){
+    	if($request->isXmlHttpRequest()) {
+    		$id = $request->request->get('idPublication');
+    		
+    		// Get publication
+    		$publication = $this->getDoctrine()->getManager()->getRepository('SingzSocialBundle:Publication')->getPublicationById($id);
+    		if($publication == null) {
+    			throw $this->createNotFoundException('Publication inexistante');
+    		}
+    		// Get thread
+    		$thread = $this->container->get('fos_comment.manager.thread')->findThreadById($id);
+    		if (null === $thread) {
+    			$thread = $this->container->get('fos_comment.manager.thread')->createThread();
+    			$thread->setId($id);
+    			$thread->setPermalink($request->getUri());
+    		
+    			// Add the thread
+    			$this->container->get('fos_comment.manager.thread')->saveThread($thread);
+    		}
+    		
+    		// Get comments
+    		$comments = $this->container->get('fos_comment.manager.comment')->findCommentTreeByThread($thread);
+    		
+    		return $this->render('SingzSocialBundle:Publication:extra.html.twig', array(
+    			'publication' => $publication,
+    			'comments' => $comments,
+    			'thread' => $thread
+    		));
+    	}
+    	return new Response('Error', 400);
     }
 
 }

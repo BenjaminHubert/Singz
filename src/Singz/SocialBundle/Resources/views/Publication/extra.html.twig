@@ -1,0 +1,57 @@
+{# Stylesheets #}
+<link href="{{ asset('bundles/foscomment/css/comments.css') }}" rel="stylesheet">
+<link href="{{ asset('bundles/singzcore/css/comments.css') }}" rel="stylesheet">
+<div class="media">
+    <div class="media-left">
+    	{# User image #}
+    	<a href="{{ path('singz_user_bundle_homepage', {'id': publication.user.id}) }}">	
+    		<img class="media-object img-circle" style="width:42px;height:42px"  src="{{ asset(publication.user.image.realPath) }}" alt="{{ publication.user.username }}">
+    	</a>
+    </div>
+    <div class="media-body">
+    	{# Username #}
+        <a href="{{ path('singz_user_bundle_homepage', {'id': publication.user.id}) }}">
+            {{ publication.user.username }}
+        </a>
+        {# Publication date #}
+        <p>{{ publication.date|time_diff }}</p>
+        {# Number of love #}
+        <p><i class="fa fa-fw fa-heart" aria-hidden="true"></i> <span id="nbloves-{{ publication.id }}">{{ publication.numLoves }}</span></p>
+    </div>
+</div>
+{# Publication description #}
+<p>{{ publication.description }}</p>
+{# love button #}
+{% if app.user %}
+    <button id="love-{{ publication.id }}" onclick="lovethis(path, {{ publication.id }}, {{ app.user.id }})">
+        {% set ilove = 0 %}
+        {% for love in publication.loves if ilove == 0 %}
+            {% if love.user.id == app.user.id  %}
+                {% set ilove = 1 %}
+                Je ne love plus
+            {% endif %}
+        {% endfor %}
+        {% if ilove == 0 %}
+            Je love !
+        {% endif %}
+    </button>
+{% else %}
+	<a href="{{ path('fos_user_security_login') }}">Se connecter</a>
+{% endif %}
+{# Comments #}
+<div class="comments-container">
+    <div id="fos_comment_thread" data-thread="{{ thread.id }}">
+        {% include 'FOSCommentBundle:Thread:comments.html.twig' with {
+            'comments': comments,
+            'thread': thread,
+            'view': 'tree'
+        } %}
+    </div>
+</div>
+{# Javascripts #}
+<script>
+    var path = '{{ path('singz_social_bundle_publication_love') }}';
+    var pathExtraPublication = '{{ path('singz_social_bundle_publication_extra_info') }}';
+</script>
+<script src="{{ asset('bundles/singzsocial/js/script.js') }}"></script>
+<script src="{{ asset('bundles/foscomment/js/comments.js') }}"></script>

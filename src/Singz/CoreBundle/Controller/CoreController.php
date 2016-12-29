@@ -36,33 +36,8 @@ class CoreController extends Controller
                 break;
         }
 
-        // Get threads and comments
-        $threads = array();
-        $allComments = array();
-
-        foreach ($publications as $pub) {
-            $id = $pub->getId();
-            $thread = $this->container->get('fos_comment.manager.thread')->findThreadById($id);
-            if (null === $thread) {
-                $thread = $this->container->get('fos_comment.manager.thread')->createThread();
-                $thread->setId($id);
-                $thread->setPermalink($request->getUri());
-
-                // Add the thread
-                $this->container->get('fos_comment.manager.thread')->saveThread($thread);
-            }
-
-            $comments = $this->container->get('fos_comment.manager.comment')->findCommentTreeByThread($thread);
-
-            $threads[$id] = $thread;
-            $allComments[$id] = $comments;
-        }
-
         return $this->render('SingzCoreBundle:Core:browse.html.twig', array(
-            "user" => $user,
-            "publications" => $publications,
-            "threads" => $threads,
-            "comments" => $allComments
+            "publications" => $publications
         ));
     }
 
@@ -71,38 +46,10 @@ class CoreController extends Controller
      */
     public function feedAction(Request $request){
         $user = $this->getUser();
-
         $em = $this->getDoctrine()->getManager();
-
         $publications = $em->getRepository('SingzSocialBundle:Publication')->getNewsFeed($user);
-
-
-        // Get publications' threads, comments
-        $threads = array();
-        $allComments = array();
-
-        foreach($publications as $pub){
-            $id = $pub->getId();
-            $thread = $this->container->get('fos_comment.manager.thread')->findThreadById($id);
-            if (null === $thread) {
-                $thread = $this->container->get('fos_comment.manager.thread')->createThread();
-                $thread->setId($id);
-                $thread->setPermalink($request->getUri());
-
-                // Add the thread
-                $this->container->get('fos_comment.manager.thread')->saveThread($thread);
-            }
-
-            $comments = $this->container->get('fos_comment.manager.comment')->findCommentTreeByThread($thread);
-
-            $threads[$id] = $thread;
-            $allComments[$id] = $comments;
-        }
         return $this->render('SingzCoreBundle:Core:feed.html.twig', array(
-            "user" => $user,
-            "publications" => $publications,
-            "threads" => $threads,
-            "comments" => $allComments
+            "publications" => $publications
         ));
     }
 }

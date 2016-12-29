@@ -4,6 +4,8 @@ namespace Singz\VideoBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\HttpFoundation\File\File;
 
 /**
  * Video
@@ -29,15 +31,22 @@ class Video
      * @ORM\OneToMany(targetEntity="Singz\SocialBundle\Entity\Publication", mappedBy="video")
      */
     private $publications;
-
-    /**
-     * @var string
-     */
-    private $path;
     
     /**
-     * @var UploadedFile
-     *
+     * @var File
+     * @Assert\File(
+     *     maxSize = "10M",
+     *     mimeTypes = {
+	 *			"video/mpeg",
+	 *			"video/mp4",
+	 *			"video/quicktime",
+	 *			"video/x-ms-wmv",
+	 *			"video/x-msvideo",
+	 *			"video/x-flv",
+	 *			"video/webm"
+     *     },
+     *     mimeTypesMessage = "Le type de vidéo ({{ type }}) n'est pas correct. Les types autorisés sont uniquement des fichiers vidéos."
+     * )
      */
     private $file;
     
@@ -52,6 +61,13 @@ class Video
      ** @ORM\Column(name="extension", type="string", length=255, nullable=true)
      */
     private $extension;
+    
+    /**
+     * @var int
+     *
+     ** @ORM\Column(name="duration", type="integer", nullable=true)
+     */
+    private $duration;
 
 
     /**
@@ -65,14 +81,25 @@ class Video
     }
 
     /**
-     * Get path
+     * Get the video path
      *
      * @return string
      */
-    public function getPath()
+    public function getVideoPath()
     {
-        return $this->path;
+        return $this->getUploadDir().'/'.$this->id.'.'.$this->extension;
     }
+
+    /**
+     * Get the video path
+     *
+     * @return string
+     */
+    public function getPreviewPath()
+    {
+        return $this->getUploadDir().'/'.$this->id.'.jpg';
+    }
+    
     /**
      * Constructor
      */
@@ -114,26 +141,58 @@ class Video
     {
         return $this->publications;
     }
+
+    /**
+     * Set extension
+     *
+     * @param string $extension
+     *
+     * @return Video
+     */
+    public function setExtension($extension)
+    {
+    	$this->extension = $extension;
     
+    	return $this;
+    }
+    
+    /**
+     * Get extension
+     *
+     * @return string
+     */
+    public function getExtension()
+    {
+    	return $this->extension;
+    }
+    
+    /**
+     * Get File
+     *
+     * @return File
+     */
     public function getFile()
     {
     	return $this->file;
     }
     
-    public function setFile(UploadedFile $file)
+    /**
+     * Set file
+     *
+     * @param File $live
+     *
+     * @return Video
+     */
+    public function setFile(File $file)
     {
     	$this->file = $file;
     	// On vérifie si on avait déjà un fichier pour cette entité
-    	if (null !== $this->path) {
+    	if (null !== $this->id) {
     		// On sauvegarde le nom du fichier pour le supprimer plus tard
-    		$this->tempFilename = $this->path;
-    		// On réinitialise les valeurs de l'attribut path
-	    	//$this->path = $this->getUploadDir().'/'.$this->id.'.'.$this->extension;
-	    	
-    	}else{
-    		$this->path = '';
+    		$this->tempFilename = $this->getUploadRootDir().'/'.$this->id.'.'.$this->extension;	    	
     	}
     	
+    	return $this;    	
     }
     
     /**
@@ -149,33 +208,6 @@ class Video
     
     	// Le nom du fichier est son id, on doit juste stocker également son extension
     	$this->extension = $this->file->guessExtension();
-    }
-    
-    /**
-     * @ORM\PostPersist()
-     * @ORM\PostUpdate()
-     */
-    public function upload()
-    {
-    	//s'il n'y a pas de fichier, on ne fait pas d'upload
-    	if (null === $this->file) {
-    		return;
-    	}
-    	//si on avait un ancien fichier, on le supprime
-//     	if (null !== $this->tempFilename) {
-//     		$oldFile = $this->getUploadRootDir().'/'.$this->id.'.'.$this->tempFilename;
-//     		if (file_exists($oldFile)) {
-//     			unlink($oldFile);
-//     		}
-//     	}
-    	//on déplace le fichier dans notre dossier
-    	$this->file->move(
-    			$this->getUploadRootDir(), 
-    			$this->id.'.'.$this->extension
-    	);
-    	
-    	//on redéfinit path
-    	$this->setPath($this->getUploadDir().'/'.$this->id.'.'.$this->extension);
     }
     
     /**
@@ -205,9 +237,33 @@ class Video
     	return 'uploads/video';
     }
     
-    protected function getUploadRootDir()
+    public function getUploadRootDir()
     {
     	// On retourne le chemin relatif vers l'image pour notre code PHP
     	return __DIR__.'/../../../../web/'.$this->getUploadDir();
+    }
+
+    /**
+     * Set duration
+     *
+     * @param integer $duration
+     *
+     * @return Video
+     */
+    public function setDuration($duration)
+    {
+        $this->duration = $duration;
+
+        return $this;
+    }
+
+    /**
+     * Get duration
+     *
+     * @return integer
+     */
+    public function getDuration()
+    {
+        return $this->duration;
     }
 }

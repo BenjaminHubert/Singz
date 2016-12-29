@@ -1,3 +1,101 @@
+<link rel="stylesheet" href="{{ asset('bundles/singzvideo/css/plyr.min.css') }}">
+<!-------------------------------------------------
+	Responsive Bootstrap Portfolio And Lightbox
+-------------------------------------------------->
+<div class="sz_video_003_wrapper">
+	<div class="sz_video_003_trig">
+		<div class="row">
+			<div class="col-xs-12 col-sm-6 col-sm-offset-3 col-md-6 col-md-offset-3" data-small-publication="{{ publication.id }}">
+				<div class="sz_video_003_trig_wrap">
+					<div class="sz_video_003_trig_img">
+						<img src="{{ asset(publication.video.previewPath) }}" alt="PREVIEW ERROR">
+						<div class="sz_video_003_trig_btn">
+							<a href="#sz_video_003_4_col" data-toggle="modal" data-slide-to="0" data-backdrop="true">
+								<span class="fa fa-play"></span>
+							</a>
+						</div>
+						<span>{{ publication.video.duration }} s</span>
+					</div>
+					<div class="sz_video_003_trig_txt">
+						<div class="media">
+                            <div class="media-left">
+                            	<a href="{{ path('singz_user_bundle_homepage', {'id': publication.user.id}) }}">	
+                            		<img class="media-object img-circle" style="width:42px;height:42px"  src="{{ asset(publication.user.image.realPath) }}" alt="{{ publication.user.username }}">
+                            	</a>
+                            </div>
+                            <div class="media-body">
+							    <a href="{{ path('singz_user_bundle_homepage', {'id': publication.user.id}) }}">
+							    	{{ publication.user.username }}
+							    </a>
+							    <p><i class="fa fa-fw fa-heart" aria-hidden="true"></i> {{ publication.numLoves }}</p>
+                     	   </div>
+                        </div>
+                        
+						{#<ul>
+							<li>
+								<a href="#">category</a>
+							</li>
+						</ul>#}
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="sz_video_003_4_col" class="modal fade sz_vid_003_mod_sld sz_bd_black carousel sz_video_003_controls sz_video_003_indicators thumb_scroll_y selfPauseVidm selfPlayVidm " data-ride="carousel" data-duration="2000" data-interval="false" role="dialog">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<a href="#" class="sz_video_003_close" data-dismiss="modal"><span class="fa fa-times"></span></a>
+					<div class="carousel-inner" role="listbox">
+						<div class="item active" data-big-publication="{{ publication.id }}">
+							{#
+							<div class="sz_video_003_slide_txt">
+							</div>
+							#}
+							<div class="sz_sldr_vid_003_image">
+								<img src="{{ asset(publication.video.previewPath) }}" alt="PREVIEW ERROR">
+							</div>
+							<div class="sz_video_003_slf_host">
+								<video controls>
+									<source src="{{ asset(publication.video.videoPath) }}">
+									Your browser does not support HTML5 video.
+								</video>
+							</div>
+							{#
+							<!-- Social Media Icons -->
+							<ul class="sz_video_003_slide_social">
+								<li><a href="#"><span class="fa fa-facebook"></span></a></li>
+								<li><a href="#"><span class="fa fa-twitter"></span></a></li>
+								<li><a href="#"><span class="fa fa-google-plus"></span></a></li>
+								<li><a href="#"><span class="fa fa-youtube"></span></a></li>
+								<li><a href="#"><span class="fa fa-vimeo"></span></a></li>
+							</ul>
+							#}
+						</div>
+					</div>
+					<div class="right-side">
+						<img class="loading-comments" src="{{ asset('bundles/singzcore/img/loading-comments.svg') }}" style="display:block;margin-left: auto;margin-right: auto;padding: 35% 0;">
+						<div class="extra-publication">
+    						{#
+    							User picture, username, number of loves, publish time, publication description,
+    							button to love and comments will be generated after clicking on the publication
+    						#}						
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script src="{{ asset('bundles/singzvideo/js/plyr.min.js') }}"></script>
+{# To load extra publication (right side when opening publication modal) #}
+<script src="{{ asset('bundles/singzsocial/js/loadExtraPublication.js') }}"></script>
+<script>
+	plyr.setup();
+	var pathExtraPublication = '{{ path('singz_social_bundle_publication_extra_info') }}';
+</script>
+
+
+{#
 <video id="my-video" class="video-js vjs-default-skin" controls preload="auto" width="640" height="264" poster="{{ asset('uploads/userImage/') }}{{ publication.user.image.path }}" data-setup="{}">
 <!-- <source src="{{ publication.video.path }}" type='video/mov'> -->
 <!-- <source src="{{ publication.video.path }}" type='video/webm'> -->
@@ -18,7 +116,7 @@
         <div id="nbloves-{{ publication.id }}">
             {{ nb_likes }} love{% if nb_likes != 1 %}s{% endif %}
         </div>
-        {# check if the user is logged #}
+        {# check if the user is logged #}{#
         {% if app.user %}
             <button id="love-{{ publication.id }}" onclick="lovethis(path, {{ publication.id }}, {{ app.user.id }})">
                 {% set ilove = 0 %}
@@ -46,3 +144,4 @@
         </div>
     </div>
 </div>
+#}
