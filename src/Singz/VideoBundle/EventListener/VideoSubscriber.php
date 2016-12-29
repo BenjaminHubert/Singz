@@ -6,7 +6,7 @@ use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Singz\VideoBundle\Entity\Video;
 
-class VideoUploadSubscriber implements EventSubscriber
+class VideoSubscriber implements EventSubscriber
 {
 	private $ffprobe;
 	private $ffmpeg;
