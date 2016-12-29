@@ -23,6 +23,17 @@ class LoadVideoData  extends AbstractFixture implements OrderedFixtureInterface
 			'https://static.videezy.com/system/resources/previews/000/000/696/original/10.mp4',
 			'https://static.videezy.com/system/resources/previews/000/004/795/original/dearborn-st-bridge-4k.mp4',
 			'https://static.videezy.com/system/resources/previews/000/004/132/original/Falls_Log_1.mp4',
+			'https://static.videezy.com/system/resources/previews/000/002/808/original/Singer.mp4',
+			'https://static.videezy.com/system/resources/previews/000/002/161/original/Good_dog.mp4',
+			'https://static.videezy.com/system/resources/previews/000/003/761/original/sleddogs.mp4',
+			'https://static.videezy.com/system/resources/previews/000/001/279/original/waterfall2.mp4',
+			'https://static.videezy.com/system/resources/previews/000/002/249/original/SeveralAnimals.mp4',
+			'https://static.videezy.com/system/resources/previews/000/002/377/original/black-cat-in-grass.mp4',
+			'https://static.videezy.com/system/resources/previews/000/004/183/original/banjo2.mp4',
+			'https://static.videezy.com/system/resources/previews/000/002/806/original/Piano.mp4',
+			'https://static.videezy.com/system/resources/previews/000/002/807/original/Saxophone.mp4',
+			'https://static.videezy.com/system/resources/previews/000/002/809/original/Tamborine.mp4',
+			
 		);
 		
 		for($i=0; $i<$this->nb; $i++){
