@@ -1,11 +1,18 @@
 ;(function ($) {
     /*--------------------------------------------------
-       SELF HOSTED VIDEO PAUSING ON MODAL CLOSE
+		SELF HOSTED VIDEO PLAYING ON MODAL OPEN
+	--------------------------------------------------*/
+	$(".selfPlayVidm").on('shown.bs.modal', function () {
+		$(".selfPlayVidm .item.active video").each(function(){
+			this.play();
+		});
+	});
+    /*--------------------------------------------------
+		SELF HOSTED VIDEO PAUSING ON MODAL CLOSE
     --------------------------------------------------*/
-    //It will work on .pauseVideoM class only
     $(".selfPauseVidm").on('hide.bs.modal', function () {
-      $("video").each(function(){
-        this.pause();
-      });
+    	$(".selfPauseVidm .item.active video").each(function(){
+			this.pause();
+    	});
     });
 })(jQuery);
