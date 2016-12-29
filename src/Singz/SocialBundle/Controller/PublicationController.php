@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Singz\SocialBundle\Form\PublicationType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 class PublicationController extends Controller
 {
@@ -19,7 +20,6 @@ class PublicationController extends Controller
     {
     	throw $this->createNotFoundException();
     }
-
 
     /**
      * @Security("has_role('ROLE_USER')")
@@ -59,16 +59,49 @@ class PublicationController extends Controller
         ));
     }
 
-    public function listAction(Request $request)
-    {
-        $repository = $this->getDoctrine()->getManager()->getRepository('SingzSocialBundle:Publication');
-        $publications = $repository->findAll();
-
-        return $this->render('SingzSocialBundle:Publication:list.html.twig', array(
-            'publications' => $publications
-        ));
+    /**
+     * @Security("has_role('ROLE_USER')")
+     */
+    public function editAction(Request $request, $id){
+    	// Get publication
+    	$em = $this->getDoctrine()->getManager();
+    	$publication = $em->getRepository('SingzSocialBundle:Publication')->getPublicationById($id);
+    	if($publication == null) {
+    		throw $this->createNotFoundException('Publication inexistante');
+    	}
+    	// Check if the user is the publication owner
+    	if($publication->getUser() != $this->getUser()){
+    		throw new AccessDeniedHttpException("Vous n'êtes pas autorisé à modifier cette publication");
+    	}
+    	
+    	// on récupère le formulaire
+    	$form = $this->createForm(PublicationType::class, $publication);
+    	$form->remove('video');
+    	
+    	// si le formulaire est soumis
+    	if($request->isMethod('POST')){
+    		//on met dans notre objet $publication les valeurs du formulaire
+    		$form->handleRequest($request);
+    	
+    		// on vérifie la validation du formulaire
+    		if($form->isValid()){
+    			//on met à jour
+    			$publication->setLastEdit(new \DateTime());
+    			$em->flush();
+    			 
+    			//on affiche un message
+    			$request->getSession()->getFlashBag()->add('success', 'Publication bien enregistrée.');
+    			 
+    			// On redirige vers la page de visualisation de la publication nouvellement créée
+    			return $this->redirectToRoute('singz_social_bundle_publication_show', array('id' => $publication->getId()));
+    		}
+    	}
+    	
+    	return $this->render('SingzSocialBundle:Publication:edit.html.twig', array(
+    		'form' => $form->createView()
+    	));
     }
-
+   	
     public function showAction(Request $request, $id)
     {
         // Get publication
@@ -99,6 +132,9 @@ class PublicationController extends Controller
         ));
     }
 
+    /**
+     * @Security("has_role('ROLE_USER')")
+     */
     public function loveAction(Request $request){
 
         if($request->isXmlHttpRequest()) {

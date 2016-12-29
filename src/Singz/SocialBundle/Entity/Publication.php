@@ -35,6 +35,13 @@ class Publication
      * @ORM\Column(name="date", type="datetime")
      */
     private $date;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="last_edit", type="datetime")
+     */
+    private $lastEdit;
     
     /**
      * @var User
@@ -80,6 +87,7 @@ class Publication
     public function __construct()
     {
     	$this->date = new \DateTime();
+    	$this->lastEdit = new \DateTime();
         $this->loves = new \Doctrine\Common\Collections\ArrayCollection();
         $this->notifications = new \Doctrine\Common\Collections\ArrayCollection();
     }
@@ -290,5 +298,29 @@ class Publication
     public function decreaseNumLoves(){
     	$this->numLoves--;
     	return $this;
+    }
+
+    /**
+     * Set lastEdit
+     *
+     * @param \DateTime $lastEdit
+     *
+     * @return Publication
+     */
+    public function setLastEdit($lastEdit)
+    {
+        $this->lastEdit = $lastEdit;
+
+        return $this;
+    }
+
+    /**
+     * Get lastEdit
+     *
+     * @return \DateTime
+     */
+    public function getLastEdit()
+    {
+        return $this->lastEdit;
     }
 }

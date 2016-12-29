@@ -10,6 +10,13 @@ singz_social_bundle_publication_show:
     requirements:
         id: \d+
 
+singz_social_bundle_publication_edit:
+    path:     /publication/{id}/edit
+    defaults:
+        _controller: SingzSocialBundle:Publication:edit
+    requirements:
+        id: \d+
+
 singz_social_bundle_publication_new:
     path:     /publication/new/
     defaults:
