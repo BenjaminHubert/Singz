@@ -55,9 +55,14 @@
 .sz_video_003_trig_wrap{
   overflow: hidden;
   position: relative;
-  border: 1px solid #f1f1f1;
+  border: 1px solid #373a47;
   -webkit-border-radius: 2px;
   border-radius: 2px;
+  background-color: #373a47;
+  color: white;
+}
+.sz_video_003_trig_wrap .media-body a{
+	color: #d94f5c;
 }
 /*----- IMAGE -----*/
 .sz_video_003_trig_img{
@@ -112,7 +117,7 @@
   transition: all 0.5s ease-out;
 }
 .sz_video_003_trig_btn > a:hover{
-  color: #ff6a00;
+  color: #d94f5c;
 }
 .sz_video_003_trig_btn > a:focus{
   outline: none;
