@@ -47,7 +47,7 @@ class PublicationController extends Controller
     			$em->flush();
     			
     			//on affiche un message
-    			$request->getSession()->getFlashBag()->add('success', 'Publication bien enregistrée.');
+    			$this->addFlash('success', 'Publication bien enregistrée.');
     			
     			// On redirige vers la page de visualisation de la publication nouvellement créée
     			return $this->redirectToRoute('singz_social_bundle_publication_show', array('id' => $publication->getId()));
@@ -70,7 +70,7 @@ class PublicationController extends Controller
     		throw $this->createNotFoundException('Publication inexistante');
     	}
     	// Check if the user is the publication owner
-    	if($publication->getUser() != $this->getUser()){
+    	if(!$this->isGranted('ROLE_ADMIN') && $publication->getUser() != $this->getUser()){
     		throw new AccessDeniedHttpException("Vous n'êtes pas autorisé à modifier cette publication");
     	}
     	
@@ -90,7 +90,7 @@ class PublicationController extends Controller
     			$em->flush();
     			 
     			//on affiche un message
-    			$request->getSession()->getFlashBag()->add('success', 'Publication bien enregistrée.');
+    			$this->addFlash('success', 'Publication bien enregistrée.');
     			 
     			// On redirige vers la page de visualisation de la publication nouvellement créée
     			return $this->redirectToRoute('singz_social_bundle_publication_show', array('id' => $publication->getId()));
