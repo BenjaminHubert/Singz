@@ -1,0 +1,16 @@
+/** HEAD LOGO **/
+img.app-logo{
+	width:30%;
+	display: block;
+	margin: 0 auto;
+}
+@media screen and (max-width: 480px){
+	img.app-logo{
+		width:100%;
+	}
+}
+@media (min-width: 480px) and (max-width: 600px){
+	img.app-logo{
+		width:60%;
+	}
+}
