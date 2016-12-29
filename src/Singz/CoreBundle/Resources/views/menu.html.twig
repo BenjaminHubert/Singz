@@ -14,12 +14,12 @@
 	</nav>
 	<div class="icon-list">
 		{% if app.user %}
-			<a href="{{ path('singz_social_bundle_publication_new') }}"><i class="fa fa-fw fa-plus"></i></a>
-			<a href="#"><i class="fa fa-fw fa-bell-o"></i></a>
-			<a href="#"><i class="fa fa-fw fa-envelope-o"></i></a>
-			<a href="#"><i class="fa fa-fw fa-comment-o"></i></a>
+			<a title="Ajouter une vidéo" data-placement="bottom" data-toggle="tooltip" href="{{ path('singz_social_bundle_publication_new') }}"><i class="fa fa-fw fa-plus"></i></a>
+			<a title="" data-placement="bottom" data-toggle="tooltip" href="#"><i class="fa fa-fw fa-bell-o"></i></a>
+			<a title="" data-placement="bottom" data-toggle="tooltip" href="#"><i class="fa fa-fw fa-envelope-o"></i></a>
+			<a title="" data-placement="bottom" data-toggle="tooltip" href="#"><i class="fa fa-fw fa-comment-o"></i></a>
 			<a href="{{ path('fos_user_security_logout') }}">
-				<button class="btn btn-danger">
+				<button title="Se déconnecter" data-placement="bottom" data-toggle="tooltip" class="btn btn-danger">
 					<i class="fa fa-sign-out" aria-hidden="true"></i>
 				</button>
 			</a>

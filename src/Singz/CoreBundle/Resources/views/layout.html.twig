@@ -71,6 +71,12 @@
         	{# Menu #}
         	<script src="{{ asset('bundles/singzcore/OffCanvasMenuEffects/js/classie.js') }}"></script>
         	<script src="{{ asset('bundles/singzcore/OffCanvasMenuEffects/js/main.js') }}"></script>
+        	<script>
+        		$(function () {
+					$('[data-toggle="tooltip"]').tooltip();
+					$('[data-toggle="popover"]').popover();
+        		})
+        	</script>
         {% block end_javascripts %}{% endblock %}
     </body>
 </html>
