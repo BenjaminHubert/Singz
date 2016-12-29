@@ -85,8 +85,7 @@ class PublicationController extends Controller
     	
     		// on vérifie la validation du formulaire
     		if($form->isValid()){
-    			//on met à jour
-    			$publication->setLastEdit(new \DateTime());
+    			// update
     			$em->flush();
     			 
     			//on affiche un message
