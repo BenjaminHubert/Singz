@@ -87,7 +87,12 @@
 </div>
 
 <script src="{{ asset('bundles/singzvideo/js/plyr.min.js') }}"></script>
-<script>plyr.setup();</script>
+{# To load extra publication (right side when opening publication modal) #}
+<script src="{{ asset('bundles/singzsocial/js/loadExtraPublication.js') }}"></script>
+<script>
+	plyr.setup();
+	var pathExtraPublication = '{{ path('singz_social_bundle_publication_extra_info') }}';
+</script>
 
 
 {#

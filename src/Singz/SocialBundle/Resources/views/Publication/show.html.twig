@@ -4,20 +4,8 @@
     {{ publication.user.username ~' - '~ parent() }}
 {% endblock %}
 
-{% block head_javascripts %}
-    <script>
-    	var pathExtraPublication = '{{ path('singz_social_bundle_publication_extra_info') }}';
-    </script>
-{% endblock %}
-
 {% block body %}
     {% include 'SingzSocialBundle:Publication:publication.html.twig' with {
         'publication': publication
     } %}
-
-{% endblock %}
-
-{% block end_javascripts %}
-    <!-- To load extra publication (right side when opening publication modal) -->
-    <script src="{{ asset('bundles/singzsocial/js/loadExtraPublication.js') }}"></script>
 {% endblock %}
