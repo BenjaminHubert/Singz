@@ -39,16 +39,9 @@ class User extends BaseUser
     /**
      * @var Comment
      * 
-     * @ORM\OneToMany(targetEntity="Singz\SocialBundle\Entity\Comment", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="Singz\SocialBundle\Entity\Comment", mappedBy="author")
      */
     private $comments;
-    
-    /**
-     * @var Notification
-     * 
-     * @ORM\OneToMany(targetEntity="Singz\SocialBundle\Entity\Notification", mappedBy="user")
-     */
-    private $notifications;
     
     /**
      * @var User
@@ -82,20 +75,7 @@ class User extends BaseUser
      */
     private $isPrivate = 0;
     
-    /**
-     * @var boolean
-     * @ORM\Column(name="is_starz", type="boolean", nullable=false)
-     */
-    private $isStarz = 0;
     
-    public function __construct(){
-    	// comportement par défaut
-    	parent::__construct();
-    	//utilisatuer lambda par défaut
-    	if(empty($this->roles)){
-    		$this->roles[] = 'ROLE_USER';
-    	}
-    }
     
 
     /**
@@ -201,40 +181,6 @@ class User extends BaseUser
     }
 
     /**
-     * Add notification
-     *
-     * @param \Singz\SocialBundle\Entity\Notification $notification
-     *
-     * @return User
-     */
-    public function addNotification(\Singz\SocialBundle\Entity\Notification $notification)
-    {
-        $this->notifications[] = $notification;
-
-        return $this;
-    }
-
-    /**
-     * Remove notification
-     *
-     * @param \Singz\SocialBundle\Entity\Notification $notification
-     */
-    public function removeNotification(\Singz\SocialBundle\Entity\Notification $notification)
-    {
-        $this->notifications->removeElement($notification);
-    }
-
-    /**
-     * Get notifications
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getNotifications()
-    {
-        return $this->notifications;
-    }
-
-    /**
      * Add leader
      *
      * @param \Singz\SocialBundle\Entity\Follow $leader
@@ -324,5 +270,53 @@ class User extends BaseUser
     public function getImage()
     {
         return $this->image;
+    }
+
+    /**
+     * Set biography
+     *
+     * @param string $biography
+     *
+     * @return User
+     */
+    public function setBiography($biography)
+    {
+        $this->biography = $biography;
+
+        return $this;
+    }
+
+    /**
+     * Get biography
+     *
+     * @return string
+     */
+    public function getBiography()
+    {
+        return $this->biography;
+    }
+
+    /**
+     * Set isPrivate
+     *
+     * @param boolean $isPrivate
+     *
+     * @return User
+     */
+    public function setIsPrivate($isPrivate)
+    {
+        $this->isPrivate = $isPrivate;
+
+        return $this;
+    }
+
+    /**
+     * Get isPrivate
+     *
+     * @return boolean
+     */
+    public function getIsPrivate()
+    {
+        return $this->isPrivate;
     }
 }

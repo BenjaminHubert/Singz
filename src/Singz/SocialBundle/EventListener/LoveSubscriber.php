@@ -32,7 +32,8 @@ class LoveSubscriber implements EventSubscriber
     	//create a notification if the lover is not the publication owner
     	if($love->getUser() != $love->getPublication()->getUser()){
     		$notif = new Notification();
-    		$notif->setUser($love->getUser());
+    		$notif->setUserFrom($love->getUser());
+    		$notif->setUserTo($love->getPublication()->getUser());
     		$notif->setPublication($love->getPublication());
     		$message = sprintf(Notification::NEW_LOVE, $love->getUser()->getUsername());
     		$notif->setMessage($message);

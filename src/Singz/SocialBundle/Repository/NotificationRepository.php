@@ -14,12 +14,14 @@ class NotificationRepository extends \Doctrine\ORM\EntityRepository
 {
 	public function getNotificationsByUser(User $user){
 		return $this->createQueryBuilder('n')
-			->innerJoin('n.user', 'notification_user')->addSelect('notification_user')
-			->innerJoin('notification_user.image', 'i')->addSelect('i')
+			->innerJoin('n.userFrom', 'userFrom')->addSelect('userFrom')
+			->innerJoin('userFrom.image', 'imageUserFrom')->addSelect('imageUserFrom')
+			->innerJoin('n.userTo', 'userTo')->addSelect('userTo')
+			->innerJoin('userTo.image', 'imageUserTo')->addSelect('imageUserTo')
 			->innerJoin('n.publication', 'p')->addSelect('p')
 			->innerJoin('p.user', 'publication_user')->addSelect('publication_user')
-			->andWhere('publication_user.id = :user_id')
-			->setParameter('user_id', $user->getId())
+			->andWhere('userTo = :userTo')
+			->setParameter('userTo', $user)
 			->orderBy('n.date', 'DESC')
 			->getQuery()
 			->getResult();

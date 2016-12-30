@@ -18,16 +18,31 @@ class CommentSubscriber implements EventSubscriber
     	}
     	// get the entity manager
     	$em = $args->getEntityManager();
-    	//create a notification if the commenter is not the publication owner
+    	### CREATE NOTIFICATION ###
     	$publication = $em->getRepository('SingzSocialBundle:Publication')->find($comment->getThread()->getId()); // publication.id = thread.id
     	if(!$publication){
     		return;
     	}
-    	if($comment->getAuthor() != $publication->getUser()){
+    	// Depth level 0
+    	// Create a notification to the publication owner
+    	if($comment->getAuthor() != $publication->getUser() && $comment->getDepth() == 0){
     		$notif = new Notification();
-    		$notif->setUser($comment->getAuthor());
+    		$notif->setUserFrom($comment->getAuthor());
+    		$notif->setUserTo($publication->getUser());
     		$notif->setPublication($publication);
     		$message = sprintf(Notification::NEW_COMMENT, $comment->getAuthor()->getUsername());
+    		$notif->setMessage($message);
+    		$em->persist($notif);
+    		$em->flush($notif);
+    	}
+    	//Depth level 1+
+    	// Create a notification to the depth level 0 comment commenter
+    	if($comment->getDepth() > 0 && $comment->getAuthor() != $comment->getParent()->getAuthor()){
+    		$notif = new Notification();
+    		$notif->setUserFrom($comment->getAuthor());
+    		$notif->setUserTo($comment->getParent()->getAuthor());
+    		$notif->setPublication($publication);
+    		$message = sprintf(Notification::REPLY_COMMENT, $comment->getAuthor()->getUsername());
     		$notif->setMessage($message);
     		$em->persist($notif);
     		$em->flush($notif);

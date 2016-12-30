@@ -28,7 +28,7 @@
 			<a class="list-group-item notification {% if notification.isRead %}active{% endif %}" href="{{ path('singz_social_bundle_publication_show', {'id':notification.publication.id}) }}">
     			<div class="media">
                     <div class="media-left">
-						<img class="media-object" src="{{ asset(notification.user.image.realPath) }}" alt="{{ notification.user.username }}">
+						<img class="media-object" src="{{ asset(notification.userFrom.image.realPath) }}" alt="{{ notification.userFrom.username }}">
                     </div>
                     <div class="media-body">
                         <p class="message">{{ notification.message|raw }}</p>
