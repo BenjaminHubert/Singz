@@ -9,7 +9,6 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="love")
  * @ORM\Entity(repositoryClass="Singz\SocialBundle\Repository\LoveRepository")
- * @ORM\HasLifecycleCallbacks()
  */
 class Love
 {
@@ -45,7 +44,10 @@ class Love
      */
     private $publication;
     
-
+    public function __construct(){
+    	$this->date = new \DateTime();
+    }
+    
     /**
      * Get id
      *
@@ -126,23 +128,5 @@ class Love
     public function getPublication()
     {
         return $this->publication;
-    }
-    
-    /**
-     * @ORM\PrePersist
-     */
-    public function prePersist()
-    {
-    	// Increase the num_loves attribute in the Publication entity 
-    	$this->getPublication()->increaseNumLoves();
-    }
-    
-    /**
-     * @ORM\PreRemove
-     */
-    public function preRemove()
-    {
-    	// Decrease the num_loves attribute in the Publication entity 
-    	$this->getPublication()->decreaseNumLoves();
     }
 }

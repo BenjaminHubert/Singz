@@ -4,6 +4,7 @@ namespace Singz\UserBundle\Entity;
 
 use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * User
@@ -44,13 +45,6 @@ class User extends BaseUser
     private $comments;
     
     /**
-     * @var Notification
-     * 
-     * @ORM\OneToMany(targetEntity="Singz\SocialBundle\Entity\Notification", mappedBy="user")
-     */
-    private $notifications;
-    
-    /**
      * @var User
      * 
      * @ORM\OneToMany(targetEntity="Singz\SocialBundle\Entity\Follow", mappedBy="leader")
@@ -89,6 +83,11 @@ class User extends BaseUser
     	if(empty($this->roles)){
     		$this->roles[] = 'ROLE_SINGZER';
     	}
+    	$this->publications = new ArrayCollection();
+    	$this->loves = new ArrayCollection();
+    	$this->comments = new ArrayCollection();
+    	$this->leaders = new ArrayCollection();
+    	$this->followers = new ArrayCollection();
     }
     
 
@@ -192,40 +191,6 @@ class User extends BaseUser
     public function getComments()
     {
         return $this->comments;
-    }
-
-    /**
-     * Add notification
-     *
-     * @param \Singz\SocialBundle\Entity\Notification $notification
-     *
-     * @return User
-     */
-    public function addNotification(\Singz\SocialBundle\Entity\Notification $notification)
-    {
-        $this->notifications[] = $notification;
-
-        return $this;
-    }
-
-    /**
-     * Remove notification
-     *
-     * @param \Singz\SocialBundle\Entity\Notification $notification
-     */
-    public function removeNotification(\Singz\SocialBundle\Entity\Notification $notification)
-    {
-        $this->notifications->removeElement($notification);
-    }
-
-    /**
-     * Get notifications
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getNotifications()
-    {
-        return $this->notifications;
     }
 
     /**

@@ -5,7 +5,14 @@
 {% endblock %}
 
 {% block body %}
-    {% include 'SingzSocialBundle:Publication:publication.html.twig' with {
+    {% include 'SingzSocialBundle::publication.html.twig' with {
         'publication': publication
     } %}
+{% endblock %}
+{% block end_javascripts %}
+	<script>
+		$(document).ready(function(){
+			$('#sz_video_003_4_col').modal('show')
+		});
+	</script>
 {% endblock %}

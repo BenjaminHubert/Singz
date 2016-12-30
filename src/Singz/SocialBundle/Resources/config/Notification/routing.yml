@@ -1,0 +1,10 @@
+singz_social_bundle_notification_list:
+    path:     /list/
+    defaults:
+        _controller: SingzSocialBundle:Notification:list
+## AJAX
+singz_social_bundle_notification_readed:
+    path:     /ajax/notification-is-readed
+    defaults:
+        _controller: SingzSocialBundle:Notification:notificationReaded
+        

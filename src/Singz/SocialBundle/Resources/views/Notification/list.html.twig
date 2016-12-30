@@ -1,0 +1,67 @@
+{% extends "SingzCoreBundle::layout.html.twig" %}
+{% block title %}
+    {{ 'Notifications - '~ parent() }}
+{% endblock %}
+{% block stylesheets %}
+	<style>
+    	 .notification .media-object{
+    	 	width:64px;
+    	 	height:64px;
+    	 }
+    	 .notification .message{
+    	 
+    	 }
+    	 .notification.list-group-item.active{
+            z-index: 2;
+            background-color: #f5f5f5;
+            border-color: #f5f5f5;
+            color: inherit;
+        }
+	 </style>
+{% endblock %}
+{% block body %}
+	<div class="list-group notifications">
+		{% for notification in notifications %}
+			<a class="list-group-item notification {% if notification.isRead == false %}active{% endif %}" href="{{ path('singz_social_bundle_publication_show', {'id':notification.publication.id}) }}" data-id-notif="{{ notification.id }}">
+    			<div class="media">
+                    <div class="media-left">
+						<img class="media-object" src="{{ asset(notification.userFrom.image.realPath) }}" alt="{{ notification.userFrom.username }}">
+                    </div>
+                    <div class="media-body">
+                        <p class="message">{{ notification.message|raw }}</p>
+                        <small>
+                            {{ notification.date|time_diff }}
+                            {% if notification.isRead == false %} 
+                            	<span>&#8226; Non lu</span>
+                            {% endif %}
+                        </small>
+                    </div>
+                </div>
+			</a>
+		{% else %}
+			Aucune notification
+		{% endfor %}
+	</div>
+{% endblock %}
+{% block end_javascripts %}
+	<script>
+		$(document).ready(function(){
+			$('a.notification.active').click(function(e){
+				var notification = $(this);
+				var idNotif = notification.attr('data-id-notif');
+				$.ajax({
+        	        url: "{{ path('singz_social_bundle_notification_readed') }}",
+        	        method: 'POST',
+        	        data: { 'idNotif': idNotif }
+        	    }).done(function(data, textStatus, jqXHR){
+					notification.removeClass('active');
+					notification.find('small span').remove();
+        	    }).fail(function(jqXHR, textStatus, errorThrown){
+
+        	    }).always(function(){
+
+    	    	});
+			});
+		});
+	</script>
+{% endblock %}

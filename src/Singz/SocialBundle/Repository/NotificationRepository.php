@@ -2,6 +2,8 @@
 
 namespace Singz\SocialBundle\Repository;
 
+use Singz\UserBundle\Entity\User;
+
 /**
  * NotificationRepository
  *
@@ -10,4 +12,18 @@ namespace Singz\SocialBundle\Repository;
  */
 class NotificationRepository extends \Doctrine\ORM\EntityRepository
 {
+	public function getNotificationsByUser(User $user){
+		return $this->createQueryBuilder('n')
+			->innerJoin('n.userFrom', 'userFrom')->addSelect('userFrom')
+			->innerJoin('userFrom.image', 'imageUserFrom')->addSelect('imageUserFrom')
+			->innerJoin('n.userTo', 'userTo')->addSelect('userTo')
+			->innerJoin('userTo.image', 'imageUserTo')->addSelect('imageUserTo')
+			->innerJoin('n.publication', 'p')->addSelect('p')
+			->innerJoin('p.user', 'publication_user')->addSelect('publication_user')
+			->andWhere('userTo = :userTo')
+			->setParameter('userTo', $user)
+			->orderBy('n.date', 'DESC')
+			->getQuery()
+			->getResult();
+	}
 }

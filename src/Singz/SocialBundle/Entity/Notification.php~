@@ -12,6 +12,10 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Notification
 {
+	const NEW_LOVE = '<b>%s</b> love votre publication.';
+	const NEW_COMMENT = '<b>%s</b> a commenté votre publication.';
+	const REPLY_COMMENT = '<b>%s</b> a répondu à votre commentaire.';
+	
     /**
      * @var int
      *
@@ -38,10 +42,18 @@ class Notification
     /**
      * @var User
      * 
-     * @ORM\ManyToOne(targetEntity="Singz\UserBundle\Entity\User", inversedBy="notifications")
+     * @ORM\ManyToOne(targetEntity="Singz\UserBundle\Entity\User")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $user;
+    private $userFrom;
+    
+    /**
+     * @var User
+     * 
+     * @ORM\ManyToOne(targetEntity="Singz\UserBundle\Entity\User")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $userTo;
     
     /**
      * @var Publication
@@ -58,7 +70,11 @@ class Notification
      */
     private $message;
 
-
+	
+    public function __construct(){
+    	$this->date = new \DateTime();
+    }
+    
     /**
      * Get id
      *
@@ -163,5 +179,29 @@ class Notification
     public function getPublication()
     {
         return $this->publication;
+    }
+
+    /**
+     * Set message
+     *
+     * @param string $message
+     *
+     * @return Notification
+     */
+    public function setMessage($message)
+    {
+        $this->message = $message;
+
+        return $this;
+    }
+
+    /**
+     * Get message
+     *
+     * @return string
+     */
+    public function getMessage()
+    {
+        return $this->message;
     }
 }

@@ -3,7 +3,6 @@
 namespace Singz\SocialBundle\Controller;
 
 use Singz\SocialBundle\Entity\Love;
-use Singz\SocialBundle\Entity\Notification;
 use Singz\SocialBundle\Entity\Publication;
 use Singz\SocialBundle\SingzSocialBundle;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -155,20 +154,7 @@ class PublicationController extends Controller
                 $love = new Love();
                 $love->setUser($user);
                 $love->setPublication($pub);
-                $love->setDate(new \DateTime());
-
                 $em->persist($love);
-
-                // New notification
-                if($user != $pub->getUser()) {
-                    $notif = new Notification();
-                    $notif->setUser($user);
-                    $notif->setPublication($pub);
-                    $notif->setDate(new \DateTime());
-                    $notif->setMessage($user->getUsername()." love votre publication !");
-
-                    $em->persist($notif);
-                }
             } else {
                 $didLove = true;
                 $em->remove(array_pop($love));
@@ -202,7 +188,7 @@ class PublicationController extends Controller
     		// Get comments
     		$comments = $this->container->get('fos_comment.manager.comment')->findCommentTreeByThread($thread);
     		
-    		return $this->render('SingzSocialBundle:Publication:extra.html.twig', array(
+    		return $this->render('SingzSocialBundle::extra.html.twig', array(
     			'publication' => $publication,
     			'comments' => $comments,
     			'thread' => $thread

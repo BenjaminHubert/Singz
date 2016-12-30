@@ -1,0 +1,37 @@
+singz_social_bundle_publication_show:
+    path:     /{id}
+    defaults:
+        _controller: SingzSocialBundle:Publication:show
+    requirements:
+        id: \d+
+
+singz_social_bundle_publication_edit:
+    path:     /{id}/edit
+    defaults:
+        _controller: SingzSocialBundle:Publication:edit
+    requirements:
+        id: \d+
+
+singz_social_bundle_publication_delete:
+    path:     /{id}/delete
+    defaults:
+        _controller: SingzSocialBundle:Publication:delete
+    requirements:
+        id: \d+
+
+singz_social_bundle_publication_new:
+    path:     /new/
+    defaults:
+        _controller: SingzSocialBundle:Publication:new
+
+# ajax
+singz_social_bundle_publication_love:
+    path:     /love/
+    defaults:
+        _controller: SingzSocialBundle:Publication:love
+
+# ajax
+singz_social_bundle_publication_extra_info:
+    path:     /extra/
+    defaults:
+        _controller: SingzSocialBundle:Publication:getPublicationExtra

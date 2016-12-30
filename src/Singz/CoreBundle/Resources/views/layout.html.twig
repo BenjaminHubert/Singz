@@ -34,7 +34,7 @@
     <body>
         <div class="container-global">
         	{# Menu #}
-			{{ include('SingzCoreBundle::menu.html.twig') }}
+			{{ render(controller('SingzCoreBundle:Core:menu')) }}
 			<button class="menu-button" id="open-button">Open Menu</button>
 			<div class="content-wrap">
 				<div class="content">

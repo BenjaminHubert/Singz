@@ -12,6 +12,10 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Notification
 {
+	const NEW_LOVE = '<b>%s</b> love votre publication.';
+	const NEW_COMMENT = '<b>%s</b> a commenté votre publication.';
+	const REPLY_COMMENT = '<b>%s</b> a répondu à votre commentaire.';
+	
     /**
      * @var int
      *
@@ -38,10 +42,18 @@ class Notification
     /**
      * @var User
      * 
-     * @ORM\ManyToOne(targetEntity="Singz\UserBundle\Entity\User", inversedBy="notifications")
+     * @ORM\ManyToOne(targetEntity="Singz\UserBundle\Entity\User")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $user;
+    private $userFrom;
+    
+    /**
+     * @var User
+     * 
+     * @ORM\ManyToOne(targetEntity="Singz\UserBundle\Entity\User")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $userTo;
     
     /**
      * @var Publication
@@ -58,7 +70,11 @@ class Notification
      */
     private $message;
 
-
+	
+    public function __construct(){
+    	$this->date = new \DateTime();
+    }
+    
     /**
      * Get id
      *
@@ -118,30 +134,6 @@ class Notification
     }
 
     /**
-     * Set user
-     *
-     * @param \Singz\UserBundle\Entity\User $user
-     *
-     * @return Notification
-     */
-    public function setUser(\Singz\UserBundle\Entity\User $user)
-    {
-        $this->user = $user;
-
-        return $this;
-    }
-
-    /**
-     * Get user
-     *
-     * @return \Singz\UserBundle\Entity\User
-     */
-    public function getUser()
-    {
-        return $this->user;
-    }
-
-    /**
      * Set publication
      *
      * @param \Singz\SocialBundle\Entity\Publication $publication
@@ -187,5 +179,53 @@ class Notification
     public function getMessage()
     {
         return $this->message;
+    }
+
+    /**
+     * Set userFrom
+     *
+     * @param \Singz\UserBundle\Entity\User $userFrom
+     *
+     * @return Notification
+     */
+    public function setUserFrom(\Singz\UserBundle\Entity\User $userFrom)
+    {
+        $this->userFrom = $userFrom;
+
+        return $this;
+    }
+
+    /**
+     * Get userFrom
+     *
+     * @return \Singz\UserBundle\Entity\User
+     */
+    public function getUserFrom()
+    {
+        return $this->userFrom;
+    }
+
+    /**
+     * Set userTo
+     *
+     * @param \Singz\UserBundle\Entity\User $userTo
+     *
+     * @return Notification
+     */
+    public function setUserTo(\Singz\UserBundle\Entity\User $userTo)
+    {
+        $this->userTo = $userTo;
+
+        return $this;
+    }
+
+    /**
+     * Get userTo
+     *
+     * @return \Singz\UserBundle\Entity\User
+     */
+    public function getUserTo()
+    {
+        return $this->userTo;
     }
 }
