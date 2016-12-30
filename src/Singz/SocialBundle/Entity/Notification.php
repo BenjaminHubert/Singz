@@ -12,7 +12,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Notification
 {
-	const NEW_LOVE = '<b>%s</b> love votre publication.';	
+	const NEW_LOVE = '<b>%s</b> love votre publication.';
+	const NEW_COMMENT = '<b>%s</b> a commenté votre publication.';
 	
     /**
      * @var int

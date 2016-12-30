@@ -9,3 +9,7 @@ services:
         class: Singz\SocialBundle\EventListener\LoveSubscriber
         tags:
             - { name: doctrine.event_subscriber, connection: default }
+    singz.social.comment:
+        class: Singz\SocialBundle\EventListener\CommentSubscriber
+        tags:
+            - { name: doctrine.event_subscriber, connection: default }
