@@ -14,14 +14,7 @@ class UserController extends Controller
         ));
     }
 
-    public function showAction()
-    {
-        return $this->render('SingzAdminBundle:User:show.html.twig', array(
-            // ...
-        ));
-    }
-
-    public function editAction()
+    public function editAction($id)
     {
         return $this->render('SingzAdminBundle:User:edit.html.twig', array(
             // ...

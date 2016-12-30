@@ -2,13 +2,6 @@ singz_admin_user_list:
     path:     /list
     defaults:
         _controller: SingzAdminBundle:User:list
-        
-singz_admin_user_show:
-    path:     /show/{id}
-    defaults:
-        _controller: SingzAdminBundle:User:show
-    requirements:
-        id: \d+
 
 singz_admin_user_edit:
     path:     /edit/{id}
@@ -18,7 +11,7 @@ singz_admin_user_edit:
         id: \d+
 
 singz_admin_user_enabled:
-    path:     /enabled/{id}/{state}
+    path:     /{id}/change-status/{state}
     defaults:
         _controller: SingzAdminBundle:User:enabled
     requirements:
