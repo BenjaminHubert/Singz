@@ -202,7 +202,7 @@ class PublicationController extends Controller
     		// Get comments
     		$comments = $this->container->get('fos_comment.manager.comment')->findCommentTreeByThread($thread);
     		
-    		return $this->render('SingzSocialBundle:Publication:extra.html.twig', array(
+    		return $this->render('SingzSocialBundle::extra.html.twig', array(
     			'publication' => $publication,
     			'comments' => $comments,
     			'thread' => $thread

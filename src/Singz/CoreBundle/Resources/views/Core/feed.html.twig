@@ -6,7 +6,7 @@
 
 {% block body %}
     {% if publications %}
-        {% include 'SingzSocialBundle:Publication:publications.html.twig' with {
+        {% include 'SingzSocialBundle::publications.html.twig' with {
             'publications': publications
         } %}
     {% else %}
