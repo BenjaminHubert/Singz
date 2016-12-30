@@ -1,0 +1,73 @@
+{% extends "SingzAdminBundle::layout.html.twig" %}
+{% block title_tag %}Liste des utilisateurs - {{ parent() }} {% endblock %}
+
+{% block stylesheets %}
+	 {{ parent() }}
+	 <link href="{{ asset('bundles/singzadmin/css/dataTables.bootstrap.css') }}" rel="stylesheet">
+	 <link href="{{ asset('bundles/singzadmin/css/dataTables.responsive.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block title_page %}
+	Liste des utilisateurs
+{% endblock %}
+
+{% block body %}
+	<table width="100%" class="table table-bordered table-hover dataTable">
+		<thead>
+			<tr>
+				<th>Photo de profil</th>
+				<th>Nom d'utilisateur</th>
+				<th>Email</th>
+				<th>Editer</th>
+				<th>Activé/Désactivé</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for user in users %}
+				<tr>
+					<td>
+						<a href="{{ path('singz_user_bundle_homepage', {'id':user.id}) }}" target="_blank">
+					    	<img style="width:64px;height:64px;" src="{{ asset(user.image.realPath) }}" alt="{{ user.username }}">
+					    </a>
+					</td>
+					<td>
+						<a href="{{ path('singz_user_bundle_homepage', {'id':user.id}) }}" target="_blank">
+						    {{ user.username }}
+						</a>
+					</td>
+					<td>{{ user.email }}</td>
+					<td>
+						<a class="btn btn-default" href="{{ path('singz_admin_user_show', {'id':user.id}) }}">
+							<i class="fa fa-pencil fa-fw" aria-hidden="true"></i> Editer
+						</a>
+					</td>
+					<td>
+						{% if user.enabled == true %}
+    						<a href="#" class="btn btn-primary">
+    					        Activé
+    					    </a>
+						{% elseif user.enabled == false %}
+    						<a href="#" class="btn btn-danger">
+    					        Désactivé
+    					    </a>
+					    {% endif %}
+					</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+	<script src="{{ asset('bundles/singzadmin/js/jquery.dataTables.min.js') }}"></script>
+	<script src="{{ asset('bundles/singzadmin/js/dataTables.bootstrap.min.js') }}"></script>
+	<script src="{{ asset('bundles/singzadmin/js/dataTables.responsive.js') }}"></script>
+	<script>
+    $(document).ready(function() {
+        $('.dataTable').DataTable({
+            responsive: true
+        });
+    });
+    </script>
+{% endblock %}

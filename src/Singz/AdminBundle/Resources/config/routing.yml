@@ -4,7 +4,7 @@ singz_admin_admin_routing:
     prefix:   /
   
 ### COMMENT CONTROLLER ###
-singz_admin_user_routing:
+singz_admin_comment_routing:
     resource: "@SingzAdminBundle/Resources/config/Comment/routing.yml"
     prefix:   /comment/
         

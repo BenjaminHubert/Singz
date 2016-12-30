@@ -10,4 +10,11 @@ namespace Singz\UserBundle\Repository;
  */
 class UserRepository extends \Doctrine\ORM\EntityRepository
 {
+	public function getUsersList() {
+		return $this->createQueryBuilder('u')
+		->innerJoin('u.image', 'i')->addSelect('i')
+		->orderBy('u.username', 'ASC')
+		->getQuery()
+		->getResult();
+	}
 }

@@ -8,8 +8,9 @@ class UserController extends Controller
 {
     public function listAction()
     {
+    	$users = $this->getDoctrine()->getManager()->getRepository('SingzUserBundle:User')->getUsersList();
         return $this->render('SingzAdminBundle:User:list.html.twig', array(
-            // ...
+            'users' => $users
         ));
     }
 
