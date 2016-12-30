@@ -5,6 +5,7 @@ namespace Singz\VideoBundle\EventListener;
 use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Singz\VideoBundle\Entity\Video;
+use FFMpeg\Format\Video\X264;
 
 class VideoSubscriber implements EventSubscriber
 {
@@ -49,6 +50,8 @@ class VideoSubscriber implements EventSubscriber
 		if (!$video instanceof Video) {
 			return;
 		}
+		//getting entity maanger
+		$em = $args->getEntityManager();
 		### UPLOAD VIDEO ###
 		//s'il n'y a pas de fichier définit, on ne fait pas d'upload
 		if (null === $video->getFile()) {
@@ -65,6 +68,20 @@ class VideoSubscriber implements EventSubscriber
 				$video->getUploadRootDir(),
 				$video->getId().'.'.$video->getExtension()
 				);
+		### CONVERTION VIDEO TO MP4###
+		$oldPath = $video->getUploadRootDir().DIRECTORY_SEPARATOR.$video->getId().'.'.$video->getExtension();
+		$copyPath = $video->getUploadRootDir().DIRECTORY_SEPARATOR.$video->getId().'.copy.'.$video->getExtension();
+		$newPath = $video->getUploadRootDir().DIRECTORY_SEPARATOR.$video->getId().'.mp4';
+		copy($oldPath, $copyPath);
+		unlink($oldPath);
+		$file = $this->ffmpeg->open($copyPath);
+		$format = new X264('libmp3lame', 'libx264');
+		$file->save($format, $newPath);
+		unlink($copyPath);
+		//define the new format
+		$video->setExtension('mp4');
+		$em->persist($video);
+		$em->flush($video);
 		### CREATE PREVIEW IMAGE ###
 		// getting the video path
 		$path = $video->getUploadRootDir().DIRECTORY_SEPARATOR.$video->getId().'.'.$video->getExtension();
