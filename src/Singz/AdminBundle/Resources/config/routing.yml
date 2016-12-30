@@ -1,35 +1,12 @@
-#Admin controller
-singz_admin_dashboard:
-    path:     /dashboard
-    defaults: 
-        _controller: SingzAdminBundle:Admin:dashboard
-singz_admin_index:
-    path:     /
-    defaults:
-        _controller: SingzAdminBundle:Admin:index
-        
-#Comment controller
-singz_admin_comment_index:
-    path:     /comment/
-    defaults:
-        _controller: SingzAdminBundle:Comment:index
-singz_admin_comment_list:
-    path:     /comment/list/
-    defaults:
-        _controller: SingzAdminBundle:Comment:list
-singz_admin_comment_show:
-    path:     /comment/show/{id}
-    defaults:
-        _controller: SingzAdminBundle:Comment:show
-    requirements:
-        id: \d+
-singz_admin_comment_state:
-    path:     /comment/edit/state/{id}/{state}
-    defaults:
-        _controller: SingzAdminBundle:Comment:state
-    requirements:
-        id: \d+
-        state: \d{1}
+### ADMIN CONTROLLER ###
+singz_admin_admin_routing:
+    resource: "@SingzAdminBundle/Resources/config/Admin/routing.yml"
+    prefix:   /
+  
+### COMMENT CONTROLLER ###
+singz_admin_user_routing:
+    resource: "@SingzAdminBundle/Resources/config/Comment/routing.yml"
+    prefix:   /comment/
         
 ### USER CONTROLLER ###
 singz_admin_user_routing:
