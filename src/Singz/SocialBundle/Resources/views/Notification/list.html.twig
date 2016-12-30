@@ -1,1 +1,44 @@
 {% extends "SingzCoreBundle::layout.html.twig" %}
+
+{% block title %}
+    {{ 'Notifications - '~ parent() }}
+{% endblock %}
+
+{% block stylesheets %}
+	<style>
+    	 .notification .media-object{
+    	 	width:64px;
+    	 	height:64px;
+    	 }
+    	 .notification .message{
+    	 
+    	 }
+    	 .notification.list-group-item.active{
+            z-index: 2;
+            background-color: #f5f5f5;
+            border-color: #f5f5f5;
+            color: inherit;
+        }
+	 </style>
+{% endblock %}
+
+{% block body %}
+	<div class="list-group notifications">
+		{% for notification in notifications %}
+			<a class="list-group-item notification {% if notification.isRead %}active{% endif %}" href="{{ path('singz_social_bundle_publication_show', {'id':notification.publication.id}) }}">
+    			<div class="media">
+                    <div class="media-left">
+						<img class="media-object" src="{{ asset(notification.user.image.realPath) }}" alt="{{ notification.user.username }}">
+                    </div>
+                    <div class="media-body">
+                        <p class="message">{{ notification.message }}</p>
+                        <small>{{ notification.date|time_diff }}</small>
+                    </div>
+                </div>
+			</a>
+		{% else %}
+			Aucune notification
+		{% endfor %}
+	</div>
+	{{ dump(notifications) }}
+{% endblock %}
