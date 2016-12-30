@@ -14,10 +14,16 @@
 	</nav>
 	<div class="icon-list">
 		{% if app.user %}
-			<a title="Ajouter une vidéo" data-placement="bottom" data-toggle="tooltip" href="{{ path('singz_social_bundle_publication_new') }}"><i class="fa fa-fw fa-plus"></i></a>
-			<a title="Notifications" data-placement="bottom" data-toggle="tooltip" href="{{ path('singz_social_bundle_notification_list') }}"><i class="fa fa-fw fa-bell-o"></i> {{ notificationsUnread }}</a>
-			<a title="" data-placement="bottom" data-toggle="tooltip" href="#"><i class="fa fa-fw fa-envelope-o"></i></a>
-			<a title="" data-placement="bottom" data-toggle="tooltip" href="#"><i class="fa fa-fw fa-comment-o"></i></a>
+			<a title="Ajouter une vidéo" data-placement="bottom" data-toggle="tooltip" href="{{ path('singz_social_bundle_publication_new') }}">
+				<i class="fa fa-fw fa-plus"></i>
+			</a>
+			<a title="Notifications" data-placement="bottom" data-toggle="tooltip" href="{{ path('singz_social_bundle_notification_list') }}">
+				<i class="fa fa-fw fa-bell-o"></i> 
+				{{ notificationsUnread }}
+			</a>
+			{% if is_granted('ROLE_ADMIN') %}
+				<a title="Administration" data-placement="bottom" data-toggle="tooltip" href="{{ path('singz_admin_dashboard') }}"><i class="fa fa-fw fa-cogs" aria-hidden="true"></i></a>
+			{% endif %}
 			<a href="{{ path('fos_user_security_logout') }}">
 				<button title="Se déconnecter" data-placement="bottom" data-toggle="tooltip" class="btn btn-danger">
 					<i class="fa fa-sign-out" aria-hidden="true"></i>
