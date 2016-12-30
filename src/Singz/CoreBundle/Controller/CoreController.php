@@ -52,4 +52,20 @@ class CoreController extends Controller
             "publications" => $publications
         ));
     }
+    
+    public function menuAction(){
+    	if($this->getUser()){
+    		$em = $this->getDoctrine()->getManager();
+    		$notifications = $em->getRepository('SingzSocialBundle:Notification')->findBy(array(
+    			'userTo' => $this->getUser(),
+    			'isRead' => false
+    		));
+    		$notificationsUnread = count($notifications);
+    	}else{
+    		$notificationsUnread = 0;
+    	}
+    	return $this->render('SingzCoreBundle::menu.html.twig', array(
+    		'notificationsUnread' => $notificationsUnread
+    	));
+    }
 }
