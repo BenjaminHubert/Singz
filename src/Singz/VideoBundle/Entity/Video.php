@@ -41,7 +41,8 @@ class Video
 	 *			"video/x-ms-wmv",
 	 *			"video/x-msvideo",
 	 *			"video/x-flv",
-	 *			"video/webm"
+	 *			"video/webm",
+	 *			"video/x-matroska"
      *     },
      *     mimeTypesMessage = "Le type de vidéo ({{ type }}) n'est pas correct. Les types autorisés sont uniquement des fichiers vidéos."
      * )
