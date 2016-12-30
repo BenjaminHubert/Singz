@@ -1,0 +1,4 @@
+singz_social_bundle_notification_list:
+    path:     /list/
+    defaults:
+        _controller: SingzSocialBundle:Notification:list
