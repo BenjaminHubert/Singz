@@ -55,6 +55,11 @@ class Video
     
     /**
      * @var string
+     */
+    private $tempFilenamePreview;
+    
+    /**
+     * @var string
      *
      ** @ORM\Column(name="extension", type="string", length=255, nullable=true)
      */
@@ -230,6 +235,16 @@ class Video
     }
 
     /**
+     * Get tempFilename
+     *
+     * @return string
+     */
+    public function getTempFilename()
+    {
+        return $this->tempFilename;
+    }
+
+    /**
      * Set tempFilename
      *
      * @param string $tempFilename
@@ -244,12 +259,26 @@ class Video
     }
 
     /**
-     * Get tempFilename
+     * Get tempFilenamePreview
      *
      * @return string
      */
-    public function getTempFilename()
+    public function getTempFilenamePreview()
     {
-        return $this->tempFilename;
+        return $this->tempFilenamePreview;
+    }
+
+    /**
+     * Set tempFilenamePreview
+     *
+     * @param string $tempFilenamePreview
+     *
+     * @return Video
+     */
+    public function setTempFilenamePreview($tempFilenamePreview)
+    {
+    	$this->tempFilenamePreview = $tempFilenamePreview;
+    	
+    	return $this;
     }
 }
