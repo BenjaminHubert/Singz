@@ -31,11 +31,11 @@
 						<img class="media-object" src="{{ asset(notification.user.image.realPath) }}" alt="{{ notification.user.username }}">
                     </div>
                     <div class="media-body">
-                        <p class="message">{{ notification.message }}</p>
+                        <p class="message">{{ notification.message|raw }}</p>
                         <small>
                             {{ notification.date|time_diff }}
                             {% if notification.isRead == false %} 
-                            	&#8226; Non lu                            
+                            	&#8226; Non lu
                             {% endif %}
                         </small>
                     </div>
