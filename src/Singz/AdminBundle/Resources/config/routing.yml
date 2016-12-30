@@ -31,3 +31,7 @@ singz_admin_comment_state:
         id: \d+
         state: \d{1}
         
+### USER CONTROLLER ###
+singz_admin_user_routing:
+    resource: "@SingzAdminBundle/Resources/config/User/routing.yml"
+    prefix:   /user/

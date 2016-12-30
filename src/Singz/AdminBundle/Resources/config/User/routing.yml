@@ -1,0 +1,14 @@
+singz_admin_user_list:
+    path:     /list
+    defaults:
+        _controller: SingzAdminBundle:User:list
+        
+singz_admin_user_show:
+    path:     /show/{id}
+    defaults:
+        _controller: SingzAdminBundle:User:show
+
+singz_admin_user_edit:
+    path:     /edit/{id}
+    defaults:
+        _controller: SingzAdminBundle:User:edit
