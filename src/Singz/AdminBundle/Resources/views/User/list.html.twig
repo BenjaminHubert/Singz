@@ -19,7 +19,7 @@
 				<th>Nom d'utilisateur</th>
 				<th>Email</th>
 				<th>Editer</th>
-				<th>Activé/Désactivé</th>
+				<th>Action</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -42,13 +42,13 @@
 						</a>
 					</td>
 					<td>
-						{% if user.enabled == true %}
-    						<a href="#" class="btn btn-primary">
-    					        Activé
+						{% if user.enabled == false %}
+    						<a title="Activer l'utilisateur" data-placement="left" data-toggle="tooltip" href="{{ path('singz_admin_user_enabled', {'id':user.id, 'state':'enabled'}) }}" class="btn btn-danger confirmation-alert">
+    					        <i class="fa fa-lock" aria-hidden="true"></i>
     					    </a>
-						{% elseif user.enabled == false %}
-    						<a href="#" class="btn btn-danger">
-    					        Désactivé
+						{% elseif user.enabled == true %}
+    						<a title="Désactiver l'utilisateur" data-placement="left" data-toggle="tooltip" href="{{ path('singz_admin_user_enabled', {'id':user.id, 'state':'disabled'}) }}" class="btn btn-success confirmation-alert">
+    					        <i class="fa fa-unlock-alt" aria-hidden="true"></i>
     					    </a>
 					    {% endif %}
 					</td>
@@ -68,6 +68,11 @@
         $('.dataTable').DataTable({
             responsive: true
         });
+        $('.confirmation-alert').click(function(){
+			return confirm('Êtes-vous sûr?');
+		});
+
+		$('[data-toggle="tooltip"]').tooltip();
     });
     </script>
 {% endblock %}

@@ -7,8 +7,20 @@ singz_admin_user_show:
     path:     /show/{id}
     defaults:
         _controller: SingzAdminBundle:User:show
+    requirements:
+        id: \d+
 
 singz_admin_user_edit:
     path:     /edit/{id}
     defaults:
         _controller: SingzAdminBundle:User:edit
+    requirements:
+        id: \d+
+
+singz_admin_user_enabled:
+    path:     /enabled/{id}/{state}
+    defaults:
+        _controller: SingzAdminBundle:User:enabled
+    requirements:
+        id: \d+
+        state: enabled|disabled
