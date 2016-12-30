@@ -3,7 +3,6 @@
 namespace Singz\VideoBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\HttpFoundation\File\File;
 
@@ -12,7 +11,6 @@ use Symfony\Component\HttpFoundation\File\File;
  *
  * @ORM\Table(name="video")
  * @ORM\Entity(repositoryClass="Singz\VideoBundle\Repository\VideoRepository")
- * @ORM\HasLifecycleCallbacks
  */
 class Video
 {
@@ -54,6 +52,11 @@ class Video
      * @var string
      */
     private $tempFilename;
+    
+    /**
+     * @var string
+     */
+    private $tempFilenamePreview;
     
     /**
      * @var string
@@ -195,42 +198,6 @@ class Video
     	return $this;    	
     }
     
-    /**
-     * @ORM\PrePersist()
-     * @ORM\PreUpdate()
-     */
-    public function preUpload()
-    {
-    	//s'il n'y a pas de fichier, on ne fait pas d'upload
-    	if (null === $this->file) {
-    		return;
-    	}
-    
-    	// Le nom du fichier est son id, on doit juste stocker également son extension
-    	$this->extension = $this->file->guessExtension();
-    }
-    
-    /**
-     * @ORM\PreRemove()
-     */
-    public function preRemoveUpload()
-    {
-    	// On sauvegarde temporairement le nom du fichier, car il dépend de l'id
-    	$this->tempFilename = $this->getUploadRootDir().'/'.$this->id.'.'.$this->extension;
-    }
-    
-    /**
-     * @ORM\PostRemove()
-     */
-    public function removeUpload()
-    {
-    	// En PostRemove, on n'a pas accès à l'id, on utilise notre nom sauvegardé
-    	if (file_exists($this->tempFilename)) {
-    		// On supprime le fichier
-    		unlink($this->tempFilename);
-    	}
-    }
-    
     public function getUploadDir()
     {
     	// On retourne le chemin relatif vers l'image pour un navigateur (relatif au répertoire /web donc)
@@ -265,5 +232,29 @@ class Video
     public function getDuration()
     {
         return $this->duration;
+    }
+
+    /**
+     * Set tempFilename
+     *
+     * @param string $tempFilename
+     *
+     * @return Video
+     */
+    public function setTempFilename($tempFilename)
+    {
+    	$this->tempFilename = $tempFilename;
+    	
+    	return $this;
+    }
+
+    /**
+     * Get tempFilename
+     *
+     * @return string
+     */
+    public function getTempFilename()
+    {
+        return $this->tempFilename;
     }
 }

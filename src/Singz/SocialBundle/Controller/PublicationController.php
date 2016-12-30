@@ -16,11 +16,6 @@ use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 class PublicationController extends Controller
 {
-    public function indexAction(Request $request)
-    {
-    	throw $this->createNotFoundException();
-    }
-
     /**
      * @Security("has_role('ROLE_USER')")
      */
@@ -85,8 +80,7 @@ class PublicationController extends Controller
     	
     		// on vérifie la validation du formulaire
     		if($form->isValid()){
-    			//on met à jour
-    			$publication->setLastEdit(new \DateTime());
+    			// update
     			$em->flush();
     			 
     			//on affiche un message
@@ -102,6 +96,29 @@ class PublicationController extends Controller
     	));
     }
    	
+    /**
+     * @Security("has_role('ROLE_USER')")
+     */
+    public function deleteAction(Request $request, $id){
+    	// Get publication
+    	$em = $this->getDoctrine()->getManager();
+    	$publication = $em->getRepository('SingzSocialBundle:Publication')->getPublicationById($id);
+    	if($publication == null) {
+    		throw $this->createNotFoundException('Publication inexistante');
+    	}
+    	// Check if the user is the publication owner
+    	if(!$this->isGranted('ROLE_ADMIN') && $publication->getUser() != $this->getUser()){
+    		throw new AccessDeniedHttpException("Vous n'êtes pas autorisé à supprimer cette publication");
+    	}
+    	// suppression
+    	$em->remove($publication);
+    	$em->flush();
+    	//on affiche un message
+    	$this->addFlash('success', 'Publication supprimée avec succès.');
+    	// On redirige vers la page de visualisation de la publication nouvellement créée
+    	return $this->redirectToRoute('singz_feed');
+    }
+    
     public function showAction(Request $request, $id)
     {
         // Get publication
@@ -109,26 +126,9 @@ class PublicationController extends Controller
         if($publication == null) {
             throw $this->createNotFoundException('Publication inexistante');
         }
-        $user = $publication->getUser();
-        // Get thread
-        $thread = $this->container->get('fos_comment.manager.thread')->findThreadById($id);
-        if (null === $thread) {
-            $thread = $this->container->get('fos_comment.manager.thread')->createThread();
-            $thread->setId($id);
-            $thread->setPermalink($request->getUri());
-
-            // Add the thread
-            $this->container->get('fos_comment.manager.thread')->saveThread($thread);
-        }
-
-        // Get comments
-        $comments = $this->container->get('fos_comment.manager.comment')->findCommentTreeByThread($thread);
 
         return $this->render('SingzSocialBundle:Publication:show.html.twig', array(
-            'user' => $user,
             'publication' => $publication,
-            'thread' => $thread,
-            'comments' => $comments
         ));
     }
 

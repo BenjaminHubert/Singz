@@ -1,4 +1,7 @@
 services:
-#    singz_social.example:
-#        class: Singz\SocialBundle\Example
-#        arguments: ["@service_id", "plain_value", "%parameter%"]
+    singz.social.publication:
+        class: Singz\SocialBundle\EventListener\PublicationSubscriber
+        arguments:
+            - "@service_container"
+        tags:
+            - { name: doctrine.event_subscriber, connection: default }

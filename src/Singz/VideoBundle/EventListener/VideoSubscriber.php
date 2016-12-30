@@ -6,7 +6,7 @@ use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Singz\VideoBundle\Entity\Video;
 
-class VideoUploadSubscriber implements EventSubscriber
+class VideoSubscriber implements EventSubscriber
 {
 	private $ffprobe;
 	private $ffmpeg;
@@ -82,8 +82,10 @@ class VideoUploadSubscriber implements EventSubscriber
 		if (!$video instanceof Video) {
 			return;
 		}
-		// On sauvegarde temporairement le nom du fichier, car il dépend de l'id
+		// On sauvegarde temporairement le nom du fichier video, car il dépend de l'id
 		$video->setTempFilename($video->getUploadRootDir().'/'.$video->getId().'.'.$video->getExtension());
+		// On sauvegarde temporairement le nom du fichier preview, car il dépend de l'id
+		$video->setTempFilenamePreview($video->getUploadRootDir().'/'.$video->getId().'.jpg');
 	}
 	
 	public function postRemove(LifecycleEventArgs $args){
@@ -92,10 +94,15 @@ class VideoUploadSubscriber implements EventSubscriber
 		if (!$video instanceof Video) {
 			return;
 		}
-		// En PostRemove, on n'a pas accès à l'id, on utilise notre nom sauvegardé
+		// On supprime la vidéo
 		if (file_exists($video->getTempFilename())) {
 			// On supprime le fichier
 			unlink($video->getTempFilename());
+		}
+		// On supprime la preview
+		if (file_exists($video->getTempFilenamePreview())) {
+			// On supprime le fichier
+			unlink($video->getTempFilenamePreview());
 		}
 	}
 	

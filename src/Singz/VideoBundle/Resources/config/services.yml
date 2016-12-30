@@ -1,6 +1,6 @@
 services:
-    singz.doctrine.upload:
-        class: Singz\VideoBundle\EventListener\VideoUploadSubscriber
+    singz.video.video:
+        class: Singz\VideoBundle\EventListener\VideoSubscriber
         arguments:
             - "@dubture_ffmpeg.ffprobe"
             - "@dubture_ffmpeg.ffmpeg"

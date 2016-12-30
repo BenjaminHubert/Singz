@@ -4,7 +4,13 @@
 {# Edit button #}
 {% if app.user and (app.user.id == publication.user.id or is_granted('ROLE_ADMIN'))  %}
     <a href="{{ path('singz_social_bundle_publication_edit', {'id': publication.id}) }}" class="btn btn-default">
-    	<i class="fa fa-pencil-square-o" aria-hidden="true"></i> Modifier la publication
+    	<i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+    </a>
+{% endif %}
+{# Delete button #}
+{% if app.user and (app.user.id == publication.user.id or is_granted('ROLE_ADMIN'))  %}
+    <a href="{{ path('singz_social_bundle_publication_delete', {'id': publication.id}) }}" class="btn btn-danger confirmation-alert">
+    	<i class="fa fa-trash-o" aria-hidden="true"></i>
     </a>
 {% endif %}
 {# User and loves #}
@@ -59,6 +65,11 @@
 <script>
     var path = '{{ path('singz_social_bundle_publication_love') }}';
     var pathExtraPublication = '{{ path('singz_social_bundle_publication_extra_info') }}';
+    $(document).ready(function(){
+		$('.confirmation-alert').click(function(){
+			return confirm('Are you sure?');
+		});
+    });
 </script>
 <script src="{{ asset('bundles/singzsocial/js/script.js') }}"></script>
 <script src="{{ asset('bundles/foscomment/js/comments.js') }}"></script>
