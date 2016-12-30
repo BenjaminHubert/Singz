@@ -1,3 +1,4 @@
+### PUBLICATION CONTROLLER ###
 singz_social_bundle_publication_show:
     path:     /publication/{id}
     defaults:
@@ -35,4 +36,9 @@ singz_social_bundle_publication_extra_info:
     path:     /publication/extra/
     defaults:
         _controller: SingzSocialBundle:Publication:getPublicationExtra
-        
+
+### NOTIFICATION CONTROLLER ###
+singz_social_bundle_notification_list:
+    path:     /notification/list/
+    defaults:
+        _controller: SingzSocialBundle:Notification:list
