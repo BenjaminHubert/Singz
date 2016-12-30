@@ -3,7 +3,6 @@
 namespace Singz\SocialBundle\Controller;
 
 use Singz\SocialBundle\Entity\Love;
-use Singz\SocialBundle\Entity\Notification;
 use Singz\SocialBundle\Entity\Publication;
 use Singz\SocialBundle\SingzSocialBundle;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
