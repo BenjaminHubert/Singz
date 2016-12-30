@@ -12,6 +12,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Notification
 {
+	const NEW_LOVE = '<b>%s</b> love votre publication.';	
+	
     /**
      * @var int
      *
@@ -58,7 +60,11 @@ class Notification
      */
     private $message;
 
-
+	
+    public function __construct(){
+    	$this->date = new \DateTime();
+    }
+    
     /**
      * Get id
      *

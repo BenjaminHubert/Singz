@@ -155,20 +155,7 @@ class PublicationController extends Controller
                 $love = new Love();
                 $love->setUser($user);
                 $love->setPublication($pub);
-                $love->setDate(new \DateTime());
-
                 $em->persist($love);
-
-                // New notification
-                if($user != $pub->getUser()) {
-                    $notif = new Notification();
-                    $notif->setUser($user);
-                    $notif->setPublication($pub);
-                    $notif->setDate(new \DateTime());
-                    $notif->setMessage($user->getUsername()." love votre publication !");
-
-                    $em->persist($notif);
-                }
             } else {
                 $didLove = true;
                 $em->remove(array_pop($love));
