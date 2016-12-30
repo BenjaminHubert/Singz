@@ -13,9 +13,7 @@ class NotificationController extends Controller
     public function listAction()
     {
     	$em = $this->getDoctrine()->getManager();
-    	$notifications = $em->getRepository('SingzSocialBundle:Notification')->findBy(array(
-    		'user' => $this->getUser()			
-    	));
+    	$notifications = $em->getRepository('SingzSocialBundle:Notification')->getNotificationsByUser($this->getUser());
         return $this->render('SingzSocialBundle:Notification:list.html.twig', array(
             'notifications' => $notifications
         ));
