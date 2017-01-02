@@ -1,17 +1,28 @@
 {# Stylesheets #}
 <link href="{{ asset('bundles/foscomment/css/comments.css') }}" rel="stylesheet">
 <link href="{{ asset('bundles/singzcore/css/comments.css') }}" rel="stylesheet">
-{# Edit button #}
+
+{# Admin or publication owner actions #}
 {% if app.user and (app.user.id == publication.user.id or is_granted('ROLE_ADMIN'))  %}
-    <a href="{{ path('singz_social_bundle_publication_edit', {'id': publication.id}) }}" class="btn btn-default">
-    	<i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-    </a>
-{% endif %}
-{# Delete button #}
-{% if app.user and (app.user.id == publication.user.id or is_granted('ROLE_ADMIN'))  %}
-    <a href="{{ path('singz_social_bundle_publication_delete', {'id': publication.id}) }}" class="btn btn-danger confirmation-alert">
-    	<i class="fa fa-trash-o" aria-hidden="true"></i>
-    </a>
+	<div class="btn-group">
+		<button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+			<i class="fa fa-fw fa-ellipsis-h" aria-hidden="true"></i>
+		</button>
+    	<ul class="dropdown-menu">
+    		<li>
+           		{# Edit button #}
+                <a href="{{ path('singz_social_bundle_publication_edit', {'id': publication.id}) }}" class="">
+                	<i class="fa fa-pencil-square-o" aria-hidden="true"></i> Editer
+                </a>
+            </li>
+            <li>
+                {# Delete button #}
+                <a href="{{ path('singz_social_bundle_publication_delete', {'id': publication.id}) }}" class=" confirmation-alert">
+                	<i class="fa fa-trash-o" aria-hidden="true"></i> Supprimer
+                </a>
+            </li>
+		</ul>
+	</div>
 {% endif %}
 {# User and loves #}
 <div class="media">
@@ -23,9 +34,11 @@
     </div>
     <div class="media-body">
     	{# Username #}
-        <a href="{{ path('singz_user_bundle_homepage', {'id': publication.user.id}) }}">
-            {{ publication.user.username }}
-        </a>
+    	<p>
+            <a href="{{ path('singz_user_bundle_homepage', {'id': publication.user.id}) }}">
+                {{ publication.user.username }}
+            </a>
+        </p>
         {# Publication date #}
         <p>{{ publication.date|time_diff }}</p>
         {# Number of love #}
@@ -36,7 +49,7 @@
 <p>{{ publication.description }}</p>
 {# love button #}
 {% if app.user %}
-    <button id="love-{{ publication.id }}" onclick="lovethis(path, {{ publication.id }}, {{ app.user.id }})">
+    <button id="love-{{ publication.id }}" onclick="lovethis(path, {{ publication.id }}, {{ app.user.id }})" class="btn btn-default">
         {% set ilove = 0 %}
         {% for love in publication.loves if ilove == 0 %}
             {% if love.user.id == app.user.id  %}
