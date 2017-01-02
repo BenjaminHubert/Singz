@@ -1,0 +1,26 @@
+{% extends "SingzAdminBundle::layout.html.twig" %}
+{% block title_tag %}{{ user.username }} - {{ parent() }} {% endblock %}
+
+{% block stylesheets %}
+	 {{ parent() }}
+	 <link href="{{ asset('bundles/singzcore/bootstrap-select-1.12.1/css/bootstrap-select.min.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block title_page %}
+	Edition de {{ user.username }}
+{% endblock %} 
+
+{% block body %}
+    {{ form(edit_form) }}
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+	<script src="{{ asset('bundles/singzcore/bootstrap-select-1.12.1/js/bootstrap-select.min.js') }}"></script>
+	<script src="{{ asset('bundles/singzcore/bootstrap-select-1.12.1/js/i18n/defaults-fr_FR.min.js') }}"></script>
+	<script>
+    $(document).ready(function() {
+    	$('.selectpicker').selectpicker();
+    });
+    </script>
+{% endblock %}

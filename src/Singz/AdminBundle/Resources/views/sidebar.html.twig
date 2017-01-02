@@ -10,22 +10,12 @@
                         </button>
                     </span>
                 </div>
-                <!-- /input-group -->
             </li>
+            {# DASHBOARD #}
             <li>
                 <a href="{{ path('singz_admin_dashboard') }}"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
             </li>
-            <style>
-                .sidebar .arrow {
-                    content: "\f105";
-                }
-                .fa.arrow:before {
-                    content: "\f105";
-                }
-                .sidebar .fa.arrow:before {
-                    content: "\f105";
-                }
-            </style>
+            {# COMMENTAIRES #}
             <li>
                 <a href="#"><i class="fa fa-comments-o fa-fw"></i> Commentaires<span style="" class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
@@ -33,10 +23,16 @@
                         <a href="{{ path('singz_admin_comment_list') }}">Liste des commentaires</a>
                     </li>
                 </ul>
-                <!-- /.nav-second-level -->
+            </li>
+            {# UTILISATEURS #}
+            <li>
+                <a href="#"><i class="fa fa-users fa-fw"></i> Utilisateurs<span style="" class="fa arrow"></span></a>
+                <ul class="nav nav-second-level">
+                    <li>
+                        <a href="{{ path('singz_admin_user_list') }}">Liste des utilisateurs</a>
+                    </li>
+                </ul>
             </li>
         </ul>
     </div>
-    <!-- /.sidebar-collapse -->
 </div>
-<!-- /.navbar-static-side -->

@@ -10,14 +10,24 @@
         <title>{% block title_tag %}{{ appname }} Admin{% endblock %}</title>
     
         <!-- Bootstrap Core CSS -->
-        <link href="{{ asset('bundles/singzadmin/css/bootstrap.min.css') }}" rel="stylesheet">
+        <link href="{{ asset('bundles/singzcore/bootstrap-3.3.7/css/bootstrap.min.css') }}" rel="stylesheet">
         <!-- MetisMenu CSS -->
         <link href="{{ asset('bundles/singzadmin/css/metisMenu.min.css') }}" rel="stylesheet">
         <!-- Custom CSS -->
         <link href="{{ asset('bundles/singzadmin/css/sb-admin-2.min.css') }}" rel="stylesheet">
         <!-- Custom Fonts -->
         <link href="{{ asset('bundles/singzadmin/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css">
-        
+        <style>
+            .sidebar .arrow {
+                content: "\f105";
+            }
+            .fa.arrow:before {
+                content: "\f105";
+            }
+            .sidebar .fa.arrow:before {
+                content: "\f105";
+            }
+        </style>
         {% block stylesheets %}{% endblock %}
     
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -43,6 +53,11 @@
                             <h1 class="page-header">{% block title_page %}{% endblock %}</h1>
                         </div>
                         <!-- /.col-lg-12 -->
+                        {# Error message #}
+						<div class="col-md-12">
+							{{ include('SingzCoreBundle::flash-messages.html.twig') }}
+						</div>
+                        <!-- /.col-lg-12 -->
                         <div class="col-lg-12">
                             {% block body %}{% endblock %}
                         </div>
@@ -60,7 +75,7 @@
         <!-- jQuery -->
         <script src="{{ asset('bundles/singzadmin/js/jquery.min.js') }}"></script>
         <!-- Bootstrap Core JavaScript -->
-        <script src="{{ asset('bundles/singzadmin/js/bootstrap.min.js') }}"></script>
+        <script src="{{ asset('bundles/singzcore/bootstrap-3.3.7/js/bootstrap.min.js') }}"></script>
         <!-- Metis Menu Plugin JavaScript -->
         <script src="{{ asset('bundles/singzadmin/js/metisMenu.min.js') }}"></script>
         <!-- Custom Theme JavaScript -->

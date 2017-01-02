@@ -1,0 +1,19 @@
+singz_admin_user_list:
+    path:     /list
+    defaults:
+        _controller: SingzAdminBundle:User:list
+
+singz_admin_user_edit:
+    path:     /edit/{id}
+    defaults:
+        _controller: SingzAdminBundle:User:edit
+    requirements:
+        id: \d+
+
+singz_admin_user_enabled:
+    path:     /{id}/change-status/{state}
+    defaults:
+        _controller: SingzAdminBundle:User:enabled
+    requirements:
+        id: \d+
+        state: enabled|disabled
