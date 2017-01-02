@@ -14,6 +14,11 @@ use Doctrine\Common\Collections\ArrayCollection;
  */
 class User extends BaseUser
 {
+	const ROLE_SINGZER = 'ROLE_SINGZER';
+	const ROLE_STARZ = 'ROLE_STARZ';
+	const ROLE_ADMIN = 'ROLE_ADMIN';
+	const ROLE_SUPER_ADMIN = 'ROLE_SUPER_ADMIN';
+	
     /**
      * @var int
      *
@@ -75,6 +80,12 @@ class User extends BaseUser
      * @ORM\Column(name="is_private", type="boolean", nullable=false)
      */
     private $isPrivate = 0;
+    
+    
+    public static function getAllRoles() {
+    	$oClass = new \ReflectionClass(__CLASS__);
+    	return $oClass->getConstants();
+    }
     
     public function __construct(){
     	//comportement par défaut de FOS User
