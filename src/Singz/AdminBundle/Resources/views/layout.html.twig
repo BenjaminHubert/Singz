@@ -53,6 +53,11 @@
                             <h1 class="page-header">{% block title_page %}{% endblock %}</h1>
                         </div>
                         <!-- /.col-lg-12 -->
+                        {# Error message #}
+						<div class="col-md-12">
+							{{ include('SingzCoreBundle::flash-messages.html.twig') }}
+						</div>
+                        <!-- /.col-lg-12 -->
                         <div class="col-lg-12">
                             {% block body %}{% endblock %}
                         </div>
