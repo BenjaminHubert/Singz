@@ -16,5 +16,5 @@ parameters:
     secret: ~
     # FFMPEG bundle - binaries path
     # Download them here: https://ffmpeg.zeranoe.com/builds/
-    ffmpeg_binary: ~
-    ffprobe_binary: ~
+    ffmpeg_binary: C:/Programes/Ffmpeg/bin/ffmpeg.exe
+    ffprobe_binary: C:/Programes/Ffmpeg/bin/ffprobe.exe
