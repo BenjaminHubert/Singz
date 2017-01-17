@@ -19,11 +19,18 @@ En plus de cette interface utilisateur il sera possible aux artistes de demander
 Ainsi de nouvelles étoiles pourront parcourir les cieux en quête de célébrité et les adeptes de talents musicaux en 
 auront pour leur argent et leurs oreilles.  
 
+Prerequisite
+-------
+You need some installations to perform Singz on your computer: 
+* Web server working with PHP
+* composer
+* database server
+* Git
+
 How to?
 -------
 
-* Works with[**Symfony 3**][7]
-* git clone https://github.com/BenjaminHubert/Singz.git  
+* git clone git@github.com:BenjaminHubert/Singz.git
 * cd Singz  
 * install composer[**here**][8]
 * composer install  
