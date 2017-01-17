@@ -15,5 +15,6 @@ parameters:
     # Symfony hash secret code
     secret: ~
     # FFMPEG bundle - binaries path
+    # Download them here: https://ffmpeg.zeranoe.com/builds/
     ffmpeg_binary: ~
     ffprobe_binary: ~
