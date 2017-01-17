@@ -18,7 +18,7 @@ auront pour leur argent et leurs oreilles.
 
 Prerequisites
 -------
-You need some installations to perform Singz on your computer: 
+You need some installations to run Singz on your computer: 
 * A web server working with PHP >=5.5.9
 * Composer
 * A database server
@@ -29,7 +29,7 @@ How to?
 * `git clone git@github.com:BenjaminHubert/Singz.git`
 * `cd Singz`
 * Create an empty file named `app/config/parameters.yml`
-* Copy and past the content from `app/config/parameters.yml.dist` to `app/config/parameters.yml`. Set the parameters.
+* Copy and paste the content from `app/config/parameters.yml.dist` to `app/config/parameters.yml`. Set the parameters.
 * Download the FFMPEG binaries files here: https://ffmpeg.zeranoe.com/builds/. **Don't forget to indicate their locations in the parameters.yml file**
 * `composer install --no-scripts`
 * `bin/console doctrine:database:create`. Sometimes, this command is faced some issue ('unknown database'). Try it again and again or check your database parameters
