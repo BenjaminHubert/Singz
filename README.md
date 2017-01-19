@@ -30,7 +30,27 @@ How to?
 * `cd Singz`
 * Create an empty file named `app/config/parameters.yml`
 * Copy and paste the content from `app/config/parameters.yml.dist` to `app/config/parameters.yml`. Set the parameters.
-* Download the FFMPEG binaries files here: https://ffmpeg.zeranoe.com/builds/. **Don't forget to indicate their locations in the parameters.yml file**
+* Download the FFMPEG binaries files 
+  * On windows: https://ffmpeg.zeranoe.com/builds/. After downloading the zip file, you will need only two files:
+    * bin/ffmpeg.exe
+    * bin/ffprobe.exe
+  * On Linux Debian 8 **(It might take a while, up to 15 minutes...)**:
+    * `cd /opt`
+    * `sudo apt-get install yasm nasm \ 
+            build-essential automake autoconf \
+            libtool pkg-config libcurl4-openssl-dev \
+            intltool libxml2-dev libgtk2.0-dev \
+            libnotify-dev libglib2.0-dev libevent-dev \
+            checkinstall`
+    * `git clone git://git.videolan.org/ffmpeg.git`
+    * `cd ffmpeg`
+    * `./configure --prefix=/usr`
+    * `time make -j 8`
+    * `cat RELEASE`
+    * `sudo checkinstall`
+    * `dpkg --install ffmpeg_*.deb`
+  
+* Fill the ffmpeg and ffprobe parameters in the parameters.yml file by adding the absolute path of that program 
 * `composer install --no-scripts`
 * `bin/console doctrine:database:create`. Sometimes, this command is faced some issue ('unknown database'). Try it again and again or check your database parameters
 * `bin/console doctrine:schema:update --force`
