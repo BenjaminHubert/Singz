@@ -46,8 +46,9 @@ How to?
     * `cd ffmpeg`
     * `./configure --prefix=/usr`
     * `time make -j 8`
+    * `mkdir /usr/share/ffmpeg`
     * `cat RELEASE`
-    * `sudo checkinstall`
+    * `sudo checkinstall`. A menu is displayed. Enter the number version indicated by the previous command
     * `dpkg --install ffmpeg_*.deb`
   
 * Fill the ffmpeg and ffprobe parameters in the parameters.yml file by adding the absolute path of that program 
