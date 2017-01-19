@@ -53,9 +53,9 @@ How to?
   
 * Fill the ffmpeg and ffprobe parameters in the parameters.yml file by adding the absolute path of that program 
 * `composer install --no-scripts`
-* `bin/console doctrine:database:create`. Sometimes, this command is faced some issue ('unknown database'). Try it again and again or check your database parameters
-* `bin/console doctrine:schema:update --force`
-* `bin/console assets:install`
+* `php bin/console doctrine:database:create`. Sometimes, this command is faced some issue ('unknown database'). Try it again and again or check your database parameters
+* `php bin/console doctrine:schema:update --force`
+* `php bin/console assets:install`
 * `composer install`
 
 Fake data
