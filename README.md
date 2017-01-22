@@ -57,6 +57,7 @@ How to?
 * `php bin/console doctrine:schema:update --force`
 * `php bin/console assets:install`
 * `composer install`
+* If you're not working on Windows, `chown -R www-data:www-data /var/www/Singz`
 
 Fake data
 -------
