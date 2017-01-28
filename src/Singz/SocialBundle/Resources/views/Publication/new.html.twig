@@ -8,34 +8,81 @@
 	<h1>Ajouter une nouvelle publication</h1>
 	<div>
         {# Ouverture de la balise <form> du formulaire HTML #}
-        {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
-        
-        {# Les erreurs générales du formulaire. #}
-        {{ form_errors(form) }}
-        
-        {# Génération manuelle et éclatée du champ description : #}
-        <div class="form-group">
-            {# Génération du label. #}
-            {{ form_label(form.description, "Légende", {'label_attr': {'class': 'col-sm-2 control-label'}}) }}
-            
-            {# Affichage des erreurs pour ce champ précis. #}
-            {{ form_errors(form.description) }}
-            
-            <div class="col-sm-10">
+        {{ form_start(form, {
+        	'attr': {
+        		'class': 'form-horizontal dropzone',
+        		'id': 'dropzone'
+        	}
+        }) }}
+            {# Les erreurs générales du formulaire. #}
+            {{ form_errors(form) }}
+        	{# LEGENDE #}
+            <div class="form-group">
+                {# Génération du label. #}
+                <div class="col-md-2">
+                    {{ form_label(form.description, "Légende", {
+                    	'label_attr': {
+                    		'class': 'control-label'
+                    	}
+                    }) }}
+                </div>
+                {# Affichage des erreurs pour ce champ précis. #}
+                {{ form_errors(form.description) }}
                 {# Génération de l'input. #}
-                {{ form_widget(form.description, {'attr': {'class': 'form-control'}}) }}
+                <div class="col-md-10">
+                    {{ form_widget(form.description, {
+                    	'attr': {
+                    		'class': 'form-control'
+                    	}
+                    }) }}
+                </div>
             </div>
-        </div>
-        
-        {# Génération automatique des champs pas encore écrits.
-        Dans cet exemple, ce serait le champ CSRF (géré automatiquement par Symfony !)
-        et tous les champs cachés (type « hidden »). #}
-        {{ form_rest(form) }}
-        
-        {# Pour le bouton, pas de label ni d'erreur, on affiche juste le widget #}
-        {{ form_widget(form.save, {'attr': {'class': 'btn btn-primary'}}) }}
-        
-        {# Fermeture de la balise <form> du formulaire HTML #}
+        	{# VIDEO #}
+            <div class="form-group">
+                {# Génération du label. #}
+                <div class="col-md-2">
+                    {{ form_label(form.video, "Video", {
+                    	'label_attr': {
+                    		'class': 'control-label'
+                    	}
+                    }) }}
+                </div>
+                {# Affichage des erreurs pour ce champ précis. #}
+                {{ form_errors(form.video) }}
+                {# Génération de l'input. #}
+                <div class="col-md-10">
+                    {{ form_widget(form.video) }}
+                </div>
+            </div>
+        	{# SAVE BUTTON #}
+            <div class="form-group">
+                {# Génération de l'input. #}
+                <div class="col-md-10">
+                    {{ form_widget(form.save, {
+                    	'attr': {
+                    		'class': 'btn btn-default',
+                    	}
+                    }) }}
+                </div>
+            </div>
+            
+            {# Génération automatique des champs pas encore écrits.
+            Dans cet exemple, ce serait le champ CSRF (géré automatiquement par Symfony !)
+            et tous les champs cachés (type « hidden »). #}
+            {{ form_rest(form) }}
+            
+            {# Pour le bouton, pas de label ni d'erreur, on affiche juste le widget #}
+            {{ form_widget(form.save, {
+            	'attr': {
+            		'class': 'btn btn-primary'
+            	}
+            }) }}
+            
+            {# Fermeture de la balise <form> du formulaire HTML #}
         {{ form_end(form) }}
     </div>
+{% endblock %}
+
+
+{% block end_javascripts %}
 {% endblock %}
