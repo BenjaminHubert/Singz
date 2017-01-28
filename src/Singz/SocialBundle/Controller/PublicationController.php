@@ -24,7 +24,9 @@ class PublicationController extends Controller
     	$publication = new Publication();
     	
     	// on récupère le formulaire
-    	$form = $this->createForm(PublicationType::class, $publication);
+    	$form = $this->createForm(PublicationType::class, $publication, array(
+		    'action' => $this->generateUrl('singz_social_bundle_publication_new'),
+		));
     	    	
     	// si le formulaire est soumis
     	if($request->isMethod('POST')){
