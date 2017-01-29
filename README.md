@@ -34,7 +34,7 @@ How to?
   * On windows: https://ffmpeg.zeranoe.com/builds/. After downloading the zip file, you will need only two files:
     * bin/ffmpeg.exe
     * bin/ffprobe.exe
-  * On Linux Debian 8 **(It might take a while, up to 15 minutes...)**:
+  * On Linux Debian 8 **(It takes a while, up to 70 minutes...)**:
     * `cd /opt`
     * `sudo apt-get install yasm nasm \ 
             build-essential automake autoconf \
@@ -44,12 +44,13 @@ How to?
             checkinstall`
     * `git clone git://git.videolan.org/ffmpeg.git`
     * `cd ffmpeg`
-    * `./configure --prefix=/usr`
+    * `./configure --prefix=/usr --enable-gpl --enable-libx264`
     * `time make -j 8`
     * `mkdir /usr/share/ffmpeg`
     * `cat RELEASE`
     * `sudo checkinstall`. A menu is displayed. Enter the number version indicated by the previous command
     * `dpkg --install ffmpeg_*.deb`
+    * `apt-get install ffmpeg`
   
 * Fill the ffmpeg and ffprobe parameters in the parameters.yml file by adding the absolute path of that program 
 * `composer install --no-scripts`
