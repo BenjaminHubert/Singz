@@ -69,19 +69,22 @@ class VideoSubscriber implements EventSubscriber
 				$video->getId().'.'.$video->getExtension()
 				);
 		### CONVERTION VIDEO TO MP4###
-		$oldPath = $video->getUploadRootDir().DIRECTORY_SEPARATOR.$video->getId().'.'.$video->getExtension();
-		$copyPath = $video->getUploadRootDir().DIRECTORY_SEPARATOR.$video->getId().'.copy.'.$video->getExtension();
-		$newPath = $video->getUploadRootDir().DIRECTORY_SEPARATOR.$video->getId().'.mp4';
-		copy($oldPath, $copyPath);
-		unlink($oldPath);
-		$file = $this->ffmpeg->open($copyPath);
-		$format = new X264('libmp3lame', 'libx264');
-		$file->save($format, $newPath);
-		unlink($copyPath);
-		//define the new format
-		$video->setExtension('mp4');
-		$em->persist($video);
-		$em->flush($video);
+		$finalFormatExpected = 'mp4';
+		if($video->getExtension() != $finalFormatExpected){
+			$oldPath = $video->getUploadRootDir().DIRECTORY_SEPARATOR.$video->getId().'.'.$video->getExtension();
+			$copyPath = $video->getUploadRootDir().DIRECTORY_SEPARATOR.$video->getId().'.copy.'.$video->getExtension();
+			$newPath = $video->getUploadRootDir().DIRECTORY_SEPARATOR.$video->getId().'.'.$finalFormatExpected;
+			copy($oldPath, $copyPath);
+			unlink($oldPath);
+			$file = $this->ffmpeg->open($copyPath);
+			$format = new X264('libmp3lame', 'libx264');
+			$file->save($format, $newPath);
+			unlink($copyPath);
+			//define the new format
+			$video->setExtension($finalFormatExpected);
+			$em->persist($video);
+			$em->flush($video);
+		}
 		### CREATE PREVIEW IMAGE ###
 		// getting the video path
 		$path = $video->getUploadRootDir().DIRECTORY_SEPARATOR.$video->getId().'.'.$video->getExtension();
