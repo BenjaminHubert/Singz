@@ -31,9 +31,12 @@ How to?
 * Create an empty file named `app/config/parameters.yml`
 * Copy and paste the content from `app/config/parameters.yml.dist` to `app/config/parameters.yml`. Set the parameters.
 * Download the FFMPEG binaries files 
-  * On windows: https://ffmpeg.zeranoe.com/builds/. After downloading the zip file, you will need only two files:
+  * On windows: https://ffmpeg.zeranoe.com/builds/. After downloading the zip file, you will need only two files. Copy them in any directory you want:
     * bin/ffmpeg.exe
     * bin/ffprobe.exe
+  * On Mac OS: http://www.ffmpegmac.net/. After downloading the zip file, you will need only two files. Copy them in any directory you want:
+    * ffmpeg
+    * ffprobe
   * On Linux Debian 8 **(It takes a while, up to 70 minutes...)**:
     * `cd /opt`
     * `sudo apt-get install yasm nasm \ 
