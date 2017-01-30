@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "37611e1e67cfb09055dd118b7f600693",
-    "content-hash": "162a9077fb41d24497b673d3be4ea4c7",
+    "hash": "d6b07d1926f1e1f7b3db01b03a4439fd",
+    "content-hash": "b10a09cdc6b9521ec73f8d8c96331745",
     "packages": [
         {
             "name": "alchemy/binary-driver",
@@ -343,16 +343,16 @@
         },
         {
             "name": "doctrine/dbal",
-            "version": "v2.5.7",
+            "version": "v2.5.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/dbal.git",
-                "reference": "3a351369582dade60c750e2cef540eb7b568e6b3"
+                "reference": "fc376f7a61498e18520cd6fa083752a4ca08072b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/dbal/zipball/3a351369582dade60c750e2cef540eb7b568e6b3",
-                "reference": "3a351369582dade60c750e2cef540eb7b568e6b3",
+                "url": "https://api.github.com/repos/doctrine/dbal/zipball/fc376f7a61498e18520cd6fa083752a4ca08072b",
+                "reference": "fc376f7a61498e18520cd6fa083752a4ca08072b",
                 "shasum": ""
             },
             "require": {
@@ -410,20 +410,20 @@
                 "persistence",
                 "queryobject"
             ],
-            "time": "2017-01-14 21:05:28"
+            "time": "2017-01-23 23:17:10"
         },
         {
             "name": "doctrine/doctrine-bundle",
-            "version": "1.6.6",
+            "version": "1.6.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/DoctrineBundle.git",
-                "reference": "0f0c4df366bd1d36d38a27e2f5ff128e118ac969"
+                "reference": "a01d99bc6c9a6c8a8ace0012690099dd957ce9b9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/DoctrineBundle/zipball/0f0c4df366bd1d36d38a27e2f5ff128e118ac969",
-                "reference": "0f0c4df366bd1d36d38a27e2f5ff128e118ac969",
+                "url": "https://api.github.com/repos/doctrine/DoctrineBundle/zipball/a01d99bc6c9a6c8a8ace0012690099dd957ce9b9",
+                "reference": "a01d99bc6c9a6c8a8ace0012690099dd957ce9b9",
                 "shasum": ""
             },
             "require": {
@@ -491,7 +491,7 @@
                 "orm",
                 "persistence"
             ],
-            "time": "2017-01-07 21:47:22"
+            "time": "2017-01-16 12:01:26"
         },
         {
             "name": "doctrine/doctrine-cache-bundle",
@@ -1065,12 +1065,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfSymfony/FOSUserBundle.git",
-                "reference": "90628acfec2dcd105f47ab6eddcf14d28f60962b"
+                "reference": "d01739f70df32e6ab441b23b88395ae26715c5f3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSUserBundle/zipball/90628acfec2dcd105f47ab6eddcf14d28f60962b",
-                "reference": "90628acfec2dcd105f47ab6eddcf14d28f60962b",
+                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSUserBundle/zipball/d01739f70df32e6ab441b23b88395ae26715c5f3",
+                "reference": "d01739f70df32e6ab441b23b88395ae26715c5f3",
                 "shasum": ""
             },
             "require": {
@@ -1133,7 +1133,7 @@
             "keywords": [
                 "User management"
             ],
-            "time": "2017-01-16 09:31:32"
+            "time": "2017-01-30 16:02:42"
         },
         {
             "name": "incenteev/composer-parameter-handler",
@@ -1466,6 +1466,65 @@
                 "xml"
             ],
             "time": "2015-11-10 12:26:42"
+        },
+        {
+            "name": "lexik/maintenance-bundle",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/lexik/LexikMaintenanceBundle.git",
+                "reference": "718a65585927a342835ae962d125567bf9a4f31a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/lexik/LexikMaintenanceBundle/zipball/718a65585927a342835ae962d125567bf9a4f31a",
+                "reference": "718a65585927a342835ae962d125567bf9a4f31a",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.2",
+                "symfony/framework-bundle": "~2.7|~3.0"
+            },
+            "require-dev": {
+                "symfony/phpunit-bridge": "~2.7|~3.0"
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Lexik\\Bundle\\MaintenanceBundle\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Dev Lexik",
+                    "email": "dev@lexik.fr"
+                },
+                {
+                    "name": "Gilles Gauthier",
+                    "email": "g.gauthier@lexik.fr"
+                },
+                {
+                    "name": "Djuri Baars",
+                    "email": "info@djurict.nl"
+                }
+            ],
+            "description": "This bundle allows you to place your website in maintenance mode by calling two commands from your console.",
+            "homepage": "https://github.com/lexik/LexikMaintenanceBundle",
+            "keywords": [
+                "Symfony2",
+                "bundle",
+                "maintenance"
+            ],
+            "time": "2016-05-09 15:55:43"
         },
         {
             "name": "monolog/monolog",
@@ -2691,16 +2750,16 @@
         },
         {
             "name": "symfony/symfony",
-            "version": "v3.1.9",
+            "version": "v3.1.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/symfony.git",
-                "reference": "8d80e330acaad0780028ecb93fa8e902eb1e9abb"
+                "reference": "96e7dede3ddc9e3b3392f5cc93e26eca77545a89"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/symfony/zipball/8d80e330acaad0780028ecb93fa8e902eb1e9abb",
-                "reference": "8d80e330acaad0780028ecb93fa8e902eb1e9abb",
+                "url": "https://api.github.com/repos/symfony/symfony/zipball/96e7dede3ddc9e3b3392f5cc93e26eca77545a89",
+                "reference": "96e7dede3ddc9e3b3392f5cc93e26eca77545a89",
                 "shasum": ""
             },
             "require": {
@@ -2782,6 +2841,7 @@
                 "ocramius/proxy-manager": "~0.4|~1.0|~2.0",
                 "phpdocumentor/reflection-docblock": "^3.0",
                 "predis/predis": "~1.0",
+                "sensio/framework-extra-bundle": "^3.0.2",
                 "symfony/phpunit-bridge": "~3.2",
                 "symfony/polyfill-apcu": "~1.1",
                 "symfony/security-acl": "~2.8|~3.0"
@@ -2828,7 +2888,7 @@
             "keywords": [
                 "framework"
             ],
-            "time": "2017-01-12 20:44:00"
+            "time": "2017-01-28 02:53:38"
         },
         {
             "name": "twig/extensions",
@@ -3314,7 +3374,8 @@
     "minimum-stability": "stable",
     "stability-flags": {
         "friendsofsymfony/user-bundle": 20,
-        "nomaya/social-bundle": 20
+        "nomaya/social-bundle": 20,
+        "lexik/maintenance-bundle": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

@@ -26,6 +26,7 @@ class AppKernel extends Kernel
             new JMS\SerializerBundle\JMSSerializerBundle($this),
             new Nomaya\SocialBundle\NomayaSocialBundle(),
         	new Dubture\FFmpegBundle\DubtureFFmpegBundle(),
+        	new Lexik\Bundle\MaintenanceBundle\LexikMaintenanceBundle(),
 
         ];
 

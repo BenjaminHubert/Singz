@@ -26,7 +26,8 @@
         "friendsofsymfony/comment-bundle": "^2.0",
         "nomaya/social-bundle": "dev-master",
         "twig/extensions": "^1.4",
-        "pulse00/ffmpeg-bundle": "^0.6"
+        "pulse00/ffmpeg-bundle": "^0.6",
+        "lexik/maintenance-bundle": "dev-master"
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",
