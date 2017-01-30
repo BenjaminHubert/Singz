@@ -43,7 +43,7 @@ class PublicationController extends Controller
     			$em->flush();
     			
     			//on affiche un message
-    			$this->addFlash('success', 'Publication bien enregistrée.');
+//     			$this->addFlash('success', 'Publication bien enregistrée.');
     			
     			// On redirige vers la page de visualisation de la publication nouvellement créée
     			return $this->redirectToRoute('singz_social_bundle_publication_show', array('id' => $publication->getId()));
