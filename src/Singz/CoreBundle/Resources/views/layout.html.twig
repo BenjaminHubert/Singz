@@ -11,12 +11,16 @@
 		{# TITLE TAG #}
         <title>{% block title %}{{ appname }}{% endblock %}</title>
         {# STYLESHEETS #}
+            {# Reset style #}
+            <link href="{{ asset('bundles/singzcore/css/reset.css') }}" rel="stylesheet">
             {# Font awesome icons #}
             <link href="{{ asset('bundles/singzcore/font-awesome-4.7.0/css/font-awesome.min.css') }}" rel="stylesheet">
         	{# Bootstrap #}
             <link rel="stylesheet" href="{{ asset('bundles/singzcore/bootstrap-3.3.7/css/bootstrap.min.css') }}">
             {# Responsive Bootstrap Portfolio And Lightbox Main Style Sheet #}
             <link href="{{ asset('bundles/singzcore/lightbox/css/sz_video_003.css') }}" rel="stylesheet">
+            {# Navigation style #}
+            <link href="{{ asset('bundles/singzcore/css/mega-site-navigation.css') }}" rel="stylesheet">
             {# Others #}
             <link href="{{ asset('bundles/singzcore/css/style.css') }}" rel="stylesheet">
         {# Custom style one shot #}
@@ -28,52 +32,46 @@
         {# OTHERS HEAD TAGS #}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
     </head>
-    <body>
-        <div class="container-global">
-        	{# Menu #}
-			{{ render(controller('SingzCoreBundle:Core:menu')) }}
-			<button class="menu-button" id="open-button">Open Menu</button>
-			<div class="content-wrap">
-				<div class="content">
-					<div class="row">
-						<div class="container">
-						    {# Logo #}
-    						<div class="col-md-12">
-    							<a href="{{ path('singz_index') }}">
-    								<img class="app-logo" src="{{ asset('bundles/singzcore/img/logo-singz.png') }}"/>
-    							</a>
-    						</div>
-                            {# Error message #}
-    						<div class="col-md-12">
-    							{{ include('SingzCoreBundle::flash-messages.html.twig') }}
-    						</div>
-                            {# Body #}
-    						<div class="col-md-12">
-                                {% block body %}{% endblock %}
-                            </div>
-						</div>
-					</div>
+    <body class="nav-is-fixed">
+    	{# Navbar #}
+		{{ render(controller('SingzCoreBundle:Core:menu')) }}
+		{# Content #}
+		<div class="container">
+			<div class="row">
+                {# Error message #}
+				<div class="col-md-12">
+					{{ include('SingzCoreBundle::flash-messages.html.twig') }}
 				</div>
+                {# Body #}
+				<div class="col-md-12">
+					<main class="cd-main-content">
+                        {% block body %}{% endblock %}
+                    </main>
+                </div>
 			</div>
 		</div>
+		
         {# JAVASCRIPTS #}
-            {# General #}
-        	<script>var assetsBaseDir = "{{ asset('/') }}";</script>
-        	{# Bootstrap #}
-        	<script src="{{ asset('bundles/singzcore/bootstrap-3.3.7/js/bootstrap.min.js') }}"></script>
-        	{# TouchSwipe JS file #}
-        	<script src="{{ asset('bundles/singzcore/lightbox/js/jquery.touchSwipe.js') }}"></script>
-        	{# Responsive Bootstrap Portfolio And Lightbox Main JS File #}
-        	<script src="{{ asset('bundles/singzcore/lightbox/js/sz_portfolio_lightbox.js') }}"></script>
-        	{# Menu #}
-        	<script src="{{ asset('bundles/singzcore/OffCanvasMenuEffects/js/classie.js') }}"></script>
-        	<script src="{{ asset('bundles/singzcore/OffCanvasMenuEffects/js/main.js') }}"></script>
-        	<script>
-        		$(function () {
-					$('[data-toggle="tooltip"]').tooltip();
-					$('[data-toggle="popover"]').popover();
-        		})
-        	</script>
+        {# General #}
+    	<script>var assetsBaseDir = "{{ asset('/') }}";</script>
+    	{# Navigation #}
+    	<script src="{{ asset('bundles/singzcore/js/mega-site-navigation.js') }}"></script>
+    	{# Bootstrap #}
+    	<script src="{{ asset('bundles/singzcore/bootstrap-3.3.7/js/bootstrap.min.js') }}"></script>
+    	{# TouchSwipe JS file #}
+    	<script src="{{ asset('bundles/singzcore/lightbox/js/jquery.touchSwipe.js') }}"></script>
+    	{# Responsive Bootstrap Portfolio And Lightbox Main JS File #}
+    	<script src="{{ asset('bundles/singzcore/lightbox/js/sz_portfolio_lightbox.js') }}"></script>
+    	<script>
+    		$(function () {
+				$('[data-toggle="tooltip"]').tooltip();
+				$('[data-toggle="popover"]').popover();
+
+				$('form#search-form').submit(function(){
+					return false;
+				});
+    		})
+    	</script>
         {% block end_javascripts %}{% endblock %}
     </body>
 </html>

@@ -1,42 +1,59 @@
-<div class="menu-wrap">
-	<nav class="menu-top">
-		<div class="profile">
-			{% if app.user %}
-				<a href="{{ path('singz_user_bundle_homepage', {'id': app.user.id}) }}">
-					<img style="width:42px;height:42px" class="img-circle" src="{% if app.user.image is null %}{{ asset('bundles/singzcore/img/anonymous_icon.jpg') }}{% else %}{{ asset(app.user.image.realPath) }}{% endif %}" alt="{{ app.user.username }}">
-					<span>{{ app.user.username }}</span>
-				</a>
-			{% else %}
-				<a href="{{ path('fos_user_security_login') }}"><button class="btn btn-default">Se connecter</button></a>
-				<a href="{{ path('fos_user_registration_register') }}"><button class="btn btn-default">S'enregistrer</button></a>
-			{% endif %}
-		</div>
-	</nav>
-	<div class="icon-list">
+<header class="cd-main-header">
+	<a class="cd-logo" href="{{ path('singz_index') }}"><img src="{{ asset('bundles/singzcore/img/logo-singz.png') }}" alt="{{ appname }}"></a>
+	<ul class="cd-header-buttons">
+		<li><a class="cd-search-trigger" href="#cd-search">Search<span></span></a></li>
+		<li><a class="cd-nav-trigger" href="#cd-primary-nav">Menu<span></span></a></li>
+	</ul>
+</header>
+<div class="cd-overlay"></div>
+<nav class="cd-nav">
+	<ul id="cd-primary-nav" class="cd-primary-nav is-fixed">
 		{% if app.user %}
-			<a title="Ajouter une vidéo" data-placement="bottom" data-toggle="tooltip" href="{{ path('singz_social_bundle_publication_new') }}">
-				<i class="fa fa-fw fa-plus"></i>
-			</a>
-			<a title="Notifications" data-placement="bottom" data-toggle="tooltip" href="{{ path('singz_social_bundle_notification_list') }}">
-				<i class="fa fa-fw fa-bell-o"></i> 
-				{{ notificationsUnread }}
-			</a>
-			{% if is_granted('ROLE_ADMIN') %}
-				<a title="Administration" data-placement="bottom" data-toggle="tooltip" href="{{ path('singz_admin_dashboard') }}"><i class="fa fa-fw fa-cogs" aria-hidden="true"></i></a>
-			{% endif %}
-			<a href="{{ path('fos_user_security_logout') }}">
-				<button title="Se déconnecter" data-placement="bottom" data-toggle="tooltip" class="btn btn-danger">
-					<i class="fa fa-sign-out" aria-hidden="true"></i>
-				</button>
-			</a>
+    		<li>
+    			<a href="{{ path('singz_user_bundle_homepage', {'id': app.user.id}) }}">
+    				<img style="width:42px;height:42px" class="img-circle" src="{% if app.user.image is null %}{{ asset('bundles/singzcore/img/anonymous_icon.jpg') }}{% else %}{{ asset(app.user.image.realPath) }}{% endif %}" alt="{{ app.user.username }}">
+    			</a>
+    			<a title="Ajouter une vidéo" data-placement="bottom" data-toggle="tooltip" href="{{ path('singz_social_bundle_publication_new') }}">
+    				<i class="fa fa-fw fa-plus"></i>
+    			</a>
+    			<a title="Notifications" data-placement="bottom" data-toggle="tooltip" href="{{ path('singz_social_bundle_notification_list') }}">
+    				<i class="fa fa-fw fa-bell-o"></i> 
+    				{{ notificationsUnread }}
+    			</a>
+    			{% if is_granted('ROLE_ADMIN') %}
+    				<a title="Administration" data-placement="bottom" data-toggle="tooltip" href="{{ path('singz_admin_dashboard') }}">
+    					<i class="fa fa-fw fa-cogs" aria-hidden="true"></i>
+    				</a>
+    			{% endif %}
+    			<a href="{{ path('fos_user_security_logout') }}">
+    				<button title="Se déconnecter" data-placement="bottom" data-toggle="tooltip" class="btn btn-danger">
+    					<i class="fa fa-sign-out" aria-hidden="true"></i>
+    				</button>
+    			</a>
+    		</li>
+		{% else %}
+    		<li>
+    			<a href="{{ path('fos_user_security_login') }}">
+    				<button class="btn btn-default">Se connecter</button>
+    			</a>
+    			<a href="{{ path('fos_user_registration_register') }}">
+    				<button class="btn btn-default">S'enregistrer</button>
+    			</a>
+    		</li>
 		{% endif %}
-	</div>
-	<nav class="menu-side">
-		<a href="{{ path('singz_feed') }}">
-			<i class="fa fa-fw fa-newspaper-o" aria-hidden="true"></i> Fil d'actualité
-		</a>
-		<a href="{{ path('singz_browse_all') }}">
-			<i class="fa fa-fw fa-globe" aria-hidden="true"></i> Browse
-		</a>
-	</nav>
+		<li>
+			<a href="{{ path('singz_feed') }}">
+    			<i class="fa fa-fw fa-newspaper-o" aria-hidden="true"></i> Fil d'actualité
+    		</a>
+    		<a href="{{ path('singz_browse_all') }}">
+    			<i class="fa fa-fw fa-globe" aria-hidden="true"></i> Browse
+    		</a>
+		</li>
+	</ul>
+</nav>
+
+<div id="cd-search" class="cd-search">
+	<form id="search-form">
+		<input type="search" placeholder="Search...">
+	</form>
 </div>
