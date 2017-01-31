@@ -1,47 +1,49 @@
+{# Extra CSS #}
 <link rel="stylesheet" href="{{ asset('bundles/singzvideo/css/plyr.min.css') }}">
-<!-------------------------------------------------
-	Responsive Bootstrap Portfolio And Lightbox
--------------------------------------------------->
+<link rel="stylesheet" href="{{ asset('bundles/singzcore/css/grid-effect.css') }}">
+{# Content #}
 <div class="sz_video_003_wrapper">
-	<div class="sz_video_003_trig">
-		<div class="row">
+	<div class="sz_video_003_trig ">
+		<ul class="grid effect-2" id="grid">
 			{% for publication in publications %}
-    			<div class="col-xs-12 col-sm-6 col-md-3" data-small-publication="{{ publication.id }}">
-    				<div class="sz_video_003_trig_wrap">
-    					<div class="sz_video_003_trig_img">
-    						<img src="{{ asset(publication.video.previewPath) }}" alt="PREVIEW ERROR">
-    						<div class="sz_video_003_trig_btn">
-    							<a href="#sz_video_003_4_col" data-toggle="modal" data-slide-to="{{ loop.index0 }}" data-backdrop="true">
-    								<span class="fa fa-play"></span>
-    							</a>
-    						</div>
-    						<span>{{ publication.video.duration }} s</span>
-    					</div>
-    					<div class="sz_video_003_trig_txt">
-							<div class="media">
-                                <div class="media-left">
-                                	<a href="{{ path('singz_user_bundle_homepage', {'id': publication.user.id}) }}">	
-                                		<img class="media-object img-circle" style="width:42px;height:42px"  src="{% if publication.user.image is null %}{{ asset('bundles/singzcore/img/anonymous_icon.jpg') }}{% else %}{{ asset(publication.user.image.realPath) }}{% endif %}" alt="{{ publication.user.username }}">
-                                	</a>
+				<li>
+        			<div data-small-publication="{{ publication.id }}">
+        				<div class="sz_video_003_trig_wrap">
+        					<div class="sz_video_003_trig_img">
+        						<img src="{{ asset(publication.video.previewPath) }}" class="preview" alt="PREVIEW ERROR">
+        						<div class="sz_video_003_trig_btn">
+        							<a href="#sz_video_003_4_col" data-toggle="modal" data-slide-to="{{ loop.index0 }}" data-backdrop="true">
+        								<span class="fa fa-play"></span>
+        							</a>
+        						</div>
+        						<span>{{ publication.video.duration }} s</span>
+        					</div>
+        					<div class="sz_video_003_trig_txt">
+    							<div class="media">
+                                    <div class="media-left">
+                                    	<a href="{{ path('singz_user_bundle_homepage', {'id': publication.user.id}) }}">	
+                                    		<img class="media-object img-circle" style="width:42px;height:42px"  src="{% if publication.user.image is null %}{{ asset('bundles/singzcore/img/anonymous_icon.jpg') }}{% else %}{{ asset(publication.user.image.realPath) }}{% endif %}" alt="{{ publication.user.username }}">
+                                    	</a>
+                                    </div>
+                                    <div class="media-body">
+        							    <a href="{{ path('singz_user_bundle_homepage', {'id': publication.user.id}) }}">
+        							    	{{ publication.user.username }}
+        							    </a>
+        							    <p><i class="fa fa-fw fa-heart" aria-hidden="true"></i> {{ publication.numLoves }}</p>
+                             	   </div>
                                 </div>
-                                <div class="media-body">
-    							    <a href="{{ path('singz_user_bundle_homepage', {'id': publication.user.id}) }}">
-    							    	{{ publication.user.username }}
-    							    </a>
-    							    <p><i class="fa fa-fw fa-heart" aria-hidden="true"></i> {{ publication.numLoves }}</p>
-                         	   </div>
-                            </div>
-                            
-    						{#<ul>
-    							<li>
-    								<a href="#">category</a>
-    							</li>
-    						</ul>#}
-    					</div>
-    				</div>
-    			</div>
+                                
+        						{#<ul>
+        							<li>
+        								<a href="#">category</a>
+        							</li>
+        						</ul>#}
+        					</div>
+        				</div>
+        			</div>
+				</li>
     		{% endfor %}
-		</div>
+		</ul>
 		<div id="sz_video_003_4_col" class="modal fade sz_vid_003_mod_sld sz_bd_black carousel sz_video_003_controls sz_video_003_indicators thumb_scroll_y selfPauseVidm selfPlayVidm " data-ride="carousel" data-duration="2000" data-interval="false" role="dialog">
 			<div class="modal-dialog">
 				<div class="modal-content">
@@ -95,63 +97,21 @@
 		</div>
 	</div>
 </div>
-
+{# Extra JS #}
 <script src="{{ asset('bundles/singzvideo/js/plyr.min.js') }}"></script>
-{# To load extra publication (right side when opening publication modal) #}
 <script src="{{ asset('bundles/singzsocial/js/loadExtraPublication.js') }}"></script>
+
+<script src="{{ asset('bundles/singzcore/js/masonry.pkgd.min.js') }}"></script>
+<script src="{{ asset('bundles/singzcore/js/imagesloaded.pkgd.min.js') }}"></script>
+<script src="{{ asset('bundles/singzcore/js/classie.js') }}"></script>
+<script src="{{ asset('bundles/singzcore/js/AnimOnScroll.js') }}"></script>
 <script>
 	plyr.setup();
 	var pathExtraPublication = '{{ path('singz_social_bundle_publication_extra_info') }}';
+
+	new AnimOnScroll(document.getElementById('grid'),{
+		minDuration : 0.4,
+		maxDuration : 0.7,
+		viewportFactor : 0.2
+	});
 </script>
-
-
-{#
-<video id="my-video" class="video-js vjs-default-skin" controls preload="auto" width="640" height="264" poster="{{ asset('uploads/userImage/') }}{{ publication.user.image.path }}" data-setup="{}">
-<!-- <source src="{{ publication.video.path }}" type='video/mov'> -->
-<!-- <source src="{{ publication.video.path }}" type='video/webm'> -->
-<source src="{{ publication.video.path }}" type='video/mp4'>
-    <p class="vjs-no-js">
-        To view this video please enable JavaScript, and consider upgrading to a web browser that
-        <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
-    </p>
-</video>
-<div class="video-side-block">
-    <div class="video-user-infos">
-        <img src="{{ asset('uploads/userImage/') }}{{ publication.user.image.path }}">
-        <a href="{{ path('singz_user_bundle_homepage', {'id': publication.user.id}) }}" class="user-name">{{ publication.user.username }}</a>
-        {% if 'ROLE_STARZ' in publication.user.roles %} &#9733; {% endif %}<br>
-        Le {{ publication.date|date("d/m/Y")}}<br><br>
-
-        {% set nb_likes = publication.loves|length %}
-        <div id="nbloves-{{ publication.id }}">
-            {{ nb_likes }} love{% if nb_likes != 1 %}s{% endif %}
-        </div>
-        {# check if the user is logged #}{#
-        {% if app.user %}
-            <button id="love-{{ publication.id }}" onclick="lovethis(path, {{ publication.id }}, {{ app.user.id }})">
-                {% set ilove = 0 %}
-                {% for love in publication.loves if ilove == 0 %}
-                    {% if love.user.id == app.user.id  %}
-                        {% set ilove = 1 %}
-                        Je ne love plus
-                    {% endif %}
-                {% endfor %}
-                {% if ilove == 0 %}
-                    Je love !
-                {% endif %}
-            </button>
-		{% else %}
-			<a href="{{ path('fos_user_security_login') }}">Se connecter</a>
-		{% endif %}
-    </div>
-    <div class="video-comments">
-        <div id="fos_comment_thread" data-thread="{{ thread.id }}">
-            {% include 'FOSCommentBundle:Thread:comments.html.twig' with {
-            'comments': comments,
-            'thread': thread,
-            'view': 'tree'
-            } %}
-        </div>
-    </div>
-</div>
-#}
