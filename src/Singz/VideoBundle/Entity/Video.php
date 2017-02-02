@@ -33,7 +33,7 @@ class Video
     /**
      * @var File
      * @Assert\File(
-     *     maxSize = "10M",
+     *     maxSize = "100M",
      *     mimeTypes = {
 	 *			"video/mpeg",
 	 *			"video/mp4",
