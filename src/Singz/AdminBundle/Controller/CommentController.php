@@ -50,7 +50,7 @@ class CommentController extends Controller
     		$comment->setState((int)$state);
     		$em->persist($comment);
     		$em->flush();
-    		$request->getSession()->getFlashBag()->add('success', 'Comment updated');
+    		$request->getSession()->getFlashBag()->add('success', 'Commentaire mis à jour');
     		return $this->redirectToRoute('singz_admin_comment_show', ['id' => $id]);
     	}else{
 	    	return $this->render('SingzAdminBundle:Comment:state.html.twig', array(
