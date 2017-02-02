@@ -14,13 +14,16 @@ body {
   background-color: #b4bad2;
 }
 
-body.nav-is-fixed{
+body.nav-is-fixed > div.container{
 	padding-top: 100px;
 }
 
 @media only screen and (max-width: 1169px) {
   body.nav-on-left.overflow-hidden {
     overflow: hidden;
+  }
+  body.nav-is-fixed > div.container{
+	padding-top: 70px;
   }
 }
 
@@ -55,7 +58,7 @@ input[type="search"]::-webkit-search-results-decoration {
 Main components 
 
 -------------------------------- */
-.cd-main-content, .cd-main-header {
+/*.cd-main-content,*/ .cd-main-header {
   /* Force Hardware Acceleration in WebKit */
   -webkit-transform: translateZ(0);
   -moz-transform: translateZ(0);
@@ -65,7 +68,7 @@ Main components
   will-change: transform;
 }
 
-.cd-main-content, .cd-main-header {
+/*.cd-main-content,*/ .cd-main-header {
   position: relative;
   -webkit-transition: -webkit-transform 0.3s;
   -moz-transition: -moz-transform 0.3s;
