@@ -25,7 +25,7 @@
 			<a class="list-group-item notification {% if notification.isRead == false %}active{% endif %}" href="{{ path('singz_social_bundle_publication_show', {'id':notification.publication.id}) }}" data-id-notif="{{ notification.id }}">
     			<div class="media">
                     <div class="media-left">
-						<img class="media-object" src="{{ asset(notification.userFrom.image.realPath) }}" alt="{{ notification.userFrom.username }}">
+						<img class="media-object" src="{% if notification.userFrom.image is null %}{{ asset('bundles/singzcore/img/anonymous_icon.jpg') }}{% else %}{{ asset(notification.userFrom.image.realPath) }}{% endif %}" alt="{{ notification.userFrom.username }}">
                     </div>
                     <div class="media-body">
                         <p class="message">{{ notification.message|raw }}</p>
