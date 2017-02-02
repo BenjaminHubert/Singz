@@ -12,7 +12,7 @@ class UserRepository extends \Doctrine\ORM\EntityRepository
 {
 	public function getUsersList() {
 		return $this->createQueryBuilder('u')
-		->innerJoin('u.image', 'i')->addSelect('i')
+		->leftJoin('u.image', 'i')->addSelect('i')
 		->orderBy('u.username', 'ASC')
 		->getQuery()
 		->getResult();
