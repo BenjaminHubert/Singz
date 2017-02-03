@@ -22,7 +22,7 @@
 {% block body %}
 	<div class="list-group notifications">
 		{% for notification in notifications %}
-			<a class="list-group-item notification {% if notification.isRead == false %}active{% endif %}" href="{{ path('singz_social_bundle_publication_show', {'id':notification.publication.id}) }}" data-id-notif="{{ notification.id }}">
+			<a class="list-group-item notification {% if notification.isRead == false %}active{% endif %}" href="{% if notification.publication is not null %}{{ path('singz_social_bundle_publication_show', {'id':notification.publication.id}) }}{% else %}{{ path('singz_user_bundle_homepage', {'id':notification.userFrom.id}) }}{% endif %}" data-id-notif="{{ notification.id }}">
     			<div class="media">
                     <div class="media-left">
 						<img class="media-object" src="{% if notification.userFrom.image is null %}{{ asset('bundles/singzcore/img/anonymous_icon.jpg') }}{% else %}{{ asset(notification.userFrom.image.realPath) }}{% endif %}" alt="{{ notification.userFrom.username }}">
