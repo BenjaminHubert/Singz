@@ -12,47 +12,32 @@ class DefaultController extends Controller
 {
     public function indexAction(Request $request, $id)
     {
-
+    	//Get entity manager
         $em = $this->getDoctrine()->getManager();
-
+		//Get the requested user
         $user = $em->getRepository('SingzUserBundle:User')->find($id);
-
-        $publications = $em->getRepository('SingzSocialBundle:Publication')->findBy(array('user' => $user));
-
-        // Get publications' threads, comments
-        $threads = array();
-        $allComments = array();
-
-        foreach($publications as $pub){
-            $id = $pub->getId();
-            $thread = $this->container->get('fos_comment.manager.thread')->findThreadById($id);
-            if (null === $thread) {
-                $thread = $this->container->get('fos_comment.manager.thread')->createThread();
-                $thread->setId($id);
-                $thread->setPermalink($request->getUri());
-
-                // Add the thread
-                $this->container->get('fos_comment.manager.thread')->saveThread($thread);
-            }
-
-            $comments = $this->container->get('fos_comment.manager.comment')->findCommentTreeByThread($thread);
-
-            $threads[$id] = $thread;
-            $allComments[$id] = $comments;
+        if(!$user){
+        	throw $this->createNotFoundException('Utilisateur non trouvé');
         }
-
-        $followers = $em->getRepository('SingzSocialBundle:Follow')->findBy(array('follower' => $user));
-        $leader   = $em->getRepository('SingzSocialBundle:Follow')->findBy(array('leader' => $user));
-
+		//Get user's publications
+        $publications = $em->getRepository('SingzSocialBundle:Publication')->findBy(array(
+        	'user' => $user,
+        ));
+		//Get user's followers
+        $followers = $em->getRepository('SingzSocialBundle:Follow')->findBy(array(
+        	'follower' => $user,
+        ));
+		//Get user's leader
+        $leader = $em->getRepository('SingzSocialBundle:Follow')->findBy(array(
+        	'leader' => $user,
+        ));
+		//Display view
         return $this->render('SingzUserBundle:Default:index.html.twig', array(
-                "publications" => $publications,
-                "threads" => $threads,
-                "comments" => $allComments,
-                "user" => $user,
-                "followers" => $followers,
-                "leader" => $leader
-            )
-        );
+			'publications' => $publications,
+            'user' => $user,
+            'followers' => $followers,
+            'leader' => $leader
+        ));
     }
 
     public function followAction(Request $request){

@@ -1,54 +1,92 @@
 {% extends "SingzCoreBundle::layout.html.twig" %}
-
 {% block title %}
-    {{ user.username }} - Vidéos Singz
+    {{ user.username }} - Profil - {{ appname }}
 {% endblock %}
-
-{% block head_javascripts %}
-    <script>
-        var lovePath = '{{ path('singz_social_bundle_follow_user') }}';
-        var followPath = '{{ path('singz_social_bundle_publication_love') }}';
-    </script>
+{% block stylesheets %}
+    <style>
+       .media
+        {
+            margin: 20px 0;
+            padding:30px;
+        }
+        .dp
+        {
+            border:10px solid #eee;
+            transition: all 0.2s ease-in-out;
+        }
+        .dp:hover
+        {
+            border:2px solid #eee;
+            transform:rotate(360deg);
+            -ms-transform:rotate(360deg);  
+            -webkit-transform:rotate(360deg);  
+        }
+    </style>
 {% endblock %}
-
 {% block body %}
-    {% if user.image.path is defined %}
-        <img width="50px" src="{{ asset('uploads/userImage/') }}{{ user.image.path }}">
-    {% endif %}
-    {{ user.username }} {% if 'ROLE_STARZ' in user.roles %} &#9733; {% endif %}<br/>
-
-    {% if user == app.user %}
-        <a href={{ path('fos_user_profile_show') }}>Modifier mon profil</a><br>
-    {% else %}
-    {% set iFollow = 0 %}
-    {% for f in leader if iFollow == 0%}
-        {% if f.follower == app.user %}
-            {% set iFollow = 1 %}
-            <button id="follow-{{ user.id }}" onclick="followUser(lovePath, {{ user.id }}, {{ app.user.id }})">Se désabonner</button>
-{#
-            {% if not f.isPending %}
-                <button id="follow-{{ user.id }}" onclick="followUser(lovePath, {{ user.id }}, {{ app.user.id }})">Se désabonner</button>
+    <div class="row">
+        <div class="col-xs-12 col-md-6 col-md-offset-3">
+            <div class="media">
+                <a class="pull-left" href="{{ path('singz_user_bundle_homepage', {'id':user.id}) }}">
+                    <img class="media-object dp img-circle" src="{% if user.image is null %}{{ asset('bundles/singzcore/img/anonymous_icon.jpg') }}{% else %}{{ asset(user.image.realPath) }}{% endif %}" style="width: 100px;height:100px;">
+                </a>
+                <div class="media-body">
+                    <h4 class="media-heading">
+                        <a href="{{ path('singz_user_bundle_homepage', {'id':user.id}) }}">
+                            {{ user.username }}
+                        </a>
+                        <small> {% if 'ROLE_STARZ' in user.roles %} &#9733; Starz {% endif %}</small></h4>
+                    <h5>
+                    	{% if user.biography is not empty %}
+                    		{{ user.biography }}
+                    	{% else %}
+                    		Aucune biographie
+                    	{% endif %}
+                    </h5>
+                    <div>
+                    	{% if user == app.user %}
+                            <a href={{ path('fos_user_profile_show') }} class="btn btn-default">
+                            	Modifier mon profil
+                            </a>
+                        {% else %}
+                            <a href="{{ path('singz_social_bundle_follow', {'leaderId':user.id}) }}" class="btn btn-default">
+                                {% set i_follow = false %}
+                                {% for currentUserFollower in app.user.followers %}
+                                	{% if currentUserFollower.leader == user %}
+                                		{% set i_follow = true %}
+                                	{% endif %}
+                                {% endfor %}
+                                {% if i_follow == true %}
+                            		Se désabonner
+                            	{% else %}
+                            		S'abonner
+                            	{% endif %}
+                            </a>
+                        {% endif %}
+                    </div>
+                    <hr style="margin:8px auto">
+    				<div>
+                        <span class="label label-default">{{ publications|length }} Publication{{ publications|length!=1?'s' }}</span>
+                        <span class="label label-default">{{ leader|length }} Abonnement{{ leader|length!=1?'s' }}</span>
+                        <span class="label label-default">{{ followers|length }} Abonné{{ followers|length!=1?'s' }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+        	{% if user.isPrivate != true %}
+                {% if publications is not empty %}
+                    {% include 'SingzSocialBundle::publications.html.twig' with {
+                        'publications': publications
+                    } %}
+                {% else %}
+                    <p style="text-align:center">Aucune publication à afficher :(</p>
+                {% endif %}
             {% else %}
-                Demande d'abonnement en attente.
+                <p style="text-align:center">Cet utilisateur est privé. Suivez le pour voir ses publications ;)</p>
             {% endif %}
-#}
-        {% endif %}
-    {% endfor %}
-    {% if iFollow == 0 %}
-        <button id="follow-{{ user.id }}" onclick="followUser(followPath, {{ user.id }}, {{ app.user.id }})">S'abonner</button>
-    {% endif %}
-    </button>
-
-    {% endif %}
-    <br>{{ publications|length }} Publications {{ leader|length }} Abonnements {{ followers|length }} Abonnés
-    <br>{{ user.biography }}
-
-    {% if publications %}
-        {% include 'SingzSocialBundle::publications.html.twig' with {
-            'publications': publications
-        } %}
-    {% else %}
-        Aucune publication à afficher
-    {% endif %}
-
+        </div>
+    </div>
 {% endblock %}

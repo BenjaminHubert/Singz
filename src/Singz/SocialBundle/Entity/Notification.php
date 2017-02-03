@@ -15,6 +15,7 @@ class Notification
 	const NEW_LOVE = '<b>%s</b> love votre publication.';
 	const NEW_COMMENT = '<b>%s</b> a commenté votre publication.';
 	const REPLY_COMMENT = '<b>%s</b> a répondu à votre commentaire.';
+	const NEW_FOLLOWER = '<b>%s</b> vous suit.';
 	
     /**
      * @var int
@@ -59,7 +60,7 @@ class Notification
      * @var Publication
      *
      * @ORM\ManyToOne(targetEntity="Singz\SocialBundle\Entity\Publication", inversedBy="notifications")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true)
      */
     private $publication;
     
@@ -140,7 +141,7 @@ class Notification
      *
      * @return Notification
      */
-    public function setPublication(\Singz\SocialBundle\Entity\Publication $publication)
+    public function setPublication(\Singz\SocialBundle\Entity\Publication $publication = null)
     {
         $this->publication = $publication;
 

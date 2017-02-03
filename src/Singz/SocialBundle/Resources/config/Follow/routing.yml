@@ -1,0 +1,6 @@
+singz_social_bundle_follow:
+    path:     /{leaderId}/
+    defaults:
+        _controller: SingzSocialBundle:Follow:request
+    requirements:
+        leaderId: \d+
