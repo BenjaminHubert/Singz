@@ -7,3 +7,8 @@ singz_social_publication_routing:
 singz_social_notification_routing:
     resource: "@SingzSocialBundle/Resources/config/Notification/routing.yml"
     prefix:   /notification/
+
+### FOLLOW CONTROLLER ###
+singz_social_follow_routing:
+    resource: "@SingzSocialBundle/Resources/config/Follow/routing.yml"
+    prefix:   /follow/

@@ -49,16 +49,26 @@
                             	Modifier mon profil
                             </a>
                         {% else %}
-                            <a href="" class="btn btn-default">
-                            	S'abonner
+                            <a href="{{ path('singz_social_bundle_follow', {'leaderId':user.id}) }}" class="btn btn-default">
+                                {% set i_follow = false %}
+                                {% for currentUserFollower in app.user.followers %}
+                                	{% if currentUserFollower.leader == user %}
+                                		{% set i_follow = true %}
+                                	{% endif %}
+                                {% endfor %}
+                                {% if i_follow == true %}
+                            		Se désabonner
+                            	{% else %}
+                            		S'abonner
+                            	{% endif %}
                             </a>
                         {% endif %}
                     </div>
                     <hr style="margin:8px auto">
     				<div>
-                        <span class="label label-default">{{ publications|length }} Publications</span>
-                        <span class="label label-default">{{ leader|length }} Abonnements</span>
-                        <span class="label label-default">{{ followers|length }} Abonnés</span>
+                        <span class="label label-default">{{ publications|length }} Publication{{ publications|length!=1?'s' }}</span>
+                        <span class="label label-default">{{ leader|length }} Abonnement{{ leader|length!=1?'s' }}</span>
+                        <span class="label label-default">{{ followers|length }} Abonné{{ followers|length!=1?'s' }}</span>
                     </div>
                 </div>
             </div>

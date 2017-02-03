@@ -28,7 +28,7 @@ class DefaultController extends Controller
         	'follower' => $user,
         ));
 		//Get user's leader
-        $leader   = $em->getRepository('SingzSocialBundle:Follow')->findBy(array(
+        $leader = $em->getRepository('SingzSocialBundle:Follow')->findBy(array(
         	'leader' => $user,
         ));
 		//Display view

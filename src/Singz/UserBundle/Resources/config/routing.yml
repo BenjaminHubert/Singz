@@ -1,4 +1,6 @@
 singz_user_bundle_homepage:
-    path:     /{id}
+    path:     /{id}/
     defaults:
         _controller: SingzUserBundle:Default:index
+    requirements:
+        id: \d+
