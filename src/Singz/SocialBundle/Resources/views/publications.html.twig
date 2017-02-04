@@ -26,18 +26,17 @@
                                     	</a>
                                     </div>
                                     <div class="media-body">
-        							    <a href="{{ path('singz_user_bundle_homepage', {'id': publication.user.id}) }}">
-        							    	{{ publication.user.username }}
-        							    </a>
+                                    	<div class="media-heading">
+                                    		<p>
+                							    <a href="{{ path('singz_user_bundle_homepage', {'id': publication.user.id}) }}" style="display:inline">
+                							    	{{ publication.user.username }}
+                							    </a>
+                							    <small> {% if 'ROLE_STARZ' in publication.user.roles %} &#9733; Starz {% endif %}</small>
+                							 </p>
+                                        </div>
         							    <p><i class="fa fa-fw fa-heart" aria-hidden="true"></i> {{ publication.numLoves }}</p>
-                             	   </div>
+                             	   	</div>
                                 </div>
-                                
-        						{#<ul>
-        							<li>
-        								<a href="#">category</a>
-        							</li>
-        						</ul>#}
         					</div>
         				</div>
         			</div>

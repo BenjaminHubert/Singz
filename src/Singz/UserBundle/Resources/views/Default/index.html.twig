@@ -4,17 +4,17 @@
 {% endblock %}
 {% block stylesheets %}
     <style>
-       .media
+       .user-profile .media
         {
             margin: 20px 0;
             padding:30px;
         }
-        .dp
+        .user-profile .dp
         {
             border:10px solid #eee;
             transition: all 0.2s ease-in-out;
         }
-        .dp:hover
+        .user-profile .dp:hover
         {
             border:2px solid #eee;
             transform:rotate(360deg);
@@ -26,7 +26,7 @@
 {% block body %}
     <div class="row">
         <div class="col-xs-12 col-md-6 col-md-offset-3">
-            <div class="media">
+            <div class="media user-profile">
                 <a class="pull-left" href="{{ path('singz_user_bundle_homepage', {'id':user.id}) }}">
                     <img class="media-object dp img-circle" src="{% if user.image is null %}{{ asset('bundles/singzcore/img/anonymous_icon.jpg') }}{% else %}{{ asset(user.image.realPath) }}{% endif %}" style="width: 100px;height:100px;">
                 </a>
@@ -35,7 +35,8 @@
                         <a href="{{ path('singz_user_bundle_homepage', {'id':user.id}) }}">
                             {{ user.username }}
                         </a>
-                        <small> {% if 'ROLE_STARZ' in user.roles %} &#9733; Starz {% endif %}</small></h4>
+                        <small> {% if 'ROLE_STARZ' in user.roles %} &#9733; Starz {% endif %}</small>
+                    </h4>
                     <h5>
                     	{% if user.biography is not empty %}
                     		{{ user.biography }}
