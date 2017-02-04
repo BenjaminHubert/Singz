@@ -14,6 +14,7 @@ $authorizedIps = array(
 	'127.0.0.1', '::1', //Localhost
 	'92.95.76.230', //Younes
 	'78.245.163.1', //Benjamin
+	'82.226.8.144', //Thibault
 );
 if (isset($_SERVER['HTTP_CLIENT_IP'])
     || isset($_SERVER['HTTP_X_FORWARDED_FOR'])
