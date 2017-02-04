@@ -10,11 +10,12 @@ class PublicationRepository extends \Doctrine\ORM\EntityRepository
 {
     public function getNewsFeed($user) {
         return $this->createQueryBuilder('p')
-            ->innerJoin('p.user', 'u')->addSelect('u')
-            ->leftJoin('u.followers', 'f')->addSelect('f')
+            ->leftJoin('p.user', 'u')->addSelect('u')
+            ->leftJoin('u.leaders', 'leaders')->addSelect('leaders')
             ->leftJoin('p.loves', 'l')->addSelect('l')
-            ->where('f.follower = :follower AND f.isPending = :pending')
+            ->where('(leaders.follower = :follower AND leaders.isPending = :pending) OR p.user = :user')
             ->setParameter('follower', $user)
+            ->setParameter('user', $user)
             ->setParameter('pending', false)
             ->orderBy('p.date', 'DESC')
             ->getQuery()
