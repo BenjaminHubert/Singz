@@ -5,7 +5,9 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge"> 
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
         {# DYNAMIC CANONICAL URL #}
-        <link rel="canonical" href="{{ url(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')) }}" />
+        {% if app.request.attributes.get('_route') is not null %}
+        	<link rel="canonical" href="{{ url(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')) }}" />
+        {% endif %}
         {# DESCRIPTION TAG #}
         <meta name="description" content="{% block description_tag %}{% endblock %}">
 		{# TITLE TAG #}

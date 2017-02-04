@@ -1,0 +1,14 @@
+{% extends('SingzCoreBundle::layout.html.twig') %}
+
+{% block title %}
+    Erreur {{ status_code }} - {{ parent() }}
+{% endblock %}
+
+{% block body %}
+	<div class="row">
+		<div style="text-align:center">
+        	<h1>{{ status_code }} <small>{{ status_text }}</small></h1>
+        	Oops! Une erreur interne a été rencontrée.
+        </div>
+	</div>
+{% endblock %}
