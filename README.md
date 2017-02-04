@@ -66,7 +66,7 @@ How to?
 Fake data
 -------
 In order to play with the application and instead of trying to add content by yourself, we put in place an easy command line to do the job for you.
-`bin/console doctrine:fixtures:load`. Enter `Y` to accept to delete all previous data (the very first time, you won't have any data). Furthermore, be aware that **it might take a while, up to 3 minutes.**
+`bin/console doctrine:fixtures:load -vvv`. Enter `Y` to accept to delete all previous data (the very first time, you won't have any data). Furthermore, be aware that **it might take a while, up to 3 minutes.**
 
 Credits
 -------

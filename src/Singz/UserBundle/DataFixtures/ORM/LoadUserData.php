@@ -21,7 +21,7 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface, C
 		$userManager = $this->container->get('fos_user.user_manager');
 
 		//Create a data faker
-		$faker = \Faker\Factory::create();
+		$faker = \Faker\Factory::create('fr_FR');
 		
 		//Adding User fixtures
 		for($i=0; $i<$this->nb; $i++){

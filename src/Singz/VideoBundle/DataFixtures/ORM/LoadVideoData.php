@@ -6,7 +6,6 @@ use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Singz\VideoBundle\Entity\Video;
 use Symfony\Component\HttpFoundation\File\File;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class LoadVideoData  extends AbstractFixture implements OrderedFixtureInterface
 {
@@ -14,6 +13,31 @@ class LoadVideoData  extends AbstractFixture implements OrderedFixtureInterface
 
 	public function load(ObjectManager $manager)
 	{
+		//Upload directory
+		$uploadDir = 'web/uploads/fixtures/';
+		//Video directory
+		$videoDir = 'web/uploads/video/';
+		// if upload dir does not exist
+		if(is_dir($videoDir)){
+			//Clear upload directory
+			$files = glob($videoDir.'*'); // get all file names
+			foreach($files as $file){ // iterate files
+				if(is_file($file))
+					unlink($file); // delete file
+			}
+		}
+		// if upload dir does not exist
+		if(!is_dir($uploadDir)){
+			mkdir($uploadDir, 0777, true);
+		}else{
+			//Clear upload directory
+			$files = glob($uploadDir.'*'); // get all file names
+			foreach($files as $file){ // iterate files
+				if(is_file($file))
+					unlink($file); // delete file
+			}
+		}
+		
 		// list of videos found mainly on 
 		// https://www.videezy.com/
 		$videos = array(
@@ -38,7 +62,7 @@ class LoadVideoData  extends AbstractFixture implements OrderedFixtureInterface
 		
 		for($i=0; $i<$this->nb; $i++){
 			$randomVideoUrl = $videos[rand(0, count($videos)-1)];
-			$path = $this->downloadFile($randomVideoUrl, $i.'.mp4');
+			$path = $this->downloadFile($randomVideoUrl, $i.'.mp4', $uploadDir);
 			$file = new File($path);
 			// Create our video and set details
 			$video = new Video();
@@ -55,9 +79,7 @@ class LoadVideoData  extends AbstractFixture implements OrderedFixtureInterface
 		return 1;
 	}
 
-	private function downloadFile($url, $filename){
-		//Upload directory
-		$uploadDir = 'web/uploads/fixtures/';
+	private function downloadFile($url, $filename, $uploadDir){
 		// if upload dir does not exist
 		if(!is_dir($uploadDir)){
 			mkdir($uploadDir, 0777, true);
