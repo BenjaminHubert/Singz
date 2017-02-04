@@ -27,8 +27,8 @@ class DefaultController extends Controller
         $followers = $em->getRepository('SingzSocialBundle:Follow')->findBy(array(
         	'follower' => $user,
         ));
-		//Get user's leader
-        $leader = $em->getRepository('SingzSocialBundle:Follow')->findBy(array(
+		//Get user's leaders
+        $leaders = $em->getRepository('SingzSocialBundle:Follow')->findBy(array(
         	'leader' => $user,
         ));
 		//Display view
@@ -36,7 +36,7 @@ class DefaultController extends Controller
 			'publications' => $publications,
             'user' => $user,
             'followers' => $followers,
-            'leader' => $leader
+            'leaders' => $leaders
         ));
     }
 
