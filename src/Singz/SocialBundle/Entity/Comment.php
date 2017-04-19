@@ -3,17 +3,20 @@
 namespace Singz\SocialBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * Comment
  *
  * @ORM\Table(name="comment")
  * @ORM\Entity(repositoryClass="Singz\SocialBundle\Repository\CommentRepository")
- * @ORM\ChangeTrackingPolicy("DEFERRED_EXPLICIT")
  */
 class Comment
 {
+	const STATE_VISIBLE = 0;
+	const STATE_DELETED = 1;
+	const STATE_SPAM = 2;
+	const STATE_PENDING = 3;
+	
     /**
      * @var int
      *
@@ -21,7 +24,7 @@ class Comment
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    protected $id;
+    private $id;
     
     /**
      * @var User
@@ -29,21 +32,61 @@ class Comment
      * @ORM\ManyToOne(targetEntity="Singz\UserBundle\Entity\User", inversedBy="comments")
      * @ORM\JoinColumn(nullable=false)
      */
-    protected $author;
+    private $author;
 
 
     /**
-     * Thread of this comment
-     *
      * @var Thread
-     * @ORM\ManyToOne(targetEntity="Singz\SocialBundle\Entity\Thread")
+     * 
+     * @ORM\ManyToOne(targetEntity="Singz\SocialBundle\Entity\Thread", inversedBy="comments")
+     * @ORM\JoinColumn(nullable=false)
      */
-    protected $thread;
+    private $thread;
+    
+    /**
+     * @var text $body
+     * 
+     * @ORM\Column(name="body", type="text")
+     */
+    private $body;
+    
+    /**
+     * @var Comment $children
+     * 
+     * @ORM\ManyToOne(targetEntity="Singz\SocialBundle\Entity\Comment")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $children;
+    
+    /**
+     * 
+     * @var DateTime $createdAt
+     * 
+     * @ORM\Column(type="datetime", name="created_at")
+     */
+    private $createdAt;
+    
+    /**
+     * 
+     * @var int $state
+     * 
+     * @ORM\Column(type="integer", name="state")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $state;
+    
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->createdAt = new \DateTime();
+    }
 
     /**
      * Get id
      *
-     * @return int
+     * @return integer
      */
     public function getId()
     {
@@ -51,56 +94,146 @@ class Comment
     }
 
     /**
-     * Set publication
+     * Set body
      *
-     * @param \Singz\SocialBundle\Entity\Publication $publication
+     * @param string $body
      *
      * @return Comment
      */
-    public function setPublication(\Singz\SocialBundle\Entity\Publication $publication)
+    public function setBody($body)
     {
-        $this->publication = $publication;
+        $this->body = $body;
 
         return $this;
     }
 
     /**
-     * Get publication
+     * Get body
      *
-     * @return \Singz\SocialBundle\Entity\Publication
+     * @return string
      */
-    public function getPublication()
+    public function getBody()
     {
-        return $this->publication;
+        return $this->body;
     }
 
     /**
-     * Sets the author of the Comment
+     * Set createdAt
      *
-     * @param UserInterface $author
+     * @param \DateTime $createdAt
+     *
+     * @return Comment
      */
-    public function setAuthor(UserInterface $author)
+    public function setCreatedAt($createdAt)
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    /**
+     * Get createdAt
+     *
+     * @return \DateTime
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * Set state
+     *
+     * @param integer $state
+     *
+     * @return Comment
+     */
+    public function setState($state)
+    {
+        $this->state = $state;
+
+        return $this;
+    }
+
+    /**
+     * Get state
+     *
+     * @return integer
+     */
+    public function getState()
+    {
+        return $this->state;
+    }
+
+    /**
+     * Set author
+     *
+     * @param \Singz\UserBundle\Entity\User $author
+     *
+     * @return Comment
+     */
+    public function setAuthor(\Singz\UserBundle\Entity\User $author)
     {
         $this->author = $author;
+
         return $this;
     }
 
     /**
-     * Gets the author of the Comment
+     * Get author
      *
-     * @return UserInterface
+     * @return \Singz\UserBundle\Entity\User
      */
     public function getAuthor()
     {
         return $this->author;
     }
-    
-    public function getAuthorName()
+
+    /**
+     * Set thread
+     *
+     * @param \Singz\SocialBundle\Entity\Thread $thread
+     *
+     * @return Comment
+     */
+    public function setThread(\Singz\SocialBundle\Entity\Thread $thread)
     {
-    	if (null === $this->getAuthor()) {
-    		return 'Anonymous';
-    	}
-    
-    	return $this->getAuthor()->getUsername();
+        $this->thread = $thread;
+
+        return $this;
+    }
+
+    /**
+     * Get thread
+     *
+     * @return \Singz\SocialBundle\Entity\Thread
+     */
+    public function getThread()
+    {
+        return $this->thread;
+    }
+
+    /**
+     * Set children
+     *
+     * @param \Singz\SocialBundle\Entity\Comment $children
+     *
+     * @return Comment
+     */
+    public function setChildren(\Singz\SocialBundle\Entity\Comment $children = null)
+    {
+        $this->children = $children;
+
+        return $this;
+    }
+
+    /**
+     * Get children
+     *
+     * @return \Singz\SocialBundle\Entity\Comment
+     */
+    public function getChildren()
+    {
+        return $this->children;
     }
 }

@@ -82,6 +82,13 @@ class Publication
     private $numLoves = 0;
     
     /**
+     * @var Thread
+     *
+     * @ORM\OneToOne(targetEntity="Singz\SocialBundle\Entity\Thread", mappedBy="publication")
+     */
+    private $thread;
+    
+    /**
      * Constructor
      */
     public function __construct()
@@ -322,5 +329,29 @@ class Publication
     public function getLastEdit()
     {
         return $this->lastEdit;
+    }
+
+    /**
+     * Set thread
+     *
+     * @param \Singz\SocialBundle\Entity\Thread $thread
+     *
+     * @return Publication
+     */
+    public function setThread(\Singz\SocialBundle\Entity\Thread $thread = null)
+    {
+        $this->thread = $thread;
+
+        return $this;
+    }
+
+    /**
+     * Get thread
+     *
+     * @return \Singz\SocialBundle\Entity\Thread
+     */
+    public function getThread()
+    {
+        return $this->thread;
     }
 }
