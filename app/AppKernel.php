@@ -21,10 +21,6 @@ class AppKernel extends Kernel
             new Singz\SocialBundle\SingzSocialBundle(),
             new Singz\VideoBundle\SingzVideoBundle(),
             new Singz\AdminBundle\SingzAdminBundle(),
-            new FOS\RestBundle\FOSRestBundle(),
-            new FOS\CommentBundle\FOSCommentBundle(),
-            new JMS\SerializerBundle\JMSSerializerBundle($this),
-            new Nomaya\SocialBundle\NomayaSocialBundle(),
         	new Dubture\FFmpegBundle\DubtureFFmpegBundle(),
         	new Lexik\Bundle\MaintenanceBundle\LexikMaintenanceBundle(),
 
