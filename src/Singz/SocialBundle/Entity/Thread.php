@@ -27,7 +27,7 @@ class Thread
      * 
      * @ORM\Column(type="integer", name="num_comments")
      */
-    private $numComments;
+    private $numComments = 0;
     
     /**
      * 
@@ -58,6 +58,7 @@ class Thread
     public function __construct()
     {
         $this->comments = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->lastCommentAt = new \DateTime();
     }
 
     /**

@@ -53,10 +53,18 @@ class Comment
     /**
      * @var Comment $children
      * 
-     * @ORM\ManyToOne(targetEntity="Singz\SocialBundle\Entity\Comment")
+     * @ORM\OneToMany(targetEntity="Singz\SocialBundle\Entity\Comment", mappedBy="parent")
      * @ORM\JoinColumn(nullable=true)
      */
-    private $children;
+    private $children = NULL;
+    
+    /**
+     * @var Comment $parent
+     * 
+     * @ORM\ManyToOne(targetEntity="Singz\SocialBundle\Entity\Comment", inversedBy="children")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $parent = NULL;
     
     /**
      * 
@@ -214,26 +222,60 @@ class Comment
     }
 
     /**
-     * Set children
+     * Add child
      *
-     * @param \Singz\SocialBundle\Entity\Comment $children
+     * @param \Singz\SocialBundle\Entity\Comment $child
      *
      * @return Comment
      */
-    public function setChildren(\Singz\SocialBundle\Entity\Comment $children = null)
+    public function addChild(\Singz\SocialBundle\Entity\Comment $child)
     {
-        $this->children = $children;
+        $this->children[] = $child;
 
         return $this;
     }
 
     /**
+     * Remove child
+     *
+     * @param \Singz\SocialBundle\Entity\Comment $child
+     */
+    public function removeChild(\Singz\SocialBundle\Entity\Comment $child)
+    {
+        $this->children->removeElement($child);
+    }
+
+    /**
      * Get children
      *
-     * @return \Singz\SocialBundle\Entity\Comment
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getChildren()
     {
         return $this->children;
+    }
+
+    /**
+     * Set parent
+     *
+     * @param \Singz\SocialBundle\Entity\Comment $parent
+     *
+     * @return Comment
+     */
+    public function setParent(\Singz\SocialBundle\Entity\Comment $parent = null)
+    {
+        $this->parent = $parent;
+
+        return $this;
+    }
+
+    /**
+     * Get parent
+     *
+     * @return \Singz\SocialBundle\Entity\Comment
+     */
+    public function getParent()
+    {
+        return $this->parent;
     }
 }
