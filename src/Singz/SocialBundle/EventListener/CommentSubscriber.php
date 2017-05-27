@@ -47,6 +47,15 @@ class CommentSubscriber implements EventSubscriber
     		$em->persist($notif);
     		$em->flush($notif);
     	}
+    	
+    	### UPDATE THREAD DATA ###
+    	$thread = $comment->getThread();
+    	//update $numComments
+    	$thread->setNumComments($thread->getNumComments()+ 1);
+    	//update $lastCommentAt
+    	$thread->setLastCommentAt(new \DateTime());
+    	$em->persist($thread);
+    	$em->flush($thread);
     }
 	
 	public function getSubscribedEvents() {

@@ -1,0 +1,38 @@
+ <div class="post">
+    <div class="post-footer">
+        <ul class="comments-list">
+        	{% for comment in comments if comment.parent is null and comment.state == constant('Singz\\SocialBundle\\Entity\\Comment::STATE_VISIBLE') %}
+            	<li class="comment">
+            		{# First depth #}
+            		<a class="pull-left" href="{{ path('singz_user_bundle_homepage', {'id': comment.author.id}) }}">
+                        <img class="avatar" src="{{ asset(comment.author.image.realPath) }}" alt="avatar">
+                    </a>
+                    <div class="comment-body">
+                        <div class="comment-heading">
+                            <h4 class="user">{{ comment.author.username }}</h4>
+                            <h5 class="time">{{ comment.createdAt|time_diff }}</h5>
+                        </div>
+                        <p>{{ comment.body }}</p>
+                    </div>
+                    {# Second depth #}
+                    {% for child in comment.children if child.state == constant('Singz\\SocialBundle\\Entity\\Comment::STATE_VISIBLE') %}
+                        <ul class="comments-list">
+                            <li class="comment">
+                                <a class="pull-left" href="{{ path('singz_user_bundle_homepage', {'id': child.author.id}) }}">
+                                    <img class="avatar" src="{{ asset(child.author.image.realPath) }}" alt="avatar">
+                                </a>
+                                <div class="comment-body">
+                                    <div class="comment-heading">
+                                        <h4 class="user">{{ child.author.username }}</h4>
+                                        <h5 class="time">{{ child.createdAt|time_diff }}</h5>
+                                    </div>
+                                    <p>{{ child.body }}</p>
+                                </div>
+                            </li> 
+                        </ul>
+                	{% endfor %}
+            	</li>
+        	{% endfor %}
+        </ul>
+    </div>
+</div>

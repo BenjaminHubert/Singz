@@ -176,27 +176,31 @@ class PublicationController extends Controller
      * @param Request $request
      */
     public function getPublicationExtraAction(Request $request){
-    	if($request->isXmlHttpRequest()) {
-    		$id = $request->request->get('idPublication');
-    		
-    		// Get publication
-    		$publication = $this->getDoctrine()->getManager()->getRepository('SingzSocialBundle:Publication')->getPublicationById($id);
-    		if($publication == null) {
-    			throw $this->createNotFoundException('Publication inexistante');
-    		}
-    		// Get thread
-    		$thread = $this->container->get('fos_comment.manager.thread')->findThreadById($id);
-    		
-    		// Get comments
-    		$comments = $this->container->get('fos_comment.manager.comment')->findCommentTreeByThread($thread);
-    		
-    		return $this->render('SingzSocialBundle::extra.html.twig', array(
-    			'publication' => $publication,
-    			'comments' => $comments,
-    			'thread' => $thread
-    		));
+    	// Check if AJAX request
+    	if(!$request->isXmlHttpRequest()) {
+    		return new Response('Must be a XML HTTP request', 400);
     	}
-    	return new Response('Error', 400);
+    	//Get ID publication
+    	$id = $request->request->get('idPublication');
+    	if($id == null){
+    		throw $this->createNotFoundException('Parameter missing');
+    	}
+    	//Get entity manager
+    	$em = $this->getDoctrine()->getManager();    	
+    	// Get publication
+    	$publication = $em->getRepository('SingzSocialBundle:Publication')->getPublicationById($id);
+    	if($publication == null) {
+    		throw $this->createNotFoundException('Publication inexistante');
+    	}
+    	// Get thread
+    	$thread = $publication->getThread();    	
+    	// Get comments
+    	$comments = $thread->getComments();
+    	// Render the view
+    	return $this->render('SingzSocialBundle::extra.html.twig', array(
+    		'publication' => $publication,
+    		'comments' => $comments,
+    		'thread' => $thread
+    	));
     }
-
 }

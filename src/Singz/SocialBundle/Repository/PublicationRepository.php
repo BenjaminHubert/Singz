@@ -25,6 +25,7 @@ class PublicationRepository extends \Doctrine\ORM\EntityRepository
         return $this->createQueryBuilder('p')
             ->innerJoin('p.user', 'u')->addSelect('u')
             ->leftJoin('p.loves', 'l')->addSelect('l')
+            ->leftJoin('p.thread', 't')->addSelect('t')
             ->where('p.id = :id')->setParameter('id', $id)
             ->getQuery()
             ->getOneOrNullResult();

@@ -39,9 +39,8 @@ class LoadCommentData extends AbstractFixture implements OrderedFixtureInterface
 					Comment::STATE_SPAM,
 					Comment::STATE_PENDING
 				]));
+				$child->setParent($comment);
 				$manager->persist($child);
-				
-				$comment->addChild($child);
 			}
 			$manager->persist($comment);
 		}

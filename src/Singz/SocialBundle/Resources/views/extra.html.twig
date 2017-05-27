@@ -1,5 +1,4 @@
 {# Stylesheets #}
-<link href="{{ asset('bundles/foscomment/css/comments.css') }}" rel="stylesheet">
 <link href="{{ asset('bundles/singzcore/css/comments.css') }}" rel="stylesheet">
 
 {# Admin or publication owner actions #}
@@ -66,8 +65,8 @@
 {% endif %}
 {# Comments #}
 <div class="comments-container">
-    <div id="fos_comment_thread" data-thread="{{ thread.id }}">
-        {% include 'FOSCommentBundle:Thread:comments.html.twig' with {
+    <div id="comment-thread" data-thread="{{ thread.id }}">
+        {% include 'SingzSocialBundle:Publication:comments.html.twig' with {
             'comments': comments,
             'thread': thread,
             'view': 'tree'
@@ -85,4 +84,3 @@
     });
 </script>
 <script src="{{ asset('bundles/singzsocial/js/script.js') }}"></script>
-<script src="{{ asset('bundles/foscomment/js/comments.js') }}"></script>
