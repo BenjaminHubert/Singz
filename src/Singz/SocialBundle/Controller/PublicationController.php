@@ -198,9 +198,11 @@ class PublicationController extends Controller
     	$thread = $publication->getThread();    	
     	// Get comments
     	$comments = $thread->getComments();
-    	// Create the form that allows to comment a publication at the first depth
+    	// Create the forms
     	$mainForm = null;
+    	$forms = [];
     	if($this->getUser()){
+    		// First depth
 	    	$comment = new Comment();
 	    	$comment->setAuthor($this->getUser());
 	    	$comment->setParent(null);
@@ -210,6 +212,19 @@ class PublicationController extends Controller
 	    			'action' => $this->generateUrl('singz_social_bundle_new_comment')
 	    		))
 	    		->createView();
+	    		
+	    	// Second depth
+	    	foreach($comments as $comment){
+	    		$c = new Comment();
+	    		$c->setAuthor($this->getUser());
+	    		$c->setParent($comment);
+	    		$c->setThread($publication->getThread());
+	    		$forms[$comment->getId()] = $this
+		    		->createForm(CommentType::class, $c, array(
+		    			'action' => $this->generateUrl('singz_social_bundle_new_comment')
+		    		))
+		    		->createView();
+	    	}
     	}
     	// Render the view
     	return $this->render('SingzSocialBundle::extra.html.twig', array(
@@ -217,6 +232,7 @@ class PublicationController extends Controller
     		'comments' => $comments,
     		'thread' => $thread,
     		'main_form' => $mainForm,
+    		'forms' => $forms,
     	));
     }
     
@@ -235,13 +251,15 @@ class PublicationController extends Controller
     	$comment = new Comment();
     	$form = $this->createForm(CommentType::class, $comment);
     	$form->handleRequest($request);
-    	if($form->isSubmitted() && $form->isValid()){
-    		$comment = $form->getData();
-    		$em->persist($comment);
-    		$em->flush();
-    		return new Response(Response::HTTP_OK);
+    	if(!$form->isSubmitted()){
+    		return new Response('Form not submitted', Response::HTTP_BAD_REQUEST);
     	}
-    	
-    	return new Response(Response::HTTP_BAD_REQUEST);
+    	if(!$form->isValid()){
+    		return new Response('Form not valid', Response::HTTP_BAD_REQUEST);
+    	}
+    	$comment = $form->getData();
+    	$em->persist($comment);
+    	$em->flush();
+    	return new Response(Response::HTTP_OK);
     }
 }

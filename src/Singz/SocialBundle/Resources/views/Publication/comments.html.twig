@@ -1,8 +1,12 @@
  <div class="post">
     <div class="post-footer">
     	{% if app.user %}
-        	{# First depth comment #}
-        	{{ form_start(main_form) }}
+        	{# First depth form comment #}
+        	{{ form_start(main_form, {
+        	    'attr': {
+        	        'class': 'first-depth'
+        	    }
+        	}) }}
         		{{ form_errors(main_form) }}
         		{# author, thread, parent #}
         		<div class="hidden">
@@ -15,13 +19,13 @@
                   	{{ form_widget(main_form.body, {
                   	    'attr': {
                   	        'class': 'form-control',
-                  	        'placeholder': 'Ajouter un commentaire...'
+                  	        'placeholder': 'Ajouter un commentaire...',
+                  	        'rows': 2
                   	    } 
                   	}) }}
                 </div>
         	{{ form_end(main_form) }}
     	{% endif %}
-    	
         <ul class="comments-list">
         	{% for comment in comments if comment.parent is null and comment.state == constant('Singz\\SocialBundle\\Entity\\Comment::STATE_VISIBLE') %}
             	<li class="comment">
@@ -41,8 +45,8 @@
                         <p>{{ comment.body }}</p>
                     </div>
                     {# Second depth #}
-                    {% for child in comment.children if child.state == constant('Singz\\SocialBundle\\Entity\\Comment::STATE_VISIBLE') %}
-                        <ul class="comments-list">
+                    <ul class="comments-list">
+                        {% for child in comment.children if child.state == constant('Singz\\SocialBundle\\Entity\\Comment::STATE_VISIBLE') %}
                             <li class="comment">
                                 <a class="pull-left" href="{{ path('singz_user_bundle_homepage', {'id': child.author.id}) }}">
                                     <img class="avatar" src="{{ asset(child.author.image.realPath) }}" alt="avatar">
@@ -58,9 +62,35 @@
                                     </div>
                                     <p>{{ child.body }}</p>
                                 </div>
-                            </li> 
-                        </ul>
-                	{% endfor %}
+                            </li>
+                	    {% endfor %}
+                        {% if app.user %}
+                        	{# Second depth form comment #}
+                        	{{ form_start(forms[comment.id], {
+                        	    'attr': {
+                        	        'class': 'second-depth'
+                        	    }
+                        	}) }}
+                        		{{ form_errors(forms[comment.id]) }}
+                        		{# author, thread, parent #}
+                        		<div class="hidden">
+                        			{{ form_row(forms[comment.id].author) }}
+                        			{{ form_row(forms[comment.id].thread) }}
+                        			{{ form_row(forms[comment.id].parent) }}
+                        		</div>
+                        		{# body #}
+                        		<div class="form-group">
+                                  	{{ form_widget(forms[comment.id].body, {
+                                  	    'attr': {
+                                  	        'class': 'form-control',
+                                  	        'placeholder': 'Répondre au commentaire...',
+                                  	        'rows': 1
+                                  	    } 
+                                  	}) }}
+                                </div>
+                        	{{ form_end(forms[comment.id]) }}
+                    	{% endif %}
+                    </ul>
             	</li>
         	{% endfor %}
         </ul>

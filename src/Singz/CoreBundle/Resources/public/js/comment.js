@@ -15,7 +15,7 @@ $('textarea').enterKey(function() {
 	$(this).blur(); 
 }, 'shift');
 
-$('form').submit(function(e){
+$('form.first-depth').submit(function(e){
 	// Prevent default behavior
 	e.preventDefault();
 	// Get form data
@@ -43,6 +43,39 @@ $('form').submit(function(e){
     }).done(function(data, textStatus, jqXHR){
     	
     }).fail(function(jqXHR, textStatus, errorThrown){
+    	$(".new-comment").last().parent('li.comment').remove()
+    });
+});
+
+$('form.second-depth').submit(function(e){
+	// Prevent default behavior
+	e.preventDefault();
+	// Get form data
+	$data = $(this).serialize();
+	// Empty the textarea field
+	$textareaValue = $(this).find('textarea').val();
+	$(this).find('textarea').val('');
+	// Create  the new comment
+	$('#comment-template').find('p').html($textareaValue);
+	$('#comment-template').find('.comment-body').addClass('new-comment')
+	var htmlTemplate = $('#comment-template').html();
+	$('#comment-template').find('.comment-body').removeClass('new-comment');
+	$(this).before(htmlTemplate);
+	// Scroll to the comment
+	$('.right-side, .modal-dialog').animate({
+        scrollTop: $(".new-comment").last().offset().top
+    }, 500);
+	var time = 300;
+	$(".new-comment").last().fadeIn(time).fadeOut(time).fadeIn(time).fadeOut(time).fadeIn(time);
+	// Launch the AJAX Request
+	$.ajax({
+        url: $(this).attr('action'),
+        method: 'POST',
+        data: $data,
+    }).done(function(data, textStatus, jqXHR){
+    	
+    }).fail(function(jqXHR, textStatus, errorThrown){
     	console.error(jqXHR);
+    	$(".new-comment").last().parent('li.comment').remove()
     });
 });
