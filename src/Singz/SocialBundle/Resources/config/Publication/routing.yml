@@ -35,3 +35,9 @@ singz_social_bundle_publication_extra_info:
     path:     /extra/
     defaults:
         _controller: SingzSocialBundle:Publication:getPublicationExtra
+
+# ajax
+singz_social_bundle_new_comment:
+    path:     /new-comment/
+    defaults:
+        _controller: SingzSocialBundle:Publication:newComment

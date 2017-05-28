@@ -69,13 +69,14 @@
         {% include 'SingzSocialBundle:Publication:comments.html.twig' with {
             'comments': comments,
             'thread': thread,
-            'view': 'tree'
+            'view': 'tree',
+            'main_form': main_form
         } %}
     </div>
 </div>
 {# Javascripts #}
 <script>
-    var path = '{{ path('singz_social_bundle_publication_love') }}';
+	var path = '{{ path('singz_social_bundle_publication_love') }}';
     var pathExtraPublication = '{{ path('singz_social_bundle_publication_extra_info') }}';
     $(document).ready(function(){
 		$('.confirmation-alert').click(function(){
@@ -84,3 +85,4 @@
     });
 </script>
 <script src="{{ asset('bundles/singzsocial/js/script.js') }}"></script>
+<script src="{{ asset('bundles/singzcore/js/comment.js') }}"></script>

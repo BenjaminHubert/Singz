@@ -12,6 +12,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Singz\SocialBundle\Form\PublicationType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use Singz\SocialBundle\Form\CommentType;
+use Singz\SocialBundle\Entity\Comment;
 
 class PublicationController extends Controller
 {
@@ -196,11 +198,48 @@ class PublicationController extends Controller
     	$thread = $publication->getThread();    	
     	// Get comments
     	$comments = $thread->getComments();
+    	// Create the form that allows to comment a publication at the first depth
+    	$comment = new Comment();
+    	$comment->setAuthor($this->getUser());
+//     	$comment->setBody('');
+    	$comment->setParent(null);
+    	$comment->setThread($publication->getThread());
+    	$mainForm = $this
+    		->createForm(CommentType::class, $comment, array(
+    			'action' => $this->generateUrl('singz_social_bundle_new_comment')
+    		))
+    		->createView();
     	// Render the view
     	return $this->render('SingzSocialBundle::extra.html.twig', array(
     		'publication' => $publication,
     		'comments' => $comments,
-    		'thread' => $thread
+    		'thread' => $thread,
+    		'main_form' => $mainForm,
     	));
+    }
+    
+    /**
+     * @Security("has_role('ROLE_USER')")
+     * @param Request $request
+     */
+    public function newCommentAction(Request $request){
+    	// Check if AJAX request
+    	if(!$request->isXmlHttpRequest()) {
+    		return new Response('Must be an XML HTTP request', Response::HTTP_BAD_REQUEST);
+    	}
+    	// Get entity manager
+    	$em = $this->getDoctrine()->getManager();
+    	// Create form
+    	$comment = new Comment();
+    	$form = $this->createForm(CommentType::class, $comment);
+    	$form->handleRequest($request);
+    	if($form->isSubmitted() && $form->isValid()){
+    		$comment = $form->getData();
+    		$em->persist($comment);
+    		$em->flush();
+    		return new Response(Response::HTTP_OK);
+    	}
+    	
+    	return new Response(Response::HTTP_BAD_REQUEST);
     }
 }

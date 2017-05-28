@@ -1,5 +1,25 @@
  <div class="post">
     <div class="post-footer">
+    	{# First depth comment #}
+    	{{ form_start(main_form) }}
+    		{{ form_errors(main_form) }}
+    		{# author, thread, parent #}
+    		<div class="hidden">
+    			{{ form_row(main_form.author) }}
+    			{{ form_row(main_form.thread) }}
+    			{{ form_row(main_form.parent) }}
+    		</div>
+    		{# body #}
+    		<div class="form-group">
+              	{{ form_widget(main_form.body, {
+              	    'attr': {
+              	        'class': 'form-control',
+              	        'placeholder': 'Ajouter un commentaire...'
+              	    } 
+              	}) }}
+            </div>
+    	{{ form_end(main_form) }}
+    	
         <ul class="comments-list">
         	{% for comment in comments if comment.parent is null and comment.state == constant('Singz\\SocialBundle\\Entity\\Comment::STATE_VISIBLE') %}
             	<li class="comment">
@@ -9,7 +29,11 @@
                     </a>
                     <div class="comment-body">
                         <div class="comment-heading">
-                            <h4 class="user">{{ comment.author.username }}</h4>
+                            <h4 class="user">
+                                <a class="pull-left" href="{{ path('singz_user_bundle_homepage', {'id': comment.author.id}) }}">
+                                    {{ comment.author.username }}
+								</a>
+                            </h4>
                             <h5 class="time">{{ comment.createdAt|time_diff }}</h5>
                         </div>
                         <p>{{ comment.body }}</p>
@@ -23,7 +47,11 @@
                                 </a>
                                 <div class="comment-body">
                                     <div class="comment-heading">
-                                        <h4 class="user">{{ child.author.username }}</h4>
+                                        <h4 class="user">
+                                            <a class="pull-left" href="{{ path('singz_user_bundle_homepage', {'id': child.author.id}) }}">
+                                                {{ child.author.username }}
+            								</a>
+                                        </h4>
                                         <h5 class="time">{{ child.createdAt|time_diff }}</h5>
                                     </div>
                                     <p>{{ child.body }}</p>

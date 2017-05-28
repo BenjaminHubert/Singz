@@ -81,7 +81,7 @@ class Comment
      * @ORM\Column(type="integer", name="state")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $state;
+    private $state = Comment::STATE_VISIBLE;
     
     /**
      * Constructor
