@@ -33,17 +33,9 @@
             		<a class="pull-left" href="{{ path('singz_user_bundle_homepage', {'id': comment.author.id}) }}">
                         <img class="avatar" src="{{ asset(comment.author.image.realPath) }}" alt="avatar">
                     </a>
-                    <div class="comment-body" id="comment-no-{{ comment.id }}">
-                        <div class="comment-heading">
-                            <h4 class="user">
-                                <a class="pull-left" href="{{ path('singz_user_bundle_homepage', {'id': comment.author.id}) }}">
-                                    {{ comment.author.username }}
-								</a>
-                            </h4>
-                            <h5 class="time">{{ comment.createdAt|time_diff }}</h5>
-                        </div>
-                        <p>{{ comment.body }}</p>
-                    </div>
+                    {% include 'SingzSocialBundle:Publication:comment.html.twig' with {
+                        'comment': comment
+                    } %}
                     {# Second depth #}
                     <ul class="comments-list">
                         {% for child in comment.children if child.state == constant('Singz\\SocialBundle\\Entity\\Comment::STATE_VISIBLE') %}
@@ -51,17 +43,9 @@
                                 <a class="pull-left" href="{{ path('singz_user_bundle_homepage', {'id': child.author.id}) }}">
                                     <img class="avatar" src="{{ asset(child.author.image.realPath) }}" alt="avatar">
                                 </a>
-                                <div class="comment-body" id="comment-no-{{ child.id }}">
-                                    <div class="comment-heading">
-                                        <h4 class="user">
-                                            <a class="pull-left" href="{{ path('singz_user_bundle_homepage', {'id': child.author.id}) }}">
-                                                {{ child.author.username }}
-            								</a>
-                                        </h4>
-                                        <h5 class="time">{{ child.createdAt|time_diff }}</h5>
-                                    </div>
-                                    <p>{{ child.body }}</p>
-                                </div>
+								{% include 'SingzSocialBundle:Publication:comment.html.twig' with {
+                                    'comment': child
+                                } %}
                             </li>
                 	    {% endfor %}
                         {% if app.user %}

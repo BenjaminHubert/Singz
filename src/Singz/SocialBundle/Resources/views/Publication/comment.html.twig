@@ -1,0 +1,45 @@
+<div class="comment-body" id="comment-no-{{ comment.id }}">
+    <div class="comment-heading">
+        <h4 class="user">
+            <a class="pull-left" href="{{ path('singz_user_bundle_homepage', {'id': comment.author.id}) }}">
+                {{ comment.author.username }}
+			</a>
+        </h4>
+        <h5 class="time">{{ comment.createdAt|time_diff }}</h5>
+        {% if is_granted('ROLE_USER') %}
+            <div class="dropdown pull-right">
+              	<button style="color: black" class="btn btn-link dropdown-toggle btn-xs" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                	<i class="fa fa-caret-down" aria-hidden="true"></i>
+              	</button>
+              	<ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu1">
+              		{% if app.user == comment.author and is_granted('ROLE_ADMIN') == false %}
+                        <li>
+                        	<a href="#">
+                        		<i class="fa fa-trash-o fa-fw" aria-hidden="true"></i> Supprimer
+                        	</a>
+                    	</li>
+                    {% endif %}
+                    <li>
+                        <a href="#">
+                        	<i class="fa fa-exclamation-circle fa-fw" aria-hidden="true"></i> Signaler
+                        </a>
+                    </li>
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <li role="separator" class="divider"></li>
+                        <li>
+                            <a href="#">
+                            	<i class="fa fa-trash-o fa-fw" aria-hidden="true"></i> Supprimer
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                            	<i class="fa fa-ban fa-fw" aria-hidden="true"></i> Spam
+                            </a>
+                        </li>
+					{% endif %}
+              	</ul>
+            </div>
+    	{% endif %}
+    </div>
+    <p>{{ comment.body }}</p>
+</div>
