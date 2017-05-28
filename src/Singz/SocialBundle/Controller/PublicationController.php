@@ -199,16 +199,18 @@ class PublicationController extends Controller
     	// Get comments
     	$comments = $thread->getComments();
     	// Create the form that allows to comment a publication at the first depth
-    	$comment = new Comment();
-    	$comment->setAuthor($this->getUser());
-//     	$comment->setBody('');
-    	$comment->setParent(null);
-    	$comment->setThread($publication->getThread());
-    	$mainForm = $this
-    		->createForm(CommentType::class, $comment, array(
-    			'action' => $this->generateUrl('singz_social_bundle_new_comment')
-    		))
-    		->createView();
+    	$mainForm = null;
+    	if($this->getUser()){
+	    	$comment = new Comment();
+	    	$comment->setAuthor($this->getUser());
+	    	$comment->setParent(null);
+	    	$comment->setThread($publication->getThread());
+	    	$mainForm = $this
+	    		->createForm(CommentType::class, $comment, array(
+	    			'action' => $this->generateUrl('singz_social_bundle_new_comment')
+	    		))
+	    		->createView();
+    	}
     	// Render the view
     	return $this->render('SingzSocialBundle::extra.html.twig', array(
     		'publication' => $publication,

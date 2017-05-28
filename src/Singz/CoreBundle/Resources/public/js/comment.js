@@ -12,15 +12,29 @@ $.fn.enterKey = function (fnc, mod) {
 
 $('textarea').enterKey(function() {
 	$(this).closest('form').submit();
+	$(this).blur(); 
 }, 'shift');
 
 $('form').submit(function(e){
 	// Prevent default behavior
 	e.preventDefault();
 	// Get form data
-	$data = $(this).serialize()
+	$data = $(this).serialize();
 	// Empty the textarea field
+	$textareaValue = $(this).find('textarea').val();
 	$(this).find('textarea').val('');
+	// Create  the new comment
+	$('#comment-template').find('p').html($textareaValue);
+	$('#comment-template').find('.comment-body').addClass('new-comment')
+	var htmlTemplate = $('#comment-template').html();
+	$('#comment-template').find('.comment-body').removeClass('new-comment');
+	$('.post-footer > ul.comments-list').append(htmlTemplate);
+	// Scroll to the comment
+	$('.right-side, .modal-dialog').animate({
+        scrollTop: $(".new-comment").last().offset().top
+    }, 500);
+	var time = 300;
+	$(".new-comment").last().fadeIn(time).fadeOut(time).fadeIn(time).fadeOut(time).fadeIn(time);
 	// Launch the AJAX Request
 	$.ajax({
         url: $(this).attr('action'),

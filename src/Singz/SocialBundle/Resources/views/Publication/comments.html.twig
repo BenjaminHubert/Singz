@@ -1,24 +1,26 @@
  <div class="post">
     <div class="post-footer">
-    	{# First depth comment #}
-    	{{ form_start(main_form) }}
-    		{{ form_errors(main_form) }}
-    		{# author, thread, parent #}
-    		<div class="hidden">
-    			{{ form_row(main_form.author) }}
-    			{{ form_row(main_form.thread) }}
-    			{{ form_row(main_form.parent) }}
-    		</div>
-    		{# body #}
-    		<div class="form-group">
-              	{{ form_widget(main_form.body, {
-              	    'attr': {
-              	        'class': 'form-control',
-              	        'placeholder': 'Ajouter un commentaire...'
-              	    } 
-              	}) }}
-            </div>
-    	{{ form_end(main_form) }}
+    	{% if app.user %}
+        	{# First depth comment #}
+        	{{ form_start(main_form) }}
+        		{{ form_errors(main_form) }}
+        		{# author, thread, parent #}
+        		<div class="hidden">
+        			{{ form_row(main_form.author) }}
+        			{{ form_row(main_form.thread) }}
+        			{{ form_row(main_form.parent) }}
+        		</div>
+        		{# body #}
+        		<div class="form-group">
+                  	{{ form_widget(main_form.body, {
+                  	    'attr': {
+                  	        'class': 'form-control',
+                  	        'placeholder': 'Ajouter un commentaire...'
+                  	    } 
+                  	}) }}
+                </div>
+        	{{ form_end(main_form) }}
+    	{% endif %}
     	
         <ul class="comments-list">
         	{% for comment in comments if comment.parent is null and comment.state == constant('Singz\\SocialBundle\\Entity\\Comment::STATE_VISIBLE') %}
