@@ -27,7 +27,7 @@
             		<a class="pull-left" href="{{ path('singz_user_bundle_homepage', {'id': comment.author.id}) }}">
                         <img class="avatar" src="{{ asset(comment.author.image.realPath) }}" alt="avatar">
                     </a>
-                    <div class="comment-body">
+                    <div class="comment-body" id="comment-no-{{ comment.id }}">
                         <div class="comment-heading">
                             <h4 class="user">
                                 <a class="pull-left" href="{{ path('singz_user_bundle_homepage', {'id': comment.author.id}) }}">
@@ -45,7 +45,7 @@
                                 <a class="pull-left" href="{{ path('singz_user_bundle_homepage', {'id': child.author.id}) }}">
                                     <img class="avatar" src="{{ asset(child.author.image.realPath) }}" alt="avatar">
                                 </a>
-                                <div class="comment-body">
+                                <div class="comment-body" id="comment-no-{{ child.id }}">
                                     <div class="comment-heading">
                                         <h4 class="user">
                                             <a class="pull-left" href="{{ path('singz_user_bundle_homepage', {'id': child.author.id}) }}">
@@ -64,3 +64,24 @@
         </ul>
     </div>
 </div>
+
+{% if app.user %}
+    <div id="comment-template" style="display:none">
+    	<li class="comment">
+    		<a class="pull-left" href="{{ path('singz_user_bundle_homepage', {'id': app.user.id}) }}">
+                <img class="avatar" src="{{ asset(app.user.image.realPath) }}" alt="avatar">
+            </a>
+            <div class="comment-body">
+                <div class="comment-heading">
+                    <h4 class="user">
+                        <a class="pull-left" href="{{ path('singz_user_bundle_homepage', {'id': app.user.id}) }}">
+                            {{ app.user.username }}
+    					</a>
+                    </h4>
+                    <h5 class="time">A l'instant</h5>
+                </div>
+                <p></p>
+            </div>
+    	</li>
+    </div>
+{% endif %}
