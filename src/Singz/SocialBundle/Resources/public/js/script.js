@@ -18,8 +18,14 @@ function lovethis(path, idPub, idUser) {
 
             if(nbLove != 1) {
                 $("#nbloves-"+idPub).text(nbLove);
+                $(".nbloves-"+idPub).each(function () {
+                    $(this).text(nbLove);
+                });
             } else {
                 $("#nbloves-"+idPub).text(nbLove);
+                $(".nbloves-"+idPub).each(function () {
+                    $(this).text(nbLove);
+                });
             }
 
             if(didLove){
