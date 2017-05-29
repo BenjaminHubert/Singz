@@ -79,3 +79,20 @@ $('form.second-depth').submit(function(e){
     	$(".new-comment").last().parent('li.comment').remove()
     });
 });
+
+$('a.through-ajax').click(function(e){
+	if(confirm('Êtes vous sûr?')){
+		var url = $(this).attr('href');		
+		$(this).closest('li.comment').hide('fast');
+		$.ajax({
+	        url: url,
+	        method: 'POST',
+	    }).done(function(data, textStatus, jqXHR){
+	    	
+	    }).fail(function(jqXHR, textStatus, errorThrown){
+	    	console.error(jqXHR);
+	    });
+	}
+	e.preventDefault();
+})
+

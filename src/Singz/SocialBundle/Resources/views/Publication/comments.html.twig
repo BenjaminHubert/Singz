@@ -30,9 +30,6 @@
         	{% for comment in comments if comment.parent is null and comment.state == constant('Singz\\SocialBundle\\Entity\\Comment::STATE_VISIBLE') %}
             	<li class="comment">
             		{# First depth #}
-            		<a class="pull-left" href="{{ path('singz_user_bundle_homepage', {'id': comment.author.id}) }}">
-                        <img class="avatar" src="{{ asset(comment.author.image.realPath) }}" alt="avatar">
-                    </a>
                     {% include 'SingzSocialBundle:Publication:comment.html.twig' with {
                         'comment': comment
                     } %}
@@ -40,9 +37,6 @@
                     <ul class="comments-list">
                         {% for child in comment.children if child.state == constant('Singz\\SocialBundle\\Entity\\Comment::STATE_VISIBLE') %}
                             <li class="comment">
-                                <a class="pull-left" href="{{ path('singz_user_bundle_homepage', {'id': child.author.id}) }}">
-                                    <img class="avatar" src="{{ asset(child.author.image.realPath) }}" alt="avatar">
-                                </a>
 								{% include 'SingzSocialBundle:Publication:comment.html.twig' with {
                                     'comment': child
                                 } %}

@@ -14,6 +14,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Singz\SocialBundle\Form\CommentType;
 use Singz\SocialBundle\Entity\Comment;
+use Singz\SocialBundle\Entity\Report;
 
 class PublicationController extends Controller
 {
@@ -262,4 +263,65 @@ class PublicationController extends Controller
     	$em->flush();
     	return new Response(Response::HTTP_OK);
     }
+    
+    /**
+     * @Security("has_role('ROLE_USER')")
+     */
+    public function editCommentAction(Request $request, $idComment, $state){
+    	// Check if AJAX request
+    	if(!$request->isXmlHttpRequest()) {
+    		return new Response('Must be an XML HTTP request', Response::HTTP_BAD_REQUEST);
+    	}
+    	// Get entity manager
+    	$em = $this->getDoctrine()->getManager();
+    	// Get comment
+    	$comment = $em->getRepository('SingzSocialBundle:Comment')->find($idComment);
+    	if(!$comment){
+    		return $this->createNotFoundException('Comment does not exist');
+    	}
+    	// Check if state exist
+    	if($state != Comment::STATE_DELETED && $state != Comment::STATE_PENDING && $state != Comment::STATE_SPAM && $state != Comment::STATE_VISIBLE){
+    		return new Response('Unknown comment state', Response::HTTP_BAD_REQUEST);
+    	}
+    	// Check the rights
+    	if($state == Comment::STATE_PENDING || $state == Comment::STATE_SPAM || $state == Comment::STATE_VISIBLE){
+    		$this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'You do not have rights to access');
+    	}
+    	if($state == Comment::STATE_DELETED && ($comment->getAuthor() != $this->getUser() || $this->get('security.authorization_checker')->isGranted('ROLE_ADMIN') === false)){
+    		throw $this->createAccessDeniedException('You do not have rights to access');
+    	}
+    	//Update the state
+    	$comment->setState($state);
+    	$em->persist($comment);
+    	$em->flush();
+    	
+    	return new Response();
+    }
+    
+    /**
+     * @Security("has_role('ROLE_USER')")
+     */
+    public function reportCommentAction(Request $request, $idComment){
+    	// Check if AJAX request
+    	if(!$request->isXmlHttpRequest()) {
+    		return new Response('Must be an XML HTTP request', Response::HTTP_BAD_REQUEST);
+    	}
+    	// Get entity manager
+    	$em = $this->getDoctrine()->getManager();
+    	// Get comment
+    	$comment = $em->getRepository('SingzSocialBundle:Comment')->find($idComment);
+    	if(!$comment){
+    		return $this->createNotFoundException('Comment does not exist');
+    	}
+    	// Create report
+    	$report = new Report();
+    	$report->setReporter($this->getUser());
+    	$report->setComment($comment);
+    	$em->persist($report);
+    	$em->flush();
+    	 
+    	return new Response();
+    }
+    
+    
 }

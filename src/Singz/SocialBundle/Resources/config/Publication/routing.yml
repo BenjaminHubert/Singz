@@ -41,3 +41,20 @@ singz_social_bundle_new_comment:
     path:     /new-comment/
     defaults:
         _controller: SingzSocialBundle:Publication:newComment
+
+# ajax
+singz_social_bundle_edit_comment:
+    path:     /{idComment}/{state}/edit-comment/
+    defaults:
+        _controller: SingzSocialBundle:Publication:editComment
+    requirements:
+        idComment: \d+
+        state: \d+
+
+# ajax
+singz_social_bundle_report_comment:
+    path:     /{idComment}/report-comment/
+    defaults:
+        _controller: SingzSocialBundle:Publication:reportComment
+    requirements:
+        idComment: \d+

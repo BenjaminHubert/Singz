@@ -3,6 +3,7 @@
 namespace Singz\SocialBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Comment
@@ -16,6 +17,7 @@ class Comment
 	const STATE_DELETED = 1;
 	const STATE_SPAM = 2;
 	const STATE_PENDING = 3;
+	const STATE_REPORTED = 4;
 	
     /**
      * @var int
@@ -84,11 +86,21 @@ class Comment
     private $state = Comment::STATE_VISIBLE;
     
     /**
+     * @var Report $reports
+     * 
+     * @ORM\OneToMany(targetEntity="Singz\SocialBundle\Entity\Report", mappedBy="comment")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $reports;
+    
+    /**
      * Constructor
      */
     public function __construct()
     {
         $this->createdAt = new \DateTime();
+        $this->children = new ArrayCollection();
+        $this->reports = new ArrayCollection();
     }
 
     /**
@@ -277,5 +289,39 @@ class Comment
     public function getParent()
     {
         return $this->parent;
+    }
+
+    /**
+     * Add report
+     *
+     * @param \Singz\SocialBundle\Entity\Comment $report
+     *
+     * @return Comment
+     */
+    public function addReport(\Singz\SocialBundle\Entity\Comment $report)
+    {
+        $this->reports[] = $report;
+
+        return $this;
+    }
+
+    /**
+     * Remove report
+     *
+     * @param \Singz\SocialBundle\Entity\Comment $report
+     */
+    public function removeReport(\Singz\SocialBundle\Entity\Comment $report)
+    {
+        $this->reports->removeElement($report);
+    }
+
+    /**
+     * Get reports
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getReports()
+    {
+        return $this->reports;
     }
 }
