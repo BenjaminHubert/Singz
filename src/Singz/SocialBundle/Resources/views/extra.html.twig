@@ -1,14 +1,13 @@
 {# Stylesheets #}
-<link href="{{ asset('bundles/foscomment/css/comments.css') }}" rel="stylesheet">
 <link href="{{ asset('bundles/singzcore/css/comments.css') }}" rel="stylesheet">
 
 {# Admin or publication owner actions #}
 {% if app.user and (app.user.id == publication.user.id or is_granted('ROLE_ADMIN'))  %}
-	<div class="btn-group">
-		<button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-			<i class="fa fa-fw fa-ellipsis-h" aria-hidden="true"></i>
+	<div class="dropdown pull-right">
+      	<button style="color: black" class="btn btn-link dropdown-toggle btn-xs" type="button" id="dropdownMenuPost" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+			Actions <i class="fa fa-caret-down fa-fw" aria-hidden="true"></i>
 		</button>
-    	<ul class="dropdown-menu">
+    	<ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuPost">
     		<li>
            		{# Edit button #}
                 <a href="{{ path('singz_social_bundle_publication_edit', {'id': publication.id}) }}" class="">
@@ -66,17 +65,18 @@
 {% endif %}
 {# Comments #}
 <div class="comments-container">
-    <div id="fos_comment_thread" data-thread="{{ thread.id }}">
-        {% include 'FOSCommentBundle:Thread:comments.html.twig' with {
+    <div id="comment-thread" data-thread="{{ thread.id }}">
+        {% include 'SingzSocialBundle:Publication:comments.html.twig' with {
             'comments': comments,
             'thread': thread,
-            'view': 'tree'
+            'view': 'tree',
+            'main_form': main_form
         } %}
     </div>
 </div>
 {# Javascripts #}
 <script>
-    var path = '{{ path('singz_social_bundle_publication_love') }}';
+	var path = '{{ path('singz_social_bundle_publication_love') }}';
     var pathExtraPublication = '{{ path('singz_social_bundle_publication_extra_info') }}';
     $(document).ready(function(){
 		$('.confirmation-alert').click(function(){
@@ -85,4 +85,4 @@
     });
 </script>
 <script src="{{ asset('bundles/singzsocial/js/script.js') }}"></script>
-<script src="{{ asset('bundles/foscomment/js/comments.js') }}"></script>
+<script src="{{ asset('bundles/singzcore/js/comment.js') }}"></script>

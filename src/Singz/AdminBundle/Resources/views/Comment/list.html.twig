@@ -20,37 +20,51 @@
 				<th>Publication</th>
 				<th>Commentaire</th>
 				<th>Etat</th>
+				<th>Signalement</th>
 			</tr>
 		</thead>
 		<tbody>
 			{% for comment in comments %}
 				<tr>
 					<td>{{ comment.createdAt|date('d/m/Y H:i:s') }}</td>
-					<td>{{ comment.username }}</td>
 					<td>
-						<a href="{{ path('singz_social_bundle_publication_show', {'id': comment.thread_id}) }}" target="_blank">
+						<a href="{{ path('singz_user_bundle_homepage', {'id': comment.author.id}) }}" target="_blank">
+					        {{ comment.author.username }}
+					    </a>
+					</td>
+					<td>
+						<a href="{{ path('singz_social_bundle_publication_show', {'id': comment.thread.publication.id}) }}" target="_blank">
 							Voir
 						</a>
 					</td>
 					<td>
-						<a href="{{ path('singz_admin_comment_show', {'id': comment.id}) }}">
-							{{ comment.body }}
-						</a>
+						{{ comment.body }}
 					</td>
 					<td>
-						{% if comment.state == 0 %}
-    						<span class="label label-primary">
+						{% if comment.state == constant('Singz\\SocialBundle\\Entity\\Comment::STATE_VISIBLE') %}
+    						<span class="label label-success">
     					        En ligne
     					    </span>
-						{% elseif comment.state == 1 %}
+						{% elseif comment.state == constant('Singz\\SocialBundle\\Entity\\Comment::STATE_DELETED') %}
     						<span class="label label-danger">
-    					        Hors ligne
+    					        Supprimé
+    					    </span>
+						{% elseif comment.state == constant('Singz\\SocialBundle\\Entity\\Comment::STATE_SPAM') %}
+    						<span class="label label-warning">
+    					        Spam
+    					    </span>
+						{% elseif comment.state == constant('Singz\\SocialBundle\\Entity\\Comment::STATE_PENDING') %}
+    						<span class="label label-info">
+    					        En attente
     					    </span>
     					{% else %}
     						<span class="label label-default">
     					        Etat inconnu
     					    </span>
 					    {% endif %}
+					</td>
+					<td>
+				    	<span class="label label-danger"><i class="fa fa-exclamation-triangle fa-fw" aria-hidden="true"></i> {{ nbReports[comment.id] }}</span>
 					</td>
 				</tr>
 			{% endfor %}

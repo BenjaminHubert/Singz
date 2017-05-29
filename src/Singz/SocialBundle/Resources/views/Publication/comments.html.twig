@@ -1,0 +1,97 @@
+ <div class="post">
+    <div class="post-footer">
+    	{% if app.user %}
+        	{# First depth form comment #}
+        	{{ form_start(main_form, {
+        	    'attr': {
+        	        'class': 'first-depth'
+        	    }
+        	}) }}
+        		{{ form_errors(main_form) }}
+        		{# author, thread, parent #}
+        		<div class="hidden">
+        			{{ form_row(main_form.author) }}
+        			{{ form_row(main_form.thread) }}
+        			{{ form_row(main_form.parent) }}
+        		</div>
+        		{# body #}
+        		<div class="form-group">
+                  	{{ form_widget(main_form.body, {
+                  	    'attr': {
+                  	        'class': 'form-control',
+                  	        'placeholder': 'Ajouter un commentaire...',
+                  	        'rows': 2
+                  	    } 
+                  	}) }}
+                </div>
+        	{{ form_end(main_form) }}
+    	{% endif %}
+        <ul class="comments-list">
+        	{% for comment in comments if comment.parent is null and comment.state == constant('Singz\\SocialBundle\\Entity\\Comment::STATE_VISIBLE') %}
+            	<li class="comment">
+            		{# First depth #}
+                    {% include 'SingzSocialBundle:Publication:comment.html.twig' with {
+                        'comment': comment
+                    } %}
+                    {# Second depth #}
+                    <ul class="comments-list">
+                        {% for child in comment.children if child.state == constant('Singz\\SocialBundle\\Entity\\Comment::STATE_VISIBLE') %}
+                            <li class="comment">
+								{% include 'SingzSocialBundle:Publication:comment.html.twig' with {
+                                    'comment': child
+                                } %}
+                            </li>
+                	    {% endfor %}
+                        {% if app.user %}
+                        	{# Second depth form comment #}
+                        	{{ form_start(forms[comment.id], {
+                        	    'attr': {
+                        	        'class': 'second-depth'
+                        	    }
+                        	}) }}
+                        		{{ form_errors(forms[comment.id]) }}
+                        		{# author, thread, parent #}
+                        		<div class="hidden">
+                        			{{ form_row(forms[comment.id].author) }}
+                        			{{ form_row(forms[comment.id].thread) }}
+                        			{{ form_row(forms[comment.id].parent) }}
+                        		</div>
+                        		{# body #}
+                        		<div class="form-group">
+                                  	{{ form_widget(forms[comment.id].body, {
+                                  	    'attr': {
+                                  	        'class': 'form-control',
+                                  	        'placeholder': 'Répondre au commentaire...',
+                                  	        'rows': 1
+                                  	    } 
+                                  	}) }}
+                                </div>
+                        	{{ form_end(forms[comment.id]) }}
+                    	{% endif %}
+                    </ul>
+            	</li>
+        	{% endfor %}
+        </ul>
+    </div>
+</div>
+
+{% if app.user %}
+    <div id="comment-template" style="display:none">
+    	<li class="comment">
+    		<a class="pull-left" href="{{ path('singz_user_bundle_homepage', {'id': app.user.id}) }}">
+                <img class="avatar" src="{{ asset(app.user.image.realPath) }}" alt="avatar">
+            </a>
+            <div class="comment-body">
+                <div class="comment-heading">
+                    <h4 class="user">
+                        <a class="pull-left" href="{{ path('singz_user_bundle_homepage', {'id': app.user.id}) }}">
+                            {{ app.user.username }}
+    					</a>
+                    </h4>
+                    <h5 class="time">A l'instant</h5>
+                </div>
+                <p></p>
+            </div>
+    	</li>
+    </div>
+{% endif %}

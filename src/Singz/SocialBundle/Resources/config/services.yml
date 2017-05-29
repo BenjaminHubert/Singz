@@ -1,8 +1,6 @@
 services:
     singz.social.publication:
         class: Singz\SocialBundle\EventListener\PublicationSubscriber
-        arguments:
-            - "@service_container"
         tags:
             - { name: doctrine.event_subscriber, connection: default }
     singz.social.love:

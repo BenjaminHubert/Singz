@@ -50,6 +50,13 @@ class User extends BaseUser
     private $comments;
     
     /**
+     * @var Report
+     * 
+     * @ORM\OneToMany(targetEntity="Singz\SocialBundle\Entity\Report", mappedBy="reporter")
+     */
+    private $reports;
+    
+    /**
      * @var User
      * 
      * @ORM\OneToMany(targetEntity="Singz\SocialBundle\Entity\Follow", mappedBy="leader")
@@ -99,6 +106,7 @@ class User extends BaseUser
     	$this->comments = new ArrayCollection();
     	$this->leaders = new ArrayCollection();
     	$this->followers = new ArrayCollection();
+    	$this->reports = new ArrayCollection();
     }
     
 
@@ -342,5 +350,39 @@ class User extends BaseUser
     public function getIsPrivate()
     {
         return $this->isPrivate;
+    }
+
+    /**
+     * Add report
+     *
+     * @param \Singz\SocialBundle\Entity\Report $report
+     *
+     * @return User
+     */
+    public function addReport(\Singz\SocialBundle\Entity\Report $report)
+    {
+        $this->reports[] = $report;
+
+        return $this;
+    }
+
+    /**
+     * Remove report
+     *
+     * @param \Singz\SocialBundle\Entity\Report $report
+     */
+    public function removeReport(\Singz\SocialBundle\Entity\Report $report)
+    {
+        $this->reports->removeElement($report);
+    }
+
+    /**
+     * Get reports
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getReports()
+    {
+        return $this->reports;
     }
 }

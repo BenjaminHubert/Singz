@@ -6,16 +6,3 @@ singz_admin_comment_list:
     path:     /list/
     defaults:
         _controller: SingzAdminBundle:Comment:list
-singz_admin_comment_show:
-    path:     /show/{id}
-    defaults:
-        _controller: SingzAdminBundle:Comment:show
-    requirements:
-        id: \d+
-singz_admin_comment_state:
-    path:     /edit/state/{id}/{state}
-    defaults:
-        _controller: SingzAdminBundle:Comment:state
-    requirements:
-        id: \d+
-        state: \d{1}

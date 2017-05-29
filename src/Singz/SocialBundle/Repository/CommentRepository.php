@@ -12,13 +12,14 @@ class CommentRepository extends \Doctrine\ORM\EntityRepository
 {
 	public function findAllCommentsInfo(){
 		$qb = $this->createQueryBuilder('c')
-			->select('c.id', 'u.username', 'c.createdAt', 'c.body', 'IDENTITY(c.thread) AS thread_id', 'c.ancestors', 'c.depth', 'c.state')
-			->innerJoin('SingzUserBundle:User', 	'u', 'WITH', 'c.author = u.id')
+			->leftJoin('c.author', 'author')
+				->addSelect('author')
+			->leftJoin('c.thread', 'thread')
+				->addSelect('thread')
+			->leftJoin('thread.publication', 'publication')
+				->addSelect('publication')
+			
 		;
-		
-		
-		// On peut ajouter ce qu'on veut après
-		//$qb->orderBy('a.date', 'DESC');
 		
 		return $qb
 			->getQuery()

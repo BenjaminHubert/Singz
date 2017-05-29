@@ -82,6 +82,13 @@ class Publication
     private $numLoves = 0;
     
     /**
+     * @var Thread
+     *
+     * @ORM\OneToOne(targetEntity="Singz\SocialBundle\Entity\Thread", inversedBy="publication")
+     */
+    private $thread;
+    
+    /**
      * Constructor
      */
     public function __construct()
@@ -298,5 +305,29 @@ class Publication
     public function decreaseNumLoves(){
     	$this->numLoves--;
     	return $this;
+    }
+
+    /**
+     * Set lastEdit
+     *
+     * @param \DateTime $lastEdit
+     *
+     * @return Publication
+     */
+    public function setLastEdit($lastEdit)
+    {
+        $this->lastEdit = $lastEdit;
+
+        return $this;
+    }
+
+    /**
+     * Get lastEdit
+     *
+     * @return \DateTime
+     */
+    public function getLastEdit()
+    {
+        return $this->lastEdit;
     }
 }

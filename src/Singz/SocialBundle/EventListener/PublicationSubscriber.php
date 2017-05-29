@@ -8,13 +8,7 @@ use Singz\SocialBundle\Entity\Publication;
 use Singz\SocialBundle\Entity\Thread;
 
 class PublicationSubscriber implements EventSubscriber
-{
-	private $container;
-	
-	public function __construct($container){
-		$this->container = $container;
-	}
-	
+{	
 	public function preUpdate(LifecycleEventArgs $args){
 		$publication = $args->getEntity();
 		// only act on some "Publication" entity
@@ -35,9 +29,11 @@ class PublicationSubscriber implements EventSubscriber
 		// Entity Manager
 		$em = $args->getEntityManager();
 		// Disable its thread
-		$thread = $this->container->get('fos_comment.manager.thread')->findThreadById($publication->getId());
-		$thread->setCommentable(false);
-		$em->persist($thread);
+		if(!$publication->getThread()){
+			throw new \Exception('Thread not found');
+		}
+		$publication->getThread()->setCommentable(false);
+// 		$em->persist($thread);
 	}
 	
 	public function postPersist(LifecycleEventArgs $args){
@@ -49,15 +45,12 @@ class PublicationSubscriber implements EventSubscriber
 		// Entity Manager
 		$em = $args->getEntityManager();
 		// Creating the publication thread
-		$thread = $this->container->get('fos_comment.manager.thread')->findThreadById($publication->getId());
-		if (null === $thread) {
+		if (null === $publication->getThread()) {
 			$thread = new Thread();
-			$thread->setId($publication->getId());
-			$thread->setPermalink('');
+			$thread->setPublication($publication);
 			$em->persist($thread);
 			$em->flush($thread);
 		}
-		
 	}
 	
 	/**
