@@ -73,6 +73,7 @@ class User extends BaseUser
     /**
      * @var Image
      * @ORM\ManyToOne(targetEntity="Singz\UserBundle\Entity\Image")
+     * @ORM\JoinColumn(nullable=false)
      */
     private $image;
     
@@ -287,7 +288,7 @@ class User extends BaseUser
      *
      * @return User
      */
-    public function setImage(\Singz\UserBundle\Entity\Image $image = null)
+    public function setImage(\Singz\UserBundle\Entity\Image $image)
     {
         $this->image = $image;
 

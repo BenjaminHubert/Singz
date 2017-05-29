@@ -11,7 +11,7 @@
 		{% if app.user %}
     		<li>
     			<a href="{{ path('singz_user_bundle_homepage', {'id': app.user.id}) }}">
-    				<img style="width:42px;height:42px" class="img-circle" src="{% if app.user.image is null %}{{ asset('bundles/singzcore/img/anonymous_icon.jpg') }}{% else %}{{ asset(app.user.image.realPath) }}{% endif %}" alt="{{ app.user.username }}">
+    				<img style="width:42px;height:42px" class="img-circle" src="{{ asset(app.user.image.realPath)}}" alt="{{ app.user.username }}">
     			</a>
     		</li>
     		<li>

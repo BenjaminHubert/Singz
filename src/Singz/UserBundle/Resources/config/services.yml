@@ -1,4 +1,5 @@
 services:
-#    singz_user.example:
-#        class: Singz\UserBundle\Example
-#        arguments: ["@service_id", "plain_value", "%parameter%"]
+    singz.user.user:
+        class: Singz\UserBundle\EventListener\UserSubscriber
+        tags:
+            - { name: doctrine.event_subscriber, connection: default }
