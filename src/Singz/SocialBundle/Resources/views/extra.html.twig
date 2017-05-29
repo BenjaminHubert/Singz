@@ -40,8 +40,11 @@
         </p>
         {# Publication date #}
         <p>{{ publication.date|time_diff }}</p>
-        {# Number of love #}
-        <p><i class="fa fa-fw fa-heart" aria-hidden="true"></i> <span id="nbloves-{{ publication.id }}">{{ publication.numLoves }}</span></p>
+        {# Number of love & comments #}
+        <p>
+            <i class="fa fa-fw fa-heart" aria-hidden="true"></i> <span id="nbloves-{{ publication.id }}">{{ publication.numLoves }}</span>
+            <i class="fa fa-fw fa-comments" aria-hidden="true"></i> <span class="nbcomments-{{ publication.id }}" id="nbcomments-{{ publication.id }}">{{ publication.thread.visibleComments|length }}</span>
+        </p>
     </div>
 </div>
 {# Publication description #}

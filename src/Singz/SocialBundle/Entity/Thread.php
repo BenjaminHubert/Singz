@@ -176,4 +176,21 @@ class Thread
     {
         return $this->publication;
     }
+
+    /**
+     * Get visible comments
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getVisibleComments()
+    {
+        $comments = $this->getComments();
+        foreach ($comments as $key => $val) {
+            if($val->getState() != Comment::STATE_VISIBLE){
+                unset($comments[$key]);
+            }
+        }
+
+        return $comments;
+    }
 }
