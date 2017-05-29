@@ -1,9 +1,12 @@
 {% extends "SingzCoreBundle::layout.html.twig" %}
 {% block title %}
-    {{ 'Notifications - '~ parent() }}
+    Notifications - {{ parent() }}
 {% endblock %}
 {% block stylesheets %}
 	<style>
+		.notification{
+			color: inherit;
+		}
     	 .notification .media-object{
     	 	width:64px;
     	 	height:64px;
@@ -11,7 +14,7 @@
     	 .notification .message{
     	 
     	 }
-    	 .notification.list-group-item.active{
+    	 .notification.active{
             z-index: 2;
             background-color: #f5f5f5;
             border-color: #f5f5f5;
@@ -22,22 +25,36 @@
 {% block body %}
 	<div class="list-group notifications">
 		{% for notification in notifications %}
-			<a class="list-group-item notification {% if notification.isRead == false %}active{% endif %}" href="{% if notification.publication is not null %}{{ path('singz_social_bundle_publication_show', {'id':notification.publication.id}) }}{% else %}{{ path('singz_user_bundle_homepage', {'id':notification.userFrom.id}) }}{% endif %}" data-id-notif="{{ notification.id }}">
-    			<div class="media">
-                    <div class="media-left">
-						<img class="media-object" src="{% if notification.userFrom.image is null %}{{ asset('bundles/singzcore/img/anonymous_icon.jpg') }}{% else %}{{ asset(notification.userFrom.image.realPath) }}{% endif %}" alt="{{ notification.userFrom.username }}">
-                    </div>
-                    <div class="media-body">
-                        <p class="message">{{ notification.message|raw }}</p>
-                        <small>
-                            {{ notification.date|time_diff }}
-                            {% if notification.isRead == false %} 
-                            	<span>&#8226; Non lu</span>
-                            {% endif %}
-                        </small>
-                    </div>
+			<div class="list-group-item">
+    			<div class="dropdown pull-right">
+                  	<button style="color: black" class="btn btn-link dropdown-toggle btn-xs" type="button" id="dropdownMenuComment" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                    	<i class="fa fa-caret-down" aria-hidden="true"></i>
+                  	</button>
+                  	<ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuComment">
+                        <li>
+                            <a href="#" data-id-notif="{{ notification.id }}" class="mark-as-read">
+                            	Marquer comme lu
+                            </a>
+                        </li>
+                  	</ul>
                 </div>
-			</a>
+    			<a class="notification {% if notification.isRead == false %}mark-as-read{% endif %}" href="{% if notification.publication is not null %}{{ path('singz_social_bundle_publication_show', {'id':notification.publication.id}) }}{% else %}{{ path('singz_user_bundle_homepage', {'id':notification.userFrom.id}) }}{% endif %}" data-id-notif="{{ notification.id }}">
+        			<div class="media">
+                        <div class="media-left">
+    						<img class="media-object" src="{% if notification.userFrom.image is null %}{{ asset('bundles/singzcore/img/anonymous_icon.jpg') }}{% else %}{{ asset(notification.userFrom.image.realPath) }}{% endif %}" alt="{{ notification.userFrom.username }}">
+                        </div>
+                        <div class="media-body">
+                            <p class="message">{{ notification.message|raw }}</p>
+                            <small>
+                                {{ notification.date|time_diff }}
+                                {% if notification.isRead == false %} 
+                                	<span>&#8226; Non lu</span>
+                                {% endif %}
+                            </small>
+                        </div>
+                    </div>
+    			</a>
+			</div>
 		{% else %}
 			Aucune notification
 		{% endfor %}
@@ -46,16 +63,17 @@
 {% block end_javascripts %}
 	<script>
 		$(document).ready(function(){
-			$('a.notification.active').click(function(e){
-				var notification = $(this);
-				var idNotif = notification.attr('data-id-notif');
+			$('.mark-as-read').click(function(e){
+				var idNotif = $(this).attr('data-id-notif');
+				var notification = $('a.notification[data-id-notif="'+idNotif+'"]');
+				notification.removeClass('active');
+				notification.find('small span').remove();
 				$.ajax({
         	        url: "{{ path('singz_social_bundle_notification_readed') }}",
         	        method: 'POST',
         	        data: { 'idNotif': idNotif }
         	    }).done(function(data, textStatus, jqXHR){
-					notification.removeClass('active');
-					notification.find('small span').remove();
+            	    
         	    }).fail(function(jqXHR, textStatus, errorThrown){
 
         	    }).always(function(){

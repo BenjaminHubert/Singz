@@ -58,14 +58,14 @@ class CoreController extends Controller
     		$em = $this->getDoctrine()->getManager();
     		$notifications = $em->getRepository('SingzSocialBundle:Notification')->findBy(array(
     			'userTo' => $this->getUser(),
-    			'isRead' => false
+    			'isSeen' => false
     		));
-    		$notificationsUnread = count($notifications);
+    		$notificationsUnseen = count($notifications);
     	}else{
-    		$notificationsUnread = 0;
+    		$notificationsUnseen = 0;
     	}
     	return $this->render('SingzCoreBundle::menu.html.twig', array(
-    		'notificationsUnread' => $notificationsUnread
+    		'notificationsUnseen' => $notificationsUnseen
     	));
     }
 }
