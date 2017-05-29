@@ -17,7 +17,6 @@ class Comment
 	const STATE_DELETED = 1;
 	const STATE_SPAM = 2;
 	const STATE_PENDING = 3;
-	const STATE_REPORTED = 4;
 	
     /**
      * @var int
