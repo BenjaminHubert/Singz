@@ -46,8 +46,14 @@
                     </h5>
                     <div>
                     	{% if user == app.user %}
-                            <a href={{ path('fos_user_profile_show') }} class="btn btn-default">
+                            <a href={{ path('fos_user_profile_show') }} class="btn btn-success">
+                                Voir mon profil
+                            </a>
+                            <a href={{ path('fos_user_profile_edit') }} class="btn btn-primary">
                             	Modifier mon profil
+                            </a>
+                            <a href="{{ path('singz_user_enabled', {'id':user.id, 'state':'disabled'}) }}" class="btn btn-danger">
+                                Supprimer mon profil
                             </a>
                         {% else %}
                             <a href="{{ path('singz_social_bundle_follow', {'leaderId':user.id}) }}" class="btn btn-default">

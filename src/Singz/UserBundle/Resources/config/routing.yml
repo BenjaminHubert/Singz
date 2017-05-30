@@ -4,3 +4,11 @@ singz_user_bundle_homepage:
         _controller: SingzUserBundle:Default:index
     requirements:
         id: \d+
+
+singz_user_enabled:
+    path:     /{id}/change-status/{state}
+    defaults:
+        _controller: SingzUserBundle:User:enabled
+    requirements:
+        id: \d+
+        state: enabled|disabled
