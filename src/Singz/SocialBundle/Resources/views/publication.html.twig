@@ -32,7 +32,10 @@
         							    <small> {% if 'ROLE_STARZ' in publication.user.roles %} &#9733; Starz {% endif %}</small>
         							 </p>
                                 </div>
-							    <p><i class="fa fa-fw fa-heart" aria-hidden="true"></i> {{ publication.numLoves }}</p>
+							    <p>
+									<i class="fa fa-fw fa-heart" aria-hidden="true"></i><span class="nbloves-{{ publication.id }}"> {{ publication.numLoves }} </span>
+									<i class="fa fa-fw fa-comments" aria-hidden="true"></i><span class="nbcomments-{{ publication.id }}"> {{ publication.thread.visibleComments|length }} </span>
+								</p>
                      	   	</div>
                         </div>
                         
