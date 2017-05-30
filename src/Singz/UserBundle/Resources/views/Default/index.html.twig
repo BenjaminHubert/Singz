@@ -24,19 +24,23 @@
     </style>
 {% endblock %}
 {% block body %}
+	{# Profile information #}
     <div class="row">
         <div class="col-xs-12 col-md-6 col-md-offset-3">
             <div class="media user-profile">
+            	{# Image #}
                 <a class="pull-left" href="{{ path('singz_user_bundle_homepage', {'id':user.id}) }}">
                     <img class="media-object dp img-circle" src="{{ asset(user.image.realPath) }}" style="width: 100px;height:100px;">
                 </a>
                 <div class="media-body">
+                	{# Username #}
                     <h4 class="media-heading">
                         <a href="{{ path('singz_user_bundle_homepage', {'id':user.id}) }}">
                             {{ user.username }}
                         </a>
                         <small> {% if 'ROLE_STARZ' in user.roles %} &#9733; Starz {% endif %}</small>
                     </h4>
+                    {# Biographie #}
                     <h5>
                     	{% if user.biography is not empty %}
                     		{{ user.biography }}
@@ -44,6 +48,7 @@
                     		Aucune biographie
                     	{% endif %}
                     </h5>
+                    {# S'abonner #}
                     <div>
                     	{% if user == app.user %}
                             <a href={{ path('fos_user_profile_show') }} class="btn btn-success">
@@ -61,26 +66,34 @@
                                 {% for currentUserFollower in app.user.followers %}
                                 	{% if currentUserFollower.leader == user %}
                                 		{% set i_follow = true %}
-                                	{% endif %}
+                                    {% endif %}
                                 {% endfor %}
                                 {% if i_follow == true %}
-                            		Se désabonner
-                            	{% else %}
-                            		S'abonner
-                            	{% endif %}
-                            </a>
+                                    Se désabonner
+                                {% else %}
+                                    S'abonner
+                                {% endif %}
+                                </a>
                         {% endif %}
                     </div>
+                    {# Followers #}
                     <hr style="margin:8px auto">
     				<div>
-                        <span class="label label-default">{{ publications|length }} Publication{{ publications|length!=1?'s' }}</span>
-                        <span class="label label-default">{{ followers|length }} Abonnement{{ followers|length!=1?'s' }}</span>
-                        <span class="label label-default">{{ leaders|length }} Abonné{{ leaders|length!=1?'s' }}</span>
+                        <button class="btn btn-default btn-xs">
+                            {{ publications|length }} Publication{{ publications|length!=1?'s' }}
+                        </button>
+                        <button class="btn btn-default btn-xs" data-tab="followers" data-toggle="modal" data-target="#followersModal">
+                            {{ followers|length }} Abonnement{{ followers|length!=1?'s' }}
+                        </button>
+                        <button class="btn btn-default btn-xs" data-tab="leaders" data-toggle="modal" data-target="#followersModal">
+                            {{ leaders|length }} Abonné{{ leaders|length!=1?'s' }}
+                        </button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    {# Publications #}
     <div class="row">
         <div class="col-md-12">
         	{% if user.isPrivate != true %}
@@ -96,4 +109,70 @@
             {% endif %}
         </div>
     </div>
+    {# Modal of followers/leaders #}
+    <div class="modal fade in" id="followersModal" tabindex="-1" role="dialog" aria-labelledby="followersLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    	<span aria-hidden="true">&times;</span>
+                    </button>
+                    
+                    {% if app.user == user or user.isPrivate == false  or (app.user and i_follow) %}
+                    	<div>
+                            {# Nav tabs #}
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li role="presentation">
+                                	<a href="#followers" aria-controls="followers" role="tab" data-toggle="tab">
+                                		Abonnements <span class="badge">{{ followers|length }}</span>
+                                	</a>
+                            	</li>
+                                <li role="presentation">
+                                    <a href="#leaders" aria-controls="leaders" role="tab" data-toggle="tab">
+                                    	Abonnés <span class="badge">{{ leaders|length }}</span>
+                                    </a>
+                                </li>
+                            </ul>
+                            {# Tab panes #}
+                            <div class="tab-content" style="padding:10px">
+                                <div role="tabpanel" class="tab-pane" id="leaders">
+        							<ul class="list-group">
+            							{% for user in leaders %}
+                                        	<a href="{{ path('singz_user_bundle_homepage', {'id': user.follower.id}) }}" class="list-group-item">
+        										<img style="width:50px;height:50px" src="{{ asset(user.follower.image.realPath) }}" alt="Error loading" class="img-circle">
+            									{{ user.follower.username }}
+            								</a>
+                                        {% endfor %}
+                                    </ul>
+        						</div>
+                                <div role="tabpanel" class="tab-pane" id="followers">
+        							<ul class="list-group">
+            							{% for user in followers %}
+                                        	<a href="{{ path('singz_user_bundle_homepage', {'id': user.leader.id}) }}" class="list-group-item">
+        										<img style="width:50px;height:50px" src="{{ asset(user.leader.image.realPath) }}" alt="Error loading" class="img-circle">
+            									{{ user.leader.username }}
+            								</a>
+                                        {% endfor %}
+                                    </ul>
+        						</div>
+                            </div>
+                        </div>
+                    {% else %}
+                    	Ce profil est privé
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block end_javascripts %}
+	<script>
+    	$(function(){
+    		$('button[data-target="#followersModal"]').click(function(){
+        		var tab = $(this).attr('data-tab');
+    			$('.nav-tabs a[href="#'+tab+'"]').tab('show');
+    		});
+    	});
+	</script>
 {% endblock %}
