@@ -114,7 +114,7 @@
                     	<span aria-hidden="true">&times;</span>
                     </button>
                     
-                    {% if user.isPrivate == false  or (app.user and i_follow)%}
+                    {% if app.user == user or user.isPrivate == false  or (app.user and i_follow) %}
                     	<div>
                             {# Nav tabs #}
                             <ul class="nav nav-tabs" role="tablist">
