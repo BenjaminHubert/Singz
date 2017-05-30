@@ -50,30 +50,32 @@
                     </h5>
                     {# S'abonner #}
                     <div>
-                    	{% if user == app.user %}
-                            <a href={{ path('fos_user_profile_show') }} class="btn btn-success">
-                                Voir mon profil
-                            </a>
-                            <a href={{ path('fos_user_profile_edit') }} class="btn btn-primary">
-                            	Modifier mon profil
-                            </a>
-                            <a href="{{ path('singz_user_enabled', {'id':user.id, 'state':'disabled'}) }}" class="btn btn-danger">
-                                Supprimer mon profil
-                            </a>
-                        {% else %}
-                            <a href="{{ path('singz_social_bundle_follow', {'leaderId':user.id}) }}" class="btn btn-default">
-                                {% set i_follow = false %}
-                                {% for currentUserFollower in app.user.followers %}
-                                	{% if currentUserFollower.leader == user %}
-                                		{% set i_follow = true %}
-                                    {% endif %}
-                                {% endfor %}
-                                {% if i_follow == true %}
-                                    Se désabonner
-                                {% else %}
-                                    S'abonner
-                                {% endif %}
+                    	{% if app.user %}
+                    		{% set i_follow = false %}
+                        	{% if user == app.user %}
+                                <a href={{ path('fos_user_profile_show') }} class="btn btn-success">
+                                    Voir mon profil
                                 </a>
+                                <a href={{ path('fos_user_profile_edit') }} class="btn btn-primary">
+                                	Modifier mon profil
+                                </a>
+                                <a href="{{ path('singz_user_enabled', {'id':user.id, 'state':'disabled'}) }}" class="btn btn-danger">
+                                    Supprimer mon profil
+                                </a>
+                            {% else %}
+                                <a href="{{ path('singz_social_bundle_follow', {'leaderId':user.id}) }}" class="btn btn-default">
+                                    {% for currentUserFollower in app.user.followers %}
+                                    	{% if currentUserFollower.leader == user %}
+                                    		{% set i_follow = true %}
+                                        {% endif %}
+                                    {% endfor %}
+                                    {% if i_follow == true %}
+                                        Se désabonner
+                                    {% else %}
+                                        S'abonner
+                                    {% endif %}
+                                    </a>
+                            {% endif %}
                         {% endif %}
                     </div>
                     {# Followers #}
