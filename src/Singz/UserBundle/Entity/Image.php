@@ -24,9 +24,9 @@ class Image
     /**
      * @var string
      *
-     * @ORM\Column(name="path", type="string", length=255, unique=true)
+     * @ORM\Column(name="path", type="string", length=255, nullable=true)
      */
-    private $path;
+    private $path = null;
 
 
     /**
@@ -46,7 +46,7 @@ class Image
      *
      * @return Image
      */
-    public function setPath($path)
+    public function setPath($path = null)
     {
         $this->path = $path;
 
@@ -64,6 +64,9 @@ class Image
     }
     
     public function getRealPath(){
+    	if($this->path == null){
+    		return 'bundles/singzuser/img/anonymous_icon.jpg';
+    	}
     	return 'uploads/userImage/'.$this->path;
     }
 }

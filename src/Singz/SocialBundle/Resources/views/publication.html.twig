@@ -20,7 +20,7 @@
 						<div class="media">
                             <div class="media-left">
                             	<a href="{{ path('singz_user_bundle_homepage', {'id': publication.user.id}) }}">	
-                            		<img class="media-object img-circle" style="width:42px;height:42px"  src="{% if publication.user.image is null %}{{ asset('bundles/singzcore/img/anonymous_icon.jpg') }}{% else %}{{ asset(publication.user.image.realPath) }}{% endif %}" alt="{{ publication.user.username }}">
+                            		<img class="media-object img-circle" style="width:42px;height:42px"  src="{{ asset(publication.user.image.realPath) }}" alt="{{ publication.user.username }}">
                             	</a>
                             </div>
                             <div class="media-body">

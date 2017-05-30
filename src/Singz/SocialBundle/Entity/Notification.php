@@ -34,6 +34,13 @@ class Notification
     private $isRead = 0;
 
     /**
+     * @var bool
+     *
+     * @ORM\Column(name="is_seen", type="boolean")
+     */
+    private $isSeen = 0;
+
+    /**
      * @var \DateTime
      *
      * @ORM\Column(name="date", type="datetime")
@@ -228,5 +235,29 @@ class Notification
     public function getUserTo()
     {
         return $this->userTo;
+    }
+
+    /**
+     * Set isSeen
+     *
+     * @param boolean $isSeen
+     *
+     * @return Notification
+     */
+    public function setIsSeen($isSeen)
+    {
+        $this->isSeen = $isSeen;
+
+        return $this;
+    }
+
+    /**
+     * Get isSeen
+     *
+     * @return boolean
+     */
+    public function getIsSeen()
+    {
+        return $this->isSeen;
     }
 }
