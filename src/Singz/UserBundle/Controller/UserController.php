@@ -19,7 +19,6 @@ class UserController extends Controller
             $user->setEnabled(false);
         }
         $em->flush();
-        //$this->redirectToRoute('fos_user_security_logout');
-        return $this->redirectToRoute('singz_index');
+        return $this->redirectToRoute('fos_user_security_logout');
     }
 }
