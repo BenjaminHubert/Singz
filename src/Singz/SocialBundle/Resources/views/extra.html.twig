@@ -63,6 +63,10 @@
             Je love !
         {% endif %}
     </button>
+
+    <button onclick="resingz('{{ path('singz_social_bundle_publication_resingz', {'id': publication.id}) }}');" class="btn btn-default">
+        <i class="fa fa-retweet" aria-hidden="true"></i> Resingzer
+    </button>
 {% else %}
 	<a href="{{ path('fos_user_security_login') }}">Se connecter</a>
 {% endif %}
@@ -89,3 +93,4 @@
 </script>
 <script src="{{ asset('bundles/singzsocial/js/script.js') }}"></script>
 <script src="{{ asset('bundles/singzcore/js/comment.js') }}"></script>
+<script src="{{ asset('bundles/singzsocial/js/resingz.js') }}"></script>
