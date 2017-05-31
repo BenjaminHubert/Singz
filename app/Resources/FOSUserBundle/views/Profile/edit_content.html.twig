@@ -2,31 +2,43 @@
 
 {{ form_start(form, { 'action': path('fos_user_profile_edit'), 'attr': { 'class': 'fos_user_profile_edit' } }) }}
 	{# username #}
-    <div class="row">
-    	<div class="col-md-12">
-            {{ form_errors(form.username) }}
-        </div>
-    	<div class="col-md-4">
+	<div>
+        {{ form_errors(form.username) }}
+		<div class="form-group">
             {{ form_label(form.username) }}
-        </div>
-    	<div class="col-md-8">
-            {{ form_widget(form.username) }}
+            {{ form_widget(form.username, {
+                'attr': {
+                    'class': 'form-control'
+                }
+            }) }}
         </div>
     </div>
 	{# email #}
-    <div>
-        {{ form_label(form.email) }}
+	<div>
         {{ form_errors(form.email) }}
-        {{ form_widget(form.email) }}
+		<div class="form-group">
+            {{ form_label(form.email) }}
+            {{ form_widget(form.email, {
+                'attr': {
+                    'class': 'form-control'
+                }
+            }) }}
+        </div>
     </div>
 	{# current_password #}
-    <div>
-        {{ form_label(form.current_password) }}
+	<div>
         {{ form_errors(form.current_password) }}
-        {{ form_widget(form.current_password) }}
+		<div class="form-group">
+            {{ form_label(form.current_password) }}
+            {{ form_widget(form.current_password, {
+                'attr': {
+                    'class': 'form-control'
+                }
+            }) }}
+        </div>
     </div>
     {# submit #}
     <div>
-        <input type="submit" value="{{ 'profile.edit.submit'|trans }}" />
+        <input type="submit" value="{{ 'profile.edit.submit'|trans }}" class="btn btn-default" >
     </div>
 {{ form_end(form) }}
