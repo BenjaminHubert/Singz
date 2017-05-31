@@ -132,7 +132,19 @@
     {# Publications #}
     <div class="row">
         <div class="col-md-12">
-        	{% if user.isPrivate != true or user == app.user %}
+        	{# Check if is pending #}
+        	{% set isPending = true %}
+        	{% set requested = false %}
+        	{% for leader in user.leaders %}
+        		{% if leader.leader == user %}
+        			{% set requested = true %}
+        			{% if leader.isPending == false %}
+        	            {% set isPending = false %}
+        		    {% endif %}
+        		{% endif %}
+        	{% endfor %}
+        	{# Publications #}
+        	{% if user.isPrivate == false or (user.isPrivate == true and isPending == false) or user == app.user %}
                 {% if publications is not empty %}
                     {% include 'SingzSocialBundle::publications.html.twig' with {
                         'publications': publications
@@ -146,7 +158,11 @@
             {% else %}
                 <div class="is-private">
                 	<p><i class="fa fa-lock" aria-hidden="true"></i></p>
-                	<p>Ce profil est privé</p>
+                	{% if user.isPrivate == true and isPending == true and requested == true %}
+                		<p>Demande en attente</p>
+                	{% else %}
+                		<p>Ce profil est privé</p>
+                	{% endif %}
                 </div>
             {% endif %}
         </div>
