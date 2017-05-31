@@ -30,6 +30,15 @@ class PublicationRepository extends \Doctrine\ORM\EntityRepository
             ->getQuery()
             ->getOneOrNullResult();
     }
+    public function getPublicationByHashtag($tag) {
+        return $this->createQueryBuilder('p')
+        ->innerJoin('p.user', 'u')->addSelect('u')
+        ->leftJoin('p.loves', 'l')->addSelect('l')
+        ->leftJoin('p.thread', 't')->addSelect('t')
+        ->where('p.description LIKE :tag')->setParameter('tag', "%#".$tag."%")
+        ->getQuery()
+        ->getResult();
+    }
     public function getBrowseAll($offset, $limit, $interval, $user) {
         return $this->createQueryBuilder('p')
             ->innerJoin('p.user', 'u')->addSelect('u')

@@ -68,4 +68,13 @@ class CoreController extends Controller
     		'notificationsUnseen' => $notificationsUnseen
     	));
     }
+
+    public function hashtagAction($tag) {
+        $em = $this->getDoctrine()->getManager();
+        $publications = $em->getRepository('SingzSocialBundle:Publication')->getPublicationByHashtag($tag);
+        return $this->render('SingzCoreBundle:Core:hashtag.html.twig', array(
+            "publications" => $publications,
+            "hashtag" => $tag
+        ));
+    }
 }

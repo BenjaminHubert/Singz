@@ -23,3 +23,8 @@ singz_feed:
     path: /feed/
     defaults:
         _controller: SingzCoreBundle:Core:feed
+
+singz_hashtag:
+    path: /hashtag/{tag}/
+    defaults:
+        _controller: SingzCoreBundle:Core:hashtag
