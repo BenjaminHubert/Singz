@@ -3,6 +3,7 @@
 namespace Singz\SocialBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Singz\UserBundle\Entity\User;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -87,6 +88,21 @@ class Publication
      * @ORM\OneToOne(targetEntity="Singz\SocialBundle\Entity\Thread", mappedBy="publication")
      */
     private $thread;
+
+    /**
+     * @var User
+     *
+     * @ORM\ManyToOne(targetEntity="Singz\UserBundle\Entity\User", inversedBy="publications")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $owner;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="is_resingz", type="boolean", nullable=false)
+     */
+    private $isResingz = false;
     
     /**
      * Constructor
@@ -353,5 +369,53 @@ class Publication
     public function getThread()
     {
         return $this->thread;
+    }
+
+    /**
+     * Set owner
+     *
+     * @param \Singz\UserBundle\Entity\User $user
+     *
+     * @return Publication
+     */
+    public function setOwner(\Singz\UserBundle\Entity\User $owner)
+    {
+        $this->owner = $owner;
+
+        return $this;
+    }
+
+    /**
+     * Get owner
+     *
+     * @return \Singz\UserBundle\Entity\User
+     */
+    public function getOwner()
+    {
+        return $this->owner;
+    }
+
+    /**
+     * Set isResingz
+     *
+     * @param boolean $isResingz
+     *
+     * @return Publication
+     */
+    public function setIsResingz($isResingz)
+    {
+        $this->isResingz = $isResingz;
+
+        return $this;
+    }
+
+    /**
+     * Get isResingz
+     *
+     * @return boolean
+     */
+    public function getIsResingz()
+    {
+        return $this->isResingz;
     }
 }

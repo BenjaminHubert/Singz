@@ -38,8 +38,8 @@ class PublicationController extends Controller
     		
     		// on vérifie la validation du formulaire
     		if($form->isValid()){
-    			//on définit alors l'user comme le current user
-    			$publication->setUser($this->getUser());
+    			//on définit alors l'user et l'owner comme le current user
+    			$publication->setOwner($this->getUser());
     			//on insère en base de données
     			$em = $this->getDoctrine()->getManager();
     			$em->persist($publication);
@@ -321,6 +321,42 @@ class PublicationController extends Controller
     	$em->flush();
     	 
     	return new Response();
+    }
+
+    /**
+     * @Security("has_role('ROLE_USER')")
+     */
+    public function resingzAction(Request $request, $id){
+
+        /*
+        // Check if AJAX request
+        if(!$request->isXmlHttpRequest()) {
+            return new Response('Must be an XML HTTP request', Response::HTTP_BAD_REQUEST);
+        }
+        */
+
+        // Get publication
+        $em = $this->getDoctrine()->getManager();
+        $publication = $em->getRepository('SingzSocialBundle:Publication')->getPublicationById($id);
+        if($publication == null) {
+            throw $this->createNotFoundException('Publication inexistante');
+        }
+        // Check if the owner is private
+        $owner = $publication->getOwner();
+        if($owner->getIsPrivate() === true){
+            throw new AccessDeniedHttpException("Vous n'êtes pas autorisé à resingzer cette publication");
+        }
+
+        $newpub = new Publication();
+        $newpub->setOwner($publication->getOwner());
+        $newpub->setVideo($publication->getVideo());
+        $newpub->setDescription($publication->getDescription());
+        $newpub->setIsResingz(true);
+
+        $em->persist($newpub);
+        $em->flush();
+
+        return new Response(null, Response::HTTP_OK);
     }
     
     

@@ -87,7 +87,7 @@ class User extends BaseUser
      * @var boolean
      * @ORM\Column(name="is_private", type="boolean", nullable=false)
      */
-    private $isPrivate = 0;
+    private $isPrivate = false;
     
     
     public static function getAllRoles() {

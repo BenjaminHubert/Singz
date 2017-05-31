@@ -6,9 +6,16 @@ use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Singz\SocialBundle\Entity\Publication;
 use Singz\SocialBundle\Entity\Thread;
+use Singz\SocialBundle\Repository\PublicationRepository;
 
 class PublicationSubscriber implements EventSubscriber
-{	
+{
+    private $context;
+
+    public function __construct($context) {
+        $this->context = $context;
+    }
+
 	public function preUpdate(LifecycleEventArgs $args){
 		$publication = $args->getEntity();
 		// only act on some "Publication" entity
@@ -35,6 +42,18 @@ class PublicationSubscriber implements EventSubscriber
 		$publication->getThread()->setCommentable(false);
 // 		$em->persist($thread);
 	}
+
+    public function prePersist(LifecycleEventArgs $args){
+        $publication = $args->getEntity();
+        // only act on some "Publication" entity
+        if (!$publication instanceof Publication) {
+            return;
+        }
+        // Entity Manager
+        if($publication->getUser() == null){
+            $publication->setUser($this->context->getToken()->getUser());
+        }
+    }
 	
 	public function postPersist(LifecycleEventArgs $args){
 		$publication = $args->getEntity();
@@ -61,6 +80,7 @@ class PublicationSubscriber implements EventSubscriber
 		return array(
 			'preUpdate',
 			'preRemove',
+            'prePersist',
 			'postPersist',
 		);
 	}
