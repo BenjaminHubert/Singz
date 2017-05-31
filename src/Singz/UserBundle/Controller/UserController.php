@@ -6,10 +6,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class UserController extends Controller
 {
-    public function enabledAction($id, $state)
+    public function enabledAction($username, $state)
     {
         $em = $this->getDoctrine()->getManager();
-        $user = $em->getRepository('SingzUserBundle:User')->find($id);
+        $userManager = $this->get('fos_user.user_manager');
+        $user = $userManager->findUserBy(array('username' => $username));
         if($user == null) {
             throw $this->createNotFoundException('Utilisateur inexistant');
         }
