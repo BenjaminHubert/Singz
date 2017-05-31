@@ -80,6 +80,9 @@ fos_user:
     registration:
         confirmation:
             enabled:    true
+    profile:
+        form:
+            type: Singz\UserBundle\Form\EditMyProfileType
     from_email:
         address:        noreply@singz.fr
         sender_name:    "%appname%"            

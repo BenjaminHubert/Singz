@@ -1,5 +1,4 @@
 {% trans_default_domain 'FOSUserBundle' %}
-
 {{ form_start(form, { 'action': path('fos_user_profile_edit'), 'attr': { 'class': 'fos_user_profile_edit' } }) }}
 	{# username #}
 	<div>
@@ -35,6 +34,14 @@
                     'class': 'form-control'
                 }
             }) }}
+        </div>
+    </div>
+	{# isPrivate #}
+	<div>
+        {{ form_errors(form.isPrivate) }}
+		<div class="form-group">
+            {{ form_widget(form.isPrivate) }}
+            {{ form_label(form.isPrivate) }}
         </div>
     </div>
     {# submit #}

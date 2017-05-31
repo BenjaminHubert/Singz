@@ -17,3 +17,8 @@ services:
        class: Twig_Extensions_Extension_Date
        tags:
             - { name: twig.extension }
+            
+    singz.form.profile:
+        class: Singz\UserBundle\Form\EditMyProfileType
+        tags:
+            - { name: form.type, alias: singz_user_profile }
