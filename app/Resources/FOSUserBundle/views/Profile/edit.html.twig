@@ -1,5 +1,21 @@
 {% extends "FOSUserBundle::layout.html.twig" %}
 
 {% block fos_user_content %}
-{% include "FOSUserBundle:Profile:edit_content.html.twig" %}
+    <div class="row ">
+        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 well">
+            <a href="{{ path('singz_user_bundle_homepage', {'id': app.user.id}) }}">
+          		<img class="media-object img-responsive" src="{{ asset(app.user.image.realPath) }}" alt="{{ app.user.username }}">
+          		<br>
+          		<h4 class="media-heading"><i class="fa fa-microphone fa-fw" aria-hidden="true"></i> {{ app.user.username }}</h4>
+            </a>
+      		<p><i class="fa fa-envelope-o fa-fw" aria-hidden="true"></i> {{ app.user.email }}</p>
+      		<p class="">{{ app.user.biography }}</p>
+        </div>
+        <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
+        	<h3 style="text-align:right">Modifier mes informations</h3>
+        	<br>
+            {# Form #}
+            {% include "FOSUserBundle:Profile:edit_content.html.twig" %}
+        </div>
+    </div>
 {% endblock fos_user_content %}
