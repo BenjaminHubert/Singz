@@ -23,6 +23,8 @@
             <link href="{{ asset('bundles/singzcore/lightbox/css/sz_video_003.css') }}" rel="stylesheet">
             {# Navigation style #}
             <link href="{{ asset('bundles/singzcore/css/mega-site-navigation.css') }}" rel="stylesheet">
+			{# Toasts #}
+			<link href="{{ asset('bundles/singzcore/toastr-2.1.3/css/toastr.min.css') }}" rel="stylesheet">
             {# Others #}
             <link href="{{ asset('bundles/singzcore/css/style.css') }}" rel="stylesheet">
         {# Custom style one shot #}
@@ -64,7 +66,10 @@
     	<script src="{{ asset('bundles/singzcore/lightbox/js/jquery.touchSwipe.js') }}"></script>
     	{# Responsive Bootstrap Portfolio And Lightbox Main JS File #}
     	<script src="{{ asset('bundles/singzcore/lightbox/js/sz_portfolio_lightbox.js') }}"></script>
-    	<script>
+		{# Toasts #}
+		<script src="{{ asset('bundles/singzcore/toastr-2.1.3/js/toastr.min.js') }}"></script>
+
+		<script>
     		$(function () {
 				$('[data-toggle="tooltip"]').tooltip();
 				$('[data-toggle="popover"]').popover();

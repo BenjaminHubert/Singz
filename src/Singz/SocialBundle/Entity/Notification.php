@@ -16,6 +16,7 @@ class Notification
 	const NEW_COMMENT = '<b>%s</b> a commenté votre publication.';
 	const REPLY_COMMENT = '<b>%s</b> a répondu à votre commentaire.';
 	const NEW_FOLLOWER = '<b>%s</b> vous suit.';
+    const NEW_RESINGZ = '<b>%s</b> a resingzé notre publication';
 	
     /**
      * @var int
