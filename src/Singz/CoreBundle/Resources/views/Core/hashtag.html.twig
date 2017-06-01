@@ -1,11 +1,11 @@
 {% extends "SingzCoreBundle::layout.html.twig" %}
 
 {% block title %}
-    Hashtag #{{ hashtag }} sur Singz
+    Hashtagz #{{ hashtag|capitalize }} sur Singz
 {% endblock %}
 
 {% block body %}
-    <p>#{{ hashtag }}</p>
+    <h1>#{{ hashtag|capitalize }}</h1>
     {% if publications %}
         {% include 'SingzSocialBundle::publications.html.twig' with {
         'publications': publications

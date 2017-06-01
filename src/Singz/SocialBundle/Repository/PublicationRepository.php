@@ -31,14 +31,34 @@ class PublicationRepository extends \Doctrine\ORM\EntityRepository
             ->getQuery()
             ->getOneOrNullResult();
     }
-    public function getPublicationByHashtag($tag) {
+    public function getPublicationByHashtag($user, $tag) {
         return $this->createQueryBuilder('p')
-        ->innerJoin('p.user', 'u')->addSelect('u')
-        ->leftJoin('p.loves', 'l')->addSelect('l')
-        ->leftJoin('p.thread', 't')->addSelect('t')
-        ->where('p.description LIKE :tag')->setParameter('tag', "%#".$tag."%")
-        ->getQuery()
-        ->getResult();
+            ->leftJoin('p.user', 'u')->addSelect('u')
+            ->leftJoin('u.followers', 'f')->addSelect('f')
+            //La decription contient le hashtag
+            //ET
+            //  SOIT être publique
+            //  SOIT être privée ET user en cours follow le posteur ET invitation acceptée
+            ->where('
+                p.description LIKE :tag 
+                AND (
+                    u.isPrivate = :private1 
+                    OR (
+                        u.isPrivate = :private2 
+                        AND f.follower = :user 
+                        AND f.isPending = :pending
+                    )
+                )
+            ')
+            ->setParameter('tag', "%#".$tag."%")
+            ->setParameter('user', $user)
+            ->setParameter('private1', false)
+            ->setParameter('private2', true)
+            ->setParameter('pending', false)
+            ->orderBy('p.date', 'DESC')
+            ->groupBy('p.id')
+            ->getQuery()
+            ->getResult();
     }
     public function getBrowseAll($offset, $limit, $interval, $user) {
         return $this->createQueryBuilder('p')

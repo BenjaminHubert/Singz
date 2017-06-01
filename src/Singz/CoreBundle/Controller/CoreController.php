@@ -69,12 +69,20 @@ class CoreController extends Controller
     	));
     }
 
-    public function hashtagAction($tag) {
+    public function hashtagzAction(Request $request) {
+        $user = $this->getUser();
+        $hashtag = $request->get('k');
+        if($hashtag == null) {
+            throw $this->createNotFoundException();
+        }
+
         $em = $this->getDoctrine()->getManager();
-        $publications = $em->getRepository('SingzSocialBundle:Publication')->getPublicationByHashtag($tag);
+        $publications = $em->getRepository('SingzSocialBundle:Publication')->getPublicationByHashtag($user, $hashtag);
+        dump($publications);
+        dump($user);
         return $this->render('SingzCoreBundle:Core:hashtag.html.twig', array(
             "publications" => $publications,
-            "hashtag" => $tag
+            "hashtag" => $hashtag
         ));
     }
 }
