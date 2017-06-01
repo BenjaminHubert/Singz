@@ -43,7 +43,7 @@
         {# Number of love & comments #}
         <p>
             <i class="fa fa-fw fa-heart" aria-hidden="true"></i> <span id="nbloves-{{ publication.id }}">{{ publication.numLoves }}</span>
-            <i class="fa fa-fw fa-comments" aria-hidden="true"></i> <span class="nbcomments-{{ publication.id }}" id="nbcomments-{{ publication.id }}">{{ publication.thread.visibleComments|length }}</span>
+            <i class="fa fa-fw fa-comments" aria-hidden="true"></i> <span class="nbcomments-{{ publication.id }}" id="nbcomments-{{ publication.id }}">{{ publication.thread.numComments }}</span>
             <span {% if resingz|length == 0 %} style="display: none" {% endif %}>
                 <i class="fa fa-fw fa-retweet" aria-hidden="true"></i> <span class="nbresingz-{{ publication.id }}" id="nbresingz-{{ publication.id }}">{{ resingz|length }}</span>
             </span>

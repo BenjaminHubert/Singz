@@ -12,7 +12,7 @@ class CommentSubscriber implements EventSubscriber
     public function postPersist(LifecycleEventArgs $args)
     {
     	$comment = $args->getEntity();
-    	// only act on some "Publication" entity
+    	// only act on some "Comment" entity
     	if (!$comment instanceof Comment) {
     		return;
     	}
@@ -57,10 +57,45 @@ class CommentSubscriber implements EventSubscriber
     	$em->persist($thread);
     	$em->flush($thread);
     }
+    
+    public function postUpdate(LifecycleEventArgs $args){
+    	$comment = $args->getEntity();
+    	// only act on some "Comment" entity
+    	if (!$comment instanceof Comment) {
+    		return;
+    	}
+    	// get the entity manager
+    	$em = $args->getEntityManager();
+    	// Update the comment.thread.numComments
+    	$thread = $comment->getThread();
+    	$toIncrease = array(
+    		Comment::STATE_VISIBLE,
+    	);
+    	$toDecrease = array(
+    		Comment::STATE_DELETED,
+    		Comment::STATE_SPAM,
+    		Comment::STATE_PENDING,
+    	);
+    	if(in_array($comment->getState(), $toIncrease)){
+    		$thread->increaseNumComments();
+    		foreach($comment->getChildren() as $child){
+    			$thread->increaseNumComments();
+    		}
+    	}
+    	if(in_array($comment->getState(), $toDecrease)){
+    		$thread->decreaseNumComments();
+    		foreach($comment->getChildren() as $child){
+    			$thread->decreaseNumComments();
+    		}
+    	}
+    	$em->persist($thread);
+    	$em->flush();
+    }
 	
 	public function getSubscribedEvents() {
 		return array(
 			'postPersist',
+			'postUpdate',
 		);
 	}
 
