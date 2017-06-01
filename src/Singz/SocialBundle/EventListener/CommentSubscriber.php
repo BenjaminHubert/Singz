@@ -51,7 +51,7 @@ class CommentSubscriber implements EventSubscriber
     	### UPDATE THREAD DATA ###
     	$thread = $comment->getThread();
     	//update $numComments
-    	$thread->setNumComments($thread->getNumComments()+ 1);
+    	$thread->increaseNumComments();
     	//update $lastCommentAt
     	$thread->setLastCommentAt(new \DateTime());
     	$em->persist($thread);
