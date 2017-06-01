@@ -1,6 +1,7 @@
 services:
     singz.social.publication:
         class: Singz\SocialBundle\EventListener\PublicationSubscriber
+        arguments: ["@security.token_storage"]
         tags:
             - { name: doctrine.event_subscriber, connection: default }
     singz.social.love:

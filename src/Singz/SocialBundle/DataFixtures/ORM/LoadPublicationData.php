@@ -19,7 +19,9 @@ class LoadPublicationData  extends AbstractFixture implements OrderedFixtureInte
 			$publication->setDescription($faker->text);
 			$publication->setDate($faker->dateTimeBetween('-30 days', 'now'));
 			$publication->setVideo($this->getReference('video '.rand(0, $this->nb-1)));
-			$publication->setUser($this->getReference('user '.rand(0, $this->nb-1)));
+            $user = $this->getReference('user '.rand(0, $this->nb-1));
+            $publication->setUser($user);
+            $publication->setOwner($user);
 			$manager->persist($publication);
 			//keep the object
 			$this->addReference('publication '.$i, $publication);

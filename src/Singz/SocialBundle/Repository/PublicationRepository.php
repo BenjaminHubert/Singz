@@ -24,6 +24,7 @@ class PublicationRepository extends \Doctrine\ORM\EntityRepository
     public function getPublicationById($id) {
         return $this->createQueryBuilder('p')
             ->innerJoin('p.user', 'u')->addSelect('u')
+            ->innerJoin('p.owner', 'o')->addSelect('o')
             ->leftJoin('p.loves', 'l')->addSelect('l')
             ->leftJoin('p.thread', 't')->addSelect('t')
             ->where('p.id = :id')->setParameter('id', $id)
@@ -76,6 +77,14 @@ class PublicationRepository extends \Doctrine\ORM\EntityRepository
             ->addOrderBy('p.date', 'DESC')
             //->setFirstResult($offset)
             //->setMaxResults($limit)
+            ->getQuery()
+            ->getResult();
+    }
+    public function getResingz($video) {
+        return $this->createQueryBuilder('p')
+            ->where('p.video = :video AND p.isResingz = :resingz')
+            ->setParameter('video', $video)
+            ->setParameter('resingz', true)
             ->getQuery()
             ->getResult();
     }
