@@ -1,5 +1,7 @@
 <?php
 namespace Singz\SocialBundle\Repository;
+use Singz\SocialBundle\Entity\Publication;
+
 /**
  * PublicationRepository
  *
@@ -17,6 +19,7 @@ class PublicationRepository extends \Doctrine\ORM\EntityRepository
             ->setParameter('follower', $user)
             ->setParameter('user', $user)
             ->setParameter('pending', false)
+            ->andWhere('p.state = :state')->setParameter('state', Publication::STATE_VISIBLE)
             ->orderBy('p.date', 'DESC')
             ->getQuery()
             ->getResult();
@@ -28,6 +31,7 @@ class PublicationRepository extends \Doctrine\ORM\EntityRepository
             ->leftJoin('p.loves', 'l')->addSelect('l')
             ->leftJoin('p.thread', 't')->addSelect('t')
             ->where('p.id = :id')->setParameter('id', $id)
+            ->andWhere('p.state = :state')->setParameter('state', Publication::STATE_VISIBLE)
             ->getQuery()
             ->getOneOrNullResult();
     }
@@ -42,6 +46,7 @@ class PublicationRepository extends \Doctrine\ORM\EntityRepository
             ->setParameter('private', false)
             ->setParameter('follower', $user)
             ->setParameter('pending', false)
+            ->andWhere('p.state = :state')->setParameter('state', Publication::STATE_VISIBLE)
             ->orderBy('p.numLoves', 'DESC')
             ->addOrderBy('p.date', 'DESC')
             //->setFirstResult($offset)
@@ -55,6 +60,7 @@ class PublicationRepository extends \Doctrine\ORM\EntityRepository
             ->leftJoin('p.loves', 'l')->addSelect('l')
             //->where('p.date > :interval')->setParameter('interval', $interval)
             ->where('u.roles LIKE :starz')->setParameter('starz', '%STARZ%')
+            ->andWhere('p.state = :state')->setParameter('state', Publication::STATE_VISIBLE)
             ->orderBy('p.numLoves', 'DESC')
             ->addOrderBy('p.date', 'DESC')
             //->setFirstResult($offset)
@@ -73,6 +79,7 @@ class PublicationRepository extends \Doctrine\ORM\EntityRepository
             ->setParameter('private', false)
             ->setParameter('follower', $user)
             ->setParameter('pending', false)
+            ->andWhere('p.state = :state')->setParameter('state', Publication::STATE_VISIBLE)
             ->orderBy('p.numLoves', 'DESC')
             ->addOrderBy('p.date', 'DESC')
             //->setFirstResult($offset)

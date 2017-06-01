@@ -114,8 +114,8 @@ class PublicationController extends Controller
     	if(!$this->isGranted('ROLE_ADMIN') && $publication->getUser() != $this->getUser()){
     		throw new AccessDeniedHttpException("Vous n'êtes pas autorisé à supprimer cette publication");
     	}
-    	// suppression
-    	$em->remove($publication);
+    	// update
+    	$publication->setState(Publication::STATE_DELETED);
     	$em->flush();
     	//on affiche un message
     	$this->addFlash('success', 'Publication supprimée avec succès.');
