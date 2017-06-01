@@ -2,25 +2,35 @@
 <link href="{{ asset('bundles/singzcore/css/comments.css') }}" rel="stylesheet">
 
 {# Admin or publication owner actions #}
-{% if app.user and (app.user.id == publication.user.id or is_granted('ROLE_ADMIN'))  %}
+{% if app.user %}
 	<div class="dropdown pull-right">
-      	<button style="color: black" class="btn btn-link dropdown-toggle btn-xs" type="button" id="dropdownMenuPost" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-			Actions <i class="fa fa-caret-down fa-fw" aria-hidden="true"></i>
-		</button>
-    	<ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuPost">
-    		<li>
-           		{# Edit button #}
-                <a href="{{ path('singz_social_bundle_publication_edit', {'id': publication.id}) }}" class="">
-                	<i class="fa fa-pencil-square-o" aria-hidden="true"></i> Editer
-                </a>
-            </li>
-            <li>
-                {# Delete button #}
-                <a href="{{ path('singz_social_bundle_publication_delete', {'id': publication.id}) }}" class=" confirmation-alert">
-                	<i class="fa fa-trash-o" aria-hidden="true"></i> Supprimer
-                </a>
-            </li>
-		</ul>
+          	<button style="color: black" class="btn btn-link dropdown-toggle btn-xs" type="button" id="dropdownMenuPost" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+    			Actions <i class="fa fa-caret-down fa-fw" aria-hidden="true"></i>
+    		</button>
+        	<ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuPost">
+        		{% if app.user != publication.user or is_granted('ROLE_ADMIN')  %}
+               		{# Report button #}
+            		<li>
+                        <a href="{{ path('singz_social_bundle_report_publication', {'id': publication.id}) }}" class="report-comment">
+                        	<i class="fa fa-exclamation-circle fa-fw" aria-hidden="true"></i> Signaler
+                        </a>
+                    </li>
+                {% endif %}
+        		{% if app.user == publication.user or is_granted('ROLE_ADMIN')  %}
+               		{# Edit button #}
+            		<li>
+                        <a href="{{ path('singz_social_bundle_publication_edit', {'id': publication.id}) }}" class="">
+                        	<i class="fa fa-pencil-square-o" aria-hidden="true"></i> Editer
+                        </a>
+                    </li>
+                    {# Delete button #}
+                    <li>
+                        <a href="{{ path('singz_social_bundle_publication_delete', {'id': publication.id}) }}" class="confirmation-alert">
+                        	<i class="fa fa-trash-o" aria-hidden="true"></i> Supprimer
+                        </a>
+                    </li>
+                {% endif %}
+    		</ul>
 	</div>
 {% endif %}
 {# User and loves #}

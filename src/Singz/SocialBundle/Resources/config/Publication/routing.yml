@@ -66,3 +66,11 @@ singz_social_bundle_report_comment:
         _controller: SingzSocialBundle:Publication:reportComment
     requirements:
         idComment: \d+
+
+# ajax
+singz_social_bundle_report_publication:
+    path:     /{id}/report/
+    defaults:
+        _controller: SingzSocialBundle:Publication:report
+    requirements:
+        idComment: \d+

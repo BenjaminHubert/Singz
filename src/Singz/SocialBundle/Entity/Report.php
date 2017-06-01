@@ -33,9 +33,9 @@ class Report
      * @var Comment $comment
      * 
      * @ORM\ManyToOne(targetEntity="Singz\SocialBundle\Entity\Comment", inversedBy="reports")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true)
      */
-    private $comment;
+    private $comment = NULL;
     
     /**
      * 
@@ -44,6 +44,14 @@ class Report
      * @ORM\Column(type="datetime", name="created_at")
      */
     private $createdAt;
+    
+    /**
+     * @var Publication $publication
+     * 
+     * @ORM\ManyToOne(targetEntity="Singz\SocialBundle\Entity\Publication", inversedBy="reports")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $publication = NULL;
     
     /**
      * Get id
@@ -114,7 +122,7 @@ class Report
      *
      * @return Report
      */
-    public function setComment(\Singz\SocialBundle\Entity\Comment $comment)
+    public function setComment(\Singz\SocialBundle\Entity\Comment $comment = NULL)
     {
         $this->comment = $comment;
 
@@ -129,5 +137,29 @@ class Report
     public function getComment()
     {
         return $this->comment;
+    }
+
+    /**
+     * Set publication
+     *
+     * @param \Singz\SocialBundle\Entity\Publication $publication
+     *
+     * @return Report
+     */
+    public function setPublication(\Singz\SocialBundle\Entity\Publication $publication = null)
+    {
+        $this->publication = $publication;
+
+        return $this;
+    }
+
+    /**
+     * Get publication
+     *
+     * @return \Singz\SocialBundle\Entity\Publication
+     */
+    public function getPublication()
+    {
+        return $this->publication;
     }
 }

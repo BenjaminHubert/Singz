@@ -360,5 +360,30 @@ class PublicationController extends Controller
         return new Response(null, Response::HTTP_OK);
     }
     
+    /**
+     * @Security("has_role('ROLE_USER')")
+     */
+    public function reportAction(Request $request, $id){
+    	// Check if AJAX request
+    	if(!$request->isXmlHttpRequest()) {
+    		return new Response('Must be an XML HTTP request', Response::HTTP_BAD_REQUEST);
+    	}
+    	// Get entity manager
+    	$em = $this->getDoctrine()->getManager();
+    	// Get publication
+    	$publication = $em->getRepository('SingzSocialBundle:Publication')->find($id);
+    	if(!$publication){
+    		return $this->createNotFoundException('La publication n\'existe pas');
+    	}
+    	// Create report
+    	$report = new Report();
+    	$report->setReporter($this->getUser());
+    	$report->setPublication($publication);
+    	$em->persist($report);
+    	$em->flush();
+    
+    	return new Response();
+    }
+    
     
 }

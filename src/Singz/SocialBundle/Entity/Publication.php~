@@ -114,7 +114,15 @@ class Publication
      * @ORM\Column(type="integer", name="state")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $state = Comment::STATE_VISIBLE;
+    private $state = Publication::STATE_VISIBLE;
+    
+    /**
+     * @var Report $reports
+     * 
+     * @ORM\OneToMany(targetEntity="Singz\SocialBundle\Entity\Report", mappedBy="publication")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $reports;
     
     /**
      * Constructor
@@ -125,6 +133,7 @@ class Publication
     	$this->lastEdit = new \DateTime();
         $this->loves = new \Doctrine\Common\Collections\ArrayCollection();
         $this->notifications = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->reports = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -429,5 +438,29 @@ class Publication
     public function getIsResingz()
     {
         return $this->isResingz;
+    }
+
+    /**
+     * Set state
+     *
+     * @param integer $state
+     *
+     * @return Publication
+     */
+    public function setState($state)
+    {
+        $this->state = $state;
+
+        return $this;
+    }
+
+    /**
+     * Get state
+     *
+     * @return integer
+     */
+    public function getState()
+    {
+        return $this->state;
     }
 }
