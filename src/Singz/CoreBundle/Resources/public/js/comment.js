@@ -35,8 +35,7 @@ $('form.first-depth').submit(function(e){
 	$('.right-side, .modal-dialog').animate({
 		scrollTop: $(".new-comment").last().offset().top
 	}, 500);
-	var time = 300;
-	$(".new-comment").last().fadeIn(time).fadeOut(time).fadeIn(time).fadeOut(time).fadeIn(time);
+	$(".new-comment").css('opacity', 0.33);
 	// Launch the AJAX Request
 	$.ajax({
 		url: $(this).attr('action'),
@@ -46,8 +45,11 @@ $('form.first-depth').submit(function(e){
 		$(".nbcomments-"+thread).each(function () {
 			$(this).html(parseInt($(this).html(), 10)+1);
 		});
+		$(".new-comment").fadeTo('fast', 1);
+		$('.new-comment').removeClass('new-comment');
 	}).fail(function(jqXHR, textStatus, errorThrown){
 		$(".new-comment").last().parent('li.comment').remove()
+		toastr["error"]("Une erreur a été rencontrée.")
 	});
 });
 
@@ -71,8 +73,7 @@ $('form.second-depth').submit(function(e){
 	$('.right-side, .modal-dialog').animate({
 		scrollTop: $(".new-comment").last().offset().top
 	}, 500);
-	var time = 300;
-	$(".new-comment").last().fadeIn(time).fadeOut(time).fadeIn(time).fadeOut(time).fadeIn(time);
+	$(".new-comment").css('opacity', 0.33);
 	// Launch the AJAX Request
 	$.ajax({
 		url: $(this).attr('action'),
@@ -82,9 +83,12 @@ $('form.second-depth').submit(function(e){
 		$(".nbcomments-"+thread).each(function () {
 			$(this).html(parseInt($(this).html(), 10)+1);
 		});
+		$(".new-comment").fadeTo('fast', 1);
+		$('.new-comment').removeClass('new-comment');
 	}).fail(function(jqXHR, textStatus, errorThrown){
 		console.error(jqXHR);
 		$(".new-comment").last().parent('li.comment').remove()
+		toastr["error"]("Une erreur a été rencontrée.")
 	});
 });
 
