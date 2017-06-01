@@ -14,6 +14,9 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Publication
 {
+	const STATE_VISIBLE = 0;
+	const STATE_DELETED = 1;
+	const STATE_SPAM = 2;
     /**
      * @var int
      *
@@ -103,6 +106,15 @@ class Publication
      * @ORM\Column(name="is_resingz", type="boolean", nullable=false)
      */
     private $isResingz = false;
+    
+    /**
+     * 
+     * @var int $state
+     * 
+     * @ORM\Column(type="integer", name="state")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $state = Publication::STATE_VISIBLE;
     
     /**
      * Constructor
@@ -417,5 +429,29 @@ class Publication
     public function getIsResingz()
     {
         return $this->isResingz;
+    }
+
+    /**
+     * Set state
+     *
+     * @param integer $state
+     *
+     * @return Publication
+     */
+    public function setState($state)
+    {
+        $this->state = $state;
+
+        return $this;
+    }
+
+    /**
+     * Get state
+     *
+     * @return integer
+     */
+    public function getState()
+    {
+        return $this->state;
     }
 }
