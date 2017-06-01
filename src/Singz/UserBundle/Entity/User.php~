@@ -30,10 +30,17 @@ class User extends BaseUser
     
     /**
      * @var Publication
-     * 
+     *
      * @ORM\OneToMany(targetEntity="Singz\SocialBundle\Entity\Publication", mappedBy="user")
      */
     private $publications;
+
+    /**
+     * @var Publication
+     *
+     * @ORM\OneToMany(targetEntity="Singz\SocialBundle\Entity\Publication", mappedBy="owner")
+     */
+    private $resingz;
     
     /**
      * @var Love
@@ -73,6 +80,7 @@ class User extends BaseUser
     /**
      * @var Image
      * @ORM\ManyToOne(targetEntity="Singz\UserBundle\Entity\Image")
+     * @ORM\JoinColumn(nullable=false)
      */
     private $image;
     
@@ -86,7 +94,7 @@ class User extends BaseUser
      * @var boolean
      * @ORM\Column(name="is_private", type="boolean", nullable=false)
      */
-    private $isPrivate = 0;
+    private $isPrivate = false;
     
     
     public static function getAllRoles() {
@@ -287,7 +295,7 @@ class User extends BaseUser
      *
      * @return User
      */
-    public function setImage(\Singz\UserBundle\Entity\Image $image = null)
+    public function setImage(\Singz\UserBundle\Entity\Image $image)
     {
         $this->image = $image;
 
@@ -350,5 +358,39 @@ class User extends BaseUser
     public function getIsPrivate()
     {
         return $this->isPrivate;
+    }
+
+    /**
+     * Add report
+     *
+     * @param \Singz\SocialBundle\Entity\Report $report
+     *
+     * @return User
+     */
+    public function addReport(\Singz\SocialBundle\Entity\Report $report)
+    {
+        $this->reports[] = $report;
+
+        return $this;
+    }
+
+    /**
+     * Remove report
+     *
+     * @param \Singz\SocialBundle\Entity\Report $report
+     */
+    public function removeReport(\Singz\SocialBundle\Entity\Report $report)
+    {
+        $this->reports->removeElement($report);
+    }
+
+    /**
+     * Get reports
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getReports()
+    {
+        return $this->reports;
     }
 }
