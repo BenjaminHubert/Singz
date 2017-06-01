@@ -18,7 +18,12 @@ class EditMyProfileType extends AbstractType
 				'required' => false
 			))
 			->add('biography', TextareaType::class, array(
-				'required' => false				
+				'label' => 'Biographie',
+				'required' => false
+			))
+			->add('image', ImageType::class, array(
+				'label' => 'Photo de profil',
+				'required' => false
 			))
 		;
 	}

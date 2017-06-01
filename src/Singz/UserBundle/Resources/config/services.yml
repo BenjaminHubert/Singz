@@ -5,6 +5,6 @@ services:
             - { name: doctrine.event_subscriber, connection: default }
     singz.user.edit_my_profile:
         class: Singz\UserBundle\EventListener\EditMyProfileListener
-        arguments: ['@router']
+        arguments: ['@router', '@doctrine.orm.entity_manager']
         tags:
             - { name: kernel.event_subscriber }

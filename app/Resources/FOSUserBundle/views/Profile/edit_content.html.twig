@@ -66,6 +66,22 @@
             {{ form_errors(form.current_password) }}
         </div>
     </div>
+	{# image #}
+	<div>
+		<div class="form-group {% if form_errors(form.image) != "" %}has-error{% endif %}">
+            {{ form_label(form.image, null, {
+                'label_attr': {
+                    'class': 'control-label'
+                }
+            }) }}
+            {{ form_widget(form.image, {
+                'attr': {
+                    'class': 'form-control'
+                }
+            }) }}
+            {{ form_errors(form.image) }}
+        </div>
+    </div>
 	{# isPrivate #}
 	<div>
 		<div class="form-group {% if form_errors(form.isPrivate) != "" %}has-error{% endif %}">

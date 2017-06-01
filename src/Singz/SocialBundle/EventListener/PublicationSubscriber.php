@@ -20,22 +20,6 @@ class PublicationSubscriber implements EventSubscriber
 		$publication->setLastEdit(new \DateTime());
 	}
 	
-	public function preRemove(LifecycleEventArgs $args){
-		$publication = $args->getEntity();
-		// only act on some "Publication" entity
-		if (!$publication instanceof Publication) {
-			return;
-		}
-		// Entity Manager
-		$em = $args->getEntityManager();
-		// Disable its thread
-		if(!$publication->getThread()){
-			throw new \Exception('Thread not found');
-		}
-		$publication->getThread()->setCommentable(false);
-// 		$em->persist($thread);
-	}
-	
 	public function postPersist(LifecycleEventArgs $args){
 		$publication = $args->getEntity();
 		// only act on some "Publication" entity
@@ -60,7 +44,6 @@ class PublicationSubscriber implements EventSubscriber
 	public function getSubscribedEvents() {
 		return array(
 			'preUpdate',
-			'preRemove',
 			'postPersist',
 		);
 	}

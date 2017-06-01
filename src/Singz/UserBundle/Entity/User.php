@@ -5,6 +5,7 @@ namespace Singz\UserBundle\Entity;
 use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * User
@@ -74,6 +75,7 @@ class User extends BaseUser
      * @var Image
      * @ORM\ManyToOne(targetEntity="Singz\UserBundle\Entity\Image")
      * @ORM\JoinColumn(nullable=false)
+     * @Assert\Valid()
      */
     private $image;
     

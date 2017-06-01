@@ -3,6 +3,8 @@
 namespace Singz\UserBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * Image
@@ -27,6 +29,21 @@ class Image
      * @ORM\Column(name="path", type="string", length=255, nullable=true)
      */
     private $path = null;
+    
+    /**
+     * @var File
+     * @Assert\File(
+     *     maxSize = "10M",
+     *     mimeTypes = {
+	 *			"image/jpg",
+	 *			"image/jpeg",
+	 *			"image/png",
+	 *			"image/tiff"
+     *     },
+     *     mimeTypesMessage = "Le type d'image ({{ type }}) n'est pas correct. Les types autorisés sont uniquement des fichiers images."
+     * )
+     */
+    private $file;
 
 
     /**
@@ -67,6 +84,40 @@ class Image
     	if($this->path == null){
     		return 'bundles/singzuser/img/anonymous_icon.jpg';
     	}
-    	return 'uploads/userImage/'.$this->path;
+    	return $this->getUploadDir().$this->path;
+    }
+    
+    public function getUploadRootDir()
+    {
+    	return __DIR__.'/../../../../web/'.$this->getUploadDir();
+    }
+    
+    public function getUploadDir()
+    {
+    	return 'uploads/userImage/';
+    }
+    
+    /**
+     * Get File
+     *
+     * @return File
+     */
+    public function getFile()
+    {
+    	return $this->file;
+    }
+    
+    /**
+     * Set file
+     *
+     * @param File $live
+     *
+     * @return Video
+     */
+    public function setFile(UploadedFile  $file)
+    {
+    	$this->file = $file;
+    	
+    	return $this;    	
     }
 }

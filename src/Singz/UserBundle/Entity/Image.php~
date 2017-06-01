@@ -3,6 +3,7 @@
 namespace Singz\UserBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Image
@@ -24,9 +25,24 @@ class Image
     /**
      * @var string
      *
-     * @ORM\Column(name="path", type="string", length=255, unique=true)
+     * @ORM\Column(name="path", type="string", length=255, nullable=true)
      */
-    private $path;
+    private $path = null;
+    
+    /**
+     * @var File
+     * @Assert\File(
+     *     maxSize = "10M",
+     *     mimeTypes = {
+	 *			"image/jpg",
+	 *			"image/jpeg",
+	 *			"image/png",
+	 *			"image/tiff"
+     *     },
+     *     mimeTypesMessage = "Le type d'image ({{ type }}) n'est pas correct. Les types autorisés sont uniquement des fichiers images."
+     * )
+     */
+    private $file;
 
 
     /**
@@ -46,7 +62,7 @@ class Image
      *
      * @return Image
      */
-    public function setPath($path)
+    public function setPath($path = null)
     {
         $this->path = $path;
 
@@ -62,5 +78,11 @@ class Image
     {
         return $this->path;
     }
+    
+    public function getRealPath(){
+    	if($this->path == null){
+    		return 'bundles/singzuser/img/anonymous_icon.jpg';
+    	}
+    	return 'uploads/userImage/'.$this->path;
+    }
 }
-
