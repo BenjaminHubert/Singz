@@ -195,6 +195,8 @@ class PublicationController extends Controller
     	if($publication == null) {
     		throw $this->createNotFoundException('Publication inexistante');
     	}
+    	// Get resingz
+        $resingz = $em->getRepository('SingzSocialBundle:Publication')->getResingz($publication->getVideo());
     	// Get thread
     	$thread = $publication->getThread();    	
     	// Get comments
@@ -230,6 +232,7 @@ class PublicationController extends Controller
     	// Render the view
     	return $this->render('SingzSocialBundle::extra.html.twig', array(
     		'publication' => $publication,
+            'resingz' => $resingz,
     		'comments' => $comments,
     		'thread' => $thread,
     		'main_form' => $mainForm,
@@ -328,12 +331,10 @@ class PublicationController extends Controller
      */
     public function resingzAction(Request $request, $id){
 
-        /*
         // Check if AJAX request
         if(!$request->isXmlHttpRequest()) {
             return new Response('Must be an XML HTTP request', Response::HTTP_BAD_REQUEST);
         }
-        */
 
         // Get publication
         $em = $this->getDoctrine()->getManager();

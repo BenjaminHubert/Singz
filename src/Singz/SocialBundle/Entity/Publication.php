@@ -92,7 +92,7 @@ class Publication
     /**
      * @var User
      *
-     * @ORM\ManyToOne(targetEntity="Singz\UserBundle\Entity\User", inversedBy="publications")
+     * @ORM\ManyToOne(targetEntity="Singz\UserBundle\Entity\User", inversedBy="resingz")
      * @ORM\JoinColumn(nullable=false)
      */
     private $owner;

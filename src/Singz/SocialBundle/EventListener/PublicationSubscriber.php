@@ -7,6 +7,7 @@ use Doctrine\ORM\Event\LifecycleEventArgs;
 use Singz\SocialBundle\Entity\Publication;
 use Singz\SocialBundle\Entity\Thread;
 use Singz\SocialBundle\Repository\PublicationRepository;
+use Singz\SocialBundle\Entity\Notification;
 
 class PublicationSubscriber implements EventSubscriber
 {
@@ -70,6 +71,17 @@ class PublicationSubscriber implements EventSubscriber
 			$em->persist($thread);
 			$em->flush($thread);
 		}
+		// Send notification in case of resingz
+        if ($publication->getUser() != $publication->getOwner()) {
+            $notif = new Notification();
+            $notif->setUserFrom($publication->getUser());
+            $notif->setUserTo($publication->getOwner());
+            $notif->setPublication($publication);
+            $message = sprintf(Notification::NEW_RESINGZ, $publication->getUser()->getUsername());
+            $notif->setMessage($message);
+            $em->persist($notif);
+            $em->flush($notif);
+        }
 	}
 	
 	/**

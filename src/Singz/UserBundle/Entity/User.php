@@ -30,10 +30,17 @@ class User extends BaseUser
     
     /**
      * @var Publication
-     * 
+     *
      * @ORM\OneToMany(targetEntity="Singz\SocialBundle\Entity\Publication", mappedBy="user")
      */
     private $publications;
+
+    /**
+     * @var Publication
+     *
+     * @ORM\OneToMany(targetEntity="Singz\SocialBundle\Entity\Publication", mappedBy="owner")
+     */
+    private $resingz;
     
     /**
      * @var Love
@@ -385,5 +392,39 @@ class User extends BaseUser
     public function getReports()
     {
         return $this->reports;
+    }
+
+    /**
+     * Add resingz
+     *
+     * @param \Singz\SocialBundle\Entity\Publication $resingz
+     *
+     * @return User
+     */
+    public function addResingz(\Singz\SocialBundle\Entity\Publication $resingz)
+    {
+        $this->resingz[] = $resingz;
+
+        return $this;
+    }
+
+    /**
+     * Remove resingz
+     *
+     * @param \Singz\SocialBundle\Entity\Publication $resingz
+     */
+    public function removeResingz(\Singz\SocialBundle\Entity\Publication $resingz)
+    {
+        $this->resingz->removeElement($resingz);
+    }
+
+    /**
+     * Get resingz
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getResingz()
+    {
+        return $this->resingz;
     }
 }
