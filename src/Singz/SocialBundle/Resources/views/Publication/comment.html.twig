@@ -1,8 +1,6 @@
-
-            		<a class="pull-left" href="{{ path('singz_user_bundle_homepage', {'id': comment.author.id}) }}">
-                        <img class="avatar" src="{{ asset(comment.author.image.realPath) }}" alt="avatar">
-                    </a>
-
+<a class="pull-left" href="{{ path('singz_user_bundle_homepage', {'id': comment.author.id}) }}">
+    <img class="avatar" src="{{ asset(comment.author.image.realPath) }}" alt="avatar">
+</a>
 <div class="comment-body" id="comment-no-{{ comment.id }}">
     <div class="comment-heading">
         <h4 class="user">

@@ -288,10 +288,10 @@ class PublicationController extends Controller
     	}
     	// Check the rights
     	if($state == Comment::STATE_PENDING || $state == Comment::STATE_SPAM || $state == Comment::STATE_VISIBLE){
-    		$this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'You do not have rights to access');
+    		$this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'You must be an admin to access');
     	}
-    	if($state == Comment::STATE_DELETED && ($comment->getAuthor() != $this->getUser() || $this->get('security.authorization_checker')->isGranted('ROLE_ADMIN') === false)){
-    		throw $this->createAccessDeniedException('You do not have rights to access');
+    	if($state == Comment::STATE_DELETED && $comment->getAuthor() != $this->getUser() && $this->get('security.authorization_checker')->isGranted('ROLE_ADMIN') != true){
+    		throw $this->createAccessDeniedException('You must be an admin or the author');
     	}
     	//Update the state
     	$comment->setState($state);
