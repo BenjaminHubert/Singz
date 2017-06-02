@@ -31,6 +31,18 @@ class PublicationRepository extends \Doctrine\ORM\EntityRepository
             ->getQuery()
             ->getOneOrNullResult();
     }
+    public function getPublicationByHashtag($user, $tag) {
+        return $this->createQueryBuilder('p')
+            ->leftJoin('p.user', 'u')->addSelect('u')
+            ->leftJoin('u.leaders', 'leaders')->addSelect('leaders')
+            ->where('p.description LIKE :tag AND (leaders.follower = :follower AND leaders.isPending = :pending)')
+            ->setParameter('tag', "%#".$tag."%")
+            ->setParameter('follower', $user)
+            ->setParameter('pending', false)
+            ->orderBy('p.date', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
     public function getBrowseAll($offset, $limit, $interval, $user) {
         return $this->createQueryBuilder('p')
             ->innerJoin('p.user', 'u')->addSelect('u')

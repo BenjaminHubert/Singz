@@ -18,6 +18,9 @@ use Singz\SocialBundle\Entity\Report;
 
 class PublicationController extends Controller
 {
+
+
+
     /**
      * @Security("has_role('ROLE_USER')")
      */
@@ -52,7 +55,7 @@ class PublicationController extends Controller
     			return $this->redirectToRoute('singz_social_bundle_publication_show', array('id' => $publication->getId()));
     		}
     	}
-    	
+
         return $this->render('SingzSocialBundle:Publication:new.html.twig', array(
             'form' => $form->createView()
         ));
@@ -359,6 +362,5 @@ class PublicationController extends Controller
 
         return new Response(null, Response::HTTP_OK);
     }
-    
     
 }
