@@ -212,7 +212,7 @@ class PublicationController extends Controller
 	    	$comment->setThread($publication->getThread());
 	    	$mainForm = $this
 	    		->createForm(CommentType::class, $comment, array(
-	    			'action' => $this->generateUrl('singz_social_bundle_new_comment')
+	    			'action' => $this->generateUrl('singz_social_bundle_comment_new')
 	    		))
 	    		->createView();
 	    		
@@ -224,7 +224,7 @@ class PublicationController extends Controller
 	    		$c->setThread($publication->getThread());
 	    		$forms[$comment->getId()] = $this
 		    		->createForm(CommentType::class, $c, array(
-		    			'action' => $this->generateUrl('singz_social_bundle_new_comment')
+		    			'action' => $this->generateUrl('singz_social_bundle_comment_new')
 		    		))
 		    		->createView();
 	    	}
@@ -238,92 +238,6 @@ class PublicationController extends Controller
     		'main_form' => $mainForm,
     		'forms' => $forms,
     	));
-    }
-    
-    /**
-     * @Security("has_role('ROLE_USER')")
-     * @param Request $request
-     */
-    public function newCommentAction(Request $request){
-    	// Check if AJAX request
-    	if(!$request->isXmlHttpRequest()) {
-    		return new Response('Must be an XML HTTP request', Response::HTTP_BAD_REQUEST);
-    	}
-    	// Get entity manager
-    	$em = $this->getDoctrine()->getManager();
-    	// Create form
-    	$comment = new Comment();
-    	$form = $this->createForm(CommentType::class, $comment);
-    	$form->handleRequest($request);
-    	if(!$form->isSubmitted()){
-    		return new Response('Form not submitted', Response::HTTP_BAD_REQUEST);
-    	}
-    	if(!$form->isValid()){
-    		return new Response('Form not valid', Response::HTTP_BAD_REQUEST);
-    	}
-    	$comment = $form->getData();
-    	$em->persist($comment);
-    	$em->flush();
-    	return new Response(Response::HTTP_OK);
-    }
-    
-    /**
-     * @Security("has_role('ROLE_USER')")
-     */
-    public function editCommentAction(Request $request, $idComment, $state){
-    	// Check if AJAX request
-    	if(!$request->isXmlHttpRequest()) {
-    		return new Response('Must be an XML HTTP request', Response::HTTP_BAD_REQUEST);
-    	}
-    	// Get entity manager
-    	$em = $this->getDoctrine()->getManager();
-    	// Get comment
-    	$comment = $em->getRepository('SingzSocialBundle:Comment')->find($idComment);
-    	if(!$comment){
-    		return $this->createNotFoundException('Comment does not exist');
-    	}
-    	// Check if state exist
-    	if($state != Comment::STATE_DELETED && $state != Comment::STATE_PENDING && $state != Comment::STATE_SPAM && $state != Comment::STATE_VISIBLE){
-    		return new Response('Unknown comment state', Response::HTTP_BAD_REQUEST);
-    	}
-    	// Check the rights
-    	if($state == Comment::STATE_PENDING || $state == Comment::STATE_SPAM || $state == Comment::STATE_VISIBLE){
-    		$this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'You must be an admin to access');
-    	}
-    	if($state == Comment::STATE_DELETED && $comment->getAuthor() != $this->getUser() && $this->get('security.authorization_checker')->isGranted('ROLE_ADMIN') != true){
-    		throw $this->createAccessDeniedException('You must be an admin or the author');
-    	}
-    	//Update the state
-    	$comment->setState($state);
-    	$em->persist($comment);
-    	$em->flush();
-    	
-    	return new Response();
-    }
-    
-    /**
-     * @Security("has_role('ROLE_USER')")
-     */
-    public function reportCommentAction(Request $request, $idComment){
-    	// Check if AJAX request
-    	if(!$request->isXmlHttpRequest()) {
-    		return new Response('Must be an XML HTTP request', Response::HTTP_BAD_REQUEST);
-    	}
-    	// Get entity manager
-    	$em = $this->getDoctrine()->getManager();
-    	// Get comment
-    	$comment = $em->getRepository('SingzSocialBundle:Comment')->find($idComment);
-    	if(!$comment){
-    		return $this->createNotFoundException('Comment does not exist');
-    	}
-    	// Create report
-    	$report = new Report();
-    	$report->setReporter($this->getUser());
-    	$report->setComment($comment);
-    	$em->persist($report);
-    	$em->flush();
-    	 
-    	return new Response();
     }
 
     /**

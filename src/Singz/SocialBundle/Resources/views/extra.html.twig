@@ -11,7 +11,7 @@
         		{% if app.user != publication.user or is_granted('ROLE_ADMIN')  %}
                		{# Report button #}
             		<li>
-                        <a href="{{ path('singz_social_bundle_report_publication', {'id': publication.id}) }}" class="report-comment">
+                        <a href="{{ path('singz_social_bundle_publication_report', {'id': publication.id}) }}" class="report-comment">
                         	<i class="fa fa-exclamation-circle fa-fw" aria-hidden="true"></i> Signaler
                         </a>
                     </li>
@@ -20,13 +20,13 @@
                		{# Edit button #}
             		<li>
                         <a href="{{ path('singz_social_bundle_publication_edit', {'id': publication.id}) }}" class="">
-                        	<i class="fa fa-pencil-square-o" aria-hidden="true"></i> Editer
+                        	<i class="fa fa-pencil-square-o fa-fw" aria-hidden="true"></i> Editer
                         </a>
                     </li>
                     {# Delete button #}
                     <li>
                         <a href="{{ path('singz_social_bundle_publication_delete', {'id': publication.id}) }}" class="confirmation-alert">
-                        	<i class="fa fa-trash-o" aria-hidden="true"></i> Supprimer
+                        	<i class="fa fa-trash-o fa-fw" aria-hidden="true"></i> Supprimer
                         </a>
                     </li>
                 {% endif %}
@@ -92,7 +92,7 @@
 {# Comments #}
 <div class="comments-container">
     <div id="comment-thread" data-thread="{{ thread.id }}">
-        {% include 'SingzSocialBundle:Publication:comments.html.twig' with {
+        {% include 'SingzSocialBundle:Comment:comments.html.twig' with {
             'comments': comments,
             'thread': thread,
             'view': 'tree',
