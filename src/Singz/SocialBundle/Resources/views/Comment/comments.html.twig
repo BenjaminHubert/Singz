@@ -30,23 +30,26 @@
         	{% for comment in comments if comment.parent is null and comment.state == constant('Singz\\SocialBundle\\Entity\\Comment::STATE_VISIBLE') %}
             	<li class="comment">
             		{# First depth #}
-                    {% include 'SingzSocialBundle:Publication:comment.html.twig' with {
+                    {% include 'SingzSocialBundle:Comment:comment.html.twig' with {
                         'comment': comment
                     } %}
                     {# Second depth #}
                     <ul class="comments-list">
                         {% for child in comment.children if child.state == constant('Singz\\SocialBundle\\Entity\\Comment::STATE_VISIBLE') %}
                             <li class="comment">
-								{% include 'SingzSocialBundle:Publication:comment.html.twig' with {
+								{% include 'SingzSocialBundle:Comment:comment.html.twig' with {
                                     'comment': child
                                 } %}
                             </li>
                 	    {% endfor %}
                         {% if app.user %}
+                        	<a href="#" class="reply-comment">
+                        		Répondre
+                        	</a>
                         	{# Second depth form comment #}
                         	{{ form_start(forms[comment.id], {
                         	    'attr': {
-                        	        'class': 'second-depth'
+                        	        'class': 'second-depth hidden'
                         	    }
                         	}) }}
                         		{{ form_errors(forms[comment.id]) }}

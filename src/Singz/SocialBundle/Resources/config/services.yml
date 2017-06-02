@@ -16,3 +16,7 @@ services:
         class: Singz\SocialBundle\EventListener\FollowSubscriber
         tags:
             - { name: doctrine.event_subscriber, connection: default }
+    singz.social.report:
+        class: Singz\SocialBundle\EventListener\ReportSubscriber
+        tags:
+            - { name: doctrine.event_subscriber, connection: default }

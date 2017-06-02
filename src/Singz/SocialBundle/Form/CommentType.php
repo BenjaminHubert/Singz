@@ -28,7 +28,9 @@ class CommentType extends AbstractType
 	    			'hidden' => ''
 	    		)
 	    	))
-	    	->add('body', TextareaType::class)
+	    	->add('body', TextareaType::class, array(
+	    		'required' => true
+	    	))
 	    	->add('parent', EntityType::class, array(
 	    		'class' => 'SingzSocialBundle:Comment',
 	    		'choice_label' => 'id',

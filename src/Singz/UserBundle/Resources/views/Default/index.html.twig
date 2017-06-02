@@ -64,9 +64,9 @@
                                 </a>
                             </li>
                             <li>
-                                {# Delete button #}
-                                <a href="{{ path('singz_user_enabled', {'id':user.id, 'state':'disabled'}) }}" class=" confirmation-alert">
-                                	<i class="fa fa-trash-o fa-fw" aria-hidden="true"></i> Supprimer
+                                {# Disable button #}
+                                <a href="{{ path('singz_user_enabled', {'id':user.id, 'state':'disabled'}) }}" class="confirmation-alert">
+                                	<i class="fa fa-trash-o fa-fw" aria-hidden="true"></i> Désactiver mon compte
                                 </a>
                             </li>
                 		</ul>
@@ -227,10 +227,18 @@
 {% block end_javascripts %}
 	<script>
     	$(function(){
+        	// List of followers
     		$('button[data-target="#followersModal"]').click(function(){
         		var tab = $(this).attr('data-tab');
     			$('.nav-tabs a[href="#'+tab+'"]').tab('show');
     		});
+    		// Confirm to disable the account
+    		$('a.confirmation-alert').click(function(e){
+				if(confirm('Vous êtes sur le point de désactiver votre compte. Êtes vous sûr?')){
+					return true;
+				}
+				return false;
+        	});
     	});
 	</script>
 {% endblock %}

@@ -7,6 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Singz\SocialBundle\Entity\Publication;
 
 class DefaultController extends Controller
 {
@@ -23,6 +24,7 @@ class DefaultController extends Controller
 		//Get user's publications
         $publications = $em->getRepository('SingzSocialBundle:Publication')->findBy(array(
         	'user' => $user,
+        	'state' => Publication::STATE_VISIBLE,
         ));
 		//Get user's followers
         $followers = $em->getRepository('SingzSocialBundle:Follow')->findBy(array(

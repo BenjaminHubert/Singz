@@ -12,3 +12,8 @@ singz_social_notification_routing:
 singz_social_follow_routing:
     resource: "@SingzSocialBundle/Resources/config/Follow/routing.yml"
     prefix:   /follow/
+
+### COMMENT CONTROLLER ###
+singz_social_comment_routing:
+    resource: "@SingzSocialBundle/Resources/config/Comment/routing.yml"
+    prefix:   /comment/

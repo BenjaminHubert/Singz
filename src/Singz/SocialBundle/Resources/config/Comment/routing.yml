@@ -1,0 +1,22 @@
+# ajax
+singz_social_bundle_comment_new:
+    path:     /new/
+    defaults:
+        _controller: SingzSocialBundle:Comment:new
+
+# ajax
+singz_social_bundle_comment_edit:
+    path:     /{idComment}/{state}/edit-comment/
+    defaults:
+        _controller: SingzSocialBundle:Comment:edit
+    requirements:
+        idComment: \d+
+        state: \d+
+
+# ajax
+singz_social_bundle_comment_report:
+    path:     /{idComment}/report/
+    defaults:
+        _controller: SingzSocialBundle:Comment:report
+    requirements:
+        idComment: \d+

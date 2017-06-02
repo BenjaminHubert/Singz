@@ -193,4 +193,16 @@ class Thread
 
         return $comments;
     }
+
+
+
+    public function increaseNumComments(){
+    	$this->numComments++;
+    	return $this;
+    }
+    
+    public function decreaseNumComments(){
+    	$this->numComments--;
+    	return $this;
+    }
 }
