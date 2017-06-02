@@ -43,10 +43,13 @@
                             </li>
                 	    {% endfor %}
                         {% if app.user %}
+                        	<a href="#" class="reply-comment">
+                        		Répondre
+                        	</a>
                         	{# Second depth form comment #}
                         	{{ form_start(forms[comment.id], {
                         	    'attr': {
-                        	        'class': 'second-depth'
+                        	        'class': 'second-depth hidden'
                         	    }
                         	}) }}
                         		{{ form_errors(forms[comment.id]) }}
