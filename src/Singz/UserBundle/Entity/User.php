@@ -5,6 +5,7 @@ namespace Singz\UserBundle\Entity;
 use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * User
@@ -30,10 +31,17 @@ class User extends BaseUser
     
     /**
      * @var Publication
-     * 
+     *
      * @ORM\OneToMany(targetEntity="Singz\SocialBundle\Entity\Publication", mappedBy="user")
      */
     private $publications;
+
+    /**
+     * @var Publication
+     *
+     * @ORM\OneToMany(targetEntity="Singz\SocialBundle\Entity\Publication", mappedBy="owner")
+     */
+    private $resingz;
     
     /**
      * @var Love
@@ -74,6 +82,7 @@ class User extends BaseUser
      * @var Image
      * @ORM\ManyToOne(targetEntity="Singz\UserBundle\Entity\Image")
      * @ORM\JoinColumn(nullable=false)
+     * @Assert\Valid()
      */
     private $image;
     
@@ -87,7 +96,7 @@ class User extends BaseUser
      * @var boolean
      * @ORM\Column(name="is_private", type="boolean", nullable=false)
      */
-    private $isPrivate = 0;
+    private $isPrivate = false;
     
     
     public static function getAllRoles() {
@@ -385,5 +394,39 @@ class User extends BaseUser
     public function getReports()
     {
         return $this->reports;
+    }
+
+    /**
+     * Add resingz
+     *
+     * @param \Singz\SocialBundle\Entity\Publication $resingz
+     *
+     * @return User
+     */
+    public function addResingz(\Singz\SocialBundle\Entity\Publication $resingz)
+    {
+        $this->resingz[] = $resingz;
+
+        return $this;
+    }
+
+    /**
+     * Remove resingz
+     *
+     * @param \Singz\SocialBundle\Entity\Publication $resingz
+     */
+    public function removeResingz(\Singz\SocialBundle\Entity\Publication $resingz)
+    {
+        $this->resingz->removeElement($resingz);
+    }
+
+    /**
+     * Get resingz
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getResingz()
+    {
+        return $this->resingz;
     }
 }

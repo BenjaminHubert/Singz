@@ -21,6 +21,28 @@
             -ms-transform:rotate(360deg);  
             -webkit-transform:rotate(360deg);  
         }
+        .is-private{
+        	text-align: center;
+    	    padding: 50px;
+        }
+        .is-private i{
+            font-size: 6em;
+        }
+        .is-private p{
+    	    font-size: 120%;
+    		font-weight: bold;
+        }
+        .no-publication{
+        	text-align: center;
+    	    padding: 50px;
+        }
+        .no-publication i{
+            font-size: 6em;
+        }
+        .no-publication p{
+    	    font-size: 120%;
+    		font-weight: bold;
+        }
     </style>
 {% endblock %}
 {% block body %}
@@ -28,6 +50,28 @@
     <div class="row">
         <div class="col-xs-12 col-md-6 col-md-offset-3">
             <div class="media user-profile">
+            	{# Options #}
+            	{% if user == app.user %}
+                    <div class="dropdown pull-right">
+                      	<button style="color: black" class="btn btn-link dropdown-toggle btn-xs" type="button" id="dropdownMenuProfile" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                			Options <i class="fa fa-caret-down fa-fw" aria-hidden="true"></i>
+                		</button>
+                    	<ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuProfile">
+                    		<li>
+                           		{# Edit button #}
+                                <a href="{{ path('fos_user_profile_edit') }}" class="">
+                                	<i class="fa fa-pencil-square-o fa-fw" aria-hidden="true"></i> Editer
+                                </a>
+                            </li>
+                            <li>
+                                {# Delete button #}
+                                <a href="{{ path('singz_user_enabled', {'username':user.username, 'state':'disabled'}) }}" class=" confirmation-alert">
+                                	<i class="fa fa-trash-o fa-fw" aria-hidden="true"></i> Supprimer
+                                </a>
+                            </li>
+                		</ul>
+                	</div>
+                {% endif %}
             	{# Image #}
                 <a class="pull-left" href="{{ path('singz_user_bundle_homepage', {'username':user.username}) }}">
                     <img class="media-object dp img-circle" src="{{ asset(user.image.realPath) }}" style="width: 100px;height:100px;">
@@ -40,6 +84,26 @@
                         </a>
                         <small> {% if 'ROLE_STARZ' in user.roles %} &#9733; Starz {% endif %}</small>
                     </h4>
+                    {# S'abonner #}
+                	{% if app.user %}
+                    	<div>
+                    		{% set i_follow = false %}
+                        	{% if user != app.user %}
+                                <a href="{{ path('singz_social_bundle_follow', {'leaderId':user.id}) }}" class="btn btn-default">
+                                    {% for currentUserFollower in app.user.followers %}
+                                    	{% if currentUserFollower.leader == user %}
+                                    		{% set i_follow = true %}
+                                        {% endif %}
+                                    {% endfor %}
+                                    {% if i_follow == true %}
+                                        <i class="fa fa-thumbs-up fa-lg fa-fw" aria-hidden="true" title="Se désabonner"></i> Se désabonner
+                                    {% else %}
+                                        <i class="fa fa-thumbs-o-up fa-lg fa-fw" aria-hidden="true" title="S'abonner"></i> S'abonner
+                                    {% endif %}
+                                    </a>
+                            {% endif %}
+                    	</div>
+                    {% endif %}
                     {# Biographie #}
                     <h5>
                     	{% if user.biography is not empty %}
@@ -48,36 +112,6 @@
                     		Aucune biographie
                     	{% endif %}
                     </h5>
-                    {# S'abonner #}
-                    <div>
-                    	{% if app.user %}
-                    		{% set i_follow = false %}
-                        	{% if user == app.user %}
-                                <a href={{ path('fos_user_profile_show') }} class="btn btn-success">
-                                    Voir mon profil
-                                </a>
-                                <a href={{ path('fos_user_profile_edit') }} class="btn btn-primary">
-                                	Modifier mon profil
-                                </a>
-                                <a href="{{ path('singz_user_enabled', {'username':user.username, 'state':'disabled'}) }}" class="btn btn-danger">
-                                    Supprimer mon profil
-                                </a>
-                            {% else %}
-                                <a href="{{ path('singz_social_bundle_follow', {'leaderId':user.id}) }}" class="btn btn-default">
-                                    {% for currentUserFollower in app.user.followers %}
-                                    	{% if currentUserFollower.leader == user %}
-                                    		{% set i_follow = true %}
-                                        {% endif %}
-                                    {% endfor %}
-                                    {% if i_follow == true %}
-                                        Se désabonner
-                                    {% else %}
-                                        S'abonner
-                                    {% endif %}
-                                    </a>
-                            {% endif %}
-                        {% endif %}
-                    </div>
                     {# Followers #}
                     <hr style="margin:8px auto">
     				<div>
@@ -98,16 +132,38 @@
     {# Publications #}
     <div class="row">
         <div class="col-md-12">
-        	{% if user.isPrivate != true %}
+        	{# Check if is pending #}
+        	{% set isPending = true %}
+        	{% set requested = false %}
+        	{% for leader in user.leaders %}
+        		{% if leader.leader == user %}
+        			{% set requested = true %}
+        			{% if leader.isPending == false %}
+        	            {% set isPending = false %}
+        		    {% endif %}
+        		{% endif %}
+        	{% endfor %}
+        	{# Publications #}
+        	{% if user.isPrivate == false or (user.isPrivate == true and isPending == false) or user == app.user %}
                 {% if publications is not empty %}
                     {% include 'SingzSocialBundle::publications.html.twig' with {
                         'publications': publications
                     } %}
                 {% else %}
-                    <p style="text-align:center">Aucune publication à afficher :(</p>
+                    <div class="no-publication">
+                    	<i class="fa fa-video-camera" aria-hidden="true"></i></p>
+                    	<p>Aucune publication</p>
+                    </div>
                 {% endif %}
             {% else %}
-                <p style="text-align:center">Cet utilisateur est privé. Suivez le pour voir ses publications ;)</p>
+                <div class="is-private">
+                	<p><i class="fa fa-lock" aria-hidden="true"></i></p>
+                	{% if user.isPrivate == true and isPending == true and requested == true %}
+                		<p>Demande en attente</p>
+                	{% else %}
+                		<p>Ce profil est privé</p>
+                	{% endif %}
+                </div>
             {% endif %}
         </div>
     </div>

@@ -28,7 +28,7 @@
 				<tr>
 					<td>{{ comment.createdAt|date('d/m/Y H:i:s') }}</td>
 					<td>
-						<a href="{{ path('singz_user_bundle_homepage', {'id': comment.author.id}) }}" target="_blank">
+						<a href="{{ path('singz_user_bundle_homepage', {'username': comment.author.username}) }}" target="_blank">
 					        {{ comment.author.username }}
 					    </a>
 					</td>

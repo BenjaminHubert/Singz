@@ -25,6 +25,14 @@ singz_social_bundle_publication_new:
         _controller: SingzSocialBundle:Publication:new
 
 # ajax
+singz_social_bundle_publication_resingz:
+    path:    /{id}/resingz
+    defaults:
+        _controller: SingzSocialBundle:Publication:resingz
+    requirements:
+        id: \d+
+
+# ajax
 singz_social_bundle_publication_love:
     path:     /love/
     defaults:

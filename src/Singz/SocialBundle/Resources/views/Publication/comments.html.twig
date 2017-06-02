@@ -78,13 +78,13 @@
 {% if app.user %}
     <div id="comment-template" style="display:none">
     	<li class="comment">
-    		<a class="pull-left" href="{{ path('singz_user_bundle_homepage', {'id': app.user.id}) }}">
+    		<a class="pull-left" href="{{ path('singz_user_bundle_homepage', {'username': app.user.username}) }}">
                 <img class="avatar" src="{{ asset(app.user.image.realPath) }}" alt="avatar">
             </a>
             <div class="comment-body">
                 <div class="comment-heading">
                     <h4 class="user">
-                        <a class="pull-left" href="{{ path('singz_user_bundle_homepage', {'id': app.user.id}) }}">
+                        <a class="pull-left" href="{{ path('singz_user_bundle_homepage', {'username': app.user.username}) }}">
                             {{ app.user.username }}
     					</a>
                     </h4>

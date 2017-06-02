@@ -27,14 +27,14 @@
 <div class="media">
     <div class="media-left">
     	{# User image #}
-    	<a href="{{ path('singz_user_bundle_homepage', {'id': publication.user.id}) }}">	
+    	<a href="{{ path('singz_user_bundle_homepage', {'username': publication.user.username}) }}">
     		<img class="media-object img-circle" style="width:42px;height:42px"  src="{{ asset(publication.user.image.realPath) }}" alt="{{ publication.user.username }}">
     	</a>
     </div>
     <div class="media-body">
     	{# Username #}
     	<p>
-            <a href="{{ path('singz_user_bundle_homepage', {'id': publication.user.id}) }}">
+            <a href="{{ path('singz_user_bundle_homepage', {'username': publication.user.username}) }}">
                 {{ publication.user.username }}
             </a>
         </p>
@@ -44,9 +44,18 @@
         <p>
             <i class="fa fa-fw fa-heart" aria-hidden="true"></i> <span id="nbloves-{{ publication.id }}">{{ publication.numLoves }}</span>
             <i class="fa fa-fw fa-comments" aria-hidden="true"></i> <span class="nbcomments-{{ publication.id }}" id="nbcomments-{{ publication.id }}">{{ publication.thread.visibleComments|length }}</span>
+            <span {% if resingz|length == 0 %} style="display: none" {% endif %}>
+                <i class="fa fa-fw fa-retweet" aria-hidden="true"></i> <span class="nbresingz-{{ publication.id }}" id="nbresingz-{{ publication.id }}">{{ resingz|length }}</span>
+            </span>
         </p>
     </div>
 </div>
+{# In case of resingz #}
+{% if publication.isresingz %}
+    <p>
+        <a href="{{ path('singz_user_bundle_homepage', {'username': publication.owner.username}) }}"><i class="fa fa-retweet" aria-hidden="true"></i> Crédit : {{ publication.owner.username }}</a>
+    </p>
+{% endif %}
 {# Publication description #}
 <p>{{ publication.description }}</p>
 {# love button #}
@@ -62,6 +71,10 @@
         {% if ilove == 0 %}
             Je love !
         {% endif %}
+    </button>
+
+    <button onclick="resingz('{{ path('singz_social_bundle_publication_resingz', {'id': publication.id}) }}', {{ publication.id }});" class="btn btn-default">
+        <i class="fa fa-retweet" aria-hidden="true"></i> Resingzer
     </button>
 {% else %}
 	<a href="{{ path('fos_user_security_login') }}">Se connecter</a>
@@ -89,3 +102,4 @@
 </script>
 <script src="{{ asset('bundles/singzsocial/js/script.js') }}"></script>
 <script src="{{ asset('bundles/singzcore/js/comment.js') }}"></script>
+<script src="{{ asset('bundles/singzsocial/js/resingz.js') }}"></script>
