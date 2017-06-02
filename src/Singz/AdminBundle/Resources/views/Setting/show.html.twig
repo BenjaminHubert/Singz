@@ -1,4 +1,10 @@
-{% extends 'base.html.twig' %}
+{% extends "SingzAdminBundle::layout.html.twig" %}
+
+{% block title_tag %}Paramètres - {{ parent() }} {% endblock %}
+
+{% block title_page %}
+    Paramètres - {{ setting.name }}
+{% endblock %}
 
 {% block body %}
     <h1>Setting</h1>
@@ -22,7 +28,7 @@
 
     <ul>
         <li>
-            <a href="{{ path('settings_index') }}">Back to the list</a>
+            <a href="{{ path('singz_admin_setting_index') }}">Back to the list</a>
         </li>
     </ul>
 {% endblock %}

@@ -5,12 +5,12 @@ namespace Singz\AdminBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Settings
+ * Setting
  *
- * @ORM\Table(name="settings")
- * @ORM\Entity(repositoryClass="Singz\AdminBundle\Repository\SettingsRepository")
+ * @ORM\Table(name="setting")
+ * @ORM\Entity(repositoryClass="Singz\AdminBundle\Repository\SettingRepository")
  */
-class Settings
+class Setting
 {
     /**
      * @var int
@@ -51,7 +51,7 @@ class Settings
      *
      * @param string $name
      *
-     * @return Settings
+     * @return Setting
      */
     public function setName($name)
     {
@@ -75,7 +75,7 @@ class Settings
      *
      * @param integer $value
      *
-     * @return Settings
+     * @return Setting
      */
     public function setValue($value)
     {
