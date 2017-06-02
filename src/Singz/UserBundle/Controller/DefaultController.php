@@ -17,7 +17,10 @@ class DefaultController extends Controller
         $em = $this->getDoctrine()->getManager();
 		//Get the requested user
         $userManager = $this->get('fos_user.user_manager');
-        $user = $userManager->findUserBy(array('username' => $username));
+        $user = $userManager->findUserBy(array(
+        	'username' => $username,
+        	'enabled' => true
+        ));
         if(!$user){
         	throw $this->createNotFoundException('Utilisateur non trouvé');
         }
