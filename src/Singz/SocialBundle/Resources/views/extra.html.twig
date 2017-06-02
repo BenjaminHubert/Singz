@@ -37,14 +37,14 @@
 <div class="media">
     <div class="media-left">
     	{# User image #}
-    	<a href="{{ path('singz_user_bundle_homepage', {'id': publication.user.id}) }}">	
+    	<a href="{{ path('singz_user_bundle_homepage', {'username': publication.user.username}) }}">
     		<img class="media-object img-circle" style="width:42px;height:42px"  src="{{ asset(publication.user.image.realPath) }}" alt="{{ publication.user.username }}">
     	</a>
     </div>
     <div class="media-body">
     	{# Username #}
     	<p>
-            <a href="{{ path('singz_user_bundle_homepage', {'id': publication.user.id}) }}">
+            <a href="{{ path('singz_user_bundle_homepage', {'username': publication.user.username}) }}">
                 {{ publication.user.username }}
             </a>
         </p>
@@ -63,11 +63,14 @@
 {# In case of resingz #}
 {% if publication.isresingz %}
     <p>
-        <a href="{{ path('singz_user_bundle_homepage', {'id': publication.owner.id}) }}"><i class="fa fa-retweet" aria-hidden="true"></i> Crédit : {{ publication.owner.username }}</a>
+        <a href="{{ path('singz_user_bundle_homepage', {'username': publication.owner.username}) }}"><i class="fa fa-retweet" aria-hidden="true"></i> Crédit : {{ publication.owner.username }}</a>
     </p>
 {% endif %}
 {# Publication description #}
-<p>{{ publication.description }}</p>
+{#<p>{{ publication.description|preg_replace('/#+([a-zA-Z0-9_]+)/', '<a href="{{ path(\'singz_hashtag\', { \'hashtag\': $1 }) }}">$0</a>')|raw }}</p>#}
+<p>
+    {{ publication.description|preg_replace('/#+([a-zA-Z0-9]+)/', '<a href="'~path('singz_hashtagz')~'?k=$1">$0</a>')|raw }}
+</p>
 {# love button #}
 {% if app.user %}
     <button id="love-{{ publication.id }}" onclick="lovethis(path, {{ publication.id }}, {{ app.user.id }})" class="btn btn-default">

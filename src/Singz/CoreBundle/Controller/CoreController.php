@@ -68,4 +68,20 @@ class CoreController extends Controller
     		'notificationsUnseen' => $notificationsUnseen
     	));
     }
+
+    public function hashtagzAction(Request $request) {
+        $user = $this->getUser();
+        $hashtag = $request->get('k');
+        if($hashtag == null) {
+            throw $this->createNotFoundException();
+        }
+
+        $em = $this->getDoctrine()->getManager();
+        $publications = $em->getRepository('SingzSocialBundle:Publication')->getPublicationByHashtag($user, $hashtag);
+        dump($publications);
+        return $this->render('SingzCoreBundle:Core:hashtag.html.twig', array(
+            "publications" => $publications,
+            "hashtag" => $hashtag
+        ));
+    }
 }

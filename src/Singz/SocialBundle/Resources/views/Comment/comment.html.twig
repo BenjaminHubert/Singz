@@ -1,10 +1,10 @@
-<a class="pull-left" href="{{ path('singz_user_bundle_homepage', {'id': comment.author.id}) }}">
+<a class="pull-left" href="{{ path('singz_user_bundle_homepage', {'username': comment.author.username}) }}">
     <img class="avatar" src="{{ asset(comment.author.image.realPath) }}" alt="avatar">
 </a>
 <div class="comment-body" id="comment-no-{{ comment.id }}">
     <div class="comment-heading">
         <h4 class="user">
-            <a class="pull-left" href="{{ path('singz_user_bundle_homepage', {'id': comment.author.id}) }}">
+            <a class="pull-left" href="{{ path('singz_user_bundle_homepage', {'username': comment.author.username}) }}">
                 {{ comment.author.username }}
 			</a>
         </h4>

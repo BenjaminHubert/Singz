@@ -10,94 +10,27 @@ $.fn.enterKey = function (fnc, mod) {
 	})
 }
 
-$('textarea').enterKey(function() {
-	$(this).closest('form').submit();
-	$(this).blur();
-}, 'shift');
-
-$('form.first-depth').submit(function(e){
-	// Prevent default behavior
-	e.preventDefault();
-	// Get form data
-	$data = $(this).serialize();
-	// Get thread id
-	var thread = $("#comment-thread").data("thread");
-	// Empty the textarea field
-	$textareaValue = $(this).find('textarea').val();
-	$(this).find('textarea').val('');
-	// Create  the new comment
-	$('#comment-template').find('p').html($textareaValue);
-	$('#comment-template').find('.comment-body').addClass('new-comment')
-	var htmlTemplate = $('#comment-template').html();
-	$('#comment-template').find('.comment-body').removeClass('new-comment');
-	$('.post-footer > ul.comments-list').append(htmlTemplate);
-	// Scroll to the comment
-	$('.right-side, .modal-dialog').animate({
-		scrollTop: $(".new-comment").last().offset().top
-	}, 500);
-	$(".new-comment").css('opacity', 0.33);
-	// Launch the AJAX Request
-	$.ajax({
-		url: $(this).attr('action'),
-		method: 'POST',
-		data: $data,
-	}).done(function(data, textStatus, jqXHR){
-		$(".nbcomments-"+thread).each(function () {
-			$(this).html(parseInt($(this).html(), 10)+1);
-		});
-		$(".new-comment").fadeTo('fast', 1);
-		$('.new-comment').removeClass('new-comment');
-	}).fail(function(jqXHR, textStatus, errorThrown){
-		$(".new-comment").last().parent('li.comment').remove()
-		toastr["error"]("Une erreur a été rencontrée.")
-	});
-});
-
-$('form.second-depth').submit(function(e){
-	// Prevent default behavior
-	e.preventDefault();
-	// Get form data
-	$data = $(this).serialize();
-	// Get thread id
-	var thread = $("#comment-thread").data("thread");
-	// Empty the textarea field
-	$textareaValue = $(this).find('textarea').val();
-	$(this).find('textarea').val('');
-	// Create  the new comment
-	$('#comment-template').find('p').html($textareaValue);
-	$('#comment-template').find('.comment-body').addClass('new-comment')
-	var htmlTemplate = $('#comment-template').html();
-	$('#comment-template').find('.comment-body').removeClass('new-comment');
-	$(this).before(htmlTemplate);
-	// Scroll to the comment
-	$('.right-side, .modal-dialog').animate({
-		scrollTop: $(".new-comment").last().offset().top
-	}, 500);
-	$(".new-comment").css('opacity', 0.33);
-	// Launch the AJAX Request
-	$.ajax({
-		url: $(this).attr('action'),
-		method: 'POST',
-		data: $data,
-	}).done(function(data, textStatus, jqXHR){
-		$(".nbcomments-"+thread).each(function () {
-			$(this).html(parseInt($(this).html(), 10)+1);
-		});
-		$(".new-comment").fadeTo('fast', 1);
-		$('.new-comment').removeClass('new-comment');
-	}).fail(function(jqXHR, textStatus, errorThrown){
-		console.error(jqXHR);
-		$(".new-comment").last().parent('li.comment').remove()
-		toastr["error"]("Une erreur a été rencontrée.")
-	});
-});
-
-$('a.change-state').click(function(e){
+function reportCommentListener(e, $this){
 	if(confirm('Êtes vous sûr?')){
-		var url = $(this).attr('href');
+		var url = $this.attr('href');		
+		$.ajax({
+	        url: url,
+	        method: 'POST',
+	    }).done(function(data, textStatus, jqXHR){
+	    	
+	    }).fail(function(jqXHR, textStatus, errorThrown){
+	    	console.error(jqXHR);
+	    });
+	}
+	e.preventDefault();
+}
+
+function changeStateListener(e, $this){
+	if(confirm('Êtes vous sûr?')){
+		var url = $this.attr('href');
 		// Get thread id
 		var thread = $("#comment-thread").data("thread");
-		$(this).closest('li.comment').hide('fast');
+		$this.closest('li.comment').hide('fast');
 		$.ajax({
 			url: url,
 			method: 'POST',
@@ -110,21 +43,83 @@ $('a.change-state').click(function(e){
 		});
 	}
 	e.preventDefault();
+}
+
+function commentSubmit(e, $this, depth){
+	// Prevent default behavior
+	e.preventDefault();
+	// Get form data
+	$data = $this.serialize();
+	// Check if not empty
+	$textareaValue = $this.find('textarea').val().trim();
+	if($textareaValue.length == 0){
+		toastr["error"]("Votre commentaire est vide");
+		return;
+	}
+	// Get thread id
+	var thread = $("#comment-thread").data("thread");
+	// Empty the textarea field
+	$this.find('textarea').val('');
+	// Create  the new comment
+	$('#comment-template').find('p').html($textareaValue);
+	$('#comment-template').find('.comment-body').addClass('new-comment');
+	var htmlTemplate = $('#comment-template').html();
+	$('#comment-template').find('.comment-body').removeClass('new-comment');
+	if(depth == 'first'){
+		$('.post-footer > ul.comments-list').append(htmlTemplate);
+	}else if(depth == 'second'){
+		$this.before(htmlTemplate);
+	}
+	// Scroll to the comment
+	$('.right-side, .modal-dialog').animate({
+		scrollTop: $(".new-comment").last().offset().top
+	}, 500);
+	$(".new-comment").css('opacity', 0.33);
+	// Launch the AJAX Request
+	$.ajax({
+		url: $this.attr('action'),
+		method: 'POST',
+		data: $data,
+		dataType: 'JSON'
+	}).done(function(data, textStatus, jqXHR){
+		// Increase the number of comment
+		$(".nbcomments-"+thread).each(function () {
+			$(this).html(parseInt($(this).html(), 10)+1);
+		});
+		// Update the comment 
+		$(".new-comment").closest('li.comment').html(data.html);
+		// Update the listener
+		$("#comment-no-"+data.idComment+" a.change-state").click(function(e){
+			changeStateListener(e, $(this));
+		});
+		$("#comment-no-"+data.idComment+" a.report-comment").click(function(e){
+			reportCommentListener(e, $(this));
+		});
+	}).fail(function(jqXHR, textStatus, errorThrown){
+		$(".new-comment").last().parent('li.comment').remove()
+		toastr["error"]("Une erreur a été rencontrée.")
+	});
+}
+
+$('textarea').enterKey(function() {
+	$(this).closest('form').submit();
+	$(this).blur();
+}, 'shift');
+
+$('form.first-depth').submit(function(e){
+	commentSubmit(e, $(this), 'first');
+});
+
+$('form.second-depth').submit(function(e){
+	commentSubmit(e, $(this), 'second');
+});
+
+$('a.change-state').click(function(e){
+	changeStateListener(e, $(this));
 })
 
 $('a.report-comment').click(function(e){
-	if(confirm('Êtes vous sûr?')){
-		var url = $(this).attr('href');		
-		$.ajax({
-	        url: url,
-	        method: 'POST',
-	    }).done(function(data, textStatus, jqXHR){
-	    	
-	    }).fail(function(jqXHR, textStatus, errorThrown){
-	    	console.error(jqXHR);
-	    });
-	}
-	e.preventDefault();
+	reportCommentListener(e, $(this));
 })
 
 $('a.reply-comment').click(function(){
@@ -135,3 +130,5 @@ $('a.reply-comment').click(function(){
 	// Remove the button
 	$(this).remove();
 })
+
+

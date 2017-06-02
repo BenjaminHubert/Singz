@@ -38,7 +38,7 @@
                         </li>
                   	</ul>
                 </div>
-    			<a class="notification {% if notification.isRead == false %}mark-as-read{% endif %}" href="{% if notification.publication is not null %}{{ path('singz_social_bundle_publication_show', {'id':notification.publication.id}) }}{% else %}{{ path('singz_user_bundle_homepage', {'id':notification.userFrom.id}) }}{% endif %}" data-id-notif="{{ notification.id }}">
+    			<a class="notification {% if notification.isRead == false %}mark-as-read{% endif %}" href="{% if notification.publication is not null %}{{ path('singz_social_bundle_publication_show', {'id':notification.publication.id}) }}{% else %}{{ path('singz_user_bundle_homepage', {'username':notification.userFrom.username}) }}{% endif %}" data-id-notif="{{ notification.id }}">
         			<div class="media">
                         <div class="media-left">
     						<img class="media-object" src="{{ asset(notification.userFrom.image.realPath) }}" alt="{{ notification.userFrom.username }}">

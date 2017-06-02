@@ -1,9 +1,9 @@
 singz_user_bundle_homepage:
-    path:     /{id}/
+    path:     /{username}/
     defaults:
         _controller: SingzUserBundle:Default:index
     requirements:
-        id: \d+
+        id: \w+
 
 singz_user_enabled:
     path:     /{id}/change-status/{state}
