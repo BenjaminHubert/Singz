@@ -34,29 +34,12 @@ class PublicationRepository extends \Doctrine\ORM\EntityRepository
     public function getPublicationByHashtag($user, $tag) {
         return $this->createQueryBuilder('p')
             ->leftJoin('p.user', 'u')->addSelect('u')
-            ->leftJoin('u.followers', 'f')->addSelect('f')
-            //La decription contient le hashtag
-            //ET
-            //  SOIT être publique
-            //  SOIT être privée ET user en cours follow le posteur ET invitation acceptée
-            ->where('
-                p.description LIKE :tag 
-                AND (
-                    u.isPrivate = :private1 
-                    OR (
-                        u.isPrivate = :private2 
-                        AND f.follower = :user 
-                        AND f.isPending = :pending
-                    )
-                )
-            ')
+            ->leftJoin('u.leaders', 'leaders')->addSelect('leaders')
+            ->where('p.description LIKE :tag AND (leaders.follower = :follower AND leaders.isPending = :pending)')
             ->setParameter('tag', "%#".$tag."%")
-            ->setParameter('user', $user)
-            ->setParameter('private1', false)
-            ->setParameter('private2', true)
+            ->setParameter('follower', $user)
             ->setParameter('pending', false)
             ->orderBy('p.date', 'DESC')
-            ->groupBy('p.id')
             ->getQuery()
             ->getResult();
     }
