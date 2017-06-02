@@ -4,6 +4,7 @@ namespace Singz\AdminBundle\Controller;
 
 use Singz\AdminBundle\Entity\Setting;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Singz\AdminBundle\Form\SettingType;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -46,25 +47,41 @@ class SettingController extends Controller
      * Edits a setting entity
      *
      */
-    public function editAction(Request $request, $idSetting, $value)
+    public function editAction(Request $request, $id)
     {
-        // Check if AJAX request
-        if(!$request->isXmlHttpRequest()) {
-            return new Response('Must be an XML HTTP request', Response::HTTP_BAD_REQUEST);
-        }
-
-        // Get setting
+        // Get publication
         $em = $this->getDoctrine()->getManager();
-        $setting = $em->getRepository('SingzAdminBundle:Setting')->getSettingById($idSetting);
+        $setting = $em->getRepository('SingzAdminBundle:Setting')->getSettingById($id);
         if($setting == null) {
             throw $this->createNotFoundException('Paramètre inexistant');
         }
 
-        $setting->setValue($value);
+        // on récupère le formulaire
+        $form = $this->createForm(SettingType::class, $setting);
+        $form->remove('name');
 
-        $em->persist($setting);
-        $em->flush();
+        // si le formulaire est soumis
+        if($request->isMethod('POST')){
+            //on met dans notre objet $publication les valeurs du formulaire
+            $form->handleRequest($request);
 
-        return new Response(null, Response::HTTP_OK);
+            // on vérifie la validation du formulaire
+            if($form->isValid()){
+                // update
+                $em->flush();
+
+                //on affiche un message
+                $this->addFlash('success', 'Paramètre bien enregistré.');
+
+                // On redirige vers la page de visualisation de la publication nouvellement créée
+                return $this->redirectToRoute('singz_admin_setting_show', array('id' => $setting->getId()));
+            }
+        }
+
+
+        return $this->render('SingzAdminBundle:Setting:edit.html.twig', array(
+            'form' => $form->createView(),
+            'setting' => $setting
+        ));
     }
 }
