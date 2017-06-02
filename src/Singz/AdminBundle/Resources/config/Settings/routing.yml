@@ -1,0 +1,12 @@
+singz_admin_settings_index:
+    path:     /
+    defaults: { _controller: "SingzAdminBundle:Settings:index" }
+    methods:  GET
+
+singz_admin_settings_show:
+    path:     /{id}/show
+    defaults: { _controller: "SingzAdminBundle:Settings:show" }
+    methods:  GET
+
+
+

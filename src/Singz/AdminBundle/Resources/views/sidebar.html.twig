@@ -15,6 +15,15 @@
             <li>
                 <a href="{{ path('singz_admin_dashboard') }}"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
             </li>
+            {# PUBLICATIONS #}
+            <li>
+                <a href="#"><i class="fa fa-video-camera fa-fw"></i> Publications<span style="" class="fa arrow"></span></a>
+                <ul class="nav nav-second-level">
+                    <li>
+                        <a href="#">Liste des publications</a>
+                    </li>
+                </ul>
+            </li>
             {# COMMENTAIRES #}
             <li>
                 <a href="#"><i class="fa fa-comments-o fa-fw"></i> Commentaires<span style="" class="fa arrow"></span></a>
@@ -32,6 +41,10 @@
                         <a href="{{ path('singz_admin_user_list') }}">Liste des utilisateurs</a>
                     </li>
                 </ul>
+            </li>
+            {# PARAMETRES #}
+            <li>
+                <a href="{{ path('singz_admin_settings_index') }}"><i class="fa fa-cogs fa-fw"></i> Paramètres</a>
             </li>
         </ul>
     </div>
