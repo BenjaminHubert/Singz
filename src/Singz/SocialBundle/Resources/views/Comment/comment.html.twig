@@ -8,7 +8,7 @@
                 {{ comment.author.username }}
 			</a>
         </h4>
-        <h5 class="time">{{ comment.createdAt|time_diff }}</h5>
+        <h5 class="time">{{ comment.createdAt|default("now"|date("Y-m-d H:i:s"))|time_diff }}</h5>
         {% if is_granted('ROLE_USER') %}
             <div class="dropdown pull-right">
               	<button style="color: black" class="btn btn-link dropdown-toggle btn-xs" type="button" id="dropdownMenuComment" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">

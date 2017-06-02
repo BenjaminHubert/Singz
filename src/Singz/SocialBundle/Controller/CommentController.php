@@ -9,6 +9,7 @@ use Singz\SocialBundle\Entity\Comment;
 use Singz\SocialBundle\Form\CommentType;
 use Singz\SocialBundle\Entity\Report;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class CommentController extends Controller
 {
@@ -33,11 +34,18 @@ class CommentController extends Controller
     	if(!$form->isValid()){
     		return new Response('Form not valid', Response::HTTP_BAD_REQUEST);
     	}
+    	// Create the comment
     	$comment = $form->getData();
     	$em->persist($comment);
     	$em->flush();
-    	dump($comment);
-    	return new Response(Response::HTTP_OK);
+    	// Get the html comment
+    	$html = $this->renderView('SingzSocialBundle:Comment:comment.html.twig', array(
+    		'comment' => $comment
+    	));
+    	return new JsonResponse(array(
+    		'html' => $html,
+    		'idComment' => $comment->getId()
+    	));
     }
     
     /**
