@@ -1,0 +1,16 @@
+{% extends "SingzCoreBundle::layout.html.twig" %}
+
+{% block title %}
+    Hashtagz #{{ hashtag|capitalize }} sur Singz
+{% endblock %}
+
+{% block body %}
+    <h1>#{{ hashtag|capitalize }}</h1>
+    {% if publications %}
+        {% include 'SingzSocialBundle::publications.html.twig' with {
+        'publications': publications
+        } %}
+    {% else %}
+        Aucune publication à afficher
+    {% endif %}
+{% endblock %}
