@@ -6,9 +6,9 @@ singz_user_bundle_homepage:
         id: \w+
 
 singz_user_enabled:
-    path:     /{username}/change-status/{state}
+    path:     /{id}/change-status/{state}
     defaults:
         _controller: SingzUserBundle:User:enabled
     requirements:
-        username: \w+
+        id: \d+
         state: enabled|disabled

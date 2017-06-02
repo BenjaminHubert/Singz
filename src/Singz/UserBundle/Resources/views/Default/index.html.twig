@@ -65,7 +65,7 @@
                             </li>
                             <li>
                                 {# Delete button #}
-                                <a href="{{ path('singz_user_enabled', {'username':user.username, 'state':'disabled'}) }}" class=" confirmation-alert">
+                                <a href="{{ path('singz_user_enabled', {'id':user.id, 'state':'disabled'}) }}" class=" confirmation-alert">
                                 	<i class="fa fa-trash-o fa-fw" aria-hidden="true"></i> Supprimer
                                 </a>
                             </li>
