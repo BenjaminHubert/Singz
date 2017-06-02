@@ -127,3 +127,11 @@ $('a.report-comment').click(function(e){
 	e.preventDefault();
 })
 
+$('a.reply-comment').click(function(){
+	// Display the form
+	$(this).closest('.comments-list').find('form').removeClass('hidden');
+	// Focus the form
+	$(this).closest('.comments-list').find('form').find('textarea').focus();
+	// Remove the button
+	$(this).remove();
+})

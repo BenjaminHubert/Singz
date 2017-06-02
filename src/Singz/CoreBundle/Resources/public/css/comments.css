@@ -26,7 +26,6 @@
 }
 .post .post-footer .comments-list {
   padding: 0;
-  margin-top: 20px;
   list-style-type: none;
 }
 .post .post-footer .comments-list .comment {
@@ -85,7 +84,6 @@
 }
 .post .post-footer .comments-list {
   padding: 0;
-  margin-top: 20px;
   list-style-type: none;
 }
 .post .post-footer .comments-list .comment {
@@ -119,4 +117,15 @@
 }
 .post .post-footer .comments-list .comment > .comments-list {
   margin-left: 50px;
+}
+
+a.reply-comment{
+	font-size: 80%;
+}
+p.comment-content{
+	margin: 0;
+}
+
+ul.comments-list ul.comments-list form{
+	margin-top: 10px;
 }
