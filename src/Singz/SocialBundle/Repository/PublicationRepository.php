@@ -125,6 +125,7 @@ class PublicationRepository extends \Doctrine\ORM\EntityRepository
             ->setParameter('resingz', true)
             ->andWhere('u.enabled = :isEnabled')->setParameter('isEnabled', true)
             ->andWhere('o.enabled = :isEnabled')->setParameter('isEnabled', true)
+            ->andWhere('p.state = :state')->setParameter('state', Publication::STATE_VISIBLE)
             ->getQuery()
             ->getResult();
     }

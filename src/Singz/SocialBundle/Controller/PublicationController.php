@@ -197,6 +197,19 @@ class PublicationController extends Controller
     	}
     	// Get resingz
         $resingz = $em->getRepository('SingzSocialBundle:Publication')->getResingz($publication->getVideo());
+        // Check if the current user has resingz
+        $hasResingz = false;
+        if(($currentUser = $this->getUser())){
+        	$q = $em->getRepository('SingzSocialBundle:Publication')->findBy(array(
+        		'user' => $currentUser,
+        		'video' => $publication->getVideo(),
+        		'isResingz' => true,
+        		'state' => Publication::STATE_VISIBLE
+        	));
+        	if(!empty($q)){
+        		$hasResingz = true;
+        	}
+        }
     	// Get thread
     	$thread = $publication->getThread();    	
     	// Get comments
@@ -204,10 +217,10 @@ class PublicationController extends Controller
     	// Create the forms
     	$mainForm = null;
     	$forms = [];
-    	if($this->getUser()){
+    	if($currentUser){
     		// First depth
 	    	$comment = new Comment();
-	    	$comment->setAuthor($this->getUser());
+	    	$comment->setAuthor($currentUser);
 	    	$comment->setParent(null);
 	    	$comment->setThread($publication->getThread());
 	    	$mainForm = $this
@@ -219,7 +232,7 @@ class PublicationController extends Controller
 	    	// Second depth
 	    	foreach($comments as $comment){
 	    		$c = new Comment();
-	    		$c->setAuthor($this->getUser());
+	    		$c->setAuthor($currentUser);
 	    		$c->setParent($comment);
 	    		$c->setThread($publication->getThread());
 	    		$forms[$comment->getId()] = $this
@@ -237,6 +250,7 @@ class PublicationController extends Controller
     		'thread' => $thread,
     		'main_form' => $mainForm,
     		'forms' => $forms,
+    		'hasResingz' => $hasResingz
     	));
     }
 
@@ -244,12 +258,10 @@ class PublicationController extends Controller
      * @Security("has_role('ROLE_USER')")
      */
     public function resingzAction(Request $request, $id){
-
         // Check if AJAX request
         if(!$request->isXmlHttpRequest()) {
             return new Response('Must be an XML HTTP request', Response::HTTP_BAD_REQUEST);
         }
-
         // Get publication
         $em = $this->getDoctrine()->getManager();
         $publication = $em->getRepository('SingzSocialBundle:Publication')->getPublicationById($id);
@@ -261,16 +273,32 @@ class PublicationController extends Controller
         if($owner->getIsPrivate() === true){
             throw new AccessDeniedHttpException("Vous n'êtes pas autorisé à resingzer cette publication");
         }
-
-        $newpub = new Publication();
-        $newpub->setOwner($publication->getOwner());
-        $newpub->setVideo($publication->getVideo());
-        $newpub->setDescription($publication->getDescription());
-        $newpub->setIsResingz(true);
-
-        $em->persist($newpub);
+        // Check if the resingz already exists
+        $hasResingz = false;
+        $q = $em->getRepository('SingzSocialBundle:Publication')->findOneBy(array(
+        	'user' => $this->getUser(),
+        	'video' => $publication->getVideo(),
+        	'isResingz' => true,
+        	'state' => Publication::STATE_VISIBLE
+        ));
+        if(!empty($q)){
+        	$hasResingz = true;
+        }
+        // Update the database
+        if($hasResingz){
+        	$q->setState(Publication::STATE_DELETED);
+	        $em->persist($q);
+        }else{
+	        // Publication creation
+	        $newpub = new Publication();
+	        $newpub->setOwner($publication->getOwner());
+	        $newpub->setVideo($publication->getVideo());
+	        $newpub->setDescription($publication->getDescription());
+	        $newpub->setIsResingz(true);
+	        $em->persist($newpub);
+        }
         $em->flush();
-
+		// Return OK
         return new Response(null, Response::HTTP_OK);
     }
     

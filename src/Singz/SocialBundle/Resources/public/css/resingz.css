@@ -1,0 +1,7 @@
+.btn-resingz{
+	cursor: pointer;
+	color: inherit;
+}
+.btn-resingz.isResingz{
+	color: #c94e50;
+}
