@@ -1,5 +1,6 @@
 {# Stylesheets #}
 <link href="{{ asset('bundles/singzcore/css/comments.css') }}" rel="stylesheet">
+<link href="{{ asset('bundles/singzsocial/css/resingz.css') }}" rel="stylesheet">
 
 {# Admin or publication owner actions #}
 {% if app.user %}
@@ -85,10 +86,15 @@
             Je love !
         {% endif %}
     </button>
-
-    <button onclick="resingz('{{ path('singz_social_bundle_publication_resingz', {'id': publication.id}) }}', {{ publication.id }});" class="btn btn-default">
-        <i class="fa fa-retweet" aria-hidden="true"></i> Resingzer
-    </button>
+	{# Resingz button #}
+	{% if publication.isresingz == false or hasResingz == false or publication.user != app.user %}
+        <a class="btn-resingz {{ (hasResingz == true)? 'isResingz' : '' }}" data-id-publication="{{ publication.id }}" data-href="{{ path('singz_social_bundle_publication_resingz', {'id': publication.id}) }}">
+            <i class="fa fa-retweet fa-fw" aria-hidden="true"></i>
+    	    <span class="has-resingz">
+    	        {{ (hasResingz == true)? 'Annuler' : 'Resingzer' }}
+    	    </span>
+        </a>
+     {% endif %}
 {% else %}
 	<a href="{{ path('fos_user_security_login') }}">Se connecter</a>
 {% endif %}
