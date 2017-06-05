@@ -186,14 +186,18 @@ class PublicationController extends Controller
     	//Get ID publication
     	$id = $request->request->get('idPublication');
     	if($id == null){
-    		throw $this->createNotFoundException('Parameter missing');
+    		return new JsonResponse(array(
+    			'error' => 'Parameter missing'
+    		), Response::HTTP_NOT_FOUND);
     	}
     	//Get entity manager
     	$em = $this->getDoctrine()->getManager();    	
     	// Get publication
     	$publication = $em->getRepository('SingzSocialBundle:Publication')->getPublicationById($id);
     	if($publication == null) {
-    		throw $this->createNotFoundException('Publication inexistante');
+    		return new JsonResponse(array(
+    			'error' => 'Publication inexistante'
+    		), Response::HTTP_NOT_FOUND);
     	}
     	// Get resingz
         $resingz = $em->getRepository('SingzSocialBundle:Publication')->getResingz($publication->getVideo());
@@ -211,7 +215,7 @@ class PublicationController extends Controller
         	}
         }
     	// Get thread
-    	$thread = $publication->getThread();    	
+    	$thread = $publication->getThread();
     	// Get comments
     	$comments = $thread->getVisibleComments();
     	// Create the forms
@@ -243,7 +247,7 @@ class PublicationController extends Controller
 	    	}
     	}
     	// Render the view
-    	return $this->render('SingzSocialBundle::extra.html.twig', array(
+    	$html = $this->renderView('SingzSocialBundle::extra.html.twig', array(
     		'publication' => $publication,
             'resingz' => $resingz,
     		'comments' => $comments,
@@ -252,6 +256,10 @@ class PublicationController extends Controller
     		'forms' => $forms,
     		'hasResingz' => $hasResingz
     	));
+    	
+    	return new JsonResponse(array(
+    		'html' => $html
+    	), Response::HTTP_OK);
     }
 
     /**
