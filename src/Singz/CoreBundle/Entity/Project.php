@@ -59,6 +59,13 @@ class Project
      * @ORM\Column(type="integer", name="state", nullable=false)
      */
     private $state = Project::STATE_VISIBLE;
+    
+    /**
+     * @var float $amountReached
+     * 
+     * @ORM\Column(type="float", name="amount_reached", nullable=false)
+     */
+    private $amountReached = 0;
 
 
     /**
@@ -189,5 +196,34 @@ class Project
     public function getRequester()
     {
         return $this->requester;
+    }
+
+    /**
+     * Set amountReached
+     *
+     * @param float $amountReached
+     *
+     * @return Project
+     */
+    public function setAmountReached($amountReached)
+    {
+        $this->amountReached = $amountReached;
+
+        return $this;
+    }
+
+    /**
+     * Get amountReached
+     *
+     * @return float
+     */
+    public function getAmountReached()
+    {
+        return $this->amountReached;
+    }
+    
+    public function getAmountReachedPercentage()
+    {
+    	return $this->amountReached;
     }
 }

@@ -15,6 +15,17 @@ class ProjectController extends Controller
 	 */
 	public function newAction(Request $request)
 	{
+		//Get the entity manager
+		$em = $this->getDoctrine()->getManager();
+		//Get user's project
+		$project = $em->getRepository('SingzCoreBundle:Project')->findOneBy(array(
+			'requester' => $this->getUser(),
+			'state' => Project::STATE_VISIBLE
+		));
+		if($project){
+			$this->addFlash('warning', 'Vous avez déjà un projet en cours');
+			return $this->redirectToRoute('singz_user_bundle_homepage', array('username' => $this->getUser()->getUsername()));
+		}
 		// Create new Project
 		$project = new Project();
 		// Create form
@@ -26,7 +37,6 @@ class ProjectController extends Controller
 			// Set the current user as the requester
 			$project->setRequester($this->getUser());
 			// Insert into db
-			$em = $this->getDoctrine()->getManager();
 			$em->persist($project);
 			$em->flush();
 			// Display success

@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Singz\SocialBundle\Entity\Publication;
+use Singz\CoreBundle\Entity\Project;
 
 class DefaultController extends Controller
 {
@@ -29,6 +30,11 @@ class DefaultController extends Controller
         	'user' => $user,
         	'state' => Publication::STATE_VISIBLE,
         ));
+        //Get user's project
+        $project = $em->getRepository('SingzCoreBundle:Project')->findOneBy(array(
+        	'requester' => $user,
+        	'state' => Project::STATE_VISIBLE
+        ));
 		//Get user's followers
         $followers = $em->getRepository('SingzSocialBundle:Follow')->findBy(array(
         	'follower' => $user,
@@ -42,7 +48,8 @@ class DefaultController extends Controller
 			'publications' => $publications,
             'user' => $user,
             'followers' => $followers,
-            'leaders' => $leaders
+            'leaders' => $leaders,
+        	'project' => $project
         ));
     }
 
