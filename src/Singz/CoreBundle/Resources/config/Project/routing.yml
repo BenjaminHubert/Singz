@@ -1,0 +1,4 @@
+singz_core_bundle_project_new:
+    path:     /new/
+    defaults:
+        _controller: SingzCoreBundle:Project:new

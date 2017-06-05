@@ -1,0 +1,17 @@
+{% extends "SingzCoreBundle::layout.html.twig" %}
+
+{% block title %}
+    Nouveau projet - {{ parent() }}
+{% endblock %}
+
+{% block body %}
+	<div class="row">
+		<div class="col-xs-12">
+	        <h2>Créer votre projet</h2>
+	        <hr>
+		</div>
+		<div class="col-xs-12">
+	        {% include 'SingzCoreBundle:Project:project-form.html.twig' with {'form': form} %}
+		</div>
+	</div>
+{% endblock %}

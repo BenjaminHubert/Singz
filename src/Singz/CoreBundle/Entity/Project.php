@@ -3,6 +3,7 @@
 namespace Singz\CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Project
@@ -29,6 +30,11 @@ class Project
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255)
+     * @Assert\NotNull()
+     * @Assert\Length(
+     *      min = 2,
+     *      max = 255
+     * )
      */
     private $name;
 
