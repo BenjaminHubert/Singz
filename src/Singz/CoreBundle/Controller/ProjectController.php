@@ -51,4 +51,21 @@ class ProjectController extends Controller
 			'form' => $form->createView()
 		));
 	}
+	
+	public function showAction(Request $request, $id)
+	{
+		//Get the entity manager
+		$em = $this->getDoctrine()->getManager();
+		// Get the project
+		$project = $em->getRepository('SingzCoreBundle:Project')->findOneBy(array(
+			'id' => $id,
+		));
+		if($project == null) {
+			throw $this->createNotFoundException('Project inexistant');
+		}
+		// Render the view
+		return $this->render('SingzCoreBundle:Project:show.html.twig', array(
+			'project' => $project
+		));
+	}
 }

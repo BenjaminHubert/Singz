@@ -126,7 +126,11 @@
                     {# Projects #}
                 	{% if project is not null and project.state is constant('STATE_VISIBLE', project) %}
                 		<div class="project">
-                    		<span class="project-name">{{ project.name }}</span>
+                    		<span class="project-name">
+                    		    <a href="{{ path('singz_core_bundle_project_show', {'id': project.id}) }}">
+                	                {{ project.name }}
+                	            </a>
+                	        </span>
                         	<div class="progress">
                               	<div class="progress-bar progress-bar-danger progress-bar-striped active" role="progressbar" aria-valuenow="{{ project.amountReachedPercentage }}" aria-valuemin="0" aria-valuemax="100" style="min-width: 2em; width: {{ project.amountReachedPercentage }}%;">
                                 	{{ project.amountReachedPercentage }}%

@@ -10,6 +10,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ORM\Table(name="project")
  * @ORM\Entity(repositoryClass="Singz\CoreBundle\Repository\ProjectRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Project
 {
@@ -66,7 +67,26 @@ class Project
      * @ORM\Column(type="float", name="amount_reached", nullable=false)
      */
     private $amountReached = 0;
+    
+    /**
+     * @var datetime $createdAt
+     * 
+     * @ORM\Column(type="datetime", name="created_at", nullable=false)
+     */
+    private $createdAt;
+    
+    /**
+     * @var datetime $lastEditAt
+     * 
+     * @ORM\Column(type="datetime", name="last_edit_at", nullable=false)
+     */
+    private $lastEditAt;
 
+    public function __construct()
+    {
+    	$this->createdAt = new \DateTime();
+    	$this->lastEditAt = new \DateTime();
+    }
 
     /**
      * Get id
@@ -225,5 +245,61 @@ class Project
     public function getAmountReachedPercentage()
     {
     	return $this->amountReached;
+    }
+
+    /**
+     * Set createdAt
+     *
+     * @param \DateTime $createdAt
+     *
+     * @return Project
+     */
+    public function setCreatedAt($createdAt)
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    /**
+     * Get createdAt
+     *
+     * @return \DateTime
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * Set lastEditAt
+     *
+     * @param \DateTime $lastEditAt
+     *
+     * @return Project
+     */
+    public function setLastEditAt($lastEditAt)
+    {
+        $this->lastEditAt = $lastEditAt;
+
+        return $this;
+    }
+
+    /**
+     * Get lastEditAt
+     *
+     * @return \DateTime
+     */
+    public function getLastEditAt()
+    {
+        return $this->lastEditAt;
+    }
+    
+    /**
+     * @ORM\PreUpdate
+     */
+    public function preUpdate()
+    {
+    	$this->lastEditAt = new \DateTime();
     }
 }
