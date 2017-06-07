@@ -3,7 +3,7 @@
 {% block fos_user_content %}
     <div class="row ">
         <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 well">
-            <a href="{{ path('singz_user_bundle_homepage', {'id': app.user.id}) }}">
+            <a href="{{ path('singz_user_bundle_homepage', {'username': app.user.username}) }}">
           		<img class="media-object img-responsive" src="{{ asset(app.user.image.realPath) }}" alt="{{ app.user.username }}">
           		<br>
           		<h4 class="media-heading"><i class="fa fa-microphone fa-fw" aria-hidden="true"></i> {{ app.user.username }}</h4>

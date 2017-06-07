@@ -47,7 +47,7 @@ class FollowController extends Controller
 		}
 		$em->flush();
 		return $this->redirectToRoute('singz_user_bundle_homepage', array(
-			'id' => $leader->getId()
+			'username' => $leader->getUsername()
 		));
 	}
 }

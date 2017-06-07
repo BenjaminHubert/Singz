@@ -30,23 +30,26 @@
         	{% for comment in comments if comment.parent is null and comment.state == constant('Singz\\SocialBundle\\Entity\\Comment::STATE_VISIBLE') %}
             	<li class="comment">
             		{# First depth #}
-                    {% include 'SingzSocialBundle:Publication:comment.html.twig' with {
+                    {% include 'SingzSocialBundle:Comment:comment.html.twig' with {
                         'comment': comment
                     } %}
                     {# Second depth #}
                     <ul class="comments-list">
                         {% for child in comment.children if child.state == constant('Singz\\SocialBundle\\Entity\\Comment::STATE_VISIBLE') %}
                             <li class="comment">
-								{% include 'SingzSocialBundle:Publication:comment.html.twig' with {
+								{% include 'SingzSocialBundle:Comment:comment.html.twig' with {
                                     'comment': child
                                 } %}
                             </li>
                 	    {% endfor %}
                         {% if app.user %}
+                        	<a href="#" class="reply-comment">
+                        		Répondre
+                        	</a>
                         	{# Second depth form comment #}
                         	{{ form_start(forms[comment.id], {
                         	    'attr': {
-                        	        'class': 'second-depth'
+                        	        'class': 'second-depth hidden'
                         	    }
                         	}) }}
                         		{{ form_errors(forms[comment.id]) }}
@@ -78,13 +81,13 @@
 {% if app.user %}
     <div id="comment-template" style="display:none">
     	<li class="comment">
-    		<a class="pull-left" href="{{ path('singz_user_bundle_homepage', {'id': app.user.id}) }}">
+    		<a class="pull-left" href="{{ path('singz_user_bundle_homepage', {'username': app.user.username}) }}">
                 <img class="avatar" src="{{ asset(app.user.image.realPath) }}" alt="avatar">
             </a>
             <div class="comment-body">
                 <div class="comment-heading">
                     <h4 class="user">
-                        <a class="pull-left" href="{{ path('singz_user_bundle_homepage', {'id': app.user.id}) }}">
+                        <a class="pull-left" href="{{ path('singz_user_bundle_homepage', {'username': app.user.username}) }}">
                             {{ app.user.username }}
     					</a>
                     </h4>

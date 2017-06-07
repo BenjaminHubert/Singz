@@ -1,40 +1,51 @@
 {# Stylesheets #}
 <link href="{{ asset('bundles/singzcore/css/comments.css') }}" rel="stylesheet">
+<link href="{{ asset('bundles/singzsocial/css/resingz.css') }}" rel="stylesheet">
 
 {# Admin or publication owner actions #}
-{% if app.user and (app.user.id == publication.user.id or is_granted('ROLE_ADMIN'))  %}
+{% if app.user %}
 	<div class="dropdown pull-right">
-      	<button style="color: black" class="btn btn-link dropdown-toggle btn-xs" type="button" id="dropdownMenuPost" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-			Actions <i class="fa fa-caret-down fa-fw" aria-hidden="true"></i>
-		</button>
-    	<ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuPost">
-    		<li>
-           		{# Edit button #}
-                <a href="{{ path('singz_social_bundle_publication_edit', {'id': publication.id}) }}" class="">
-                	<i class="fa fa-pencil-square-o" aria-hidden="true"></i> Editer
-                </a>
-            </li>
-            <li>
-                {# Delete button #}
-                <a href="{{ path('singz_social_bundle_publication_delete', {'id': publication.id}) }}" class=" confirmation-alert">
-                	<i class="fa fa-trash-o" aria-hidden="true"></i> Supprimer
-                </a>
-            </li>
-		</ul>
+          	<button style="color: black" class="btn btn-link dropdown-toggle btn-xs" type="button" id="dropdownMenuPost" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+    			Actions <i class="fa fa-caret-down fa-fw" aria-hidden="true"></i>
+    		</button>
+        	<ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuPost">
+        		{% if app.user != publication.user or is_granted('ROLE_ADMIN')  %}
+               		{# Report button #}
+            		<li>
+                        <a href="{{ path('singz_social_bundle_publication_report', {'id': publication.id}) }}" class="report-comment">
+                        	<i class="fa fa-exclamation-circle fa-fw" aria-hidden="true"></i> Signaler
+                        </a>
+                    </li>
+                {% endif %}
+        		{% if app.user == publication.user or is_granted('ROLE_ADMIN')  %}
+               		{# Edit button #}
+            		<li>
+                        <a href="{{ path('singz_social_bundle_publication_edit', {'id': publication.id}) }}" class="">
+                        	<i class="fa fa-pencil-square-o fa-fw" aria-hidden="true"></i> Editer
+                        </a>
+                    </li>
+                    {# Delete button #}
+                    <li>
+                        <a href="{{ path('singz_social_bundle_publication_delete', {'id': publication.id}) }}" class="confirmation-alert">
+                        	<i class="fa fa-trash-o fa-fw" aria-hidden="true"></i> Supprimer
+                        </a>
+                    </li>
+                {% endif %}
+    		</ul>
 	</div>
 {% endif %}
 {# User and loves #}
 <div class="media">
     <div class="media-left">
     	{# User image #}
-    	<a href="{{ path('singz_user_bundle_homepage', {'id': publication.user.id}) }}">	
+    	<a href="{{ path('singz_user_bundle_homepage', {'username': publication.user.username}) }}">
     		<img class="media-object img-circle" style="width:42px;height:42px"  src="{{ asset(publication.user.image.realPath) }}" alt="{{ publication.user.username }}">
     	</a>
     </div>
     <div class="media-body">
     	{# Username #}
     	<p>
-            <a href="{{ path('singz_user_bundle_homepage', {'id': publication.user.id}) }}">
+            <a href="{{ path('singz_user_bundle_homepage', {'username': publication.user.username}) }}">
                 {{ publication.user.username }}
             </a>
         </p>
@@ -43,7 +54,7 @@
         {# Number of love & comments #}
         <p>
             <i class="fa fa-fw fa-heart" aria-hidden="true"></i> <span id="nbloves-{{ publication.id }}">{{ publication.numLoves }}</span>
-            <i class="fa fa-fw fa-comments" aria-hidden="true"></i> <span class="nbcomments-{{ publication.id }}" id="nbcomments-{{ publication.id }}">{{ publication.thread.visibleComments|length }}</span>
+            <i class="fa fa-fw fa-comments" aria-hidden="true"></i> <span class="nbcomments-{{ publication.id }}" id="nbcomments-{{ publication.id }}">{{ publication.thread.numComments }}</span>
             <span {% if resingz|length == 0 %} style="display: none" {% endif %}>
                 <i class="fa fa-fw fa-retweet" aria-hidden="true"></i> <span class="nbresingz-{{ publication.id }}" id="nbresingz-{{ publication.id }}">{{ resingz|length }}</span>
             </span>
@@ -53,11 +64,14 @@
 {# In case of resingz #}
 {% if publication.isresingz %}
     <p>
-        <a href="{{ path('singz_user_bundle_homepage', {'id': publication.owner.id}) }}"><i class="fa fa-retweet" aria-hidden="true"></i> Crédit : {{ publication.owner.username }}</a>
+        <a href="{{ path('singz_user_bundle_homepage', {'username': publication.owner.username}) }}"><i class="fa fa-retweet" aria-hidden="true"></i> Crédit : {{ publication.owner.username }}</a>
     </p>
 {% endif %}
 {# Publication description #}
-<p>{{ publication.description }}</p>
+{#<p>{{ publication.description|preg_replace('/#+([a-zA-Z0-9_]+)/', '<a href="{{ path(\'singz_hashtag\', { \'hashtag\': $1 }) }}">$0</a>')|raw }}</p>#}
+<p>
+    {{ publication.description|preg_replace('/#+([a-zA-Z0-9]+)/', '<a href="'~path('singz_hashtagz')~'?k=$1">$0</a>')|raw }}
+</p>
 {# love button #}
 {% if app.user %}
     <button id="love-{{ publication.id }}" onclick="lovethis(path, {{ publication.id }}, {{ app.user.id }})" class="btn btn-default">
@@ -72,17 +86,22 @@
             Je love !
         {% endif %}
     </button>
-
-    <button onclick="resingz('{{ path('singz_social_bundle_publication_resingz', {'id': publication.id}) }}', {{ publication.id }});" class="btn btn-default">
-        <i class="fa fa-retweet" aria-hidden="true"></i> Resingzer
-    </button>
+	{# Resingz button #}
+	{% if publication.isresingz == false or hasResingz == false or publication.user != app.user %}
+        <a class="btn-resingz {{ (hasResingz == true)? 'isResingz' : '' }}" data-id-publication="{{ publication.id }}" data-href="{{ path('singz_social_bundle_publication_resingz', {'id': publication.id}) }}">
+            <i class="fa fa-retweet fa-fw" aria-hidden="true"></i>
+    	    <span class="has-resingz">
+    	        {{ (hasResingz == true)? 'Annuler' : 'Resingzer' }}
+    	    </span>
+        </a>
+     {% endif %}
 {% else %}
 	<a href="{{ path('fos_user_security_login') }}">Se connecter</a>
 {% endif %}
 {# Comments #}
 <div class="comments-container">
     <div id="comment-thread" data-thread="{{ thread.id }}">
-        {% include 'SingzSocialBundle:Publication:comments.html.twig' with {
+        {% include 'SingzSocialBundle:Comment:comments.html.twig' with {
             'comments': comments,
             'thread': thread,
             'view': 'tree',

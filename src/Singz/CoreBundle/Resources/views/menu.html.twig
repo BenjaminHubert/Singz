@@ -10,7 +10,7 @@
 	<ul id="cd-primary-nav" class="cd-primary-nav is-fixed">
 		{% if app.user %}
     		<li>
-    			<a href="{{ path('singz_user_bundle_homepage', {'id': app.user.id}) }}">
+    			<a href="{{ path('singz_user_bundle_homepage', {'username': app.user.username}) }}">
     				<img style="width:42px;height:42px" class="img-circle" src="{{ asset(app.user.image.realPath)}}" alt="{{ app.user.username }}">
     			</a>
     		</li>

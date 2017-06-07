@@ -40,21 +40,21 @@ class UserController extends Controller
         	'edit_form' => $editForm->createView(),
         ));
     }
-    
+
     public function enabledAction($id, $state)
     {
-    	$em = $this->getDoctrine()->getManager();
-    	$user = $em->getRepository('SingzUserBundle:User')->find($id);
-    	if($user == null) {
-    		throw $this->createNotFoundException('Utilisateur inexistant');
-    	}
-    	if($state == 'enabled'){
-    		$user->setEnabled(true);
-    	}elseif($state == 'disabled'){
-    		$user->setEnabled(false);
-    	}
-    	$em->flush();
-    	return $this->redirectToRoute('singz_admin_user_list');
+        $em = $this->getDoctrine()->getManager();
+        $user = $em->getRepository('SingzUserBundle:User')->find($id);
+        if($user == null) {
+            throw $this->createNotFoundException('Utilisateur inexistant');
+        }
+        if($state == 'enabled'){
+            $user->setEnabled(true);
+        }elseif($state == 'disabled'){
+            $user->setEnabled(false);
+        }
+        $em->flush();
+        return $this->redirectToRoute('singz_admin_user_list');
     }
 
 }

@@ -53,7 +53,7 @@
             	{# Options #}
             	{% if user == app.user %}
                     <div class="dropdown pull-right">
-                      	<button style="color: black" class="btn btn-link dropdown-toggle btn-xs" type="button" id="dropdownMenuProfile" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                      	<button style="color: black" class="btn btn-default dropdown-toggle btn-xs" type="button" id="dropdownMenuProfile" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                 			Options <i class="fa fa-caret-down fa-fw" aria-hidden="true"></i>
                 		</button>
                     	<ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuProfile">
@@ -64,22 +64,22 @@
                                 </a>
                             </li>
                             <li>
-                                {# Delete button #}
-                                <a href="{{ path('singz_user_enabled', {'id':user.id, 'state':'disabled'}) }}" class=" confirmation-alert">
-                                	<i class="fa fa-trash-o fa-fw" aria-hidden="true"></i> Supprimer
+                                {# Disable button #}
+                                <a href="{{ path('singz_user_enabled', {'id':user.id, 'state':'disabled'}) }}" class="confirmation-alert">
+                                	<i class="fa fa-trash-o fa-fw" aria-hidden="true"></i> Désactiver mon compte
                                 </a>
                             </li>
                 		</ul>
                 	</div>
                 {% endif %}
             	{# Image #}
-                <a class="pull-left" href="{{ path('singz_user_bundle_homepage', {'id':user.id}) }}">
+                <a class="pull-left" href="{{ path('singz_user_bundle_homepage', {'username':user.username}) }}">
                     <img class="media-object dp img-circle" src="{{ asset(user.image.realPath) }}" style="width: 100px;height:100px;">
                 </a>
                 <div class="media-body">
                 	{# Username #}
                     <h4 class="media-heading">
-                        <a href="{{ path('singz_user_bundle_homepage', {'id':user.id}) }}">
+                        <a href="{{ path('singz_user_bundle_homepage', {'username':user.username}) }}">
                             {{ user.username }}
                         </a>
                         <small> {% if 'ROLE_STARZ' in user.roles %} &#9733; Starz {% endif %}</small>
@@ -196,7 +196,7 @@
                                 <div role="tabpanel" class="tab-pane" id="leaders">
         							<ul class="list-group">
             							{% for user in leaders %}
-                                        	<a href="{{ path('singz_user_bundle_homepage', {'id': user.follower.id}) }}" class="list-group-item">
+                                        	<a href="{{ path('singz_user_bundle_homepage', {'username': user.follower.username}) }}" class="list-group-item">
         										<img style="width:50px;height:50px" src="{{ asset(user.follower.image.realPath) }}" alt="Error loading" class="img-circle">
             									{{ user.follower.username }}
             								</a>
@@ -206,7 +206,7 @@
                                 <div role="tabpanel" class="tab-pane" id="followers">
         							<ul class="list-group">
             							{% for user in followers %}
-                                        	<a href="{{ path('singz_user_bundle_homepage', {'id': user.leader.id}) }}" class="list-group-item">
+                                        	<a href="{{ path('singz_user_bundle_homepage', {'username': user.leader.username}) }}" class="list-group-item">
         										<img style="width:50px;height:50px" src="{{ asset(user.leader.image.realPath) }}" alt="Error loading" class="img-circle">
             									{{ user.leader.username }}
             								</a>
@@ -227,10 +227,18 @@
 {% block end_javascripts %}
 	<script>
     	$(function(){
+        	// List of followers
     		$('button[data-target="#followersModal"]').click(function(){
         		var tab = $(this).attr('data-tab');
     			$('.nav-tabs a[href="#'+tab+'"]').tab('show');
     		});
+    		// Confirm to disable the account
+    		$('a.confirmation-alert').click(function(e){
+				if(confirm('Vous êtes sur le point de désactiver votre compte. Êtes vous sûr?')){
+					return true;
+				}
+				return false;
+        	});
     	});
 	</script>
 {% endblock %}

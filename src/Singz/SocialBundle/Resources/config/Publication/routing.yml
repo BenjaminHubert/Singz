@@ -45,24 +45,9 @@ singz_social_bundle_publication_extra_info:
         _controller: SingzSocialBundle:Publication:getPublicationExtra
 
 # ajax
-singz_social_bundle_new_comment:
-    path:     /new-comment/
+singz_social_bundle_publication_report:
+    path:     /{id}/report/
     defaults:
-        _controller: SingzSocialBundle:Publication:newComment
-
-# ajax
-singz_social_bundle_edit_comment:
-    path:     /{idComment}/{state}/edit-comment/
-    defaults:
-        _controller: SingzSocialBundle:Publication:editComment
-    requirements:
-        idComment: \d+
-        state: \d+
-
-# ajax
-singz_social_bundle_report_comment:
-    path:     /{idComment}/report-comment/
-    defaults:
-        _controller: SingzSocialBundle:Publication:reportComment
+        _controller: SingzSocialBundle:Publication:report
     requirements:
         idComment: \d+

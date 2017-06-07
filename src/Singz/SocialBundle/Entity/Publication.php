@@ -14,6 +14,9 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Publication
 {
+	const STATE_VISIBLE = 0;
+	const STATE_DELETED = 1;
+	const STATE_SPAM = 2;
     /**
      * @var int
      *
@@ -105,6 +108,23 @@ class Publication
     private $isResingz = false;
     
     /**
+     * 
+     * @var int $state
+     * 
+     * @ORM\Column(type="integer", name="state")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $state = Publication::STATE_VISIBLE;
+    
+    /**
+     * @var Report $reports
+     * 
+     * @ORM\OneToMany(targetEntity="Singz\SocialBundle\Entity\Report", mappedBy="publication")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $reports;
+    
+    /**
      * Constructor
      */
     public function __construct()
@@ -113,6 +133,7 @@ class Publication
     	$this->lastEdit = new \DateTime();
         $this->loves = new \Doctrine\Common\Collections\ArrayCollection();
         $this->notifications = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->reports = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -417,5 +438,63 @@ class Publication
     public function getIsResingz()
     {
         return $this->isResingz;
+    }
+
+    /**
+     * Set state
+     *
+     * @param integer $state
+     *
+     * @return Publication
+     */
+    public function setState($state)
+    {
+        $this->state = $state;
+
+        return $this;
+    }
+
+    /**
+     * Get state
+     *
+     * @return integer
+     */
+    public function getState()
+    {
+        return $this->state;
+    }
+
+    /**
+     * Add report
+     *
+     * @param \Singz\SocialBundle\Entity\Report $report
+     *
+     * @return Publication
+     */
+    public function addReport(\Singz\SocialBundle\Entity\Report $report)
+    {
+        $this->reports[] = $report;
+
+        return $this;
+    }
+
+    /**
+     * Remove report
+     *
+     * @param \Singz\SocialBundle\Entity\Report $report
+     */
+    public function removeReport(\Singz\SocialBundle\Entity\Report $report)
+    {
+        $this->reports->removeElement($report);
+    }
+
+    /**
+     * Get reports
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getReports()
+    {
+        return $this->reports;
     }
 }

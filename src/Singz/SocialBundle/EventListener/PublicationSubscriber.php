@@ -27,22 +27,6 @@ class PublicationSubscriber implements EventSubscriber
 		/* Update last edit */
 		$publication->setLastEdit(new \DateTime());
 	}
-	
-	public function preRemove(LifecycleEventArgs $args){
-		$publication = $args->getEntity();
-		// only act on some "Publication" entity
-		if (!$publication instanceof Publication) {
-			return;
-		}
-		// Entity Manager
-		$em = $args->getEntityManager();
-		// Disable its thread
-		if(!$publication->getThread()){
-			throw new \Exception('Thread not found');
-		}
-		$publication->getThread()->setCommentable(false);
-// 		$em->persist($thread);
-	}
 
     public function prePersist(LifecycleEventArgs $args){
         $publication = $args->getEntity();
@@ -50,7 +34,7 @@ class PublicationSubscriber implements EventSubscriber
         if (!$publication instanceof Publication) {
             return;
         }
-        // Entity Manager
+        // Set the user
         if($publication->getUser() == null){
             $publication->setUser($this->context->getToken()->getUser());
         }
@@ -91,7 +75,6 @@ class PublicationSubscriber implements EventSubscriber
 	public function getSubscribedEvents() {
 		return array(
 			'preUpdate',
-			'preRemove',
             'prePersist',
 			'postPersist',
 		);

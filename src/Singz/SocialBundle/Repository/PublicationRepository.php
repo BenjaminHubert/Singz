@@ -1,5 +1,7 @@
 <?php
 namespace Singz\SocialBundle\Repository;
+use Singz\SocialBundle\Entity\Publication;
+
 /**
  * PublicationRepository
  *
@@ -11,12 +13,16 @@ class PublicationRepository extends \Doctrine\ORM\EntityRepository
     public function getNewsFeed($user) {
         return $this->createQueryBuilder('p')
             ->leftJoin('p.user', 'u')->addSelect('u')
+            ->leftJoin('p.owner', 'o')->addSelect('o')
             ->leftJoin('u.leaders', 'leaders')->addSelect('leaders')
             ->leftJoin('p.loves', 'l')->addSelect('l')
             ->where('(leaders.follower = :follower AND leaders.isPending = :pending) OR p.user = :user')
             ->setParameter('follower', $user)
             ->setParameter('user', $user)
             ->setParameter('pending', false)
+            ->andWhere('p.state = :state')->setParameter('state', Publication::STATE_VISIBLE)
+            ->andWhere('u.enabled = :isEnabled')->setParameter('isEnabled', true)
+            ->andWhere('o.enabled = :isEnabled')->setParameter('isEnabled', true)
             ->orderBy('p.date', 'DESC')
             ->getQuery()
             ->getResult();
@@ -28,12 +34,31 @@ class PublicationRepository extends \Doctrine\ORM\EntityRepository
             ->leftJoin('p.loves', 'l')->addSelect('l')
             ->leftJoin('p.thread', 't')->addSelect('t')
             ->where('p.id = :id')->setParameter('id', $id)
+            ->andWhere('p.state = :state')->setParameter('state', Publication::STATE_VISIBLE)
+            ->andWhere('u.enabled = :isEnabled')->setParameter('isEnabled', true)
+            ->andWhere('o.enabled = :isEnabled')->setParameter('isEnabled', true)
             ->getQuery()
             ->getOneOrNullResult();
+    }
+    public function getPublicationByHashtag($user, $tag) {
+        return $this->createQueryBuilder('p')
+            ->leftJoin('p.user', 'u')->addSelect('u')
+            ->leftJoin('p.owner', 'o')->addSelect('o')
+            ->leftJoin('u.leaders', 'leaders')->addSelect('leaders')
+            ->where('p.description LIKE :tag AND (leaders.follower = :follower AND leaders.isPending = :pending)')
+            ->setParameter('tag', "%#".$tag."%")
+            ->setParameter('follower', $user)
+            ->setParameter('pending', false)
+            ->andWhere('u.enabled = :isEnabled')->setParameter('isEnabled', true)
+            ->andWhere('o.enabled = :isEnabled')->setParameter('isEnabled', true)
+            ->orderBy('p.date', 'DESC')
+            ->getQuery()
+            ->getResult();
     }
     public function getBrowseAll($offset, $limit, $interval, $user) {
         return $this->createQueryBuilder('p')
             ->innerJoin('p.user', 'u')->addSelect('u')
+            ->innerJoin('p.owner', 'o')->addSelect('o')
             ->leftJoin('u.followers', 'f')->addSelect('f')
             ->leftJoin('p.loves', 'l')->addSelect('l')
             //->where('p.date > :interval')
@@ -42,6 +67,9 @@ class PublicationRepository extends \Doctrine\ORM\EntityRepository
             ->setParameter('private', false)
             ->setParameter('follower', $user)
             ->setParameter('pending', false)
+            ->andWhere('p.state = :state')->setParameter('state', Publication::STATE_VISIBLE)
+            ->andWhere('u.enabled = :isEnabled')->setParameter('isEnabled', true)
+            ->andWhere('o.enabled = :isEnabled')->setParameter('isEnabled', true)
             ->orderBy('p.numLoves', 'DESC')
             ->addOrderBy('p.date', 'DESC')
             //->setFirstResult($offset)
@@ -52,9 +80,13 @@ class PublicationRepository extends \Doctrine\ORM\EntityRepository
     public function getBrowseStarz($offset, $limit, $interval) {
         return $this->createQueryBuilder('p')
             ->innerJoin('p.user', 'u')->addSelect('u')
+            ->innerJoin('p.owner', 'o')->addSelect('o')
             ->leftJoin('p.loves', 'l')->addSelect('l')
             //->where('p.date > :interval')->setParameter('interval', $interval)
             ->where('u.roles LIKE :starz')->setParameter('starz', '%STARZ%')
+            ->andWhere('p.state = :state')->setParameter('state', Publication::STATE_VISIBLE)
+            ->andWhere('u.enabled = :isEnabled')->setParameter('isEnabled', true)
+            ->andWhere('o.enabled = :isEnabled')->setParameter('isEnabled', true)
             ->orderBy('p.numLoves', 'DESC')
             ->addOrderBy('p.date', 'DESC')
             //->setFirstResult($offset)
@@ -65,6 +97,7 @@ class PublicationRepository extends \Doctrine\ORM\EntityRepository
     public function getBrowseSingzers($offset, $limit, $interval, $user) {
         return $this->createQueryBuilder('p')
             ->innerJoin('p.user', 'u')->addSelect('u')
+            ->innerJoin('p.owner', 'o')->addSelect('o')
             ->leftJoin('u.followers', 'f')->addSelect('f')
             ->leftJoin('p.loves', 'l')->addSelect('l')
             //->where('p.date > :interval')->setParameter('interval', $interval)
@@ -73,6 +106,9 @@ class PublicationRepository extends \Doctrine\ORM\EntityRepository
             ->setParameter('private', false)
             ->setParameter('follower', $user)
             ->setParameter('pending', false)
+            ->andWhere('p.state = :state')->setParameter('state', Publication::STATE_VISIBLE)
+            ->andWhere('u.enabled = :isEnabled')->setParameter('isEnabled', true)
+            ->andWhere('o.enabled = :isEnabled')->setParameter('isEnabled', true)
             ->orderBy('p.numLoves', 'DESC')
             ->addOrderBy('p.date', 'DESC')
             //->setFirstResult($offset)
@@ -82,9 +118,14 @@ class PublicationRepository extends \Doctrine\ORM\EntityRepository
     }
     public function getResingz($video) {
         return $this->createQueryBuilder('p')
+            ->innerJoin('p.user', 'u')->addSelect('u')
+            ->innerJoin('p.owner', 'o')->addSelect('o')
             ->where('p.video = :video AND p.isResingz = :resingz')
             ->setParameter('video', $video)
             ->setParameter('resingz', true)
+            ->andWhere('u.enabled = :isEnabled')->setParameter('isEnabled', true)
+            ->andWhere('o.enabled = :isEnabled')->setParameter('isEnabled', true)
+            ->andWhere('p.state = :state')->setParameter('state', Publication::STATE_VISIBLE)
             ->getQuery()
             ->getResult();
     }

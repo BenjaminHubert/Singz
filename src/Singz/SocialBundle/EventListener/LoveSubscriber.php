@@ -12,7 +12,7 @@ class LoveSubscriber implements EventSubscriber
     public function prePersist(LifecycleEventArgs $args)
     {
     	$love = $args->getEntity();
-    	// only act on some "Publication" entity
+    	// only act on some "Love" entity
     	if (!$love instanceof Love) {
     		return;
     	}
@@ -23,7 +23,7 @@ class LoveSubscriber implements EventSubscriber
     public function postPersist(LifecycleEventArgs $args)
     {
     	$love = $args->getEntity();
-    	// only act on some "Publication" entity
+    	// only act on some "Love" entity
     	if (!$love instanceof Love) {
     		return;
     	}
@@ -45,7 +45,7 @@ class LoveSubscriber implements EventSubscriber
     public function preRemove(LifecycleEventArgs $args)
     {
     	$love = $args->getEntity();
-    	// only act on some "Publication" entity
+    	// only act on some "Love" entity
     	if (!$love instanceof Love) {
     		return;
     	}

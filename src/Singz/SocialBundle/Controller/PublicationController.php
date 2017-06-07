@@ -52,7 +52,7 @@ class PublicationController extends Controller
     			return $this->redirectToRoute('singz_social_bundle_publication_show', array('id' => $publication->getId()));
     		}
     	}
-    	
+
         return $this->render('SingzSocialBundle:Publication:new.html.twig', array(
             'form' => $form->createView()
         ));
@@ -114,8 +114,8 @@ class PublicationController extends Controller
     	if(!$this->isGranted('ROLE_ADMIN') && $publication->getUser() != $this->getUser()){
     		throw new AccessDeniedHttpException("Vous n'êtes pas autorisé à supprimer cette publication");
     	}
-    	// suppression
-    	$em->remove($publication);
+    	// update
+    	$publication->setState(Publication::STATE_DELETED);
     	$em->flush();
     	//on affiche un message
     	$this->addFlash('success', 'Publication supprimée avec succès.');
@@ -186,156 +186,90 @@ class PublicationController extends Controller
     	//Get ID publication
     	$id = $request->request->get('idPublication');
     	if($id == null){
-    		throw $this->createNotFoundException('Parameter missing');
+    		return new JsonResponse(array(
+    			'error' => 'Parameter missing'
+    		), Response::HTTP_NOT_FOUND);
     	}
     	//Get entity manager
     	$em = $this->getDoctrine()->getManager();    	
     	// Get publication
     	$publication = $em->getRepository('SingzSocialBundle:Publication')->getPublicationById($id);
     	if($publication == null) {
-    		throw $this->createNotFoundException('Publication inexistante');
+    		return new JsonResponse(array(
+    			'error' => 'Publication inexistante'
+    		), Response::HTTP_NOT_FOUND);
     	}
     	// Get resingz
         $resingz = $em->getRepository('SingzSocialBundle:Publication')->getResingz($publication->getVideo());
+        // Check if the current user has resingz
+        $hasResingz = false;
+        if(($currentUser = $this->getUser())){
+        	$q = $em->getRepository('SingzSocialBundle:Publication')->findBy(array(
+        		'user' => $currentUser,
+        		'video' => $publication->getVideo(),
+        		'isResingz' => true,
+        		'state' => Publication::STATE_VISIBLE
+        	));
+        	if(!empty($q)){
+        		$hasResingz = true;
+        	}
+        }
     	// Get thread
-    	$thread = $publication->getThread();    	
+    	$thread = $publication->getThread();
     	// Get comments
     	$comments = $thread->getVisibleComments();
     	// Create the forms
     	$mainForm = null;
     	$forms = [];
-    	if($this->getUser()){
+    	if($currentUser){
     		// First depth
 	    	$comment = new Comment();
-	    	$comment->setAuthor($this->getUser());
+	    	$comment->setAuthor($currentUser);
 	    	$comment->setParent(null);
 	    	$comment->setThread($publication->getThread());
 	    	$mainForm = $this
 	    		->createForm(CommentType::class, $comment, array(
-	    			'action' => $this->generateUrl('singz_social_bundle_new_comment')
+	    			'action' => $this->generateUrl('singz_social_bundle_comment_new')
 	    		))
 	    		->createView();
 	    		
 	    	// Second depth
 	    	foreach($comments as $comment){
 	    		$c = new Comment();
-	    		$c->setAuthor($this->getUser());
+	    		$c->setAuthor($currentUser);
 	    		$c->setParent($comment);
 	    		$c->setThread($publication->getThread());
 	    		$forms[$comment->getId()] = $this
 		    		->createForm(CommentType::class, $c, array(
-		    			'action' => $this->generateUrl('singz_social_bundle_new_comment')
+		    			'action' => $this->generateUrl('singz_social_bundle_comment_new')
 		    		))
 		    		->createView();
 	    	}
     	}
     	// Render the view
-    	return $this->render('SingzSocialBundle::extra.html.twig', array(
+    	$html = $this->renderView('SingzSocialBundle::extra.html.twig', array(
     		'publication' => $publication,
             'resingz' => $resingz,
     		'comments' => $comments,
     		'thread' => $thread,
     		'main_form' => $mainForm,
     		'forms' => $forms,
+    		'hasResingz' => $hasResingz
     	));
-    }
-    
-    /**
-     * @Security("has_role('ROLE_USER')")
-     * @param Request $request
-     */
-    public function newCommentAction(Request $request){
-    	// Check if AJAX request
-    	if(!$request->isXmlHttpRequest()) {
-    		return new Response('Must be an XML HTTP request', Response::HTTP_BAD_REQUEST);
-    	}
-    	// Get entity manager
-    	$em = $this->getDoctrine()->getManager();
-    	// Create form
-    	$comment = new Comment();
-    	$form = $this->createForm(CommentType::class, $comment);
-    	$form->handleRequest($request);
-    	if(!$form->isSubmitted()){
-    		return new Response('Form not submitted', Response::HTTP_BAD_REQUEST);
-    	}
-    	if(!$form->isValid()){
-    		return new Response('Form not valid', Response::HTTP_BAD_REQUEST);
-    	}
-    	$comment = $form->getData();
-    	$em->persist($comment);
-    	$em->flush();
-    	return new Response(Response::HTTP_OK);
-    }
-    
-    /**
-     * @Security("has_role('ROLE_USER')")
-     */
-    public function editCommentAction(Request $request, $idComment, $state){
-    	// Check if AJAX request
-    	if(!$request->isXmlHttpRequest()) {
-    		return new Response('Must be an XML HTTP request', Response::HTTP_BAD_REQUEST);
-    	}
-    	// Get entity manager
-    	$em = $this->getDoctrine()->getManager();
-    	// Get comment
-    	$comment = $em->getRepository('SingzSocialBundle:Comment')->find($idComment);
-    	if(!$comment){
-    		return $this->createNotFoundException('Comment does not exist');
-    	}
-    	// Check if state exist
-    	if($state != Comment::STATE_DELETED && $state != Comment::STATE_PENDING && $state != Comment::STATE_SPAM && $state != Comment::STATE_VISIBLE){
-    		return new Response('Unknown comment state', Response::HTTP_BAD_REQUEST);
-    	}
-    	// Check the rights
-    	if($state == Comment::STATE_PENDING || $state == Comment::STATE_SPAM || $state == Comment::STATE_VISIBLE){
-    		$this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'You do not have rights to access');
-    	}
-    	if($state == Comment::STATE_DELETED && ($comment->getAuthor() != $this->getUser() || $this->get('security.authorization_checker')->isGranted('ROLE_ADMIN') === false)){
-    		throw $this->createAccessDeniedException('You do not have rights to access');
-    	}
-    	//Update the state
-    	$comment->setState($state);
-    	$em->persist($comment);
-    	$em->flush();
     	
-    	return new Response();
-    }
-    
-    /**
-     * @Security("has_role('ROLE_USER')")
-     */
-    public function reportCommentAction(Request $request, $idComment){
-    	// Check if AJAX request
-    	if(!$request->isXmlHttpRequest()) {
-    		return new Response('Must be an XML HTTP request', Response::HTTP_BAD_REQUEST);
-    	}
-    	// Get entity manager
-    	$em = $this->getDoctrine()->getManager();
-    	// Get comment
-    	$comment = $em->getRepository('SingzSocialBundle:Comment')->find($idComment);
-    	if(!$comment){
-    		return $this->createNotFoundException('Comment does not exist');
-    	}
-    	// Create report
-    	$report = new Report();
-    	$report->setReporter($this->getUser());
-    	$report->setComment($comment);
-    	$em->persist($report);
-    	$em->flush();
-    	 
-    	return new Response();
+    	return new JsonResponse(array(
+    		'html' => $html
+    	), Response::HTTP_OK);
     }
 
     /**
      * @Security("has_role('ROLE_USER')")
      */
     public function resingzAction(Request $request, $id){
-
         // Check if AJAX request
         if(!$request->isXmlHttpRequest()) {
             return new Response('Must be an XML HTTP request', Response::HTTP_BAD_REQUEST);
         }
-
         // Get publication
         $em = $this->getDoctrine()->getManager();
         $publication = $em->getRepository('SingzSocialBundle:Publication')->getPublicationById($id);
@@ -347,18 +281,57 @@ class PublicationController extends Controller
         if($owner->getIsPrivate() === true){
             throw new AccessDeniedHttpException("Vous n'êtes pas autorisé à resingzer cette publication");
         }
-
-        $newpub = new Publication();
-        $newpub->setOwner($publication->getOwner());
-        $newpub->setVideo($publication->getVideo());
-        $newpub->setDescription($publication->getDescription());
-        $newpub->setIsResingz(true);
-
-        $em->persist($newpub);
+        // Check if the resingz already exists
+        $hasResingz = false;
+        $q = $em->getRepository('SingzSocialBundle:Publication')->findOneBy(array(
+        	'user' => $this->getUser(),
+        	'video' => $publication->getVideo(),
+        	'isResingz' => true,
+        	'state' => Publication::STATE_VISIBLE
+        ));
+        if(!empty($q)){
+        	$hasResingz = true;
+        }
+        // Update the database
+        if($hasResingz){
+        	$q->setState(Publication::STATE_DELETED);
+	        $em->persist($q);
+        }else{
+	        // Publication creation
+	        $newpub = new Publication();
+	        $newpub->setOwner($publication->getOwner());
+	        $newpub->setVideo($publication->getVideo());
+	        $newpub->setDescription($publication->getDescription());
+	        $newpub->setIsResingz(true);
+	        $em->persist($newpub);
+        }
         $em->flush();
-
+		// Return OK
         return new Response(null, Response::HTTP_OK);
     }
     
+    /**
+     * @Security("has_role('ROLE_USER')")
+     */
+    public function reportAction(Request $request, $id){
+    	// Check if AJAX request
+    	if(!$request->isXmlHttpRequest()) {
+    		return new Response('Must be an XML HTTP request', Response::HTTP_BAD_REQUEST);
+    	}
+    	// Get entity manager
+    	$em = $this->getDoctrine()->getManager();
+    	// Get publication
+    	$publication = $em->getRepository('SingzSocialBundle:Publication')->find($id);
+    	if(!$publication){
+    		return $this->createNotFoundException('La publication n\'existe pas');
+    	}
+    	// Create report
+    	$report = new Report();
+    	$report->setReporter($this->getUser());
+    	$report->setPublication($publication);
+    	$em->persist($report);
+    	$em->flush();
     
+    	return new Response();
+    }
 }

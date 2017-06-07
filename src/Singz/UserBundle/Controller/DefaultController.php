@@ -7,21 +7,27 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Singz\SocialBundle\Entity\Publication;
 
 class DefaultController extends Controller
 {
-    public function indexAction(Request $request, $id)
+    public function indexAction(Request $request, $username)
     {
     	//Get entity manager
         $em = $this->getDoctrine()->getManager();
 		//Get the requested user
-        $user = $em->getRepository('SingzUserBundle:User')->find($id);
+        $userManager = $this->get('fos_user.user_manager');
+        $user = $userManager->findUserBy(array(
+        	'username' => $username,
+        	'enabled' => true
+        ));
         if(!$user){
         	throw $this->createNotFoundException('Utilisateur non trouvé');
         }
 		//Get user's publications
         $publications = $em->getRepository('SingzSocialBundle:Publication')->findBy(array(
         	'user' => $user,
+        	'state' => Publication::STATE_VISIBLE,
         ));
 		//Get user's followers
         $followers = $em->getRepository('SingzSocialBundle:Follow')->findBy(array(

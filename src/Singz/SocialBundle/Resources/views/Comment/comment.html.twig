@@ -1,16 +1,14 @@
-
-            		<a class="pull-left" href="{{ path('singz_user_bundle_homepage', {'id': comment.author.id}) }}">
-                        <img class="avatar" src="{{ asset(comment.author.image.realPath) }}" alt="avatar">
-                    </a>
-
+<a class="pull-left" href="{{ path('singz_user_bundle_homepage', {'username': comment.author.username}) }}">
+    <img class="avatar" src="{{ asset(comment.author.image.realPath) }}" alt="avatar">
+</a>
 <div class="comment-body" id="comment-no-{{ comment.id }}">
     <div class="comment-heading">
         <h4 class="user">
-            <a class="pull-left" href="{{ path('singz_user_bundle_homepage', {'id': comment.author.id}) }}">
+            <a class="pull-left" href="{{ path('singz_user_bundle_homepage', {'username': comment.author.username}) }}">
                 {{ comment.author.username }}
 			</a>
         </h4>
-        <h5 class="time">{{ comment.createdAt|time_diff }}</h5>
+        <h5 class="time">{{ comment.createdAt|default("now"|date("Y-m-d H:i:s"))|time_diff }}</h5>
         {% if is_granted('ROLE_USER') %}
             <div class="dropdown pull-right">
               	<button style="color: black" class="btn btn-link dropdown-toggle btn-xs" type="button" id="dropdownMenuComment" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
@@ -19,25 +17,25 @@
               	<ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuComment">
               		{% if app.user == comment.author and is_granted('ROLE_ADMIN') == false %}
                         <li>
-                        	<a href="{{ path('singz_social_bundle_edit_comment', {'idComment': comment.id, 'state': constant('Singz\\SocialBundle\\Entity\\Comment::STATE_DELETED')}) }}" class="change-state">
+                        	<a href="{{ path('singz_social_bundle_comment_edit', {'idComment': comment.id, 'state': constant('Singz\\SocialBundle\\Entity\\Comment::STATE_DELETED')}) }}" class="change-state">
                         		<i class="fa fa-trash-o fa-fw" aria-hidden="true"></i> Supprimer
                         	</a>
                     	</li>
                     {% endif %}
                     <li>
-                        <a href="{{ path('singz_social_bundle_report_comment', {'idComment': comment.id}) }}" class="report-comment">
+                        <a href="{{ path('singz_social_bundle_comment_report', {'idComment': comment.id}) }}" class="report-comment">
                         	<i class="fa fa-exclamation-circle fa-fw" aria-hidden="true"></i> Signaler
                         </a>
                     </li>
                     {% if is_granted('ROLE_ADMIN') %}
                         <li role="separator" class="divider"></li>
                         <li>
-                            <a href="{{ path('singz_social_bundle_edit_comment', {'idComment': comment.id, 'state': constant('Singz\\SocialBundle\\Entity\\Comment::STATE_DELETED')}) }}" class="change-state">
+                            <a href="{{ path('singz_social_bundle_comment_edit', {'idComment': comment.id, 'state': constant('Singz\\SocialBundle\\Entity\\Comment::STATE_DELETED')}) }}" class="change-state">
                             	<i class="fa fa-trash-o fa-fw" aria-hidden="true"></i> Supprimer
                             </a>
                         </li>
                         <li>
-                            <a href="{{ path('singz_social_bundle_edit_comment', {'idComment': comment.id, 'state': constant('Singz\\SocialBundle\\Entity\\Comment::STATE_SPAM')}) }}" class="change-state">
+                            <a href="{{ path('singz_social_bundle_comment_edit', {'idComment': comment.id, 'state': constant('Singz\\SocialBundle\\Entity\\Comment::STATE_SPAM')}) }}" class="change-state">
                             	<i class="fa fa-ban fa-fw" aria-hidden="true"></i> Spam
                             </a>
                         </li>
@@ -46,5 +44,5 @@
             </div>
     	{% endif %}
     </div>
-    <p>{{ comment.body }}</p>
+    <p class="comment-content">{{ comment.body }}</p>
 </div>

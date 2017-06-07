@@ -21,14 +21,14 @@
         					<div class="sz_video_003_trig_txt">
     							<div class="media">
                                     <div class="media-left">
-                                    	<a href="{{ path('singz_user_bundle_homepage', {'id': publication.user.id}) }}">	
+                                    	<a href="{{ path('singz_user_bundle_homepage', {'username': publication.user.username}) }}">
                                     		<img class="media-object img-circle" style="width:42px;height:42px"  src="{{ asset(publication.user.image.realPath) }}" alt="{{ publication.user.username }}">
                                     	</a>
                                     </div>
                                     <div class="media-body">
                                     	<div class="media-heading">
                                     		<p>
-                							    <a href="{{ path('singz_user_bundle_homepage', {'id': publication.user.id}) }}" style="display:inline">
+                							    <a href="{{ path('singz_user_bundle_homepage', {'username': publication.user.username}) }}" style="display:inline">
                 							    	{{ publication.user.username }}
                 							    </a>
                 							    <small> {% if 'ROLE_STARZ' in publication.user.roles %} &#9733; Starz {% endif %}</small>
@@ -36,7 +36,7 @@
                                         </div>
 										<p>
 											<i class="fa fa-fw fa-heart" aria-hidden="true"></i><span class="nbloves-{{ publication.id }}"> {{ publication.numLoves }} </span>
-											<i class="fa fa-fw fa-comments" aria-hidden="true"></i><span class="nbcomments-{{ publication.id }}"> {{ publication.thread.visibleComments|length }} </span>
+											<i class="fa fa-fw fa-comments" aria-hidden="true"></i><span class="nbcomments-{{ publication.id }}"> {{ publication.thread.numComments }} </span>
 										</p>
                              	   	</div>
                                 </div>
@@ -98,6 +98,10 @@
 			</div>
 		</div>
 	</div>
+</div>
+{# Error template #}
+<div class="error-template" style="display: none">
+	{% include 'SingzSocialBundle:Publication:error-template.html.twig' %}
 </div>
 {# Extra JS #}
 <script src="{{ asset('bundles/singzvideo/js/plyr.min.js') }}"></script>
