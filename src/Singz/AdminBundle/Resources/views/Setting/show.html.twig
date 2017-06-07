@@ -1,0 +1,34 @@
+{% extends "SingzAdminBundle::layout.html.twig" %}
+
+{% block title_tag %}Paramètres - {{ parent() }} {% endblock %}
+
+{% block title_page %}
+    Paramètres - {{ setting.name }}
+{% endblock %}
+
+{% block body %}
+    <h1>Setting</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ setting.id }}</td>
+            </tr>
+            <tr>
+                <th>Name</th>
+                <td>{{ setting.name }}</td>
+            </tr>
+            <tr>
+                <th>Value</th>
+                <td>{{ setting.value }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('singz_admin_setting_index') }}">Back to the list</a>
+        </li>
+    </ul>
+{% endblock %}

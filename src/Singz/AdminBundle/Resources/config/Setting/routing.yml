@@ -1,0 +1,18 @@
+singz_admin_setting_index:
+    path:     /
+    defaults:
+        _controller: SingzAdminBundle:Setting:index
+
+singz_admin_setting_show:
+    path:     /{id}/show
+    defaults:
+        _controller: SingzAdminBundle:Setting:show
+    requirements:
+        id: \d+
+
+singz_admin_setting_edit:
+    path:     /{id}/edit
+    defaults:
+        _controller: SingzAdminBundle:Setting:edit
+    requirements:
+        id: \d+

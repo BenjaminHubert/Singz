@@ -12,3 +12,8 @@ singz_admin_comment_routing:
 singz_admin_user_routing:
     resource: "@SingzAdminBundle/Resources/config/User/routing.yml"
     prefix:   /user/
+
+### SETTINGS CONTROLLER ###
+singz_admin_setting_routing:
+    resource: "@SingzAdminBundle/Resources/config/Setting/routing.yml"
+    prefix:   /setting/
