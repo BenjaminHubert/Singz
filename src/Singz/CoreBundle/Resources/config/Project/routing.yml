@@ -9,3 +9,10 @@ singz_core_bundle_project_show:
         _controller: SingzCoreBundle:Project:show
     requirements:
         id: \d+
+
+singz_core_bundle_project_edit:
+    path:     /{id}/edit/
+    defaults:
+        _controller: SingzCoreBundle:Project:edit
+    requirements:
+        id: \d+

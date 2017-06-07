@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Singz\CoreBundle\Entity\Project;
 use Singz\CoreBundle\Form\ProjectType;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class ProjectController extends Controller
 {
@@ -41,7 +42,7 @@ class ProjectController extends Controller
 			$em->flush();
 			// Display success
     		$this->addFlash('success', 'Projet créé avec succès.');
-			// On redirige vers la page de visualisation de la publication nouvellement créée
+			// On redirige vers la page de visualisation du projet nouvellement créé
 			return $this->redirectToRoute('singz_user_bundle_homepage', array(
 				'username' => $this->getUser()->getUsername()
 			));
@@ -66,6 +67,47 @@ class ProjectController extends Controller
 		// Render the view
 		return $this->render('SingzCoreBundle:Project:show.html.twig', array(
 			'project' => $project
+		));
+	}
+
+	/**
+	 * @Security("has_role('ROLE_USER')")
+	 */
+	public function editAction(Request $request, $id)
+	{
+		//Get the entity manager
+		$em = $this->getDoctrine()->getManager();
+		// Get the project
+		$project = $em->getRepository('SingzCoreBundle:Project')->findOneBy(array(
+			'id' => $id,
+		));
+		if($project == null) {
+			throw $this->createNotFoundException('Project inexistant');
+		}
+		// Check authorization
+		if($this->getUser() != $project->getRequester() && !$this->isGranted('ROLE_ADMIN')){
+			throw new AccessDeniedException('Accès refusé');
+		}
+		// Create form
+		$form = $this->createForm(ProjectType::class, $project);
+		$form->remove('requester');
+		$form->handleRequest($request);
+		// Form submission
+		if($form->isSubmitted() && $form->isValid()){
+			// Update db
+			$em->persist($project);
+			$em->flush();
+			// Display success
+    		$this->addFlash('success', 'Projet mis à jour');
+			// On redirige vers la page du projet 
+			return $this->redirectToRoute('singz_core_bundle_project_show', array(
+				'id' => $project->getId()
+			));
+		}
+		// Render the view
+		return $this->render('SingzCoreBundle:Project:edit.html.twig', array(
+			'project' => $project,
+			'form' => $form->createView()
 		));
 	}
 }

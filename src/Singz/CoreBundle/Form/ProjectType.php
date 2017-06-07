@@ -29,7 +29,7 @@ class ProjectType extends AbstractType
         		'choice_label' => 'username'
     		))
       		->add('save', SubmitType::class, array(
-      			'label' => 'Créer'
+      			'label' => 'Enregistrer'
       		))
       	;
     }

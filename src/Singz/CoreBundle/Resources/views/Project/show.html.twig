@@ -6,6 +6,22 @@
 
 {% block body %}
 	<div class="row">
+		{# Options #}
+    	{% if app.user and (project.requester == app.user or is_granted('ROLE_ADMIN')) %}
+            <div class="dropdown pull-right">
+              	<button style="color: black" class="btn btn-default dropdown-toggle btn-xs" type="button" id="dropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+        			Options <i class="fa fa-caret-down fa-fw" aria-hidden="true"></i>
+        		</button>
+            	<ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu">
+                    <li>
+                        {# Edit button #}
+                        <a href="{{ path('singz_core_bundle_project_edit', {'id': project.id}) }}" class="confirmation-alert">
+                        	<i class="fa fa-pencil-square-o fa-fw" aria-hidden="true"></i> Modifier le projet
+                        </a>
+                    </li>
+        		</ul>
+        	</div>
+        {% endif %}
 		{# Name #}
 		<div class="col-xs-12">
 			<h2 style="text-align:center">
