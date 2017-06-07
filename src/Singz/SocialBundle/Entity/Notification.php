@@ -17,6 +17,7 @@ class Notification
 	const REPLY_COMMENT = '<b>%s</b> a répondu à votre commentaire.';
 	const NEW_FOLLOWER = '<b>%s</b> vous suit.';
     const NEW_RESINGZ = '<b>%s</b> a resingzé votre publication';
+    const NEW_PROJECT = '<b>%s</b> a créé le projet "%s".';
 	
     /**
      * @var int
@@ -70,7 +71,15 @@ class Notification
      * @ORM\ManyToOne(targetEntity="Singz\SocialBundle\Entity\Publication", inversedBy="notifications")
      * @ORM\JoinColumn(nullable=true)
      */
-    private $publication;
+    private $publication = null;
+    
+    /**
+     * @var Project
+     *
+     * @ORM\ManyToOne(targetEntity="Singz\CoreBundle\Entity\Project", inversedBy="notifications")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $project = null;
     
     /**
      * @var text
@@ -260,5 +269,29 @@ class Notification
     public function getIsSeen()
     {
         return $this->isSeen;
+    }
+
+    /**
+     * Set project
+     *
+     * @param \Singz\CoreBundle\Entity\Project $project
+     *
+     * @return Notification
+     */
+    public function setProject(\Singz\CoreBundle\Entity\Project $project = null)
+    {
+        $this->project = $project;
+
+        return $this;
+    }
+
+    /**
+     * Get project
+     *
+     * @return \Singz\CoreBundle\Entity\Project
+     */
+    public function getProject()
+    {
+        return $this->project;
     }
 }

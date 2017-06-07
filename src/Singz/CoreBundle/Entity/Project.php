@@ -4,6 +4,7 @@ namespace Singz\CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Project
@@ -81,11 +82,19 @@ class Project
      * @ORM\Column(type="datetime", name="last_edit_at", nullable=false)
      */
     private $lastEditAt;
+    
+    /**
+     * @var Notification
+     * 
+     * @ORM\OneToMany(targetEntity="Singz\SocialBundle\Entity\Notification", mappedBy="project")
+     */
+    private $notifications;
 
     public function __construct()
     {
     	$this->createdAt = new \DateTime();
     	$this->lastEditAt = new \DateTime();
+    	$this->notifications = new ArrayCollection();
     }
 
     /**
@@ -301,5 +310,39 @@ class Project
     public function preUpdate()
     {
     	$this->lastEditAt = new \DateTime();
+    }
+
+    /**
+     * Add notification
+     *
+     * @param \Singz\SocialBundle\Entity\Notification $notification
+     *
+     * @return Project
+     */
+    public function addNotification(\Singz\SocialBundle\Entity\Notification $notification)
+    {
+        $this->notifications[] = $notification;
+
+        return $this;
+    }
+
+    /**
+     * Remove notification
+     *
+     * @param \Singz\SocialBundle\Entity\Notification $notification
+     */
+    public function removeNotification(\Singz\SocialBundle\Entity\Notification $notification)
+    {
+        $this->notifications->removeElement($notification);
+    }
+
+    /**
+     * Get notifications
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getNotifications()
+    {
+        return $this->notifications;
     }
 }

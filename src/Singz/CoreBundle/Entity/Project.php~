@@ -4,6 +4,7 @@ namespace Singz\CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Project
@@ -81,11 +82,19 @@ class Project
      * @ORM\Column(type="datetime", name="last_edit_at", nullable=false)
      */
     private $lastEditAt;
+    
+    /**
+     * @var Notification
+     * 
+     * @ORM\OneToMany(targetEntity="Singz\SocialBundle\Entity\Notification", mappedBy="project")
+     */
+    private $notifications;
 
     public function __construct()
     {
     	$this->createdAt = new \DateTime();
     	$this->lastEditAt = new \DateTime();
+    	$this->notifications = new ArrayCollection();
     }
 
     /**
@@ -269,5 +278,37 @@ class Project
     public function getCreatedAt()
     {
         return $this->createdAt;
+    }
+
+    /**
+     * Set lastEditAt
+     *
+     * @param \DateTime $lastEditAt
+     *
+     * @return Project
+     */
+    public function setLastEditAt($lastEditAt)
+    {
+        $this->lastEditAt = $lastEditAt;
+
+        return $this;
+    }
+
+    /**
+     * Get lastEditAt
+     *
+     * @return \DateTime
+     */
+    public function getLastEditAt()
+    {
+        return $this->lastEditAt;
+    }
+    
+    /**
+     * @ORM\PreUpdate
+     */
+    public function preUpdate()
+    {
+    	$this->lastEditAt = new \DateTime();
     }
 }
