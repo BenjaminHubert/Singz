@@ -23,13 +23,20 @@
         	</div>
         {% endif %}
 		{# Name #}
-		<div class="col-xs-12">
-			<h2 style="text-align:center">
+		<div class="col-xs-12" style="text-align:center">
+			<h2>
 			    {{ project.name }} 
-			    <small>
-			        
-			    </small>
 			</h2>
+	    	{% if project.state is constant('STATE_VISIBLE', project) %}
+	        	<span class="label label-info">En cours</span>
+        	{% endif %}
+	    	{% if project.state is constant('STATE_DELETED', project) %}
+	        	<span class="label label-danger">Supprimé</span>
+        	{% endif %}
+	    	{% if project.state is constant('STATE_DONE', project) %}
+	        	<span class="label label-success">Objectif atteint</span>
+        	{% endif %}
+        	<br><br>
 		</div>
 		{# Requester #}
 		<div class="col-xs-12 col-sm-6" style="text-align:center">
