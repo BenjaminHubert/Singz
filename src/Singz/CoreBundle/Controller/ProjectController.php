@@ -110,4 +110,44 @@ class ProjectController extends Controller
 			'form' => $form->createView()
 		));
 	}
+	
+	/**
+	 * @Security("has_role('ROLE_USER')")
+	 */
+	public function deleteAction(Request $request, $id)
+	{
+		//Get the entity manager
+		$em = $this->getDoctrine()->getManager();
+		// Get the project
+		$project = $em->getRepository('SingzCoreBundle:Project')->findOneBy(array(
+			'id' => $id,
+		));
+		if($project == null) {
+			throw $this->createNotFoundException('Project inexistant');
+		}
+		// Check authorization
+		if($this->getUser() != $project->getRequester() && !$this->isGranted('ROLE_ADMIN')){
+			throw new AccessDeniedException('Accès refusé');
+		}
+		// Check the current state
+		if($project->getState() == Project::STATE_DELETED ){
+			// Display error
+			$this->addFlash('danger', 'Le projet a déjà été supprimé');
+			// On redirige vers la page du projet
+			return $this->redirectToRoute('singz_core_bundle_project_show', array(
+				'id' => $project->getId()
+			));
+		}
+		// Set the project as deleted
+		$project->setState(Project::STATE_DELETED);
+		// Update db
+		$em->persist($project);
+		$em->flush();
+		// Display success
+		$this->addFlash('success', 'Projet supprimé avec succès');
+		// On redirige vers la page du projet
+		return $this->redirectToRoute('singz_core_bundle_project_show', array(
+			'id' => $project->getId()
+		));
+	}
 }
