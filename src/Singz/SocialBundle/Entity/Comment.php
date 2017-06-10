@@ -63,7 +63,7 @@ class Comment
      * @var Comment $parent
      * 
      * @ORM\ManyToOne(targetEntity="Singz\SocialBundle\Entity\Comment", inversedBy="children")
-     * @ORM\JoinColumn(nullable=true)
+     * @ORM\JoinColumn(nullable=true, onDelete="CASCADE")
      */
     private $parent = NULL;
     
