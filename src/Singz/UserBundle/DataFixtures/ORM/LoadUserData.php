@@ -23,6 +23,9 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface, C
 		//Create a data faker
 		$faker = \Faker\Factory::create('fr_FR');
 		
+		//Define different role
+		$roles = ['ROLE_SINGZER', 'ROLE_STARZ', 'ROLE_ADMIN', 'ROLE_SUPER_ADMIN'];
+		
 		//Adding User fixtures
 		for($i=0; $i<$this->nb; $i++){
 			$user = $userManager->createUser();
@@ -30,11 +33,7 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface, C
 			$user->setEmail($faker->email);
 			$user->setPlainPassword('password');
 			$user->setEnabled(true);
-			if($faker->boolean){
-				$user->setRoles(['ROLE_SINGZER']);
-			}else{
-				$user->setRoles(['ROLE_STARZ']);
-			}			
+			$user->addRole($faker->randomElement($roles));
 			$user->setImage($this->getReference('image '.rand(0, $this->nb-1)));
 			$user->setBiography($faker->text);
 			

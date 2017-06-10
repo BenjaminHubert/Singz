@@ -145,12 +145,23 @@ class Thread
 
     /**
      * Get comments
-     *
-     * @return \Doctrine\Common\Collections\Collection
+     * 
+     * @param array $states
+     * @return \Singz\SocialBundle\Entity\Comment
      */
-    public function getComments()
+    public function getComments(Array $states = null)
     {
-        return $this->comments;
+    	if($states == null){
+    		return $this->comments;
+    	}
+    	
+    	$comments = [];
+    	foreach($this->comments as $comment){
+    		if(in_array($comment->getState(), $states)){
+    			$comments[] = $comment;
+    		}
+    	}
+    	return $comments;
     }
 
     /**
@@ -176,25 +187,6 @@ class Thread
     {
         return $this->publication;
     }
-
-    /**
-     * Get visible comments
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getVisibleComments()
-    {
-        $comments = $this->getComments();
-        foreach ($comments as $key => $val) {
-            if($val->getState() != Comment::STATE_VISIBLE){
-                unset($comments[$key]);
-            }
-        }
-
-        return $comments;
-    }
-
-
 
     public function increaseNumComments(){
     	$this->numComments++;

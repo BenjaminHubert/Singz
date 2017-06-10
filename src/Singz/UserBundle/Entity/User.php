@@ -98,6 +98,13 @@ class User extends BaseUser
      */
     private $isPrivate = false;
     
+    /**
+     * @var Project
+     *
+     * @ORM\OneToMany(targetEntity="Singz\CoreBundle\Entity\Project", mappedBy="requester")
+     */
+    private $projects;
+    
     
     public static function getAllRoles() {
     	$oClass = new \ReflectionClass(__CLASS__);
@@ -117,6 +124,7 @@ class User extends BaseUser
     	$this->leaders = new ArrayCollection();
     	$this->followers = new ArrayCollection();
     	$this->reports = new ArrayCollection();
+    	$this->projects = new ArrayCollection();
     }
     
 
@@ -428,5 +436,39 @@ class User extends BaseUser
     public function getResingz()
     {
         return $this->resingz;
+    }
+
+    /**
+     * Add project
+     *
+     * @param \Singz\CoreBundle\Entity\Project $project
+     *
+     * @return User
+     */
+    public function addProject(\Singz\CoreBundle\Entity\Project $project)
+    {
+        $this->projects[] = $project;
+
+        return $this;
+    }
+
+    /**
+     * Remove project
+     *
+     * @param \Singz\CoreBundle\Entity\Project $project
+     */
+    public function removeProject(\Singz\CoreBundle\Entity\Project $project)
+    {
+        $this->projects->removeElement($project);
+    }
+
+    /**
+     * Get projects
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getProjects()
+    {
+        return $this->projects;
     }
 }
