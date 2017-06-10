@@ -1,0 +1,38 @@
+{% extends "SingzAdminBundle::layout.html.twig" %}
+
+{% block title_tag %}Paramètres - {{ parent() }} {% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset('bundles/singzadmin/css/dataTables.bootstrap.css') }}" rel="stylesheet">
+    <link href="{{ asset('bundles/singzadmin/css/dataTables.responsive.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block title_page %}
+    Paramètres
+{% endblock %}
+
+{% block body %}
+    <table width="100%" class="table table-bordered table-hover dataTable">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Value</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for setting in settings %}
+            <tr>
+                <td>{{ setting.name }}</td>
+                <td>
+                    {{ setting.value }}
+                    <a style="float:right" class="btn btn-default" href="{{ path('singz_admin_setting_edit', {'id':setting.id}) }}">
+                        <i class="fa fa-pencil fa-fw" aria-hidden="true"></i> Editer
+                    </a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}
