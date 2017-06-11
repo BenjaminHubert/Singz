@@ -8,6 +8,9 @@ imports:
 parameters:
     locale: fr
     appname: Singz
+    settings:
+        Promotion: 100
+        Cagnotte: 1000
 
 framework:
     #esi:             ~
