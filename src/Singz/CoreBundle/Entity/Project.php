@@ -5,6 +5,7 @@ namespace Singz\CoreBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Persistence\Event\LifecycleEventArgs;
 
 /**
  * Project
@@ -89,6 +90,8 @@ class Project
      * @ORM\OneToMany(targetEntity="Singz\SocialBundle\Entity\Notification", mappedBy="project")
      */
     private $notifications;
+    
+    private $amountReachedPercentage = 0;
 
     public function __construct()
     {
@@ -250,11 +253,6 @@ class Project
     {
         return $this->amountReached;
     }
-    
-    public function getAmountReachedPercentage()
-    {
-    	return $this->amountReached;
-    }
 
     /**
      * Set createdAt
@@ -344,5 +342,38 @@ class Project
     public function getNotifications()
     {
         return $this->notifications;
+    }
+
+    /**
+     * @ORM\PostLoad
+     */
+    public function setAmountReachedPercentage(LifecycleEventArgs $args)
+    {
+    	$em = $args->getEntityManager();
+    	$setting = $em->getRepository('SingzAdminBundle:Setting')->findOneBy(array(
+    		'name' => 'Cagnotte'
+    	));
+    	if(!$setting){
+    		$this->amountReachedPercentage = 0;
+    		return;
+    	}
+    	if($setting->getValue() == 0){
+    		$this->amountReachedPercentage = 0;
+    		return;
+    	}
+    	$this->amountReachedPercentage = round(($this->amountReached*100)/$setting->getValue(), 2);
+    	if($this->amountReachedPercentage > 100){
+    		$this->amountReachedPercentage = 100;
+    	}
+    }
+    
+    /**
+     * Get amountReachedPercentage
+     *
+     * return float
+     */
+    public function getAmountReachedPercentage()
+    {
+    	return $this->amountReachedPercentage;
     }
 }
