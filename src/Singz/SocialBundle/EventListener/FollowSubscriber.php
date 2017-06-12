@@ -6,9 +6,18 @@ use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Singz\SocialBundle\Entity\Follow;
 use Singz\SocialBundle\Entity\Notification;
+use Singz\AdminBundle\Repository\SettingRepository;
+use Singz\AdminBundle\Entity\Setting;
+use Singz\UserBundle\Entity\User;
 
 class FollowSubscriber implements EventSubscriber
-{    
+{
+    private $container;
+
+    public function __construct($container){
+        $this->container = $container;
+    }
+
     public function postPersist(LifecycleEventArgs $args)
     {
     	$follow = $args->getEntity();
@@ -27,6 +36,20 @@ class FollowSubscriber implements EventSubscriber
     		$notif->setMessage($message);
     		$em->persist($notif);
     		$em->flush($notif);
+
+        // check if Settings::Promotion is reached
+            $setting = $em->getRepository('SingzAdminBundle:Setting')->getSettingByName('Promotion');
+            if($setting != null) {
+                $leader = $follow->getLeader();
+                $roleService = $this->container->get('singz.user.service.role');
+                if(!$roleService->isGranted(User::ROLE_STARZ, $leader)) {
+                    if($leader->getFollowers() >= $setting->getValue()) {
+                        $leader->removeRole([User::ROLE_SINGZER]);
+                        $leader->addRole([User::ROLE_STARZ]);
+                    }
+                }
+            }
+
     }
 	
 	public function getSubscribedEvents() {

@@ -17,4 +17,12 @@ class SettingRepository extends \Doctrine\ORM\EntityRepository
             ->getQuery()
             ->getOneOrNullResult();
     }
+
+    public function getSettingByName($name)
+    {
+        return $this->createQueryBuilder('s')
+            ->where('s.name = :name')->setParameter('name', $name)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
 }
