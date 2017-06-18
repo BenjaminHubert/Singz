@@ -18,4 +18,13 @@ class FollowRepository extends \Doctrine\ORM\EntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function getRealLeads($user){
+        return $this->createQueryBuilder('f')
+            ->where('f.follower = :follower AND f.isPending = :pending')
+            ->setParameter('follower', $user)
+            ->setParameter('pending', false)
+            ->getQuery()
+            ->getResult();
+    }
 }
