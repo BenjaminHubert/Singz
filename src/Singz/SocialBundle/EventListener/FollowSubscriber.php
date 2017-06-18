@@ -40,13 +40,18 @@ class FollowSubscriber implements EventSubscriber
         // check if Settings::Promotion is reached
             $setting = $em->getRepository('SingzAdminBundle:Setting')->getSettingByName('Promotion');
             if($setting != null) {
+                print 'are we here ?';
                 $leader = $follow->getLeader();
                 $roleService = $this->container->get('singz.user.service.role');
                 if(!$roleService->isGranted(User::ROLE_STARZ, $leader)) {
+                    print 'are we there ?';
                     $follows = $em->getRepository('SingzSocialBundle:Follow')->getRealFollows($leader);
                     if(count($follows) >= $setting->getValue()) {
-                        $leader->removeRole([User::ROLE_SINGZER]);
-                        $leader->addRole([User::ROLE_STARZ]);
+                        print 'then wtf ?';
+                        $leader->removeRole(User::ROLE_SINGZER);
+                        $leader->addRole(User::ROLE_STARZ);
+                        $em->persist($leader);
+                        $em->flush($leader);
 
                         // create new notification
                         $notif = new Notification();
