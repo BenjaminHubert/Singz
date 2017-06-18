@@ -8,6 +8,9 @@ imports:
 parameters:
     locale: fr
     appname: Singz
+    settings:
+        Promotion: 100
+        Cagnotte: 1000
 
 framework:
     #esi:             ~
@@ -39,6 +42,7 @@ twig:
     strict_variables: "%kernel.debug%"
     globals:
         appname: "%appname%"
+        locale: "%locale%"
     form_themes:
         - 'Form/fields.html.twig'
 

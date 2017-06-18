@@ -217,7 +217,7 @@ class PublicationController extends Controller
     	// Get thread
     	$thread = $publication->getThread();
     	// Get comments
-    	$comments = $thread->getVisibleComments();
+    	$comments = $thread->getComments(array(Comment::STATE_VISIBLE));
     	// Create the forms
     	$mainForm = null;
     	$forms = [];

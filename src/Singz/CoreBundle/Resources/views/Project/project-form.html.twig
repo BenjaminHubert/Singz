@@ -1,0 +1,46 @@
+{{ form_start(form) }}
+	{# name #}
+	<div>
+		<div class="form-group {% if form_errors(form.name) != "" %}has-error{% endif %}">
+            {{ form_label(form.name, null, {
+                'label_attr': {
+                    'class': 'control-label'
+                }
+            }) }}
+            {{ form_widget(form.name, {
+                'attr': {
+                    'class': 'form-control'
+                }
+            }) }}
+            {{ form_errors(form.name) }}
+        </div>
+    </div>
+	{# description #}
+	<div>
+		<div class="form-group {% if form_errors(form.description) != "" %}has-error{% endif %}">
+            {{ form_label(form.description, null, {
+                'label_attr': {
+                    'class': 'control-label'
+                }
+            }) }}
+            {{ form_widget(form.description, {
+                'attr': {
+                    'class': 'form-control',
+                    'rows': 5,
+                    'style': 'resize: vertical'
+                }
+            }) }}
+            {{ form_errors(form.description) }}
+        </div>
+    </div>
+	{# save #}
+	<div>
+		<div class="form-group">
+            {{ form_widget(form.save, {
+                'attr': {
+                    'class': 'btn btn-default',
+                }
+            }) }}
+        </div>
+    </div>
+{{ form_end(form) }}

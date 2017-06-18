@@ -33,12 +33,16 @@ class LoadCommentData extends AbstractFixture implements OrderedFixtureInterface
 				$child->setAuthor($this->getReference('user '.rand(0, $this->nb-1)));
 				$child->setThread($comment->getThread());
 				$child->setBody($faker->text(250));
-				$child->setState($faker->randomElement([
-					Comment::STATE_VISIBLE,
-					Comment::STATE_DELETED,
-					Comment::STATE_SPAM,
-					Comment::STATE_PENDING
-				]));
+				if($comment->getState() == Comment::STATE_VISIBLE){
+					$child->setState($faker->randomElement([
+						Comment::STATE_VISIBLE,
+						Comment::STATE_DELETED,
+						Comment::STATE_SPAM,
+						Comment::STATE_PENDING
+					]));
+				}else{
+					$child->setState(Comment::STATE_DELETED);
+				}
 				$child->setParent($comment);
 				$manager->persist($child);
 			}

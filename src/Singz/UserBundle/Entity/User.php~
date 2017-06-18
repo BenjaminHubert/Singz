@@ -5,6 +5,7 @@ namespace Singz\UserBundle\Entity;
 use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * User
@@ -81,6 +82,7 @@ class User extends BaseUser
      * @var Image
      * @ORM\ManyToOne(targetEntity="Singz\UserBundle\Entity\Image")
      * @ORM\JoinColumn(nullable=false)
+     * @Assert\Valid()
      */
     private $image;
     
@@ -95,6 +97,13 @@ class User extends BaseUser
      * @ORM\Column(name="is_private", type="boolean", nullable=false)
      */
     private $isPrivate = false;
+    
+    /**
+     * @var Project
+     *
+     * @ORM\OneToMany(targetEntity="Singz\CoreBundle\Entity\Project", mappedBy="requester")
+     */
+    private $projects;
     
     
     public static function getAllRoles() {
@@ -115,6 +124,7 @@ class User extends BaseUser
     	$this->leaders = new ArrayCollection();
     	$this->followers = new ArrayCollection();
     	$this->reports = new ArrayCollection();
+    	$this->projects = new ArrayCollection();
     }
     
 
@@ -392,5 +402,73 @@ class User extends BaseUser
     public function getReports()
     {
         return $this->reports;
+    }
+
+    /**
+     * Add resingz
+     *
+     * @param \Singz\SocialBundle\Entity\Publication $resingz
+     *
+     * @return User
+     */
+    public function addResingz(\Singz\SocialBundle\Entity\Publication $resingz)
+    {
+        $this->resingz[] = $resingz;
+
+        return $this;
+    }
+
+    /**
+     * Remove resingz
+     *
+     * @param \Singz\SocialBundle\Entity\Publication $resingz
+     */
+    public function removeResingz(\Singz\SocialBundle\Entity\Publication $resingz)
+    {
+        $this->resingz->removeElement($resingz);
+    }
+
+    /**
+     * Get resingz
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getResingz()
+    {
+        return $this->resingz;
+    }
+
+    /**
+     * Add project
+     *
+     * @param \Singz\CoreBundle\Entity\Project $project
+     *
+     * @return User
+     */
+    public function addProject(\Singz\CoreBundle\Entity\Project $project)
+    {
+        $this->projects[] = $project;
+
+        return $this;
+    }
+
+    /**
+     * Remove project
+     *
+     * @param \Singz\CoreBundle\Entity\Project $project
+     */
+    public function removeProject(\Singz\CoreBundle\Entity\Project $project)
+    {
+        $this->projects->removeElement($project);
+    }
+
+    /**
+     * Get projects
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getProjects()
+    {
+        return $this->projects;
     }
 }

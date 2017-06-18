@@ -1,0 +1,35 @@
+singz_index:
+    path:     /
+    defaults:
+        _controller: FrameworkBundle:Redirect:urlRedirect
+        path: /feed/
+        permanent: true
+
+singz_browse:
+    path: /browse/{filter}/
+    requirements:
+        filter: '(all|singzer|starz)'
+    defaults:
+        _controller: SingzCoreBundle:Core:browse
+
+singz_browse_all:
+    path: /browse/
+    defaults:
+        _controller: FrameworkBundle:Redirect:urlRedirect
+        path: /browse/all/
+        permanent: true
+
+singz_feed:
+    path: /feed/
+    defaults:
+        _controller: SingzCoreBundle:Core:feed
+
+singz_hashtagz:
+    path: /hashtagz
+    defaults:
+        _controller: SingzCoreBundle:Core:hashtagz
+
+### PROJECT CONTROLLER ###
+singz_core_project_routing:
+    resource: "@SingzCoreBundle/Resources/config/Project/routing.yml"
+    prefix:   /project/

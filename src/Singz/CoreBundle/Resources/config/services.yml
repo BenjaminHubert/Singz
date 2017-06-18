@@ -1,4 +1,5 @@
 services:
-#    singz_core.example:
-#        class: Singz\CoreBundle\Example
-#        arguments: ["@service_id", "plain_value", "%parameter%"]
+    singz.core.project:
+        class: Singz\CoreBundle\EventListener\ProjectSubscriber
+        tags:
+            - { name: doctrine.event_subscriber, connection: default }
