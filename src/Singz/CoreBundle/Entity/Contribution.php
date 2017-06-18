@@ -3,6 +3,7 @@
 namespace Singz\CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Contribution
@@ -23,6 +24,9 @@ class Contribution
 
     /**
      * @var float
+     * @Assert\Range(
+     *      min = 1,
+     * )
      *
      * @ORM\Column(name="amount", type="float")
      */

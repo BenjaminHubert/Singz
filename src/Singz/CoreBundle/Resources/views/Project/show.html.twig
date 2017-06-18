@@ -96,11 +96,15 @@
 		</div>
 		{# Crowdfunding button #}
 		<div class="col-xs-8 col-xs-offset-2 col-sm-4 col-sm-offset-4">
-			<a href="{{ path('singz_core_bundle_project_contributing', {'id': project.id}) }}">
+			<a href="#" class="show-contribution-form">
                 <div class="btn-crowdfunding">
     				Participer au projet
     			</div>
     		</a>
+		</div>
+		{# Crowdfunding form #}
+		<div class="col-xs-8 col-xs-offset-2 col-sm-4 col-sm-offset-4 contribution-form" style="display:none">
+	        {% include 'SingzCoreBundle:Project:contribution-form.html.twig' with {'form': form} %}
 		</div>
 		{# Description #}
 		<div class="col-xs-12">
@@ -128,6 +132,16 @@
 				}
 				return false;
         	});
+        	// Display contribution form
+        	$('a.show-contribution-form').click(function(e){
+				e.preventDefault();
+				// hide the button
+				$(this).fadeOut('fast', function(){
+					// show form
+					$('.contribution-form').fadeIn('slow');
+				});
+				
+            });
     	});
 	</script>
 {% endblock %}

@@ -8,6 +8,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Singz\CoreBundle\Entity\Project;
 use Singz\CoreBundle\Form\ProjectType;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Singz\CoreBundle\Form\ContributionType;
+use Singz\CoreBundle\Entity\Contribution;
 
 class ProjectController extends Controller
 {
@@ -64,9 +66,17 @@ class ProjectController extends Controller
 		if($project == null) {
 			throw $this->createNotFoundException('Project inexistant');
 		}
+		//Create contribution form
+		$contribution = new Contribution();
+		$form = $this->createForm(ContributionType::class, $contribution, array(
+			'action' => $this->generateUrl('singz_core_bundle_project_contributing', array('id' => $project->getId()))
+		));
+		$form->remove('project');
+		$form->remove('contributer');
 		// Render the view
 		return $this->render('SingzCoreBundle:Project:show.html.twig', array(
-			'project' => $project
+			'project' => $project,
+			'form' => $form->createView()
 		));
 	}
 
@@ -165,9 +175,32 @@ class ProjectController extends Controller
 		if($project == null) {
 			throw $this->createNotFoundException('Projet inexistant');
 		}
-		// Render the view
-		return $this->render('SingzCoreBundle:Project:contributing.html.twig', array(
-			'project' => $project
+		// Create form
+		$contribution = new Contribution();
+		$form = $this->createForm(ContributionType::class, $contribution);
+		$form->remove('project');
+		$form->remove('contributer');
+		$form->handleRequest($request);
+		// Check if submitted
+		if(!$form->isSubmitted()){
+			$this->addFlash('danger', 'Le formulaire doit être soumis.');
+			return $this->redirectToRoute('singz_core_bundle_project_show', array(
+				'id' => $project->getId()
+			));
+		}
+		// Check if the form is valid
+		if(!$form->isValid()){
+			$this->addFlash('danger', 'Le formulaire n\'est pas valide.');
+			return $this->redirectToRoute('singz_core_bundle_project_show', array(
+				'id' => $project->getId()
+			));
+		}
+			
+		// ...
+		// ...
+		// Redirect to route
+		return $this->redirectToRoute('singz_core_bundle_project_show', array(
+			'id' => $project->getId()
 		));
 	}
 }
