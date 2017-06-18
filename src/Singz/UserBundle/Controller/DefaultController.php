@@ -36,13 +36,9 @@ class DefaultController extends Controller
         	'state' => Project::STATE_VISIBLE
         ));
 		//Get user's followers
-        $followers = $em->getRepository('SingzSocialBundle:Follow')->findBy(array(
-        	'follower' => $user,
-        ));
+        $followers = $em->getRepository('SingzSocialBundle:Follow')->getRealLeads($user);
 		//Get user's leaders
-        $leaders = $em->getRepository('SingzSocialBundle:Follow')->findBy(array(
-        	'leader' => $user,
-        ));
+        $leaders = $em->getRepository('SingzSocialBundle:Follow')->getRealFollows($user);
 		//Display view
         return $this->render('SingzUserBundle:Default:index.html.twig', array(
 			'publications' => $publications,
