@@ -4,6 +4,48 @@
     "{{ project.name }}" de {{ project.requester.username }} - {{ parent() }}
 {% endblock %}
 
+{% block stylesheets %}
+	<style>
+        .btn-crowdfunding {
+          -webkit-box-flex: 1;
+              -ms-flex: 1 1 auto;
+                  flex: 1 1 auto;
+          margin: 10px;
+          padding: 20px;
+          border: 2px solid #f7f7f7;
+          text-align: center;
+          text-transform: uppercase;
+          position: relative;
+          overflow: hidden;
+          -webkit-transition: .3s;
+          transition: .3s;
+          color: #f7f7f7;
+        }
+        .btn-crowdfunding:after {
+          position: absolute;
+          -webkit-transition: .3s;
+          transition: .3s;
+          content: '';
+          width: 0;
+          bottom: 0;
+          background: #f7f7f7;
+          height: 120%;
+          left: -10%;
+          -webkit-transform: skewX(15deg);
+          transform: skewX(15deg);
+          z-index: -1;
+        }
+        .btn-crowdfunding:hover {
+          cursor: pointer;
+          color: #c94e50;
+        }
+        .btn-crowdfunding:hover:after {
+          left: -10%;
+          width: 120%;
+        }    
+	</style>
+{% endblock %}
+
 {% block body %}
 	<div class="row">
 		{# Options #}
@@ -51,6 +93,14 @@
 		{# Created at #}
 		<div class="col-xs-12 col-sm-6" style="text-align:center">
 			<i class="fa fa-clock-o fa-fw fa-lg" aria-hidden="true"></i> {{ project.createdAt|localizeddate('full', 'none', locale) }}
+		</div>
+		{# Crowdfunding button #}
+		<div class="col-xs-8 col-xs-offset-2 col-sm-4 col-sm-offset-4">
+			<a href="{{ path('singz_core_bundle_project_contributing', {'id': project.id}) }}">
+                <div class="btn-crowdfunding">
+    				Participer au projet
+    			</div>
+    		</a>
 		</div>
 		{# Description #}
 		<div class="col-xs-12">
