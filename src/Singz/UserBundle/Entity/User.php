@@ -105,6 +105,13 @@ class User extends BaseUser
      */
     private $projects;
     
+    /**
+     * @var Contribution
+     *
+     * @ORM\OneToMany(targetEntity="Singz\CoreBundle\Entity\Contribution", mappedBy="contributer")
+     */
+    private $contributions;
+    
     
     public static function getAllRoles() {
     	$oClass = new \ReflectionClass(__CLASS__);
@@ -125,6 +132,7 @@ class User extends BaseUser
     	$this->followers = new ArrayCollection();
     	$this->reports = new ArrayCollection();
     	$this->projects = new ArrayCollection();
+    	$this->contributions = new ArrayCollection();
     }
     
 
@@ -470,5 +478,39 @@ class User extends BaseUser
     public function getProjects()
     {
         return $this->projects;
+    }
+
+    /**
+     * Add contribution
+     *
+     * @param \Singz\CoreBundle\Entity\Contribution $contribution
+     *
+     * @return User
+     */
+    public function addContribution(\Singz\CoreBundle\Entity\Contribution $contribution)
+    {
+        $this->contributions[] = $contribution;
+
+        return $this;
+    }
+
+    /**
+     * Remove contribution
+     *
+     * @param \Singz\CoreBundle\Entity\Contribution $contribution
+     */
+    public function removeContribution(\Singz\CoreBundle\Entity\Contribution $contribution)
+    {
+        $this->contributions->removeElement($contribution);
+    }
+
+    /**
+     * Get contributions
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getContributions()
+    {
+        return $this->contributions;
     }
 }
