@@ -40,14 +40,11 @@ class FollowSubscriber implements EventSubscriber
         // check if Settings::Promotion is reached
             $setting = $em->getRepository('SingzAdminBundle:Setting')->getSettingByName('Promotion');
             if($setting != null) {
-                print 'are we here ?';
                 $leader = $follow->getLeader();
                 $roleService = $this->container->get('singz.user.service.role');
                 if(!$roleService->isGranted(User::ROLE_STARZ, $leader)) {
-                    print 'are we there ?';
                     $follows = $em->getRepository('SingzSocialBundle:Follow')->getRealFollows($leader);
                     if(count($follows) >= $setting->getValue()) {
-                        print 'then wtf ?';
                         $leader->removeRole(User::ROLE_SINGZER);
                         $leader->addRole(User::ROLE_STARZ);
                         $em->persist($leader);
@@ -67,10 +64,38 @@ class FollowSubscriber implements EventSubscriber
             }
 
     }
+
+    public function postRemove(LifecycleEventArgs $args){
+        $follow = $args->getEntity();
+        // only act on some "Follow" entity
+        if (!$follow instanceof Follow) {
+            return;
+        }
+        // get the entity manager
+        $em = $args->getEntityManager();
+
+        // check if Settings::Promotion is reached
+        $setting = $em->getRepository('SingzAdminBundle:Setting')->getSettingByName('Promotion');
+        if($setting != null) {
+            $leader = $follow->getLeader();
+            $roleService = $this->container->get('singz.user.service.role');
+            if($roleService->isGranted(User::ROLE_STARZ, $leader)) {
+                $follows = $em->getRepository('SingzSocialBundle:Follow')->getRealFollows($leader);
+                if(count($follows) < $setting->getValue()) {
+                    $leader->removeRole(User::ROLE_STARZ);
+                    $leader->addRole(User::ROLE_SINGZER);
+                    $em->persist($leader);
+                    $em->flush($leader);
+                }
+            }
+        }
+
+    }
 	
 	public function getSubscribedEvents() {
 		return array(
 			'postPersist',
+            'postRemove'
 		);
 	}
 
