@@ -43,7 +43,7 @@ class FollowSubscriber implements EventSubscriber
                 $leader = $follow->getLeader();
                 $roleService = $this->container->get('singz.user.service.role');
                 if(!$roleService->isGranted(User::ROLE_STARZ, $leader)) {
-                    $follows = $em->getRepository('SingzSocialBundle:Follow')->getRealFollows($leader);
+                    $follows = $em->getRepository('SingzSocialBundle:Follow')->getFollowers($leader);
                     if(count($follows) >= $setting->getValue()) {
                         $leader->removeRole(User::ROLE_SINGZER);
                         $leader->addRole(User::ROLE_STARZ);
@@ -80,7 +80,7 @@ class FollowSubscriber implements EventSubscriber
             $leader = $follow->getLeader();
             $roleService = $this->container->get('singz.user.service.role');
             if($roleService->isGranted(User::ROLE_STARZ, $leader)) {
-                $follows = $em->getRepository('SingzSocialBundle:Follow')->getRealFollows($leader);
+                $follows = $em->getRepository('SingzSocialBundle:Follow')->getFollowers($leader);
                 if(count($follows) < $setting->getValue()) {
                     $leader->removeRole(User::ROLE_STARZ);
                     $leader->addRole(User::ROLE_SINGZER);

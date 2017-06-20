@@ -101,7 +101,7 @@
                     		{% set i_follow = false %}
                         	{% if user != app.user %}
                                 <a href="{{ path('singz_social_bundle_follow', {'leaderId':user.id}) }}" class="btn btn-default">
-                                    {% for currentUserFollower in app.user.followers %}
+                                    {% for currentUserFollower in app.user.leaders %}
                                     	{% if currentUserFollower.leader == user %}
                                     		{% set i_follow = true %}
                                         {% endif %}
@@ -150,11 +150,11 @@
                         <button class="btn btn-default btn-xs">
                             {{ publications|length }} Publication{{ publications|length!=1?'s' }}
                         </button>
-                        <button class="btn btn-default btn-xs" data-tab="followers" data-toggle="modal" data-target="#followersModal">
-                            {{ followers|length }} Abonnement{{ followers|length!=1?'s' }}
+                        <button class="btn btn-default btn-xs" data-tab="leaders" data-toggle="modal" data-target="#leadersModal">
+                            {{ leaders|length }} Abonnement{{ leaders|length!=1?'s' }}
                         </button>
-                        <button class="btn btn-default btn-xs" data-tab="leaders" data-toggle="modal" data-target="#followersModal">
-                            {{ leaders|length }} Abonné{{ leaders|length!=1?'s' }}
+                        <button class="btn btn-default btn-xs" data-tab="followers" data-toggle="modal" data-target="#leadersModal">
+                            {{ followers|length }} Abonné{{ followers|length!=1?'s' }}
                         </button>
                     </div>
                 </div>
@@ -167,7 +167,7 @@
         	{# Check if is pending #}
         	{% set isPending = true %}
         	{% set requested = false %}
-        	{% for leader in user.leaders %}
+        	{% for leader in user.followers %}
         		{% if leader.leader == user %}
         			{% set requested = true %}
         			{% if leader.isPending == false %}
@@ -199,8 +199,8 @@
             {% endif %}
         </div>
     </div>
-    {# Modal of followers/leaders #}
-    <div class="modal fade in" id="followersModal" tabindex="-1" role="dialog" aria-labelledby="followersLabel">
+    {# Modal of leaders/followers #}
+    <div class="modal fade in" id="leadersModal" tabindex="-1" role="dialog" aria-labelledby="leadersLabel">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-body">
@@ -213,21 +213,21 @@
                             {# Nav tabs #}
                             <ul class="nav nav-tabs" role="tablist">
                                 <li role="presentation">
-                                	<a href="#followers" aria-controls="followers" role="tab" data-toggle="tab">
-                                		Abonnements <span class="badge">{{ followers|length }}</span>
+                                	<a href="#leaders" aria-controls="leaders" role="tab" data-toggle="tab">
+                                		Abonnements <span class="badge">{{ leaders|length }}</span>
                                 	</a>
                             	</li>
                                 <li role="presentation">
-                                    <a href="#leaders" aria-controls="leaders" role="tab" data-toggle="tab">
-                                    	Abonnés <span class="badge">{{ leaders|length }}</span>
+                                    <a href="#followers" aria-controls="followers" role="tab" data-toggle="tab">
+                                    	Abonnés <span class="badge">{{ followers|length }}</span>
                                     </a>
                                 </li>
                             </ul>
                             {# Tab panes #}
                             <div class="tab-content" style="padding:10px">
-                                <div role="tabpanel" class="tab-pane" id="leaders">
+                                <div role="tabpanel" class="tab-pane" id="followers">
         							<ul class="list-group">
-            							{% for user in leaders %}
+            							{% for user in followers %}
                                         	<a href="{{ path('singz_user_bundle_homepage', {'username': user.follower.username}) }}" class="list-group-item">
         										<img style="width:50px;height:50px" src="{{ asset(user.follower.image.realPath) }}" alt="Error loading" class="img-circle">
             									{{ user.follower.username }}
@@ -235,9 +235,9 @@
                                         {% endfor %}
                                     </ul>
         						</div>
-                                <div role="tabpanel" class="tab-pane" id="followers">
+                                <div role="tabpanel" class="tab-pane" id="leaders">
         							<ul class="list-group">
-            							{% for user in followers %}
+            							{% for user in leaders %}
                                         	<a href="{{ path('singz_user_bundle_homepage', {'username': user.leader.username}) }}" class="list-group-item">
         										<img style="width:50px;height:50px" src="{{ asset(user.leader.image.realPath) }}" alt="Error loading" class="img-circle">
             									{{ user.leader.username }}
@@ -259,8 +259,8 @@
 {% block end_javascripts %}
 	<script>
     	$(function(){
-        	// List of followers
-    		$('button[data-target="#followersModal"]').click(function(){
+        	// List of leaders
+    		$('button[data-target="#leadersModal"]').click(function(){
         		var tab = $(this).attr('data-tab');
     			$('.nav-tabs a[href="#'+tab+'"]').tab('show');
     		});

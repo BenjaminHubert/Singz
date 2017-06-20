@@ -36,14 +36,16 @@ class DefaultController extends Controller
         	'state' => Project::STATE_VISIBLE
         ));
 		//Get user's followers
-        $followers = $em->getRepository('SingzSocialBundle:Follow')->getRealLeads($user);
+        $followers = $em->getRepository('SingzSocialBundle:Follow')->getFollowers($user);
+        $pending = $em->getRepository('SingzSocialBundle:Follow')->getPendingFollowers($user);
 		//Get user's leaders
-        $leaders = $em->getRepository('SingzSocialBundle:Follow')->getRealFollows($user);
+        $leaders = $em->getRepository('SingzSocialBundle:Follow')->getSubscriptions($user);
 		//Display view
         return $this->render('SingzUserBundle:Default:index.html.twig', array(
 			'publications' => $publications,
             'user' => $user,
             'followers' => $followers,
+            'pending' => $pending,
             'leaders' => $leaders,
         	'project' => $project
         ));
