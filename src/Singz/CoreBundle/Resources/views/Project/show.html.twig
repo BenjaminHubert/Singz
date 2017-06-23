@@ -134,8 +134,14 @@
                                 </a>
                             </div>
                             <div class="media-body">
-                            	<h5 class="media-heading">{{ contribution.contributer.username }} <small>{{ contribution.createdAt|default("now"|date("Y-m-d H:i:s"))|time_diff }}</small></h5>
-            					<p>{{ contribution.amount }} €</p>
+                            	<h5 class="media-heading">
+                            	    <a href="{{ path('singz_user_bundle_homepage', {'username': contribution.contributer.username}) }}">
+                            	        {{ contribution.contributer.username }}
+                            	    </a>
+                            	    <small>{{ contribution.createdAt|default("now"|date("Y-m-d H:i:s"))|time_diff }}</small></h5>
+            					{% if contribution.isPrivate == false %}
+            						<p>{{ contribution.amount }} €</p>
+            					{% endif %}
                             </div>
                         </div>
                     {% else %}

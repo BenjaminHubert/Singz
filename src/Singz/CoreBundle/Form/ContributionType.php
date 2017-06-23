@@ -7,9 +7,8 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 
 class ContributionType extends AbstractType
 {
@@ -23,6 +22,10 @@ class ContributionType extends AbstractType
     			'label' => 'Montant',
     			'scale' => 2,
     			'grouping' => true
+    		))
+    		->add('isPrivate', CheckboxType::class, array(
+    			'label' => 'Ne pas afficher le montant',
+    			'required' => false
     		))
         	->add('project', EntityType::class, array( 
     			'class' => 'Singz\CoreBundle\Entity\Project',

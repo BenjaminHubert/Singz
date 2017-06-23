@@ -56,6 +56,13 @@ class Contribution
     private $project;
 
     /**
+     * @var boolean
+     *
+     * @ORM\Column(name="is_private", type="boolean")
+     */
+    private $isPrivate = false;
+
+    /**
      * Constructor
      */
 	public function __construct()
@@ -167,5 +174,29 @@ class Contribution
     public function getProject()
     {
         return $this->project;
+    }
+
+    /**
+     * Set isPrivate
+     *
+     * @param boolean $isPrivate
+     *
+     * @return Contribution
+     */
+    public function setIsPrivate($isPrivate)
+    {
+        $this->isPrivate = $isPrivate;
+
+        return $this;
+    }
+
+    /**
+     * Get isPrivate
+     *
+     * @return boolean
+     */
+    public function getIsPrivate()
+    {
+        return $this->isPrivate;
     }
 }

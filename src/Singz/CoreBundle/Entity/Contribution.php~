@@ -3,6 +3,7 @@
 namespace Singz\CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Contribution
@@ -23,6 +24,9 @@ class Contribution
 
     /**
      * @var float
+     * @Assert\Range(
+     *      min = 1,
+     * )
      *
      * @ORM\Column(name="amount", type="float")
      */
@@ -52,13 +56,19 @@ class Contribution
     private $project;
 
     /**
+     * @var boolean
+     *
+     * @ORM\Column(name="is_private", type="boolean")
+     */
+    private $isPrivate;
+
+    /**
      * Constructor
      */
 	public function __construct()
 	{
 		$this->createdAt = new \DateTime();
 	}
-    
     
     /**
      * Get id
@@ -140,5 +150,29 @@ class Contribution
     public function getContributer()
     {
         return $this->contributer;
+    }
+
+    /**
+     * Set project
+     *
+     * @param \Singz\CoreBundle\Entity\Project $project
+     *
+     * @return Contribution
+     */
+    public function setProject(\Singz\CoreBundle\Entity\Project $project)
+    {
+        $this->project = $project;
+
+        return $this;
+    }
+
+    /**
+     * Get project
+     *
+     * @return \Singz\CoreBundle\Entity\Project
+     */
+    public function getProject()
+    {
+        return $this->project;
     }
 }
