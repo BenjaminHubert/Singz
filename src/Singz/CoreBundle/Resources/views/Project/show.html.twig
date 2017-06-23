@@ -119,6 +119,31 @@
               	</div>
             </div>
 		</div>
+		{# Contributions #}
+		<div class="col-xs-12">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h2 class="panel-title">Personnes ayant contribué au projet</h2>
+				</div>
+    			<div class="panel-body">
+        			{% for contribution in contributions %}
+            			<div class="media">
+                            <div class="media-left">
+                                <a href="{{ path('singz_user_bundle_homepage', {'username': contribution.contributer.username}) }}">
+                                	<img width="50px" class="media-object" src="{{ asset(contribution.contributer.image.getRealPath) }}" alt="{{ contribution.contributer.username }}">
+                                </a>
+                            </div>
+                            <div class="media-body">
+                            	<h5 class="media-heading">{{ contribution.contributer.username }} <small>{{ contribution.createdAt|default("now"|date("Y-m-d H:i:s"))|time_diff }}</small></h5>
+            					<p>{{ contribution.amount }} €</p>
+                            </div>
+                        </div>
+                    {% else %}
+                    	<p style="font-style: italic">Aucune contribution</p>
+        			{% endfor %}
+        		</div>
+    		</div>
+		</div>
 	</div>
 {% endblock %}
 

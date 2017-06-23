@@ -73,10 +73,16 @@ class ProjectController extends Controller
 		));
 		$form->remove('project');
 		$form->remove('contributer');
+		// Sort contribution by date
+		$contributions = $project->getContributions()->toArray();
+		usort($contributions, function($a, $b){
+			return $b->getCreatedAt() <=> $a->getCreatedAt();
+		});
 		// Render the view
 		return $this->render('SingzCoreBundle:Project:show.html.twig', array(
 			'project' => $project,
-			'form' => $form->createView()
+			'form' => $form->createView(),
+			'contributions' => $contributions
 		));
 	}
 
