@@ -196,8 +196,12 @@ class ProjectController extends Controller
 			));
 		}
 			
-		// ...
-		// ...
+		// Create contribution
+		$contribution->setProject($project);
+		$contribution->setContributer($this->getUser());
+		$em->persist($contribution);
+		$em->flush();
+		$this->addFlash('success', "Merci d'avoir contribué à ce projet !");
 		// Redirect to route
 		return $this->redirectToRoute('singz_core_bundle_project_show', array(
 			'id' => $project->getId()

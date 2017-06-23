@@ -19,6 +19,7 @@ class Notification
     const NEW_RESINGZ = '<b>%s</b> a resingzé votre publication.';
     const PROMOTE = 'Félicitations <b>%s</b> ! Vous avez été promu Starz !';
     const NEW_PROJECT = '<b>%s</b> a créé le projet "%s".';
+    const NEW_CONTRIBUTION = '<b>%s</b> a contribué au projet <b>%s</b> à hauteur de <b>%s</b> €.';
 	
     /**
      * @var int
