@@ -30,7 +30,7 @@ class ContributionSubscriber implements EventSubscriber
 		$em->persist($notif);
 		// Increase the amount reached of the project
 		$currentAmountReached = $project->getAmountReached();
-		$project->setAmountReached($currentAmountReached + intval($contribution->getAmount()));
+		$project->setAmountReached($currentAmountReached + floatval($contribution->getAmount()));
 		$em->persist($project);
 		// Flush
 		$em->flush();
