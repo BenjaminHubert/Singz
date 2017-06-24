@@ -95,17 +95,29 @@
 			<i class="fa fa-clock-o fa-fw fa-lg" aria-hidden="true"></i> {{ project.createdAt|localizeddate('full', 'none', locale) }}
 		</div>
 		{# Crowdfunding button #}
-		<div class="col-xs-8 col-xs-offset-2 col-sm-4 col-sm-offset-4">
-			<a href="#" class="show-contribution-form">
-                <div class="btn-crowdfunding">
-    				Participer au projet
-    			</div>
-    		</a>
-		</div>
-		{# Crowdfunding form #}
-		<div class="col-xs-8 col-xs-offset-2 col-sm-4 col-sm-offset-4 contribution-form" style="display:none">
-	        {% include 'SingzCoreBundle:Project:contribution-form.html.twig' with {'form': form} %}
-		</div>
+		{% if app.user is not null and (project.state is constant('STATE_VISIBLE', project) or project.state is constant('STATE_DONE', project)) %}
+    		<div class="col-xs-8 col-xs-offset-2 col-sm-4 col-sm-offset-4">
+    			<a href="#" class="show-contribution-form">
+                    <div class="btn-crowdfunding">
+        				Participer au projet
+        			</div>
+        		</a>
+    		</div>
+    		{# Crowdfunding form #}
+        	<div class="col-xs-8 col-xs-offset-2 col-sm-4 col-sm-offset-4 contribution-form" style="display:none">
+                {% include 'SingzCoreBundle:Project:contribution-form.html.twig' with {'form': form} %}
+        	</div>
+    	{% endif %}
+    	{# Login button #}
+		{% if app.user is null and (project.state is constant('STATE_VISIBLE', project) or project.state is constant('STATE_DONE', project)) %}
+    		<div class="col-xs-8 col-xs-offset-2 col-sm-4 col-sm-offset-4">
+    			<a href="{{ path('fos_user_security_login') }}">
+                    <div class="btn-crowdfunding">
+        				Participer au projet
+        			</div>
+        		</a>
+    		</div>
+    	{% endif %}
 		{# Description #}
 		<div class="col-xs-12">
 			<hr>
