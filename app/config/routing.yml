@@ -1,3 +1,7 @@
+singz_paypal:
+    resource: "@SingzPaypalBundle/Resources/config/routing.yml"
+    prefix:   /
+
 singz_admin:
     resource: "@SingzAdminBundle/Resources/config/routing.yml"
     prefix:   /admin/

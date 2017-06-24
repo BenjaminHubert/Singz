@@ -10,6 +10,7 @@ use Singz\CoreBundle\Form\ProjectType;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Singz\CoreBundle\Form\ContributionType;
 use Singz\CoreBundle\Entity\Contribution;
+use Singz\CoreBundle\Service\PaypalService;
 
 class ProjectController extends Controller
 {
@@ -201,10 +202,21 @@ class ProjectController extends Controller
 				'id' => $project->getId()
 			));
 		}
-			
 		// Create contribution
 		$contribution->setProject($project);
 		$contribution->setContributer($this->getUser());
+		#########################################
+		#
+		#
+		#
+		#
+		$paypalService = $this->container->get('singz.paypal.paypal');
+		$paypalService->createPayment($contribution);
+		
+		#
+		#
+		#
+		#########################################
 		$em->persist($contribution);
 		$em->flush();
 		$this->addFlash('success', "Merci d'avoir contribué à ce projet !");
