@@ -8,6 +8,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Singz\CoreBundle\Entity\Project;
 use Singz\CoreBundle\Form\ProjectType;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Singz\CoreBundle\Form\ContributionType;
+use Singz\CoreBundle\Entity\Contribution;
 
 class ProjectController extends Controller
 {
@@ -64,9 +66,23 @@ class ProjectController extends Controller
 		if($project == null) {
 			throw $this->createNotFoundException('Project inexistant');
 		}
+		//Create contribution form
+		$contribution = new Contribution();
+		$form = $this->createForm(ContributionType::class, $contribution, array(
+			'action' => $this->generateUrl('singz_core_bundle_project_contributing', array('id' => $project->getId()))
+		));
+		$form->remove('project');
+		$form->remove('contributer');
+		// Sort contribution by date
+		$contributions = $project->getContributions()->toArray();
+		usort($contributions, function($a, $b){
+			return $b->getCreatedAt() <=> $a->getCreatedAt();
+		});
 		// Render the view
 		return $this->render('SingzCoreBundle:Project:show.html.twig', array(
-			'project' => $project
+			'project' => $project,
+			'form' => $form->createView(),
+			'contributions' => $contributions
 		));
 	}
 
@@ -146,6 +162,53 @@ class ProjectController extends Controller
 		// Display success
 		$this->addFlash('success', 'Projet supprimé avec succès');
 		// On redirige vers la page du projet
+		return $this->redirectToRoute('singz_core_bundle_project_show', array(
+			'id' => $project->getId()
+		));
+	}
+	
+	/**
+	 * @Security("has_role('ROLE_USER')")
+	 */
+	public function contributingAction(Request $request, $id)
+	{
+		//Get the entity manager
+		$em = $this->getDoctrine()->getManager();
+		// Get the project
+		$project = $em->getRepository('SingzCoreBundle:Project')->findOneBy(array(
+			'id' => $id,
+		));
+		if($project == null) {
+			throw $this->createNotFoundException('Projet inexistant');
+		}
+		// Create form
+		$contribution = new Contribution();
+		$form = $this->createForm(ContributionType::class, $contribution);
+		$form->remove('project');
+		$form->remove('contributer');
+		$form->handleRequest($request);
+		// Check if submitted
+		if(!$form->isSubmitted()){
+			$this->addFlash('danger', 'Le formulaire doit être soumis.');
+			return $this->redirectToRoute('singz_core_bundle_project_show', array(
+				'id' => $project->getId()
+			));
+		}
+		// Check if the form is valid
+		if(!$form->isValid()){
+			$this->addFlash('danger', 'Le formulaire n\'est pas valide.');
+			return $this->redirectToRoute('singz_core_bundle_project_show', array(
+				'id' => $project->getId()
+			));
+		}
+			
+		// Create contribution
+		$contribution->setProject($project);
+		$contribution->setContributer($this->getUser());
+		$em->persist($contribution);
+		$em->flush();
+		$this->addFlash('success', "Merci d'avoir contribué à ce projet !");
+		// Redirect to route
 		return $this->redirectToRoute('singz_core_bundle_project_show', array(
 			'id' => $project->getId()
 		));

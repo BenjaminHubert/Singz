@@ -23,3 +23,10 @@ singz_core_bundle_project_delete:
         _controller: SingzCoreBundle:Project:delete
     requirements:
         id: \d+
+        
+singz_core_bundle_project_contributing:
+    path:     /{id}/contributing/
+    defaults:
+        _controller: SingzCoreBundle:Project:contributing
+    requirements:
+        id: \d+
