@@ -156,6 +156,9 @@
                         <button class="btn btn-default btn-xs" data-tab="leaders" data-toggle="modal" data-target="#followersModal">
                             {{ leaders|length }} Abonné{{ leaders|length!=1?'s' }}
                         </button>
+                        <button class="btn btn-default btn-xs" data-tab="contributions" data-toggle="modal" data-target="#followersModal">
+                            {{ user.contributions|length }} Contribution{{ user.contributions|length!=1?'s' }}
+                        </button>
                     </div>
                 </div>
             </div>
@@ -212,19 +215,28 @@
                     	<div>
                             {# Nav tabs #}
                             <ul class="nav nav-tabs" role="tablist">
+                            	{# Abonnements #}
                                 <li role="presentation">
                                 	<a href="#followers" aria-controls="followers" role="tab" data-toggle="tab">
                                 		Abonnements <span class="badge">{{ followers|length }}</span>
                                 	</a>
                             	</li>
+                            	{# Abonnés #}
                                 <li role="presentation">
                                     <a href="#leaders" aria-controls="leaders" role="tab" data-toggle="tab">
                                     	Abonnés <span class="badge">{{ leaders|length }}</span>
                                     </a>
                                 </li>
+                            	{# Contributions #}
+                                <li role="presentation">
+                                    <a href="#contributions" aria-controls="contributions" role="tab" data-toggle="tab">
+                                    	Contributions <span class="badge">{{ user.contributions|length }}</span>
+                                    </a>
+                                </li>
                             </ul>
                             {# Tab panes #}
                             <div class="tab-content" style="padding:10px">
+                            	{# Leaders #}
                                 <div role="tabpanel" class="tab-pane" id="leaders">
         							<ul class="list-group">
             							{% for user in leaders %}
@@ -235,6 +247,7 @@
                                         {% endfor %}
                                     </ul>
         						</div>
+                            	{# Followers #}
                                 <div role="tabpanel" class="tab-pane" id="followers">
         							<ul class="list-group">
             							{% for user in followers %}
@@ -243,6 +256,21 @@
             									{{ user.leader.username }}
             								</a>
                                         {% endfor %}
+                                    </ul>
+        						</div>
+                            	{# Contributions #}
+                                <div role="tabpanel" class="tab-pane" id="contributions">
+        							<ul class="list-group">
+										{% for contribution in user.contributions %}
+											<a href="{{ path('singz_core_bundle_project_show', {'id': contribution.project.id}) }}" class="list-group-item">
+											    <b>{{ contribution.project.name }}</b>
+											    {% if contribution.isPrivate == false %}
+											    	<small>{{ contribution.amount }} €</small>
+											    {% endif %}
+											</a>
+                                        {% else %}
+                                        	<li style="font-style: italic">Aucune contribution</li>
+                            			{% endfor %}
                                     </ul>
         						</div>
                             </div>
