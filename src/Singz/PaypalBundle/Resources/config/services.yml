@@ -1,3 +1,5 @@
 services:
     singz.paypal.paypal:
         class:     Singz\PaypalBundle\Service\PaypalService
+        arguments:
+           router: "@router"

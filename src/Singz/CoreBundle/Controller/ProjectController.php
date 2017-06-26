@@ -211,18 +211,27 @@ class ProjectController extends Controller
 		#
 		#
 		$paypalService = $this->container->get('singz.paypal.paypal');
-		$paypalService->createPayment($contribution);
-		
+		try{
+			$payment = $paypalService->createPayment($contribution);
+		}catch(\Exception $e){
+			$this->addFlash('danger', 'Une erreur a été rencontrée ('.$e->getMessage().')');
+			// Redirect to route
+			return $this->redirectToRoute('singz_core_bundle_project_show', array(
+				'id' => $project->getId()
+			));
+		}
+				
+		return $this->redirect($payment->getApprovalLink());
 		#
 		#
 		#
 		#########################################
-		$em->persist($contribution);
-		$em->flush();
-		$this->addFlash('success', "Merci d'avoir contribué à ce projet !");
-		// Redirect to route
-		return $this->redirectToRoute('singz_core_bundle_project_show', array(
-			'id' => $project->getId()
-		));
+// 		$em->persist($contribution);
+// 		$em->flush();
+// 		$this->addFlash('success', "Merci d'avoir contribué à ce projet !");
+// 		// Redirect to route
+// 		return $this->redirectToRoute('singz_core_bundle_project_show', array(
+// 			'id' => $project->getId()
+// 		));
 	}
 }
