@@ -10,7 +10,6 @@ use Singz\CoreBundle\Form\ProjectType;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Singz\CoreBundle\Form\ContributionType;
 use Singz\CoreBundle\Entity\Contribution;
-use Singz\CoreBundle\Service\PaypalService;
 use PayPal\Api\Item;
 use PayPal\Api\ItemList;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;

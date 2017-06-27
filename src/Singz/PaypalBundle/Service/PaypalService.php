@@ -92,6 +92,11 @@ class PaypalService
 		$payment->create($apiContext);
 
 		/*
+		 * Keep the payment into the database
+		 */
+		
+		
+		/*
 		 * Get redirect url
 		 *
 		 * The API response provides the url that you must redirect the buyer to.
