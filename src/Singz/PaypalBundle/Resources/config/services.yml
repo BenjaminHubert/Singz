@@ -3,3 +3,5 @@ services:
         class:     Singz\PaypalBundle\Service\PaypalService
         arguments:
            router: "@router"
+           paypal_client_id: "%paypal_client_id%"
+           paypal_secret: "%paypal_secret%"

@@ -18,11 +18,16 @@ use PayPal\Auth\OAuthTokenCredential;
 class PaypalService
 {
 	private $router;
+	private $clientId;
+	private $clientSecret;
 	
-	public function __construct(Router $router)
+	public function __construct(Router $router, $clientId, $clientSecret)
 	{
 		$this->router = $router;
+		$this->clientId = $clientId;
+		$this->clientSecret = $clientSecret;
 	}
+	
 	public function createPayment(Contribution $contribution)
 	{
 		/*
@@ -106,9 +111,7 @@ class PaypalService
 		 * The return object contains the state and the url to which the buyer must be redirected to
 		 * for payment approval
 		 */
-		$clientId = '';
-		$clientSecret = '';
-		$credential = new OAuthTokenCredential($clientId, $clientSecret);
+		$credential = new OAuthTokenCredential($this->clientId, $this->clientSecret);
 		$requestId = '';
 		$apiContext = new ApiContext($credential, $requestId);
 		$payment->create($apiContext);
