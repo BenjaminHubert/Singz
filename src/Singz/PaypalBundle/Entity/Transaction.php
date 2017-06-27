@@ -48,6 +48,15 @@ class Transaction
      * @ORM\Column(name="invoice_number", type="string")
      */
     private $invoiceNumber;
+    
+    /**
+     * @var Payment
+     * 
+     * @ORM\ManyToOne(targetEntity="Singz\PaypalBundle\Entity\Payment", inversedBy="transactions")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $payment;
+    
 
     /**
      * Get id
@@ -153,5 +162,29 @@ class Transaction
     public function getInvoiceNumber()
     {
         return $this->invoiceNumber;
+    }
+
+    /**
+     * Set payment
+     *
+     * @param \Singz\PaypalBundle\Entity\Payment $payment
+     *
+     * @return Transaction
+     */
+    public function setPayment(\Singz\PaypalBundle\Entity\Payment $payment)
+    {
+        $this->payment = $payment;
+
+        return $this;
+    }
+
+    /**
+     * Get payment
+     *
+     * @return \Singz\PaypalBundle\Entity\Payment
+     */
+    public function getPayment()
+    {
+        return $this->payment;
     }
 }

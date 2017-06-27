@@ -48,6 +48,15 @@ class Transaction
      * @ORM\Column(name="invoice_number", type="string")
      */
     private $invoiceNumber;
+    
+    /**
+     * @var Payment
+     * 
+     * @ORM\ManyToOne(targetEntity="Singz\PaypalBundle\Entity\Payment", inversedBy="transactions")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $payment;
+    
 
     /**
      * Get id
@@ -59,6 +68,99 @@ class Transaction
         return $this->id;
     }
     
-    
-}
+    /**
+     * Set amount
+     *
+     * @param float $amount
+     *
+     * @return Transaction
+     */
+    public function setAmount($amount)
+    {
+        $this->amount = $amount;
 
+        return $this;
+    }
+
+    /**
+     * Get amount
+     *
+     * @return float
+     */
+    public function getAmount()
+    {
+        return $this->amount;
+    }
+
+    /**
+     * Set currency
+     *
+     * @param string $currency
+     *
+     * @return Transaction
+     */
+    public function setCurrency($currency)
+    {
+        $this->currency = $currency;
+
+        return $this;
+    }
+
+    /**
+     * Get currency
+     *
+     * @return string
+     */
+    public function getCurrency()
+    {
+        return $this->currency;
+    }
+
+    /**
+     * Set description
+     *
+     * @param string $description
+     *
+     * @return Transaction
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * Set invoiceNumber
+     *
+     * @param string $invoiceNumber
+     *
+     * @return Transaction
+     */
+    public function setInvoiceNumber($invoiceNumber)
+    {
+        $this->invoiceNumber = $invoiceNumber;
+
+        return $this;
+    }
+
+    /**
+     * Get invoiceNumber
+     *
+     * @return string
+     */
+    public function getInvoiceNumber()
+    {
+        return $this->invoiceNumber;
+    }
+}
