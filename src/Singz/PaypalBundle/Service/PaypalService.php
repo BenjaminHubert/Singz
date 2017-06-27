@@ -3,32 +3,36 @@
 namespace Singz\PaypalBundle\Service;
 
 use PayPal\Api\Amount;
-use PayPal\Api\Item;
 use PayPal\Api\ItemList;
 use PayPal\Api\Payer;
 use PayPal\Api\Payment;
 use PayPal\Api\RedirectUrls;
 use PayPal\Api\Transaction;
-use Singz\CoreBundle\Entity\Contribution;
-use Symfony\Bundle\FrameworkBundle\Routing\Router;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use PayPal\Rest\ApiContext;
 use PayPal\Auth\OAuthTokenCredential;
 
 class PaypalService
 {
-	private $router;
 	private $clientId;
 	private $clientSecret;
 	
-	public function __construct(Router $router, $clientId, $clientSecret)
+	public function __construct($clientId, $clientSecret)
 	{
-		$this->router = $router;
 		$this->clientId = $clientId;
 		$this->clientSecret = $clientSecret;
 	}
 	
-	public function createPayment(Contribution $contribution)
+	/**
+	 * 
+	 * @param ItemList $itemList
+	 * @param float $totalAmount
+	 * @param string $currency
+	 * @param string $description
+	 * @param string $returnUrl
+	 * @param string $cancelUrl
+	 * @return \PayPal\Api\Payment
+	 */
+	public function createPayment(ItemList $itemList, float $totalAmount, string $currency, string $description, string $returnUrl, string $cancelUrl)
 	{
 		/*
 		 * Payer
@@ -37,37 +41,14 @@ class PaypalService
 		 */
 		$payer = new Payer();
 		$payer->setPaymentMethod('paypal');
-		
-		/*
-		 * Itemized information
-		 *
-		 * (Optional) Lets you specify item wise information
-		 */
-		$item = new Item();
-		$item->setCurrency('EUR'); // List of currencies : https://developer.paypal.com/docs/integration/direct/rest/currency-codes/
-		$item->setDescription(sprintf(
-			'Vous souhaitez participer au projet <b>%s</b> créé par <b>%s</b> à hauteur de <b>%s</b>',
-			$contribution->getProject()->getName(),
-			$contribution->getProject()->getRequester()->getUsername(),
-			$contribution->getAmount()
-		));
-		$item->setName('Contribution');
-		$item->setPrice($contribution->getAmount());
-		$item->setQuantity(1);
-		$item->setTax(0);
-		
-		$itemList = new ItemList();
-		$itemList->setItems(array($item));
-
 		/*
 		 * Amount
 		 *
 		 * Lets you specify a payment amount. You can also specify additional details such as shipping, tax.
 		 */
 		$amount = new Amount();
-		$amount->setCurrency('EUR');
-		$amount->setTotal($contribution->getAmount());
-
+		$amount->setCurrency($currency);
+		$amount->setTotal($totalAmount);
 		/*
 		 * Transaction
 		 *
@@ -76,12 +57,7 @@ class PaypalService
 		$transaction = new Transaction();
 		$transaction->setAmount($amount);
 		$transaction->setItemList($itemList);
-		$transaction->setDescription(sprintf(
-			'Vous souhaitez participer au projet <b>%s</b> créé par <b>%s</b> à hauteur de <b>%s</b>',
-			$contribution->getProject()->getName(),
-			$contribution->getProject()->getRequester()->getUsername(),
-			$contribution->getAmount()
-		));
+		$transaction->setDescription($description);
 		$transaction->setInvoiceNumber(uniqid());
 
 		/*
@@ -90,8 +66,8 @@ class PaypalService
 		 * Set the urls that the buyer must be redirected to after payment approval/ cancellation.
 		 */
 		$redirectUrls = new RedirectUrls();
-		$redirectUrls->setReturnUrl($this->router->generate('singz_paypal_bundle_execute_payment', array('success' => 'true'), UrlGeneratorInterface::ABSOLUTE_URL));
-		$redirectUrls->setCancelUrl($this->router->generate('singz_paypal_bundle_execute_payment', array('success' => 'false'), UrlGeneratorInterface::ABSOLUTE_URL));
+		$redirectUrls->setReturnUrl($returnUrl);
+		$redirectUrls->setCancelUrl($cancelUrl);
 
 		/*
 		 * Payment
@@ -112,8 +88,7 @@ class PaypalService
 		 * for payment approval
 		 */
 		$credential = new OAuthTokenCredential($this->clientId, $this->clientSecret);
-		$requestId = '';
-		$apiContext = new ApiContext($credential, $requestId);
+		$apiContext = new ApiContext($credential);
 		$payment->create($apiContext);
 
 		/*
