@@ -57,6 +57,13 @@ class Payment
      * @ORM\OneToMany(targetEntity="Singz\PaypalBundle\Entity\Transaction", mappedBy="payment")
      */
     private $transactions;
+    
+    /**
+     * @var Contribution
+     * 
+     * @ORM\OneToOne(targetEntity="Singz\CoreBundle\Entity\Contribution", mappedBy="payment")
+     */
+    private $contribution;
 
 
     public function __construct()
@@ -203,5 +210,29 @@ class Payment
     public function getTransactions()
     {
         return $this->transactions;
+    }
+
+    /**
+     * Set contribution
+     *
+     * @param \Singz\CoreBundle\Entity\Contribution $contribution
+     *
+     * @return Payment
+     */
+    public function setContribution(\Singz\CoreBundle\Entity\Contribution $contribution = null)
+    {
+        $this->contribution = $contribution;
+
+        return $this;
+    }
+
+    /**
+     * Get contribution
+     *
+     * @return \Singz\CoreBundle\Entity\Contribution
+     */
+    public function getContribution()
+    {
+        return $this->contribution;
     }
 }
