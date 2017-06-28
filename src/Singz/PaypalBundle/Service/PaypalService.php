@@ -5,21 +5,22 @@ namespace Singz\PaypalBundle\Service;
 use PayPal\Api\Amount;
 use PayPal\Api\ItemList;
 use PayPal\Api\Payer;
-use PayPal\Api\Payment;
 use PayPal\Api\RedirectUrls;
-use PayPal\Api\Transaction;
 use PayPal\Rest\ApiContext;
 use PayPal\Auth\OAuthTokenCredential;
+use Doctrine\ORM\EntityManager;
 
 class PaypalService
 {
 	private $clientId;
 	private $clientSecret;
+	private $em;
 	
-	public function __construct($clientId, $clientSecret)
+	public function __construct($clientId, $clientSecret, EntityManager $em)
 	{
 		$this->clientId = $clientId;
 		$this->clientSecret = $clientSecret;
+		$this->em = $em;
 	}
 	
 	/**
@@ -54,7 +55,7 @@ class PaypalService
 		 *
 		 * A transaction defines the contract of a payment - what is the payment for and who is fulfilling it.
 		 */
-		$transaction = new Transaction();
+		$transaction = new \PayPal\Api\Transaction();
 		$transaction->setAmount($amount);
 		$transaction->setItemList($itemList);
 		$transaction->setDescription($description);
@@ -74,7 +75,7 @@ class PaypalService
 		 *
 		 * A Payment Resource; create one using the above types and intent set to 'sale'
 		 */
-		$payment = new Payment();
+		$payment = new \PayPal\Api\Payment();
 		$payment->setIntent('sale');
 		$payment->setPayer($payer);
 		$payment->setRedirectUrls($redirectUrls);
@@ -94,7 +95,21 @@ class PaypalService
 		/*
 		 * Keep the payment into the database
 		 */
+		$paymentEntity = new \Singz\PaypalBundle\Entity\Payment();
+		$paymentEntity->setIntent($payment->getIntent());
+		$paymentEntity->setState($payment->getState());
+		$paymentEntity->setPaypalId($payment->getId());
+		$this->em->persist($paymentEntity);
 		
+		$transactionEntity = new \Singz\PaypalBundle\Entity\Transaction();
+		$transactionEntity->setAmount($amount->getTotal());
+		$transactionEntity->setCurrency($amount->getCurrency());
+		$transactionEntity->setDescription($transaction->getDescription());
+		$transactionEntity->setInvoiceNumber($transaction->getInvoiceNumber());
+		$transactionEntity->setPayment($paymentEntity);
+		$this->em->persist($transactionEntity);
+		
+		$this->em->flush();		
 		
 		/*
 		 * Get redirect url

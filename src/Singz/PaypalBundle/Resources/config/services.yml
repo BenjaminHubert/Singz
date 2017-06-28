@@ -2,5 +2,6 @@ services:
     singz.paypal.paypal:
         class:     Singz\PaypalBundle\Service\PaypalService
         arguments:
-           paypal_client_id: "%paypal_client_id%"
-           paypal_secret: "%paypal_secret%"
+            paypal_client_id: "%paypal_client_id%"
+            paypal_secret: "%paypal_secret%"
+            em: "@doctrine.orm.entity_manager"
