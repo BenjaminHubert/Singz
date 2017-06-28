@@ -9,6 +9,9 @@ use PayPal\Api\RedirectUrls;
 use PayPal\Rest\ApiContext;
 use PayPal\Auth\OAuthTokenCredential;
 use Doctrine\ORM\EntityManager;
+use PayPal\Api\PaymentExecution;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class PaypalService
 {
@@ -21,6 +24,18 @@ class PaypalService
 		$this->clientId = $clientId;
 		$this->clientSecret = $clientSecret;
 		$this->em = $em;
+	}
+	
+	/**
+	 * 
+	 * @return \PayPal\Rest\ApiContext
+	 */
+	private function getApiContext()
+	{
+		$credential = new OAuthTokenCredential($this->clientId, $this->clientSecret);
+		$apiContext = new ApiContext($credential);
+		
+		return $apiContext;
 	}
 	
 	/**
@@ -42,6 +57,7 @@ class PaypalService
 		 */
 		$payer = new Payer();
 		$payer->setPaymentMethod('paypal');
+		
 		/*
 		 * Amount
 		 *
@@ -50,6 +66,7 @@ class PaypalService
 		$amount = new Amount();
 		$amount->setCurrency($currency);
 		$amount->setTotal($totalAmount);
+		
 		/*
 		 * Transaction
 		 *
@@ -82,14 +99,17 @@ class PaypalService
 		$payment->setTransactions(array($transaction));
 
 		/*
+		 * Get the api context
+		 */
+		$apiContext = $this->getApiContext();
+		
+		/*
 		 * Create Payment
 		 *
 		 * Create a payment by calling the 'create' method passing it a valid apiContext.
 		 * The return object contains the state and the url to which the buyer must be redirected to
 		 * for payment approval
 		 */
-		$credential = new OAuthTokenCredential($this->clientId, $this->clientSecret);
-		$apiContext = new ApiContext($credential);
 		$payment->create($apiContext);
 
 		/*
@@ -117,6 +137,68 @@ class PaypalService
 		 * The API response provides the url that you must redirect the buyer to.
 		 * Retrieve the url from the $payment->getApprovalLink() method
 		 */
+		return $payment;
+	}
+	
+	
+	public function executePayment(string $paymentId, string $payerId)
+	{
+		/*
+		 * Check if the payment is already created into the database
+		 */
+		$paymentEntity = $this->em->getRepository('SingzPaypalBundle:Payment')->findOneBy(array(
+			'paypalId' => $paymentId,
+		));
+		if(!$paymentEntity){
+			throw new NotFoundHttpException('The payment does not exist.');
+		}
+		if($paymentEntity->getState() != 'created'){
+			throw new HttpException(400, 'Payment has been done already for this transaction.');
+		}
+		
+		/*
+		 * Get the api context
+		 */
+		$apiContext = $this->getApiContext();
+		
+		/*
+		 * Get the payment Object by passing paymentId 
+		 */
+		$payment = \PayPal\Api\Payment::get($paymentId, $apiContext);
+		
+		/*
+		 * Payment Execute
+		 * 
+		 * PaymentExecution object includes information necessary to execute a PayPal account payment. 
+		 * The payer_id is added to the request query parameters when the user is redirected from paypal 
+		 * back to your site
+		 */
+		$execution = new PaymentExecution();
+		$execution->setPayerId($payerId);
+		
+		/*
+		 * Execute the payment
+		 */
+		try {
+			$result = $payment->execute($execution, $apiContext);
+			try {
+				$payment = \PayPal\Api\Payment::get($paymentId, $apiContext);
+			}catch(\Exception $e){
+				$data = json_decode($e->getData());
+				throw new \Exception($data->message);
+			}
+		}catch(\Exception $e){
+			$data = json_decode($e->getData());
+			throw new \Exception($data->message);
+		}
+		
+		/*
+		 * Update the payment into database
+		 */
+		$paymentEntity->setState($payment->getState());
+		$this->em->persist($paymentEntity);
+		$this->em->flush();
+		
 		return $payment;
 	}
 }
