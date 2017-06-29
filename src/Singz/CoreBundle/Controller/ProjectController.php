@@ -63,9 +63,7 @@ class ProjectController extends Controller
 		//Get the entity manager
 		$em = $this->getDoctrine()->getManager();
 		// Get the project
-		$project = $em->getRepository('SingzCoreBundle:Project')->findOneBy(array(
-			'id' => $id,
-		));
+		$project = $em->getRepository('SingzCoreBundle:Project')->getProject($id);
 		if($project == null) {
 			throw $this->createNotFoundException('Project inexistant');
 		}
@@ -76,16 +74,10 @@ class ProjectController extends Controller
 		));
 		$form->remove('project');
 		$form->remove('contributer');
-		// Sort contribution by date
-		$contributions = $project->getContributions()->toArray();
-		usort($contributions, function($a, $b){
-			return $b->getCreatedAt() <=> $a->getCreatedAt();
-		});
 		// Render the view
 		return $this->render('SingzCoreBundle:Project:show.html.twig', array(
 			'project' => $project,
-			'form' => $form->createView(),
-			'contributions' => $contributions
+			'form' => $form->createView()
 		));
 	}
 

@@ -10,4 +10,18 @@ namespace Singz\CoreBundle\Repository;
  */
 class ProjectRepository extends \Doctrine\ORM\EntityRepository
 {
+	public function getProject($id){
+		return $this->createQueryBuilder('p')
+			// contributions
+			->leftJoin('p.contributions', 'c', 'WITH', 'c.isValidated = :contributionValidated')
+				->addSelect('c')
+				->setParameter('contributionValidated', true)
+			// id project
+			->andWhere('p.id = :id')
+				->setParameter('id', $id)
+		
+			->getQuery()
+			->getOneOrNullResult()
+		;
+	}
 }
