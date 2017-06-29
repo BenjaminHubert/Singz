@@ -36,7 +36,7 @@ class ContributionSubscriber implements EventSubscriber
 		$cagnotte = $em->getRepository('SingzAdminBundle:Setting')->findOneBy(array(
 			'name' => 'Cagnotte'
 		));
-		if($project->getAmountReached() >= $cagnotte->getValue()){
+		if($project->getAmountReached() >= $cagnotte->getValue() && $project->getState() != Project::STATE_DONE){
 			// update the state
 			$project->setState(Project::STATE_DONE);
 			### Send notification to the project owner if the contributions project has reached the total needed
