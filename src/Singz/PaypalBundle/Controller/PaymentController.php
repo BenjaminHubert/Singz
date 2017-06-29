@@ -9,17 +9,17 @@ class PaymentController extends Controller
 {
 	public function executePaymentAction(Request $request, $success)
 	{
+		// If the payment is cancelled, display an error message
+		if($success == 'false'){
+			$this->addFlash('danger', 'Vous avez annulé le paiement. Votre contribution n\'a pas été prise en compte.');
+			return $this->redirectToRoute('singz_index');
+		}
 		// Get required params
 		$paymentId = $request->query->get('paymentId');
 		$payerId = $request->query->get('PayerID');
 		// Check if required params are provided
 		if(!$paymentId || !$payerId){
 			throw $this->createNotFoundException();
-		}
-		// If the payment is cancelled, display an error message
-		if($success == 'false'){
-			$this->addFlash('danger', 'Vous avez annulé le paiement. Votre contribution n\'a pas été prise en compte.');
-			return $this->redirectToRoute('singz_index');
 		}
 		// Execute payment on Paypal
 		$paypalService = $this->container->get('singz.paypal.paypal');
