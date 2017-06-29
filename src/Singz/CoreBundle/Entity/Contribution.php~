@@ -60,7 +60,22 @@ class Contribution
      *
      * @ORM\Column(name="is_private", type="boolean")
      */
-    private $isPrivate;
+    private $isPrivate = false;
+    
+    /**
+     * @var Payment
+     * 
+     * @ORM\OneToOne(targetEntity="Singz\PaypalBundle\Entity\Payment", inversedBy="contribution")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $payment;
+    
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="is_validated", type="boolean")
+     */
+    private $isValidated = false;
 
     /**
      * Constructor
@@ -174,5 +189,53 @@ class Contribution
     public function getProject()
     {
         return $this->project;
+    }
+
+    /**
+     * Set isPrivate
+     *
+     * @param boolean $isPrivate
+     *
+     * @return Contribution
+     */
+    public function setIsPrivate($isPrivate)
+    {
+        $this->isPrivate = $isPrivate;
+
+        return $this;
+    }
+
+    /**
+     * Get isPrivate
+     *
+     * @return boolean
+     */
+    public function getIsPrivate()
+    {
+        return $this->isPrivate;
+    }
+
+    /**
+     * Set payment
+     *
+     * @param \Singz\PaypalBundle\Entity\Payment $payment
+     *
+     * @return Contribution
+     */
+    public function setPayment(\Singz\PaypalBundle\Entity\Payment $payment)
+    {
+        $this->payment = $payment;
+
+        return $this;
+    }
+
+    /**
+     * Get payment
+     *
+     * @return \Singz\PaypalBundle\Entity\Payment
+     */
+    public function getPayment()
+    {
+        return $this->payment;
     }
 }

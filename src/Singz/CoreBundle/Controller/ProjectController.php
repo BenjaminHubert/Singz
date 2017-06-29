@@ -10,6 +10,9 @@ use Singz\CoreBundle\Form\ProjectType;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Singz\CoreBundle\Form\ContributionType;
 use Singz\CoreBundle\Entity\Contribution;
+use PayPal\Api\Item;
+use PayPal\Api\ItemList;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class ProjectController extends Controller
 {
@@ -60,9 +63,7 @@ class ProjectController extends Controller
 		//Get the entity manager
 		$em = $this->getDoctrine()->getManager();
 		// Get the project
-		$project = $em->getRepository('SingzCoreBundle:Project')->findOneBy(array(
-			'id' => $id,
-		));
+		$project = $em->getRepository('SingzCoreBundle:Project')->getProject($id);
 		if($project == null) {
 			throw $this->createNotFoundException('Project inexistant');
 		}
@@ -73,16 +74,10 @@ class ProjectController extends Controller
 		));
 		$form->remove('project');
 		$form->remove('contributer');
-		// Sort contribution by date
-		$contributions = $project->getContributions()->toArray();
-		usort($contributions, function($a, $b){
-			return $b->getCreatedAt() <=> $a->getCreatedAt();
-		});
 		// Render the view
 		return $this->render('SingzCoreBundle:Project:show.html.twig', array(
 			'project' => $project,
-			'form' => $form->createView(),
-			'contributions' => $contributions
+			'form' => $form->createView()
 		));
 	}
 
@@ -201,16 +196,58 @@ class ProjectController extends Controller
 				'id' => $project->getId()
 			));
 		}
-			
 		// Create contribution
 		$contribution->setProject($project);
 		$contribution->setContributer($this->getUser());
+		
+		// Paypal item
+		$currency = 'EUR';
+		$description = sprintf(
+			'Vous souhaitez participer au projet "%s" créé par "%s" à hauteur de "%s" '.$currency,
+			$contribution->getProject()->getName(),
+			$contribution->getProject()->getRequester()->getUsername(),
+			$contribution->getAmount()
+		);
+		$item = new Item();
+		$item->setCurrency($currency); // List of currencies : https://developer.paypal.com/docs/integration/direct/rest/currency-codes/
+		$item->setDescription($description);
+		$item->setName('Contribution au projet "'.$contribution->getProject()->getName().'"');
+		$item->setPrice($contribution->getAmount());
+		$item->setQuantity(1);
+		$itemList = new ItemList();
+		$itemList->setItems(array($item));
+		
+		// Call Paypal service
+		$paypalService = $this->container->get('singz.paypal.paypal');
+		try{
+			$payment = $paypalService->createPayment(
+				$itemList,
+				$contribution->getAmount(),
+				$currency,
+				$description,
+				$this->generateUrl('singz_paypal_bundle_execute_payment', array('success' => 'true'), UrlGeneratorInterface::ABSOLUTE_URL),
+				$this->generateUrl('singz_paypal_bundle_execute_payment', array('success' => 'false'), UrlGeneratorInterface::ABSOLUTE_URL)
+			);
+		}catch(\Exception $e){
+			$this->addFlash('danger', 'Une erreur a été rencontrée ('.$e->getMessage().')');
+			// Redirect to route
+			return $this->redirectToRoute('singz_core_bundle_project_show', array(
+				'id' => $project->getId()
+			));
+		}
+		
+		// Create a contribution
+		$paymentEntity = $em->getRepository('SingzPaypalBundle:Payment')->findOneBy(array(
+			'paypalId' => $payment->getId()
+		));
+		if(!$paymentEntity){
+			throw new \Exception('Payment does not exist');
+		}
+		$contribution->setPayment($paymentEntity);
 		$em->persist($contribution);
 		$em->flush();
-		$this->addFlash('success', "Merci d'avoir contribué à ce projet !");
-		// Redirect to route
-		return $this->redirectToRoute('singz_core_bundle_project_show', array(
-			'id' => $project->getId()
-		));
+		
+		// Redirect to Paypal in order to make the payment
+		return $this->redirect($payment->getApprovalLink());
 	}
 }

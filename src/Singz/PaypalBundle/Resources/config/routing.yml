@@ -1,0 +1,4 @@
+### PAYMENT CONTROLLER ###
+singz_paypal_payment_routing:
+    resource: "@SingzPaypalBundle/Resources/config/Payment/routing.yml"
+    prefix:   /paypal/

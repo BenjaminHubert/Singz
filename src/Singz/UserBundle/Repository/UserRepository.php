@@ -2,6 +2,10 @@
 
 namespace Singz\UserBundle\Repository;
 
+
+use Singz\SocialBundle\Entity\Publication;
+use Singz\CoreBundle\Entity\Project;
+
 /**
  * UserRepository
  *
@@ -16,5 +20,36 @@ class UserRepository extends \Doctrine\ORM\EntityRepository
 		->orderBy('u.username', 'ASC')
 		->getQuery()
 		->getResult();
+	}
+	
+	public function getUser($username, $enabled = true){
+		return $this->createQueryBuilder('u')
+			// image
+			->leftJoin('u.image', 'image')
+				->addSelect('image')			
+			// publications
+			->leftJoin('u.publications', 'publications', 'WITH', 'publications.state = :publicationState')
+				->addSelect('publications')
+				->setParameter('publicationState', Publication::STATE_VISIBLE)
+			->leftJoin('publications.video', 'video')
+				->addSelect('video')
+			// projects
+			->leftJoin('u.projects', 'projects', 'WITH', 'projects.state = :projectState')
+				->addSelect('projects')
+				->setParameter('projectState', Project::STATE_VISIBLE)
+			// contributions
+			->leftJoin('u.contributions', 'contributions', 'WITH', 'contributions.isValidated = :isValidated')
+				->addSelect('contributions')
+				->setParameter('isValidated', true)
+			// check state
+			->andWhere('u.enabled = :enabled')
+				->setParameter('enabled', $enabled)
+			// username
+			->andWhere('u.username = :username')
+				->setParameter('username', $username)
+				
+			->getQuery()
+			->getOneOrNullResult()
+		;
 	}
 }

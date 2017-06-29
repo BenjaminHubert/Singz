@@ -97,6 +97,7 @@ class Project
      * @var Contribution
      * 
      * @ORM\OneToMany(targetEntity="Singz\CoreBundle\Entity\Contribution", mappedBy="project")
+     * @ORM\OrderBy({"createdAt" = "DESC"})
      */
     private $contributions;
 

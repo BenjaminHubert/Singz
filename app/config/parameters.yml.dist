@@ -18,3 +18,6 @@ parameters:
     # Download them here: https://ffmpeg.zeranoe.com/builds/
     ffmpeg_binary: C:/Programes/Ffmpeg/bin/ffmpeg.exe
     ffprobe_binary: C:/Programes/Ffmpeg/bin/ffprobe.exe
+    # Paypal credentials
+    paypal_client_id: ~
+    paypal_secret: ~
