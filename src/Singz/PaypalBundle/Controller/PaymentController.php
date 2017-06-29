@@ -29,6 +29,25 @@ class PaymentController extends Controller
 			$this->addFlash('danger', $e->getMessage());
 			return $this->redirectToRoute('singz_index');
 		}
+		// Get the Payment entity
+		$em = $this->getDoctrine()->getManager();
+		$payment = $em->getRepository('SingzPaypalBundle:Payment')->findOneBy(array(
+			'paypalId' => $paymentId
+		));
+		if(!$payment){
+			throw new \Exception('Payment does not exist');
+		}
+		// Get the Contribution entity
+		$contribution = $em->getRepository('SingzCoreBundle:Contribution')->findOneBy(array(
+			'payment' => $payment
+		));
+		if(!$contribution){
+			throw new \Exception('Contribution does not exist');
+		}
+		// Validating the contribution
+		$contribution->setIsValidated(true);
+		$em->persist($contribution);
+		$em->flush();
 		// Display success message
 		$this->addFlash('success', 'Votre contribution au projet est validé. Merci pour votre participation !');
 		return $this->redirectToRoute('singz_index');

@@ -244,6 +244,17 @@ class ProjectController extends Controller
 			));
 		}
 		
+		// Create a contribution
+		$paymentEntity = $em->getRepository('SingzPaypalBundle:Payment')->findOneBy(array(
+			'paypalId' => $payment->getId()
+		));
+		if(!$paymentEntity){
+			throw new \Exception('Payment does not exist');
+		}
+		$contribution->setPayment($paymentEntity);
+		$em->persist($contribution);
+		$em->flush();
+		
 		// Redirect to Paypal in order to make the payment
 		return $this->redirect($payment->getApprovalLink());
 	}
