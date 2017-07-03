@@ -5,39 +5,23 @@ namespace Singz\CoreBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Singz\SocialBundle\Entity\Publication;
 
 class CoreController extends Controller
 {
 	
     public function browseAction(Request $request, $filter) {
-
-        $user = $this->getUser();
-
-        $offset = 0;
-        $limit = 20;
-        $now = new \DateTime();
-        $interval = $now->sub(new \DateInterval("P30D"));
-
+        // Get entity manager
         $em = $this->getDoctrine()->getManager();
 
         // Get publications
-        switch($filter) {
-            case 'all':
-                $publications = $em->getRepository('SingzSocialBundle:Publication')->getBrowseAll($offset, $limit, $interval, $user);
-                break;
-            case 'starz':
-                $publications = $em->getRepository('SingzSocialBundle:Publication')->getBrowseStarz($offset, $limit, $interval);
-                break;
-            case 'singzer':
-                $publications = $em->getRepository('SingzSocialBundle:Publication')->getBrowseSingzers($offset, $limit, $interval, $user);
-                break;
-            default:
-                $publications = null;
-                break;
-        }
-
+        $publications = $em
+        	->getRepository('SingzSocialBundle:Publication')
+        	->getPublications($this->getUser(), $filter, 0, 10000);
+        
+        // Render view
         return $this->render('SingzCoreBundle:Core:browse.html.twig', array(
-            "publications" => $publications
+            'publications' => $publications
         ));
     }
 
