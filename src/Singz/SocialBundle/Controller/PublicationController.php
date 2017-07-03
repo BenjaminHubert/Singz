@@ -334,4 +334,37 @@ class PublicationController extends Controller
     
     	return new Response();
     }
+    
+    public function getPublicationsAction(Request $request){
+    	// Check if ajax
+    	if(!$request->isXmlHttpRequest()){
+    		return new JsonResponse('Bad request', Response::HTTP_BAD_REQUEST);
+    	}
+    	// Get params
+    	$filter = $request->query->get('filter', 'all');
+    	$offset = $request->query->get('offset', 0);
+    	$limit  = $request->query->get('limit', PHP_INT_MAX);
+    	// Check params
+    	if(!is_numeric($offset) || (is_numeric($offset) && $offset < 0)){
+    		return new JsonResponse('Unknown offset', Response::HTTP_BAD_REQUEST);
+    	}
+    	if(!is_numeric($limit) || (is_numeric($limit) && $limit < 0)){
+    		return new JsonResponse('Unknown limit', Response::HTTP_BAD_REQUEST);
+    	}
+    	// Get publications
+    	$publications = $this->getDoctrine()->getManager()
+    		->getRepository('SingzSocialBundle:Publication')
+    		->getPublications($this->getUser(), $filter, $offset, $limit);
+    	
+    	$html = $this->renderView('SingzSocialBundle:Publication:publications.html.twig', array(
+    		'publications' => $publications
+    	));
+    		
+    	return new JsonResponse(array(
+    		'html' 	=> $html,
+    		'filter' 		=> $filter,
+    		'offset'		=> $offset,
+    		'limit' 		=> $limit
+    	));
+    }
 }

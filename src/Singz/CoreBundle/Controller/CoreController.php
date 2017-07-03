@@ -15,13 +15,13 @@ class CoreController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         // Get publications
-        $publications = $em
-        	->getRepository('SingzSocialBundle:Publication')
-        	->getPublications($this->getUser(), $filter, 0, 10000);
+//         $publications = $em
+//         	->getRepository('SingzSocialBundle:Publication')
+//         	->getPublications($this->getUser(), $filter, 0, 10000);
         
         // Render view
         return $this->render('SingzCoreBundle:Core:browse.html.twig', array(
-            'publications' => $publications
+            //'publications' => $publications
         ));
     }
 

@@ -30,22 +30,68 @@
     		</ul>
     	</nav>
     </section>
-	{% if publications %}
-		{% include 'SingzSocialBundle::publications.html.twig' with {
-			'publications': publications
-		} %}
-	{% else %}
-		Aucune publication à afficher
-	{% endif %}
+
+    <div class="publications row" data-default-offset="0" data-default-limit="3" data-href="{{ path('singz_social_bundle_get_publications', app.request.attributes.get('_route_params')) }}">
+    
+    </div>
 	
-	<nav aria-label="...">
+	<nav>
         <ul class="pager">
-            <li><a href="#">Previous</a></li>
-            <li><a href="#">Next</a></li>
+            <li>
+            	<a data-next href="#">
+            		<i class="fa fa-spinner fa-spin fa-fw"></i>
+					<span class="sr-only">Loading...</span>
+				</a>
+			</li>
         </ul>
     </nav>
 {% endblock %}
 
 {% block end_javascripts %}
     <script src="{{ asset('bundles/singzcore/js/animated_menu.js') }}"></script>
+    <script>
+    	function getPublications(url, container, filter, offset, limit){
+        	var dataToSend = {};
+			if(filter != 'undefined'){
+				dataToSend['filter'] = filter;
+			}
+			if(offset != 'undefined'){
+				dataToSend['offset'] = offset;
+			}
+			if(limit != 'undefined'){
+				dataToSend['limit'] = limit;
+			}
+        	
+    		$.ajax({
+		        url: url,
+		        method: 'GET',
+		        data: dataToSend,
+		        dataType: 'JSON'
+		    }).done(function(data, textStatus, jqXHR){
+		        container.append(data.html);
+		        
+		    }).fail(function(jqXHR, textStatus, errorThrown){
+		        console.log(errorThrown);
+		        toastr.error(errorThrown)
+		    });
+        }
+        
+		$(function(){
+			// Set the offset and limit values
+			var offset = $('.publications').data('default-offset');
+			var limit = $('.publications').data('default-limit');
+			
+			// Display the first publications
+			getPublications($('.publications').data('href'), $('.publications'), undefined, offset, limit);
+			// Display the next publications
+			$('.pager a[data-next]').click(function(e){
+				// Prevent default behavior
+				e.preventDefault();
+				// Increase the offset
+				offset += limit;
+				// Get next publications
+				getPublications($('.publications').data('href'), $('.publications'), undefined, offset, limit);
+			});
+		});
+    </script>
 {% endblock %}

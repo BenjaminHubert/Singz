@@ -100,6 +100,7 @@ class PublicationRepository extends \Doctrine\ORM\EntityRepository
 			// order by num loves and desc date
 			->orderBy('p.numLoves', 'DESC')
 			->addOrderBy('p.date', 'DESC')
+			->groupBy('p.id')
 			// set max result
 			->setFirstResult($offset)
 		    ->setMaxResults($limit)
