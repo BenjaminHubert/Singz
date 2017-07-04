@@ -1,0 +1,47 @@
+{% extends "SingzAdminBundle::layout.html.twig" %}
+{% block title_tag %}Liste des publications - {{ parent() }} {% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset('bundles/singzadmin/css/dataTables.bootstrap.css') }}" rel="stylesheet">
+    <link href="{{ asset('bundles/singzadmin/css/dataTables.responsive.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block title_page %}
+    Liste des commentaires
+{% endblock %}
+
+{% block body %}
+    <table width="100%" class="table table-bordered table-hover dataTable">
+        <thead>
+        <tr>
+            <th>Auteur</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for publication in publications %}
+            <tr>
+                <td>
+                    <a href="{{ path('singz_user_bundle_homepage', {'username': publication.user.username}) }}" target="_blank">
+                        {{ publication.user.username }}
+                    </a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/singzadmin/js/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('bundles/singzadmin/js/dataTables.bootstrap.min.js') }}"></script>
+    <script src="{{ asset('bundles/singzadmin/js/dataTables.responsive.js') }}"></script>
+    <script>
+        $(document).ready(function() {
+            $('.dataTable').DataTable({
+                responsive: true
+            });
+        });
+    </script>
+{% endblock %}
