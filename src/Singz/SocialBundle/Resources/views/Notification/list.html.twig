@@ -68,13 +68,13 @@
 									{% for follow in pending_followers %}
 										{% if follow.follower == notification.userFrom %}
 											{# Accept follow #}
-											<button class="btn btn-xs btn-success" onclick="location.href='{{ path('singz_social_bundle_follow_pending', {'status':'accept', 'id':follow.id}) }}'">
-												{#<button class="btn btn-xs btn-success">Accepter</button>#}Accepter
-											</button>
+											<a href="{{ path('singz_social_bundle_follow_pending', {'status':'accept', 'id':follow.id}) }}">
+												<button class="btn btn-xs btn-success">Accepter</button>
+											</a>
 											{# Deny follow #}
-											<button class="btn btn-xs btn-danger" onclick="location.href='{{ path('singz_social_bundle_follow_pending', {'status':'deny', 'id':follow.id}) }}'">
-												{#<button class="btn btn-xs btn-danger">Refuser</button>#}Refuser
-											</button>
+											<a href="{{ path('singz_social_bundle_follow_pending', {'status':'deny', 'id':follow.id}) }}">
+												<button class="btn btn-xs btn-danger">Refuser</button>
+											</a>
 										{% endif %}
 									{% endfor %}
 								{% endif %}
