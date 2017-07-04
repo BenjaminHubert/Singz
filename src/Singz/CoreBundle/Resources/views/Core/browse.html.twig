@@ -4,11 +4,15 @@
 	Explorer - {{ parent() }}
 {% endblock %}
 {% block stylesheets %}
+	{# Animated menu #}
 	<link rel="stylesheet" href="{{ asset('bundles/singzcore/css/animated_menu.css') }}">
+    {# Publication purpose #}
+    <link rel="stylesheet" href="{{ asset('bundles/singzvideo/css/plyr.min.css') }}">
 	<link rel="stylesheet" href="{{ asset('bundles/singzsocial/css/publication.css') }}">
 {% endblock %}
 
 {% block body %}
+	{# Animated menu #}
 	{% set currentPath = path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')) %}
 	<section class="menu-container">
     	<nav class="menu menu--valentine">
@@ -32,10 +36,12 @@
     	</nav>
     </section>
 
+    {# Publication purpose #}
     <div class="publications row" data-default-offset="0" data-default-limit="3" data-href="{{ path('singz_social_bundle_get_publications', app.request.attributes.get('_route_params')) }}">
     
     </div>
 	
+	{# Loading #}
 	<nav>
         <ul class="pager">
             <li>
@@ -49,14 +55,16 @@
 {% endblock %}
 
 {% block end_javascripts %}
+	{# Animated menu #}
     <script src="{{ asset('bundles/singzcore/js/animated_menu.js') }}"></script>
+    {# Publication purpose #}
+    <script src="{{ asset('bundles/singzvideo/js/plyr.min.js') }}"></script>
     <script src="{{ asset('bundles/singzsocial/js/getPublications.js') }}"></script>
     <script>
 		$(function(){
 			// Set the offset and limit values
 			var offset = $('.publications').data('default-offset');
 			var limit = $('.publications').data('default-limit');
-			
 			// Display the first publications
 			getPublications($('.publications').data('href'), $('.publications'), undefined, offset, limit);
 			// Display the next publications
@@ -68,7 +76,6 @@
 				// Get next publications
 				getPublications($('.publications').data('href'), $('.publications'), undefined, offset, limit);
 			});
-			
 		});
     </script>
 {% endblock %}

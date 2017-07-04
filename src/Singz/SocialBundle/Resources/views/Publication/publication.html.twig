@@ -1,7 +1,13 @@
-<div class="col-sm-12 col-md-4">
+{# Publication card #}
+<div class="col-sm-12 col-md-4 mini-publication" data-id-publication="{{ publication.id }}">
     <div class="card">
     	{# Video's preview #}
-        <img class="card-img-top" src="{{ asset(publication.video.previewPath) }}">
+        <div class="overlay">
+    		<img class="card-img-top thumbnail" src="{{ asset(publication.video.previewPath) }}">
+        	<a href="#" class="playWrapper" data-toggle="modal" data-target="[data-modal-publication='{{ publication.id }}']">
+            
+            </a>
+        </div>
         <div class="card-block">
         	{# User profile picture #}
             <figure class="profile">
@@ -40,3 +46,26 @@
         </div>
     </div>
 </div>
+
+{# Modal #}
+<div class="modal modal-publication fade" tabindex="-1" role="dialog" data-modal-publication="{{ publication.id }}">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+            	<div class="row">
+            		{# Video #}
+            		<div class="video col-xs-12 col-md-6">
+                    	<video controls>
+        					<source src="{{ asset(publication.video.videoPath) }}">
+        					Your browser does not support HTML5 video.
+        				</video>
+        			</div>
+        			{# Comments #}
+            		<div class="right-side col-xs-12 col-md-6">
+						
+        			</div>
+    			</div>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
