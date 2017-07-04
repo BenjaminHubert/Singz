@@ -8,7 +8,7 @@ class PublicationController extends Controller
 {
     public function indexAction($name)
     {
-        return $this->redirectToRoute('singz_admin_comment_list');
+        return $this->redirectToRoute('singz_admin_publication_list');
     }
 
     public function listAction()
