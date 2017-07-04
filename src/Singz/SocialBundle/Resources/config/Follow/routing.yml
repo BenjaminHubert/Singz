@@ -4,3 +4,11 @@ singz_social_bundle_follow:
         _controller: SingzSocialBundle:Follow:request
     requirements:
         leaderId: \d+
+
+singz_social_bundle_follow_pending:
+    path:    /{status}/{id}/
+    defaults:
+        _controller: SingzSocialBundle:Follow:pending
+    requirements:
+        status: '(accept|deny)'
+        id: \d+

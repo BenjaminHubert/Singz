@@ -97,17 +97,26 @@
                     </h4>
                     {# S'abonner #}
                 	{% if app.user %}
+                        {# Check if is following or pending #}
+                        {% set following = false %}
+                        {% set ispending = false %}
+                        {% for f in followers %}
+                            {% if f.follower == app.user %}
+                                {% set following = true %}
+                            {% endif %}
+                        {% endfor %}
+                        {% for p in pending %}
+                            {% if p.follower == app.user %}
+                                {% set ispending = true %}
+                            {% endif %}
+                        {% endfor %}
                     	<div>
-                    		{% set i_follow = false %}
-                        	{% if user != app.user %}
+                    		{% if user != app.user %}
                                 <a href="{{ path('singz_social_bundle_follow', {'leaderId':user.id}) }}" class="btn btn-default">
-                                    {% for currentUserFollower in app.user.followers %}
-                                    	{% if currentUserFollower.leader == user %}
-                                    		{% set i_follow = true %}
-                                        {% endif %}
-                                    {% endfor %}
-                                    {% if i_follow == true %}
+                                    {% if following == true %}
                                         <i class="fa fa-thumbs-up fa-lg fa-fw" aria-hidden="true" title="Se désabonner"></i> Se désabonner
+                                    {% elseif ispending == true %}
+                                        <i class="fa fa-hand-paper-o fa-lg fa-fw"></i> Annuler la demande
                                     {% else %}
                                         <i class="fa fa-thumbs-o-up fa-lg fa-fw" aria-hidden="true" title="S'abonner"></i> S'abonner
                                     {% endif %}
@@ -150,11 +159,11 @@
                         <button class="btn btn-default btn-xs">
                             {{ user.publications|length }} Publication{{ user.publications|length!=1?'s' }}
                         </button>
-                        <button class="btn btn-default btn-xs" data-tab="followers" data-toggle="modal" data-target="#followersModal">
-                            {{ followers|length }} Abonnement{{ followers|length!=1?'s' }}
+                        <button class="btn btn-default btn-xs" data-tab="leaders" data-toggle="modal" data-target="#leadersModal">
+                            {{ leaders|length }} Abonnement{{ leaders|length!=1?'s' }}
                         </button>
-                        <button class="btn btn-default btn-xs" data-tab="leaders" data-toggle="modal" data-target="#followersModal">
-                            {{ leaders|length }} Abonné{{ leaders|length!=1?'s' }}
+                        <button class="btn btn-default btn-xs" data-tab="followers" data-toggle="modal" data-target="#leadersModal">
+                            {{ followers|length }} Abonné{{ followers|length!=1?'s' }}
                         </button>
                         <button class="btn btn-default btn-xs" data-tab="contributions" data-toggle="modal" data-target="#followersModal">
                             {{ user.contributions|length }} Contribution{{ user.contributions|length!=1?'s' }}
@@ -167,7 +176,7 @@
     {# Publications #}
     <div class="row">
         <div class="col-md-12">
-        	{# Check if is pending #}
+            {# Check if is pending #}
         	{% set isPending = true %}
         	{% set requested = false %}
         	{% for leader in user.leaders %}
@@ -193,7 +202,7 @@
             {% else %}
                 <div class="is-private">
                 	<p><i class="fa fa-lock" aria-hidden="true"></i></p>
-                	{% if user.isPrivate == true and isPending == true and requested == true %}
+                	{% if ispending %}
                 		<p>Demande en attente</p>
                 	{% else %}
                 		<p>Ce profil est privé</p>
@@ -202,29 +211,29 @@
             {% endif %}
         </div>
     </div>
-    {# Modal of followers/leaders #}
-    <div class="modal fade in" id="followersModal" tabindex="-1" role="dialog" aria-labelledby="followersLabel">
+    {# Modal of leaders/followers #}
+    <div class="modal fade in" id="leadersModal" tabindex="-1" role="dialog" aria-labelledby="leadersLabel">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-body">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     	<span aria-hidden="true">&times;</span>
                     </button>
-                    
-                    {% if app.user == user or user.isPrivate == false  or (app.user and i_follow) %}
+
+                    {% if app.user == user or user.isPrivate == false  or (app.user and following) %}
                     	<div>
                             {# Nav tabs #}
                             <ul class="nav nav-tabs" role="tablist">
                             	{# Abonnements #}
                                 <li role="presentation">
-                                	<a href="#followers" aria-controls="followers" role="tab" data-toggle="tab">
-                                		Abonnements <span class="badge">{{ followers|length }}</span>
+                                	<a href="#leaders" aria-controls="leaders" role="tab" data-toggle="tab">
+                                		Abonnements <span class="badge">{{ leaders|length }}</span>
                                 	</a>
                             	</li>
                             	{# Abonnés #}
                                 <li role="presentation">
-                                    <a href="#leaders" aria-controls="leaders" role="tab" data-toggle="tab">
-                                    	Abonnés <span class="badge">{{ leaders|length }}</span>
+                                    <a href="#followers" aria-controls="followers" role="tab" data-toggle="tab">
+                                    	Abonnés <span class="badge">{{ followers|length }}</span>
                                     </a>
                                 </li>
                             	{# Contributions #}
@@ -239,7 +248,7 @@
                             	{# Leaders #}
                                 <div role="tabpanel" class="tab-pane" id="leaders">
         							<ul class="list-group">
-            							{% for user in leaders %}
+            							{% for user in followers %}
                                         	<a href="{{ path('singz_user_bundle_homepage', {'username': user.follower.username}) }}" class="list-group-item">
         										<img style="width:50px;height:50px" src="{{ asset(user.follower.image.realPath) }}" alt="Error loading" class="img-circle">
             									{{ user.follower.username }}
@@ -250,7 +259,7 @@
                             	{# Followers #}
                                 <div role="tabpanel" class="tab-pane" id="followers">
         							<ul class="list-group">
-            							{% for user in followers %}
+            							{% for user in leaders %}
                                         	<a href="{{ path('singz_user_bundle_homepage', {'username': user.leader.username}) }}" class="list-group-item">
         										<img style="width:50px;height:50px" src="{{ asset(user.leader.image.realPath) }}" alt="Error loading" class="img-circle">
             									{{ user.leader.username }}
@@ -287,8 +296,8 @@
 {% block end_javascripts %}
 	<script>
     	$(function(){
-        	// List of followers
-    		$('button[data-target="#followersModal"]').click(function(){
+        	// List of leaders
+    		$('button[data-target="#leadersModal"]').click(function(){
         		var tab = $(this).attr('data-tab');
     			$('.nav-tabs a[href="#'+tab+'"]').tab('show');
     		});

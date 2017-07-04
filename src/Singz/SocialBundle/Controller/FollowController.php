@@ -50,4 +50,20 @@ class FollowController extends Controller
 			'username' => $leader->getUsername()
 		));
 	}
+
+    public function pendingAction($status, $id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $follow = $em->getRepository('SingzSocialBundle:Follow')->find($id);
+        if($follow == null) {
+            throw $this->createNotFoundException('Demande de follow inexistante');
+        }
+        if($status == 'accept'){
+            $follow->setIsPending(false);
+        }elseif($status == 'deny'){
+            $em->remove($follow);
+        }
+        $em->flush();
+        return $this->redirectToRoute('singz_social_bundle_notification_list');
+    }
 }
