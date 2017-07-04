@@ -64,7 +64,7 @@
                             <p class="message">{{ notification.message|raw }}</p>
 							<p>
 								{# If it's a pending follow, display buttons #}
-								{% if isFollow and pending_followers is not empty %}
+								{% if isFollow is defined and pending_followers is not empty %}
 									{% for follow in pending_followers %}
 										{% if follow.follower == notification.userFrom %}
 											{# Accept follow #}
