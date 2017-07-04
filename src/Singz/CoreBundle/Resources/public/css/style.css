@@ -5,9 +5,3 @@
    top: -10px;
    left: -15px;
 }
-/* RESPONSIVE VIDEO */
-.modal .item.active video{
-    height: 29em;
-    display: block;
-    margin: 0 auto;
-}

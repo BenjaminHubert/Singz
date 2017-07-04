@@ -170,4 +170,5 @@
 .modal-publication .extra-publication{
     overflow:scroll;
     overflow-x:hidden;
+    height:0;
 }
