@@ -39,7 +39,7 @@
     </section>
 
     {# Publication purpose #}
-    <div class="publications row" data-default-offset="0" data-default-limit="3" data-href="{{ path('singz_social_bundle_get_publications', app.request.attributes.get('_route_params')) }}">
+    <div class="publications row" data-default-limit="{{ default_publications_to_retrieve }}" data-href="{{ path('singz_social_bundle_get_publications', app.request.attributes.get('_route_params')) }}">
     
     </div>
 	
@@ -69,7 +69,7 @@
     	var path = '{{ path('singz_social_bundle_publication_love') }}';
 		$(function(){
 			// Set the offset and limit values
-			var offset = $('.publications').data('default-offset');
+			var offset = 0
 			var limit = $('.publications').data('default-limit');
 			// Display the first publications
 			getPublications($('.publications').data('href'), $('.publications'), undefined, offset, limit);
