@@ -114,7 +114,7 @@
   position: relative;
 }
 
-.mini-publication .overlay .thumbnail {
+.mini-publication .overlay .preview {
   display: block;
   max-width: 100%;
 }
@@ -148,4 +148,26 @@
 	background-color: white;
 	margin: 15px;
     padding: 0px;
+}
+.modal-publication [data-dismiss="modal"]{
+	position: absolute;
+    z-index: 2;
+    opacity: 1;
+    top: 0;
+    right: 0;
+    text-shadow: none;
+  	color: #c94e50;
+    font-size: 50px;
+    padding: 10px;
+}
+.modal-publication .modal-dialog{
+    margin: 60px auto auto auto;
+}
+
+/*
+*	Extra publication
+*/
+.modal-publication .extra-publication{
+    overflow:scroll;
+    overflow-x:hidden;
 }

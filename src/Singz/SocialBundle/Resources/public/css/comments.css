@@ -1,131 +1,132 @@
-.post .post-image .image {
+.modal-publication .post .post-image .image {
   width: 100%;
   height: auto;
 }
-.post .post-description {
+.modal-publication .post .post-description {
   padding: 15px;
 }
-.post .post-description p {
+.modal-publication .post .post-description p {
   font-size: 14px;
 }
-.post .post-description .stats {
+.modal-publication .post .post-description .stats {
   margin-top: 20px;
 }
-.post .post-description .stats .stat-item {
+.modal-publication .post .post-description .stats .stat-item {
   display: inline-block;
   margin-right: 15px;
 }
-.post .post-description .stats .stat-item .icon {
+.modal-publication .post .post-description .stats .stat-item .icon {
   margin-right: 8px;
 }
-.post .post-footer {
+.modal-publication .post .post-footer {
   padding-top: 15px;
 }
-.post .post-footer .input-group-addon a {
+.modal-publication .post .post-footer .input-group-addon a {
   color: #454545;
 }
-.post .post-footer .comments-list {
+.modal-publication .post .post-footer .comments-list {
   padding: 0;
   list-style-type: none;
 }
-.post .post-footer .comments-list .comment {
+.modal-publication .post .post-footer .comments-list .comment {
   display: block;
   width: 100%;
   margin: 20px 0;
 }
-.post .post-footer .comments-list .comment .avatar {
+.modal-publication .post .post-footer .comments-list .comment .avatar {
   width: 35px;
   height: 35px;
 }
-.post .post-footer .comments-list .comment .comment-heading {
+.modal-publication .post .post-footer .comments-list .comment .comment-heading {
   display: block;
   width: 100%;
 }
-.post .post-footer .comments-list .comment .comment-heading .user {
+.modal-publication .post .post-footer .comments-list .comment .comment-heading .user {
   font-size: 14px;
   font-weight: bold;
   display: inline;
   margin-top: 0;
   margin-right: 10px;
 }
-.post .post-footer .comments-list .comment .comment-heading .time {
+.modal-publication .post .post-footer .comments-list .comment .comment-heading .time {
   font-size: 12px;
   color: #aaa;
   margin-top: 0;
   display: inline;
 }
-.post .post-footer .comments-list .comment .comment-body {
+.modal-publication .post .post-footer .comments-list .comment .comment-body {
   margin-left: 50px;
 }
-.post .post-footer .comments-list .comment > .comments-list {
+.modal-publication .post .post-footer .comments-list .comment > .comments-list {
   margin-left: 50px;
-}.post .post-image .image {
+}.modal-publication .post .post-image .image {
   width: 100%;
   height: auto;
 }
-.post .post-description {
+.modal-publication .post .post-description {
   padding: 15px;
 }
-.post .post-description p {
+.modal-publication .post .post-description p {
   font-size: 14px;
 }
-.post .post-description .stats {
+.modal-publication .post .post-description .stats {
   margin-top: 20px;
 }
-.post .post-description .stats .stat-item {
+.modal-publication .post .post-description .stats .stat-item {
   display: inline-block;
   margin-right: 15px;
 }
-.post .post-description .stats .stat-item .icon {
+.modal-publication .post .post-description .stats .stat-item .icon {
   margin-right: 8px;
 }
-.post .post-footer .input-group-addon a {
+.modal-publication .post .post-footer .input-group-addon a {
   color: #454545;
 }
-.post .post-footer .comments-list {
+.modal-publication .post .post-footer .comments-list {
   padding: 0;
   list-style-type: none;
 }
-.post .post-footer .comments-list .comment {
+.modal-publication .post .post-footer .comments-list .comment {
   display: block;
   width: 100%;
   margin: 20px 0;
 }
-.post .post-footer .comments-list .comment .avatar {
+.modal-publication .post .post-footer .comments-list .comment .avatar {
   width: 35px;
   height: 35px;
 }
-.post .post-footer .comments-list .comment .comment-heading {
+.modal-publication .post .post-footer .comments-list .comment .comment-heading {
   display: block;
   width: 100%;
 }
-.post .post-footer .comments-list .comment .comment-heading .user {
+.modal-publication .post .post-footer .comments-list .comment .comment-heading .user {
   font-size: 14px;
   font-weight: bold;
   display: inline;
   margin-top: 0;
   margin-right: 10px;
 }
-.post .post-footer .comments-list .comment .comment-heading .time {
+.modal-publication .post .post-footer .comments-list .comment .comment-heading .time {
   font-size: 12px;
   color: #aaa;
   margin-top: 0;
   display: inline;
 }
-.post .post-footer .comments-list .comment .comment-body {
+.modal-publication .post .post-footer .comments-list .comment .comment-body {
   margin-left: 50px;
 }
-.post .post-footer .comments-list .comment > .comments-list {
+.modal-publication .post .post-footer .comments-list .comment > .comments-list {
   margin-left: 50px;
 }
 
-a.reply-comment{
+.modal-publication .post a.reply-comment{
 	font-size: 80%;
 }
-p.comment-content{
+.modal-publication .post p.comment-content{
 	margin: 0;
 }
 
-ul.comments-list ul.comments-list form{
+.post ul.comments-list ul.comments-list form{
 	margin-top: 10px;
 }
+
