@@ -5,6 +5,7 @@
 {% endblock %}
 {% block stylesheets %}
 	<link rel="stylesheet" href="{{ asset('bundles/singzcore/css/animated_menu.css') }}">
+	<link rel="stylesheet" href="{{ asset('bundles/singzsocial/css/publication.css') }}">
 {% endblock %}
 
 {% block body %}
@@ -49,33 +50,8 @@
 
 {% block end_javascripts %}
     <script src="{{ asset('bundles/singzcore/js/animated_menu.js') }}"></script>
+    <script src="{{ asset('bundles/singzsocial/js/getPublications.js') }}"></script>
     <script>
-    	function getPublications(url, container, filter, offset, limit){
-        	var dataToSend = {};
-			if(filter != 'undefined'){
-				dataToSend['filter'] = filter;
-			}
-			if(offset != 'undefined'){
-				dataToSend['offset'] = offset;
-			}
-			if(limit != 'undefined'){
-				dataToSend['limit'] = limit;
-			}
-        	
-    		$.ajax({
-		        url: url,
-		        method: 'GET',
-		        data: dataToSend,
-		        dataType: 'JSON'
-		    }).done(function(data, textStatus, jqXHR){
-		        container.append(data.html);
-		        
-		    }).fail(function(jqXHR, textStatus, errorThrown){
-		        console.log(errorThrown);
-		        toastr.error(errorThrown)
-		    });
-        }
-        
 		$(function(){
 			// Set the offset and limit values
 			var offset = $('.publications').data('default-offset');
@@ -92,6 +68,7 @@
 				// Get next publications
 				getPublications($('.publications').data('href'), $('.publications'), undefined, offset, limit);
 			});
+			
 		});
     </script>
 {% endblock %}

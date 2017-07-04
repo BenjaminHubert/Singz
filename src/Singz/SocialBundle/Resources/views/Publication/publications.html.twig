@@ -1,7 +1,5 @@
 {% for publication in publications %}
-	<div class="col-md-4">
-    	{% include 'SingzSocialBundle:Publication:publication.html.twig' with {
-            'publication': publication
-        } %}
-	</div>
+	{% include 'SingzSocialBundle:Publication:publication.html.twig' with {
+        'publication': publication
+    } %}
 {% endfor %}
