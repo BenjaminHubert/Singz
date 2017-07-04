@@ -15,12 +15,17 @@
     <table width="100%" class="table table-bordered table-hover dataTable">
         <thead>
         <tr>
+            <th>Date</th>
             <th>Auteur</th>
+            <th>Description</th>
         </tr>
         </thead>
         <tbody>
         {% for publication in publications %}
             <tr>
+                <td>
+                    {{ publication.date|date('d/m/Y H:i:s') }}
+                </td>
                 <td>
                     <a href="{{ path('singz_user_bundle_homepage', {'username': publication.user.username}) }}" target="_blank">
                         {{ publication.user.username }}
