@@ -2,7 +2,7 @@
 singz_admin_admin_routing:
     resource: "@SingzAdminBundle/Resources/config/Admin/routing.yml"
     prefix:   /
-### COMMENT CONTROLLER ###
+### PUBLICATION CONTROLLER ###
 singz_admin_publication_routing:
     resource: "@SingzAdminBundle/Resources/config/Publication/routing.yml"
     prefix:   /publication/
