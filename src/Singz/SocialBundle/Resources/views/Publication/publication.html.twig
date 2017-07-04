@@ -4,7 +4,7 @@
     	{# Video's preview #}
         <div class="overlay">
     		<img class="card-img-top thumbnail" src="{{ asset(publication.video.previewPath) }}">
-        	<a href="#" class="playWrapper" data-toggle="modal" data-target="[data-modal-publication='{{ publication.id }}']">
+        	<a href="#" class="playWrapper" data-toggle="modal" data-target="[data-id-publication='{{ publication.id }}']">
             
             </a>
         </div>
@@ -48,7 +48,7 @@
 </div>
 
 {# Modal #}
-<div class="modal modal-publication fade" tabindex="-1" role="dialog" data-modal-publication="{{ publication.id }}">
+<div class="modal modal-publication fade" tabindex="-1" role="dialog" data-id-publication="{{ publication.id }}" data-href="{{ path('singz_social_bundle_publication_extra_info') }}">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-body">
@@ -61,8 +61,11 @@
         				</video>
         			</div>
         			{# Comments #}
-            		<div class="right-side col-xs-12 col-md-6">
-						
+            		<div class="col-xs-12 col-md-6">
+            			<img class="loading-comments" src="{{ asset('bundles/singzcore/img/loading-comments.svg') }}" style="display:block;margin-left: auto;margin-right: auto;padding: 35% 0;">
+						<div class="extra-publication">
+							<!-- Loading through AJAX -->
+						</div>
         			</div>
     			</div>
             </div>

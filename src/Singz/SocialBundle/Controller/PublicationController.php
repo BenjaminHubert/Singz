@@ -184,7 +184,7 @@ class PublicationController extends Controller
     		return new Response('Must be a XML HTTP request', 400);
     	}
     	//Get ID publication
-    	$id = $request->request->get('idPublication');
+    	$id = $request->query->get('idPublication');
     	if($id == null){
     		return new JsonResponse(array(
     			'error' => 'Parameter missing'

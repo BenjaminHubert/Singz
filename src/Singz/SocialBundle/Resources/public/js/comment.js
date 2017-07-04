@@ -1,15 +1,3 @@
-$.fn.enterKey = function (fnc, mod) {
-	return this.each(function () {
-		$(this).keypress(function (ev) {
-			var keycode = (ev.keyCode ? ev.keyCode : ev.which);
-			if (keycode == '13' && mod && !ev[mod + 'Key']) {
-				fnc.call(this, ev);
-				return false;
-			}
-		})
-	})
-}
-
 function reportCommentListener(e, $this){
 	if(confirm('Êtes vous sûr?')){
 		var url = $this.attr('href');		
@@ -88,47 +76,50 @@ function commentSubmit(e, $this, depth){
 		});
 		// Update the comment 
 		$(".new-comment").closest('li.comment').html(data.html);
-		// Update the listener
-		$("#comment-no-"+data.idComment+" a.change-state").click(function(e){
-			changeStateListener(e, $(this));
-		});
-		$("#comment-no-"+data.idComment+" a.report-comment").click(function(e){
-			reportCommentListener(e, $(this));
-		});
 	}).fail(function(jqXHR, textStatus, errorThrown){
 		$(".new-comment").last().parent('li.comment').remove()
 		toastr["error"]("Une erreur a été rencontrée.")
 	});
 }
 
-$('textarea').enterKey(function() {
-	$(this).closest('form').submit();
-	$(this).blur();
-}, 'shift');
-
-$('form.first-depth').submit(function(e){
-	commentSubmit(e, $(this), 'first');
-});
-
-$('form.second-depth').submit(function(e){
-	commentSubmit(e, $(this), 'second');
-});
-
-$('a.change-state').click(function(e){
-	changeStateListener(e, $(this));
+$(function(){
+	$(document).on('keypress', 'textarea', function(evt){
+		if (evt.keyCode == 13 && !evt.shiftKey) {
+	        if (evt.type == "keypress") {
+	        	$(this).closest('form').submit();
+	    		$(this).blur();
+	        }
+	        evt.preventDefault();
+	    }
+	});
+	
+	$(document).on('submit', 'form.first-depth', function(e){
+		commentSubmit(e, $(this), 'first');
+	});
+	
+	$(document).on('submit', 'form.second-depth', function(e){
+		commentSubmit(e, $(this), 'second');
+	});
+	
+	$(document).on('click', 'a.change-state', function(e){
+		changeStateListener(e, $(this));
+	})
+	
+	$(document).on('click', 'a.report-comment', function(e){
+		reportCommentListener(e, $(this));
+	})
+	
+	$(document).on('click', 'a.reply-comment', function(){
+		// Display the form
+		$(this).closest('.comments-list').find('form').removeClass('hidden');
+		// Focus the form
+		$(this).closest('.comments-list').find('form').find('textarea').focus();
+		// Remove the button
+		$(this).remove();
+	})
+	
+	$(document).on('click', '.confirmation-alert', function(){
+		return confirm('Êtes-vous sûr?');
+	});
 })
-
-$('a.report-comment').click(function(e){
-	reportCommentListener(e, $(this));
-})
-
-$('a.reply-comment').click(function(){
-	// Display the form
-	$(this).closest('.comments-list').find('form').removeClass('hidden');
-	// Focus the form
-	$(this).closest('.comments-list').find('form').find('textarea').focus();
-	// Remove the button
-	$(this).remove();
-})
-
 

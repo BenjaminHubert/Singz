@@ -9,6 +9,8 @@
     {# Publication purpose #}
     <link rel="stylesheet" href="{{ asset('bundles/singzvideo/css/plyr.min.css') }}">
 	<link rel="stylesheet" href="{{ asset('bundles/singzsocial/css/publication.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/singzsocial/css/comments.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/singzsocial/css/resingz.css') }}">
 {% endblock %}
 
 {% block body %}
@@ -60,7 +62,11 @@
     {# Publication purpose #}
     <script src="{{ asset('bundles/singzvideo/js/plyr.min.js') }}"></script>
     <script src="{{ asset('bundles/singzsocial/js/getPublications.js') }}"></script>
+    <script src="{{ asset('bundles/singzsocial/js/script.js') }}"></script>
+    <script src="{{ asset('bundles/singzsocial/js/comment.js') }}"></script>
+    <script src="{{ asset('bundles/singzsocial/js/resingz.js') }}"></script>
     <script>
+    	var path = '{{ path('singz_social_bundle_publication_love') }}';
 		$(function(){
 			// Set the offset and limit values
 			var offset = $('.publications').data('default-offset');

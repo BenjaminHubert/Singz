@@ -25,3 +25,26 @@ function getPublications(url, container, filter, offset, limit){
         toastr.error(errorThrown)
     });
 }
+
+$(function(){
+	$('.publications').on('show.bs.modal', '.modal-publication', function(){
+		var $publication = $(this);
+		var idPublication = $publication.data('id-publication');
+		var url = $publication.data('href');
+		// Add loading
+		$publication.find('.loading-comments').slideDown('fast', function(){
+    		$.ajax({
+    	        url: url,
+    	        method: 'GET',
+    	        data: { 'idPublication': idPublication },
+    	        dataType: 'JSON'
+    	    }).done(function(data, textStatus, jqXHR){
+    	    	$publication.find('.modal-content .extra-publication').html(data.html);
+    	    }).fail(function(jqXHR, textStatus, errorThrown){
+    	    	$publication.find('.modal-content .extra-publication').text(jqXHR.responseJSON.error);
+    	    }).always(function(){
+    	    	$publication.find('.loading-comments').slideUp('fast');
+	    	});
+		});
+	})
+});
