@@ -1,0 +1,6 @@
+singz_paypal_bundle_execute_payment:
+    path:     /execute-payment/{success}/
+    defaults:
+        _controller: SingzPaypalBundle:Payment:executePayment
+    requirements:
+        success: true|false

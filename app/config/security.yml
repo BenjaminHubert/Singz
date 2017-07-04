@@ -32,6 +32,7 @@ security:
                 remember_me: true
                 csrf_token_generator: security.csrf.token_manager
                 use_referer: true
+                use_forward: true
                 post_only:      true
             logout:       true
 

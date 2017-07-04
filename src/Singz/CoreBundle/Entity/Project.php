@@ -92,12 +92,21 @@ class Project
     private $notifications;
     
     private $amountReachedPercentage = 0;
+    
+    /**
+     * @var Contribution
+     * 
+     * @ORM\OneToMany(targetEntity="Singz\CoreBundle\Entity\Contribution", mappedBy="project")
+     * @ORM\OrderBy({"createdAt" = "DESC"})
+     */
+    private $contributions;
 
     public function __construct()
     {
     	$this->createdAt = new \DateTime();
     	$this->lastEditAt = new \DateTime();
     	$this->notifications = new ArrayCollection();
+    	$this->contributions = new ArrayCollection();
     }
 
     /**
@@ -375,5 +384,39 @@ class Project
     public function getAmountReachedPercentage()
     {
     	return $this->amountReachedPercentage;
+    }
+
+    /**
+     * Add contribution
+     *
+     * @param \Singz\CoreBundle\Entity\Contribution $contribution
+     *
+     * @return Project
+     */
+    public function addContribution(\Singz\CoreBundle\Entity\Contribution $contribution)
+    {
+        $this->contributions[] = $contribution;
+
+        return $this;
+    }
+
+    /**
+     * Remove contribution
+     *
+     * @param \Singz\CoreBundle\Entity\Contribution $contribution
+     */
+    public function removeContribution(\Singz\CoreBundle\Entity\Contribution $contribution)
+    {
+        $this->contributions->removeElement($contribution);
+    }
+
+    /**
+     * Get contributions
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getContributions()
+    {
+        return $this->contributions;
     }
 }

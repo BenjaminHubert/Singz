@@ -23,7 +23,7 @@ class AppKernel extends Kernel
             new Singz\AdminBundle\SingzAdminBundle(),
         	new Dubture\FFmpegBundle\DubtureFFmpegBundle(),
         	new Lexik\Bundle\MaintenanceBundle\LexikMaintenanceBundle(),
-
+            new Singz\PaypalBundle\SingzPaypalBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

@@ -3,3 +3,7 @@ services:
         class: Singz\CoreBundle\EventListener\ProjectSubscriber
         tags:
             - { name: doctrine.event_subscriber, connection: default }
+    singz.core.contribution:
+        class: Singz\CoreBundle\EventListener\ContributionSubscriber
+        tags:
+            - { name: doctrine.event_subscriber, connection: default }

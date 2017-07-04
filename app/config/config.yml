@@ -136,3 +136,7 @@ lexik_maintenance:
     response:
         code: 503
         status: "Service Temporarily Unavailable"
+
+singz_paypal:
+    paypal_client_id: "%paypal_client_id%"
+    paypal_secret: "%paypal_secret%"       
