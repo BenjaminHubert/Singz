@@ -84,7 +84,8 @@
 	<script>
     $(document).ready(function() {
         $('.dataTable').DataTable({
-            responsive: true
+            responsive: true,
+            columnDefs: [ { orderable: false, targets: [2] } ]
         });
     });
     </script>

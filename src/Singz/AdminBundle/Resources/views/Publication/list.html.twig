@@ -17,7 +17,7 @@
         <tr>
             <th>Date</th>
             <th>Auteur</th>
-            <th>Voir</th>
+            <th>Publication</th>
             <th>Description</th>
             <th>Etat</th>
             <th>Signalement</th>
@@ -82,7 +82,8 @@
     <script>
         $(document).ready(function() {
             $('.dataTable').DataTable({
-                responsive: true
+                responsive: true,
+                columnDefs: [ { orderable: false, targets: [2] } ]
             });
         });
     </script>
