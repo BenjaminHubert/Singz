@@ -24,9 +24,13 @@ class NotificationController extends Controller
     		$em->persist($notification);
     	}
     	$em->flush();
+        // Get all user pending followers
+        $followers = $em->getRepository('SingzSocialBundle:Follow')->getPendingFollowers($this->getUser());
+
     	// Render the view
         return $this->render('SingzSocialBundle:Notification:list.html.twig', array(
-            'notifications' => $notifications
+            'notifications' => $notifications,
+            'pending_followers' => $followers
         ));
     }
 

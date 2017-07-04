@@ -50,6 +50,7 @@
                     {% endset %}
                 {% endif %}
                 {% if notification.publication is null and notification.project is null %}
+					{% set isFollow = true %}
                     {% set href %}
                         {{ path('singz_user_bundle_homepage', {'username':notification.userFrom.username}) }}
                     {% endset %}
@@ -61,7 +62,25 @@
                         </div>
                         <div class="media-body">
                             <p class="message">{{ notification.message|raw }}</p>
+							<p>
+								{# If it's a pending follow, display buttons #}
+								{% if isFollow and pending_followers is not empty %}
+									{% for follow in pending_followers %}
+										{% if follow.follower == notification.userFrom %}
+											{# Accept follow #}
+											<button class="btn btn-xs btn-success" onclick="location.href='{{ path('singz_social_bundle_follow_pending', {'status':'accept', 'id':follow.id}) }}'">
+												{#<button class="btn btn-xs btn-success">Accepter</button>#}Accepter
+											</button>
+											{# Deny follow #}
+											<button class="btn btn-xs btn-danger" onclick="location.href='{{ path('singz_social_bundle_follow_pending', {'status':'deny', 'id':follow.id}) }}'">
+												{#<button class="btn btn-xs btn-danger">Refuser</button>#}Refuser
+											</button>
+										{% endif %}
+									{% endfor %}
+								{% endif %}
+							</p>
                             <small>
+								{# Date and details #}
                                 {{ notification.date|time_diff }}
                                 {% if notification.isRead == false %} 
                                 	<span>&#8226; Non lu</span>

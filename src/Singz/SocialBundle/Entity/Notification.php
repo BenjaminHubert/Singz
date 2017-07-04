@@ -16,6 +16,8 @@ class Notification
 	const NEW_COMMENT = '<b>%s</b> a commenté votre publication.';
 	const REPLY_COMMENT = '<b>%s</b> a répondu à votre commentaire.';
 	const NEW_FOLLOWER = '<b>%s</b> vous suit.';
+	const NEW_FOLLOWER_PRIVATE = '<b>%s</b> veut vous suivre.';
+	const NEW_FOLLOW_ACCEPTED = '<b>%s</b> a accepté votre demande d\'abonnement.';
     const NEW_RESINGZ = '<b>%s</b> a resingzé votre publication.';
     const PROMOTE = 'Félicitations <b>%s</b> ! Vous avez été promu Starz !';
     const NEW_PROJECT = '<b>%s</b> a créé le projet "%s".';
