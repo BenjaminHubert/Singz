@@ -1,0 +1,89 @@
+{% extends "SingzAdminBundle::layout.html.twig" %}
+{% block title_tag %}Liste des publications - {{ parent() }} {% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset('bundles/singzadmin/css/dataTables.bootstrap.css') }}" rel="stylesheet">
+    <link href="{{ asset('bundles/singzadmin/css/dataTables.responsive.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block title_page %}
+    Liste des publications
+{% endblock %}
+
+{% block body %}
+    <table width="100%" class="table table-bordered table-hover dataTable">
+        <thead>
+        <tr>
+            <th>Date</th>
+            <th>Auteur</th>
+            <th>Voir</th>
+            <th>Description</th>
+            <th>Etat</th>
+            <th>Signalement</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for publication in publications %}
+            <tr>
+                <td>
+                    {{ publication.date|date('d/m/Y H:i:s') }}
+                </td>
+                <td>
+                    <a href="{{ path('singz_user_bundle_homepage', {'username': publication.user.username}) }}" target="_blank">
+                        {{ publication.user.username }}
+                    </a>
+                </td>
+                <td>
+                    <a href="{{ path('singz_social_bundle_publication_show', {'id': publication.id}) }}" target="_blank">
+                        Voir
+                    </a>
+                </td>
+                <td>
+                    {{ publication.description }}
+                </td>
+                <td>
+                    {% if publication.state == constant('Singz\\SocialBundle\\Entity\\Publication::STATE_VISIBLE') %}
+                        <span class="label label-success">
+    					        En ligne
+                        </span>
+                    {% elseif publication.state == constant('Singz\\SocialBundle\\Entity\\Publication::STATE_DELETED') %}
+                        <span class="label label-danger">
+    					        Supprimé
+                        </span>
+                    {% elseif publication.state == constant('Singz\\SocialBundle\\Entity\\Publication::STATE_SPAM') %}
+                        <span class="label label-warning">
+    					        Spam
+                        </span>
+                    {% else %}
+                        <span class="label label-default">
+    					        Etat inconnu
+                        </span>
+                    {% endif %}
+                </td>
+                <td>
+                    {% if nbReports[publication.id] == 0 %}
+                    <span class="label label-success"><i class="fa fa-info-circle fa-fw" aria-hidden="true"></i> {{ nbReports[publication.id] }}</span>
+                    {% else %}
+                    <span class="label label-danger"><i class="fa fa-exclamation-triangle fa-fw" aria-hidden="true"></i> {{ nbReports[publication.id] }}</span>
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/singzadmin/js/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('bundles/singzadmin/js/dataTables.bootstrap.min.js') }}"></script>
+    <script src="{{ asset('bundles/singzadmin/js/dataTables.responsive.js') }}"></script>
+    <script>
+        $(document).ready(function() {
+            $('.dataTable').DataTable({
+                responsive: true
+            });
+        });
+    </script>
+{% endblock %}
