@@ -64,7 +64,11 @@
 					    {% endif %}
 					</td>
 					<td>
-				    	<span class="label label-danger"><i class="fa fa-exclamation-triangle fa-fw" aria-hidden="true"></i> {{ nbReports[comment.id] }}</span>
+                        {% if nbReports[comment.id] == 0 %}
+							<span class="label label-success"><i class="fa fa-info-circle fa-fw" aria-hidden="true"></i> {{ nbReports[comment.id] }}</span>
+                        {% else %}
+							<span class="label label-danger"><i class="fa fa-exclamation-triangle fa-fw" aria-hidden="true"></i> {{ nbReports[comment.id] }}</span>
+                        {% endif %}
 					</td>
 				</tr>
 			{% endfor %}
