@@ -132,6 +132,7 @@ class PublicationRepository extends \Doctrine\ORM\EntityRepository
     public function findAllPublicationsInfo(){
         return $this->createQueryBuilder('p')
             ->leftJoin('p.user', 'u')->addSelect('u')
+            ->orderBy('p.date', 'DESC')
             ->getQuery()
             ->getResult();
         ;
