@@ -1,4 +1,4 @@
-var loading = false;
+var loadingPublications = false;
 
 function getPublications(url, container, filter, offset, limit){
 	var dataToSend = {};
@@ -12,8 +12,8 @@ function getPublications(url, container, filter, offset, limit){
 		dataToSend['limit'] = limit;
 	}
 	
-	if(loading == false){
-		loading = true;
+	if(loadingPublications == false){
+		loadingPublications = true;
 		$.ajax({
 	        url: url,
 	        method: 'GET',
@@ -29,11 +29,13 @@ function getPublications(url, container, filter, offset, limit){
 	        container.append(data.html);
 			// Set the video library
 			plyr.setup();
+			loadingPublications = false;
 	    }).fail(function(jqXHR, textStatus, errorThrown){
 	        console.log(errorThrown);
-	        toastr.error(errorThrown)
+	        toastr.error(errorThrown);
+	        loadingPublications = false;
 	    }).always(function(){
-	    	loading = false;
+	    	
 	    });
 	}
 }
