@@ -42,10 +42,11 @@ function getPublications(url, container, filter, offset, limit){
 }
 
 $(function(){
-	$('.publications').on('hide.bs.modal', '.modal-publication', function(){
-		$.each(plyr.get(), function(i, e){
-			e.pause();
-		});
+	$('.publications').on('hidden.bs.modal', '.modal-publication', function(){
+		$(this).find('video')[0].pause();
+	});
+	$('.publications').on('shown.bs.modal', '.modal-publication', function(){
+		$(this).find('video')[0].play();
 	});
 	$('.publications').on('show.bs.modal', '.modal-publication', function(){
 		// Set vars
