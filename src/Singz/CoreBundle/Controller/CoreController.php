@@ -11,30 +11,16 @@ class CoreController extends Controller
 {
 	
     public function browseAction(Request $request, $filter) {
-        // Get entity manager
-        $em = $this->getDoctrine()->getManager();
-
-        // Get publications
-//         $publications = $em
-//         	->getRepository('SingzSocialBundle:Publication')
-//         	->getPublications($this->getUser(), $filter, 0, 10000);
-        
         // Render view
-        return $this->render('SingzCoreBundle:Core:browse.html.twig', array(
-            //'publications' => $publications
-        ));
+        return $this->render('SingzCoreBundle:Core:browse.html.twig');
     }
 
     /**
      * @Security("has_role('ROLE_USER')")
      */
     public function feedAction(Request $request){
-        $user = $this->getUser();
-        $em = $this->getDoctrine()->getManager();
-        $publications = $em->getRepository('SingzSocialBundle:Publication')->getNewsFeed($user);
-        return $this->render('SingzCoreBundle:Core:feed.html.twig', array(
-            "publications" => $publications
-        ));
+        // Render view
+        return $this->render('SingzCoreBundle:Core:feed.html.twig');
     }
     
     public function menuAction(){

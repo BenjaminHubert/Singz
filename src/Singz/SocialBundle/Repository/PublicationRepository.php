@@ -9,25 +9,7 @@ use Singz\SocialBundle\Entity\Publication;
  * repository methods below.
  */
 class PublicationRepository extends \Doctrine\ORM\EntityRepository
-{
-    public function getNewsFeed($user) {
-        return $this->createQueryBuilder('p')
-            ->leftJoin('p.user', 'u')->addSelect('u')
-            ->leftJoin('p.owner', 'o')->addSelect('o')
-            ->leftJoin('u.leaders', 'leaders')->addSelect('leaders')
-            ->leftJoin('p.loves', 'l')->addSelect('l')
-            ->where('(leaders.follower = :follower AND leaders.isPending = :pending) OR p.user = :user')
-            ->setParameter('follower', $user)
-            ->setParameter('user', $user)
-            ->setParameter('pending', false)
-            ->andWhere('p.state = :state')->setParameter('state', Publication::STATE_VISIBLE)
-            ->andWhere('u.enabled = :isEnabled')->setParameter('isEnabled', true)
-            ->andWhere('o.enabled = :isEnabled')->setParameter('isEnabled', true)
-            ->orderBy('p.date', 'DESC')
-            ->getQuery()
-            ->getResult();
-    }
-    
+{    
     public function getPublicationById($id) {
         return $this->createQueryBuilder('p')
             ->innerJoin('p.user', 'u')->addSelect('u')
@@ -97,34 +79,48 @@ class PublicationRepository extends \Doctrine\ORM\EntityRepository
 			// only visible publications
 			->andWhere('p.state = :state')
 				->setParameter('state', Publication::STATE_VISIBLE)
-			// order by num loves and desc date
-			->orderBy('p.numLoves', 'DESC')
-			->addOrderBy('p.date', 'DESC')
 			->groupBy('p.id')
 			// set max result
 			->setFirstResult($offset)
 		    ->setMaxResults($limit)
 		;
 		// Apply filters
+		if($filter == 'starz' || $filter == 'singzer' || $filter == 'all'){
+			$queryBuilder
+				->orderBy('p.numLoves', 'DESC')
+				->addOrderBy('p.date', 'DESC')
+			;
+		}
 		if($filter == 'starz'){
-			$queryBuilder = $queryBuilder
+			$queryBuilder
 				->andWhere('user.roles LIKE :starz')
 					->setParameter('starz', '%STARZ%')
 			;
 		}
 		if($filter == 'singzer'){
-			$queryBuilder = $queryBuilder
+			$queryBuilder
 				->andWhere('user.roles LIKE :singzer')
 					->setParameter('singzer', '%SINGZER%')
 			;
 		}
 		if($filter == 'singzer' || $filter == 'all'){
-			$queryBuilder = $queryBuilder
+			$queryBuilder
 				->leftJoin('user.followers', 'f')->addSelect('f')
 					->andWhere('user.isPrivate = :private OR (f.follower = :follower AND f.isPending = :pending)')
 						->setParameter('private', false)
 						->setParameter('follower', $user)
 						->setParameter('pending', false)
+			;
+		}
+		if($filter == 'feed'){
+			$queryBuilder
+				->leftJoin('user.leaders', 'leaders')
+					->addSelect('leaders')
+				->andWhere('(leaders.follower = :follower AND leaders.isPending = :pending) OR p.user = :user')
+					->setParameter('follower', $user)
+					->setParameter('user', $user)
+					->setParameter('pending', false)
+				->orderBy('p.date', 'DESC')
 			;
 		}
 		
