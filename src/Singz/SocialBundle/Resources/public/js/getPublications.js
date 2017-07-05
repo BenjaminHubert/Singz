@@ -27,8 +27,9 @@ function getPublications(url, container, filter, offset, limit){
 	    	}
 	    	// Add publications
 	        container.append(data.html);
-			// Set the video library
+	        // Create video players
 			plyr.setup();
+			// Allow load again
 			loadingPublications = false;
 	    }).fail(function(jqXHR, textStatus, errorThrown){
 	        console.log(errorThrown);
@@ -41,7 +42,13 @@ function getPublications(url, container, filter, offset, limit){
 }
 
 $(function(){
+	$('.publications').on('hide.bs.modal', '.modal-publication', function(){
+		$.each(plyr.get(), function(i, e){
+			e.pause();
+		});
+	});
 	$('.publications').on('show.bs.modal', '.modal-publication', function(){
+		// Set vars
 		var $publication = $(this);
 		var idPublication = $publication.data('id-publication');
 		var url = $publication.data('href');
