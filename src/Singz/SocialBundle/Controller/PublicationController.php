@@ -344,6 +344,7 @@ class PublicationController extends Controller
     	$filter = $request->query->get('filter', 'all');
     	$offset = $request->query->get('offset', 0);
     	$limit  = $request->query->get('limit', PHP_INT_MAX);
+    	$userId  = $request->query->get('userId', null);
     	// Check params
     	if(!is_numeric($offset) || (is_numeric($offset) && $offset < 0)){
     		return new JsonResponse('Unknown offset', Response::HTTP_BAD_REQUEST);
@@ -354,7 +355,7 @@ class PublicationController extends Controller
     	// Get publications
     	$publications = $this->getDoctrine()->getManager()
     		->getRepository('SingzSocialBundle:Publication')
-    		->getPublications($this->getUser(), $filter, $offset, $limit);
+    		->getPublications($this->getUser(), $filter, $offset, $limit, $userId);
     	
     	$html = $this->renderView('SingzSocialBundle:Publication:publications.html.twig', array(
     		'publications' => $publications

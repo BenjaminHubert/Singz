@@ -54,7 +54,7 @@ class PublicationRepository extends \Doctrine\ORM\EntityRepository
             ->getResult();
     }
     
-	public function getPublications($user, $filter = 'all', $offset = 0, $limit = 0){
+	public function getPublications($user, $filter = 'all', $offset = 0, $limit = 0, $userId = null){
 		$queryBuilder = $this->createQueryBuilder('p')
 			// only enabled users
 			->leftJoin('p.user', 'user', 'WITH', 'user.enabled = :userIsEnabled')
@@ -121,6 +121,12 @@ class PublicationRepository extends \Doctrine\ORM\EntityRepository
 					->setParameter('user', $user)
 					->setParameter('pending', false)
 				->orderBy('p.date', 'DESC')
+			;
+		}
+		if($filter ='user' && $userId != null){
+			$queryBuilder
+				->andWhere('user.id = :userId')
+					->setParameter('userId', $userId)
 			;
 		}
 		
