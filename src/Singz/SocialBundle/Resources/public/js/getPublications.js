@@ -21,8 +21,8 @@ function getPublications(url, container, filter, offset, limit){
 	        dataType: 'JSON'
 	    }).done(function(data, textStatus, jqXHR){
 	    	if(data.html == ''){
-	    		$('nav.loading-publications').text('Aucune publication');
-	    		console.log(data.html)
+	    		$('nav.loading-publications').hide();
+	    		$('.no-publication').show();
 	    		return;
 	    	}
 	    	// Add publications
