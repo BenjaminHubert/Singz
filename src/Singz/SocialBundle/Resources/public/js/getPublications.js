@@ -1,3 +1,5 @@
+var loading = false;
+
 function getPublications(url, container, filter, offset, limit){
 	var dataToSend = {};
 	if(filter != 'undefined'){
@@ -10,20 +12,30 @@ function getPublications(url, container, filter, offset, limit){
 		dataToSend['limit'] = limit;
 	}
 	
-	$.ajax({
-        url: url,
-        method: 'GET',
-        data: dataToSend,
-        dataType: 'JSON'
-    }).done(function(data, textStatus, jqXHR){
-    	// Add publications
-        container.append(data.html);
-		// Set the video library
-		plyr.setup();
-    }).fail(function(jqXHR, textStatus, errorThrown){
-        console.log(errorThrown);
-        toastr.error(errorThrown)
-    });
+	if(loading == false){
+		loading = true;
+		$.ajax({
+	        url: url,
+	        method: 'GET',
+	        data: dataToSend,
+	        dataType: 'JSON'
+	    }).done(function(data, textStatus, jqXHR){
+	    	if(data.html == ''){
+	    		$('nav.loading-publications').text('Aucune publication');
+	    		console.log(data.html)
+	    		return;
+	    	}
+	    	// Add publications
+	        container.append(data.html);
+			// Set the video library
+			plyr.setup();
+	    }).fail(function(jqXHR, textStatus, errorThrown){
+	        console.log(errorThrown);
+	        toastr.error(errorThrown)
+	    }).always(function(){
+	    	loading = false;
+	    });
+	}
 }
 
 $(function(){
