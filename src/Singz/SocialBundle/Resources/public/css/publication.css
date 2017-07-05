@@ -167,8 +167,18 @@
 /*
 *	Extra publication
 */
+.modal-publication .right-side{
+	
+    height:0;
+}
 .modal-publication .extra-publication{
     overflow:scroll;
     overflow-x:hidden;
-    height:0;
+}
+.modal-publication .extra-publication .loading-comments{
+	display:block;
+	margin-left: auto;
+	margin-right: auto;
+	width:30%;
+	height:100%
 }

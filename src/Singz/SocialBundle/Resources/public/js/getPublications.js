@@ -33,25 +33,22 @@ $(function(){
 		var url = $publication.data('href');
 		// Check if the extra publication has been not already loaded
 		if($publication.attr('loaded') != 'true'){
-			// Add loading
-			$publication.find('.loading-comments').slideDown('fast', function(){
-				// Get extra publication
-	    		$.ajax({
-	    	        url: url,
-	    	        method: 'GET',
-	    	        data: { 'idPublication': idPublication },
-	    	        dataType: 'JSON'
-	    	    }).done(function(data, textStatus, jqXHR){
-	    	    	// Add extra publication html
-	    	    	$publication.find('.modal-content .extra-publication').html(data.html);
-	    	    	// Set the extra publication as loaded
-	    	    	$publication.attr('loaded', 'true');
-	    	    }).fail(function(jqXHR, textStatus, errorThrown){
-	    	    	$publication.find('.modal-content .extra-publication').text(jqXHR.responseJSON.error);
-	    	    }).always(function(){
-	    	    	$publication.find('.loading-comments').slideUp('fast');
-		    	});
-			});
+			// Get extra publication
+    		$.ajax({
+    	        url: url,
+    	        method: 'GET',
+    	        data: { 'idPublication': idPublication },
+    	        dataType: 'JSON'
+    	    }).done(function(data, textStatus, jqXHR){
+    	    	// Add extra publication html
+    	    	$publication.find('.modal-content .extra-publication').html(data.html);
+    	    	// Set the extra publication as loaded
+    	    	$publication.attr('loaded', 'true');
+    	    }).fail(function(jqXHR, textStatus, errorThrown){
+    	    	$publication.find('.modal-content .extra-publication').text(jqXHR.responseJSON.error);
+    	    }).always(function(){
+    	    	$publication.find('.loading-comments').slideUp('fast');
+	    	});
 		}
 	})
 });

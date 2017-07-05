@@ -1,5 +1,5 @@
 {# Publication card #}
-<div class="col-sm-12 col-md-4 mini-publication" data-id-publication="{{ publication.id }}">
+<div class="col-sm-12 col-md-4 mini-publication animated bounceInDown" data-id-publication="{{ publication.id }}">
     <div class="card">
     	{# Video's preview #}
         <div class="overlay">
@@ -65,9 +65,8 @@
         			</div>
         			{# Comments #}
             		<div class="col-xs-12 col-md-5">
-            			<img class="loading-comments" src="{{ asset('bundles/singzcore/img/loading-comments.svg') }}" style="display:block;margin-left: auto;margin-right: auto;">
 						<div class="extra-publication">
-							<!-- Loading through AJAX -->
+							<img class="loading-comments" src="{{ asset('bundles/singzcore/img/loading-comments.svg') }}">
 						</div>
         			</div>
     			</div>
