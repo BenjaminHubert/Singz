@@ -1,0 +1,8 @@
+singz_admin_publication_index:
+    path:     /
+    defaults:
+        _controller: SingzAdminBundle:Publication:index
+singz_admin_publication_list:
+    path:     /list/
+    defaults:
+        _controller: SingzAdminBundle:Publication:list

@@ -32,7 +32,7 @@ class FollowSubscriber implements EventSubscriber
     		$notif->setUserFrom($follow->getFollower());
     		$notif->setUserTo($follow->getLeader());
     		$notif->setPublication(null);
-    		$message = sprintf(Notification::NEW_FOLLOWER, $follow->getFollower()->getUsername());
+    		$message = sprintf(($follow->getLeader()->getIsPrivate()?Notification::NEW_FOLLOWER_PRIVATE:Notification::NEW_FOLLOWER), $follow->getFollower()->getUsername());
     		$notif->setMessage($message);
     		$em->persist($notif);
     		$em->flush($notif);
@@ -43,7 +43,7 @@ class FollowSubscriber implements EventSubscriber
                 $leader = $follow->getLeader();
                 $roleService = $this->container->get('singz.user.service.role');
                 if(!$roleService->isGranted(User::ROLE_STARZ, $leader)) {
-                    $follows = $em->getRepository('SingzSocialBundle:Follow')->getRealFollows($leader);
+                    $follows = $em->getRepository('SingzSocialBundle:Follow')->getFollowers($leader);
                     if(count($follows) >= $setting->getValue()) {
                         $leader->removeRole(User::ROLE_SINGZER);
                         $leader->addRole(User::ROLE_STARZ);
@@ -65,6 +65,31 @@ class FollowSubscriber implements EventSubscriber
 
     }
 
+    public function postUpdate(LifecycleEventArgs $args){
+        $follow = $args->getEntity();
+        // only act on some "Follow" entity
+        if (!$follow instanceof Follow) {
+            return;
+        }
+        // get the entity manager
+        $em = $args->getEntityManager();
+        // edit old notification
+        $oldNotif = $em->getRepository('SingzSocialBundle:Notification')->findOneBy(array('userFrom'=>$follow->getFollower(), 'userTo'=>$follow->getLeader()));
+        $message = sprintf(Notification::NEW_FOLLOWER, $follow->getFollower()->getUsername());
+        $oldNotif->setMessage($message);
+        $em->persist($oldNotif);
+        $em->flush($oldNotif);
+        //create a notification
+        $notif = new Notification();
+        $notif->setUserFrom($follow->getLeader());
+        $notif->setUserTo($follow->getFollower());
+        $notif->setPublication(null);
+        $message = sprintf(Notification::NEW_FOLLOW_ACCEPTED, $follow->getLeader()->getUsername());
+        $notif->setMessage($message);
+        $em->persist($notif);
+        $em->flush($notif);
+    }
+
     public function postRemove(LifecycleEventArgs $args){
         $follow = $args->getEntity();
         // only act on some "Follow" entity
@@ -80,7 +105,7 @@ class FollowSubscriber implements EventSubscriber
             $leader = $follow->getLeader();
             $roleService = $this->container->get('singz.user.service.role');
             if($roleService->isGranted(User::ROLE_STARZ, $leader)) {
-                $follows = $em->getRepository('SingzSocialBundle:Follow')->getRealFollows($leader);
+                $follows = $em->getRepository('SingzSocialBundle:Follow')->getFollowers($leader);
                 if(count($follows) < $setting->getValue()) {
                     $leader->removeRole(User::ROLE_STARZ);
                     $leader->addRole(User::ROLE_SINGZER);
@@ -90,11 +115,18 @@ class FollowSubscriber implements EventSubscriber
             }
         }
 
+        //delete notification to avoid doubloons
+        $notifs = $em->getRepository('SingzSocialBundle:Notification')->findBy(array('userFrom'=>$follow->getFollower(), 'userTo'=>$follow->getLeader()));
+        foreach($notifs as $notif) {
+            $em->remove($notif);
+        }
+        $em->flush();
     }
 	
 	public function getSubscribedEvents() {
 		return array(
 			'postPersist',
+            'postUpdate',
             'postRemove'
 		);
 	}
