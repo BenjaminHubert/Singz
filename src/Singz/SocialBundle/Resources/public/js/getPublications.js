@@ -1,6 +1,6 @@
 var loadingPublications = false;
 
-function getPublications(url, container, filter, offset, limit){
+function getPublications(url, $grid, filter, offset, limit){
 	var dataToSend = {};
 	if(filter != 'undefined'){
 		dataToSend['filter'] = filter;
@@ -14,6 +14,7 @@ function getPublications(url, container, filter, offset, limit){
 	
 	if(loadingPublications == false){
 		loadingPublications = true;
+		NProgress.start();
 		$.ajax({
 	        url: url,
 	        method: 'GET',
@@ -26,7 +27,11 @@ function getPublications(url, container, filter, offset, limit){
 	    		return;
 	    	}
 	    	// Add publications
-	        container.append(data.html);
+	    	var $html = $(data.html);
+	    	$grid.append($html)
+	    		.imagesLoaded(function(){
+	    			$grid.masonry('appended', $html);
+	    		})
 	        // Create video players
 			plyr.setup();
 			// Allow load again
@@ -36,7 +41,7 @@ function getPublications(url, container, filter, offset, limit){
 	        toastr.error(errorThrown);
 	        loadingPublications = false;
 	    }).always(function(){
-	    	
+	    	NProgress.done();
 	    });
 	}
 }

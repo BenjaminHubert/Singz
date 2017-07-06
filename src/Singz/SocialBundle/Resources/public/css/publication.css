@@ -120,6 +120,10 @@
 	font-weight: bold;
 }
 
+.grid-item {
+  	margin-bottom: 10px;
+}
+
 /*
 *	Overlay the play button
 */
