@@ -11,6 +11,7 @@ parameters:
     settings:
         Promotion: 100
         Cagnotte: 1000
+    default_publications_to_retrieve: 3
 
 framework:
     #esi:             ~
@@ -43,6 +44,7 @@ twig:
     globals:
         appname: "%appname%"
         locale: "%locale%"
+        default_publications_to_retrieve: "%default_publications_to_retrieve%"
     form_themes:
         - 'Form/fields.html.twig'
 

@@ -1,0 +1,198 @@
+/*
+*	Publication
+*/
+
+.mini-publication .card {
+    font-size: 1em;
+    overflow: hidden;
+    padding: 0;
+    border: none;
+    border-radius: .28571429rem;
+    box-shadow: 0 1px 3px 0 #d4d4d5, 0 0 0 1px #d4d4d5;
+    background-color: white;
+}
+
+.mini-publication .card-block {
+    font-size: 1em;
+    position: relative;
+    margin: 0;
+    padding: 1em;
+    border: none;
+    border-top: 1px solid rgba(34, 36, 38, .1);
+    box-shadow: none;
+}
+
+.mini-publication .card-img-top {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+.mini-publication .card-title {
+    font-size: 1.28571429em;
+    font-weight: 700;
+    line-height: 1.2857em;
+}
+
+.mini-publication .card-text {
+    clear: both;
+    margin-top: .5em;
+    color: rgba(0, 0, 0, .68);
+}
+
+.mini-publication .card-footer {
+    font-size: 1em;
+    position: static;
+    top: 0;
+    left: 0;
+    max-width: 100%;
+    padding: .75em 1em;
+    color: rgba(255, 255, 255, .4);
+    border-top: 1px solid rgba(0, 0, 0, .05) !important;
+    background: #373a47;
+}
+
+.mini-publication .card-inverse .btn {
+    border: 1px solid rgba(0, 0, 0, .05);
+}
+
+.mini-publication .profile {
+    position: absolute;
+    top: -33px;
+    display: inline-block;
+    overflow: hidden;
+    box-sizing: border-box;
+    width: 50px;
+    height: 50px;
+    margin: 0;
+    border: 1px solid #fff;
+    border-radius: 50%;
+}
+
+.mini-publication .profile-avatar {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 50%;
+}
+
+.mini-publication .profile-inline {
+    position: relative;
+    top: 0;
+    display: inline-block;
+}
+
+.mini-publication .profile-inline ~ .card-title {
+    display: inline-block;
+    margin-left: 4px;
+    vertical-align: top;
+}
+
+.mini-publication .text-bold {
+    font-weight: 700;
+}
+
+.mini-publication .meta {
+    font-size: 1em;
+    color: rgba(0, 0, 0, .4);
+}
+
+.mini-publication .meta a {
+    text-decoration: none;
+    color: rgba(0, 0, 0, .4);
+}
+
+.mini-publication .meta a:hover {
+    color: rgba(0, 0, 0, .87);
+}
+
+
+.no-publication{
+	text-align: center;
+	padding: 50px;
+	display: none;
+}
+.no-publication i{
+	font-size: 6em;
+}
+.no-publication p{
+	font-size: 120%;
+	font-weight: bold;
+}
+
+/*
+*	Overlay the play button
+*/
+
+.mini-publication .overlay {
+  position: relative;
+}
+
+.mini-publication .overlay .preview {
+  display: block;
+  max-width: 100%;
+}
+
+.mini-publication .overlay .playWrapper {
+  opacity: 0;
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.3) url("http://wptf.com/wp-content/uploads/2014/05/play-button.png") no-repeat scroll center center / 50px 50px;
+}
+
+.mini-publication .overlay .playWrapper {
+  opacity: 1;
+}
+
+/*
+*	Modal
+*/
+.modal-publication .modal-dialog{
+	width:100%;
+}
+.modal-publication .modal-content{
+    background-color: transparent;
+    border: none;
+    box-shadow: none;
+}
+.modal-publication .modal-body{
+	background-color: white;
+	margin: 15px;
+    padding: 0px;
+}
+.modal-publication [data-dismiss="modal"]{
+	position: absolute;
+    z-index: 2;
+    opacity: 1;
+    top: 0;
+    right: 0;
+    text-shadow: none;
+  	color: #c94e50;
+    font-size: 50px;
+    padding: 10px;
+}
+.modal-publication .modal-dialog{
+    margin: 60px auto auto auto;
+}
+
+/*
+*	Extra publication
+*/
+.modal-publication .right-side{
+	
+    height:0;
+}
+.modal-publication .extra-publication{
+    overflow:scroll;
+    overflow-x:hidden;
+}
+.modal-publication .extra-publication .loading-comments{
+	display:block;
+	margin-left: auto;
+	margin-right: auto;
+	width:30%;
+	height:100%
+}

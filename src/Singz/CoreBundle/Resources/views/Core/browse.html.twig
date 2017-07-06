@@ -4,10 +4,17 @@
 	Explorer - {{ parent() }}
 {% endblock %}
 {% block stylesheets %}
+	{# Animated menu #}
 	<link rel="stylesheet" href="{{ asset('bundles/singzcore/css/animated_menu.css') }}">
+    {# Publication purpose #}
+    <link rel="stylesheet" href="{{ asset('bundles/singzvideo/css/plyr.min.css') }}">
+	<link rel="stylesheet" href="{{ asset('bundles/singzsocial/css/publication.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/singzsocial/css/comments.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/singzsocial/css/resingz.css') }}">
 {% endblock %}
 
 {% block body %}
+	{# Animated menu #}
 	{% set currentPath = path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')) %}
 	<section class="menu-container">
     	<nav class="menu menu--valentine">
@@ -30,15 +37,47 @@
     		</ul>
     	</nav>
     </section>
-	{% if publications %}
-		{% include 'SingzSocialBundle::publications.html.twig' with {
-			'publications': publications
-		} %}
-	{% else %}
-		Aucune publication à afficher
-	{% endif %}
+
+    {# Publication purpose #}
+    <div class="publications row" data-default-limit="{{ default_publications_to_retrieve }}" data-href="{{ path('singz_social_bundle_get_publications', app.request.attributes.get('_route_params')) }}">
+    
+    </div>
+	<nav class="loading-publications" style="text-align: center;">
+		<i class="fa fa-spinner fa-spin fa-fw fa-2x"></i>
+		<span class="sr-only">Loading...</span>
+    </nav>
+    <div class="no-publication">
+    	<i class="fa fa-video-camera" aria-hidden="true"></i></p>
+    	<p>Aucune publication</p>
+    </div>
 {% endblock %}
 
 {% block end_javascripts %}
+	{# Animated menu #}
     <script src="{{ asset('bundles/singzcore/js/animated_menu.js') }}"></script>
+    {# Publication purpose #}
+    <script src="{{ asset('bundles/singzvideo/js/plyr.min.js') }}"></script>
+    <script src="{{ asset('bundles/singzsocial/js/getPublications.js') }}"></script>
+    <script src="{{ asset('bundles/singzsocial/js/script.js') }}"></script>
+    <script src="{{ asset('bundles/singzsocial/js/comment.js') }}"></script>
+    <script src="{{ asset('bundles/singzsocial/js/resingz.js') }}"></script>
+    <script>
+    	var path = '{{ path('singz_social_bundle_publication_love') }}';
+		$(function(){
+			// Set the offset and limit values
+			var offset = 0
+			var limit = $('.publications').data('default-limit');
+			// Display the first publications
+			getPublications($('.publications').data('href'), $('.publications'), undefined, offset, limit);
+			// Display the next publications through infinite scroll				
+            $(window).scroll(function(){
+                if(($(window).scrollTop() + $(window).height()) == $(document).height() ) {
+    				// Increase the offset
+    				offset += limit;
+    				// Get next publications
+    				getPublications($('.publications').data('href'), $('.publications'), undefined, offset, limit);
+                }
+            });
+		});
+    </script>
 {% endblock %}

@@ -51,3 +51,9 @@ singz_social_bundle_publication_report:
         _controller: SingzSocialBundle:Publication:report
     requirements:
         idComment: \d+
+
+# ajax
+singz_social_bundle_get_publications:
+    path:     /get-publications
+    defaults:
+        _controller: SingzSocialBundle:Publication:getPublications
