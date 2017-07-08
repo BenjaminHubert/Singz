@@ -21,10 +21,14 @@ function getPublications(url, $grid, filter, offset, limit){
 	        data: dataToSend,
 	        dataType: 'JSON'
 	    }).done(function(data, textStatus, jqXHR){
-	    	if(data.html == ''){
+	    	if(offset == '0' && data.html == ''){
 	    		$('nav.loading-publications').hide();
 	    		$('.no-publication').show();
 	    		return;
+	    	}
+	    	if(offset != '0' && data.html == ''){
+	    		$('.no-publication').html('<i class="fa fa-music fa-fw animated shake" aria-hidden="true"></i>');
+	    		$('.no-publication').show();
 	    	}
 	    	// Add publications
 	    	var $html = $(data.html);
