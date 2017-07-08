@@ -83,8 +83,8 @@
     		<i class="fa fa-heart-o" aria-hidden="true"></i>
     	{% endif %}
     </button>
-	{# Resingz button #}
-	{% if publication.isresingz == false or hasResingz == false or publication.user != app.user %}
+        {# Resingz button #}
+	{% if (publication.isresingz == false or hasResingz == false) and (publication.user.isprivate == false or publication.user == app.user) %}
         <a class="btn-resingz {{ (hasResingz == true)? 'isResingz' : '' }}" data-id-publication="{{ publication.id }}" data-href="{{ path('singz_social_bundle_publication_resingz', {'id': publication.id}) }}">
             <i class="fa fa-retweet fa-fw" aria-hidden="true"></i>
     	    <span class="has-resingz">
