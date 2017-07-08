@@ -1,0 +1,8 @@
+singz_admin_project_index:
+    path:     /
+    defaults:
+        _controller: SingzAdminBundle:Project:index
+singz_admin_project_list:
+    path:     /list/
+    defaults:
+        _controller: SingzAdminBundle:Project:list

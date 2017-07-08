@@ -1,0 +1,91 @@
+{% extends "SingzAdminBundle::layout.html.twig" %}
+{% block title_tag %}Liste des projets - {{ parent() }} {% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset('bundles/singzadmin/css/dataTables.bootstrap.css') }}" rel="stylesheet">
+    <link href="{{ asset('bundles/singzadmin/css/dataTables.responsive.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block title_page %}
+    Liste des projets
+{% endblock %}
+
+{% block body %}
+    <table width="100%" class="table table-bordered table-hover dataTable">
+        <thead>
+        <tr>
+            <th>Auteur</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Crée le</th>
+            <th>Etat</th>
+            <th>Taux</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for project in projects %}
+            <tr>
+                <td>
+                    <a href="{{ path('singz_user_bundle_homepage', {'username': project.requester.username}) }}" target="_blank">
+                        {{ project.requester.username }}
+                    </a>
+                </td>
+                <td>
+                    {{ project.name }}
+                </td>
+                <td>
+                    {{ project.description }}
+                </td>
+                <td>
+                    {{ project.createdAt|date('d/m/Y H:i:s') }}
+                </td>
+                <td>
+                    {% if project.state == constant('Singz\\CoreBundle\\Entity\\Project::STATE_VISIBLE') %}
+                        <span class="label label-warning">
+    					        En ligne
+                        </span>
+                    {% elseif project.state == constant('Singz\\CoreBundle\\Entity\\Project::STATE_DELETED') %}
+                        <span class="label label-danger">
+    					        Supprimé
+                        </span>
+                    {% elseif project.state == constant('Singz\\CoreBundle\\Entity\\Project::STATE_DONE') %}
+                        <span class="label label-success">
+    					        Terminé
+                        </span>
+                    {% else %}
+                        <span class="label label-default">
+    					        Etat inconnu
+                        </span>
+                    {% endif %}
+                </td>
+                <td style="text-align: center">
+                    {{ project.amountReachedPercentage }} % <br>
+
+                    {% if project.amountReachedPercentage == 0 %}
+                        <i class="fa fa-times-circle" aria-hidden="true" style="color:red"></i>
+                    {% elseif project.amountReachedPercentage < 100 %}
+                        <i class="fa fa-check-circle" aria-hidden="true" style="color:orange"></i>
+                    {% else %}
+                        <i class="fa fa-check-circle" aria-hidden="true" style="color:green"></i>
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/singzadmin/js/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('bundles/singzadmin/js/dataTables.bootstrap.min.js') }}"></script>
+    <script src="{{ asset('bundles/singzadmin/js/dataTables.responsive.js') }}"></script>
+    <script>
+        $(document).ready(function() {
+            $('.dataTable').DataTable({
+                responsive: true
+            });
+        });
+    </script>
+{% endblock %}
