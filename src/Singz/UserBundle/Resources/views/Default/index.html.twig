@@ -32,21 +32,15 @@
     	    font-size: 120%;
     		font-weight: bold;
         }
-        .no-publication{
-        	text-align: center;
-    	    padding: 50px;
-        }
-        .no-publication i{
-            font-size: 6em;
-        }
-        .no-publication p{
-    	    font-size: 120%;
-    		font-weight: bold;
-        }
         .project .project-name{
         	font-style: italic;
         }
     </style>
+    {# Publication purpose #}
+    <link rel="stylesheet" href="{{ asset('bundles/singzvideo/css/plyr.min.css') }}">
+	<link rel="stylesheet" href="{{ asset('bundles/singzsocial/css/publication.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/singzsocial/css/comments.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/singzsocial/css/resingz.css') }}">
 {% endblock %}
 {% block body %}
 	{# Profile information #}
@@ -176,6 +170,7 @@
     {# Publications #}
     <div class="row">
         <div class="col-md-12">
+        	<br><br><br>
             {# Check if is pending #}
         	{% set isPending = true %}
         	{% set requested = false %}
@@ -188,17 +183,17 @@
         		{% endif %}
         	{% endfor %}
         	{# Publications #}
-        	{% if user.isPrivate == false or (user.isPrivate == true and isPending == false) or user == app.user %}
-                {% if user.publications is not empty %}
-                    {% include 'SingzSocialBundle::publications.html.twig' with {
-                        'publications': user.publications
-                    } %}
-                {% else %}
+            {% if (user == app.user) or (user.isPrivate == false) or (user.isPrivate == true and isPending == false and following == true) %}
+                {# Publication purpose #}
+                <div class="container-fluid">
+                    <div class="publications grid" data-default-limit="{{ default_publications_to_retrieve }}" data-href="{{ path('singz_social_bundle_get_publications', { 'filter': 'user', 'userId': user.id }) }}">
+                    	<div class="grid-sizer col-sm-12 col-md-4"></div>
+                    </div>
                     <div class="no-publication">
-                    	<i class="fa fa-video-camera" aria-hidden="true"></i></p>
+                    	<i class="fa fa-video-camera" aria-hidden="true"></i>
                     	<p>Aucune publication</p>
                     </div>
-                {% endif %}
+				</div>
             {% else %}
                 <div class="is-private">
                 	<p><i class="fa fa-lock" aria-hidden="true"></i></p>
@@ -220,7 +215,7 @@
                     	<span aria-hidden="true">&times;</span>
                     </button>
 
-                    {% if app.user == user or user.isPrivate == false  or (app.user and following) %}
+                        {% if (user == app.user) or (user.isPrivate == false) or (user.isPrivate == true and isPending == false and following == true) %}
                     	<div>
                             {# Nav tabs #}
                             <ul class="nav nav-tabs" role="tablist">
@@ -294,6 +289,31 @@
 {% endblock %}
 
 {% block end_javascripts %}
+    {# Check if is following or pending #}
+    {% set following = false %}
+    {% set ispending = false %}
+    {% for f in followers %}
+        {% if f.follower == app.user %}
+            {% set following = true %}
+        {% endif %}
+    {% endfor %}
+    {% for p in pending %}
+        {% if p.follower == app.user %}
+            {% set ispending = true %}
+        {% endif %}
+    {% endfor %}
+    {# Check if is pending #}
+    {% set isPending = true %}
+	{% set requested = false %}
+	{% for leader in user.leaders %}
+		{% if leader.leader == user %}
+			{% set requested = true %}
+			{% if leader.isPending == false %}
+	            {% set isPending = false %}
+		    {% endif %}
+		{% endif %}
+	{% endfor %}
+	
 	<script>
     	$(function(){
         	// List of leaders
@@ -310,4 +330,38 @@
         	});
     	});
 	</script>
+    {# Publication purpose #}
+    <script src="{{ asset('bundles/singzsocial/imagesLoaded-4.1.3/imagesloaded.pkgd.min.js') }}"></script>
+    <script src="{{ asset('bundles/singzsocial/masonry-4.2.0/masonry.pkgd.min.js') }}"></script>
+    <script src="{{ asset('bundles/singzvideo/js/plyr.min.js') }}"></script>
+    <script src="{{ asset('bundles/singzsocial/js/getPublications.js') }}"></script>
+    <script src="{{ asset('bundles/singzsocial/js/script.js') }}"></script>
+    <script src="{{ asset('bundles/singzsocial/js/comment.js') }}"></script>
+    <script src="{{ asset('bundles/singzsocial/js/resingz.js') }}"></script>
+    <script>
+    	var path = '{{ path('singz_social_bundle_publication_love') }}';
+		$(function(){
+			// Set the offset and limit values
+			var offset = 0
+			var limit = $('.publications').data('default-limit');
+			// Display the first publications
+            {% if (user == app.user) or (user.isPrivate == false) or (user.isPrivate == true and isPending == false and following == true) %}
+				getPublications($('.publications').data('href'), $('.publications'), undefined, offset, limit);
+    			// Display the next publications through infinite scroll				
+                $(window).scroll(function(){
+                    if(($(window).scrollTop() + $(window).height()) == $(document).height() ) {
+        				// Increase the offset
+        				offset += limit;
+        				// Get next publications
+        				getPublications($('.publications').data('href'), $('.grid'), undefined, offset, limit);
+                    }
+                });
+             	// Setup masonry grid layout
+                $('.grid').masonry({
+                	itemSelector: '.grid-item',
+                	columnWidth: '.grid-sizer'
+                });
+			{% endif %}
+		});
+    </script>
 {% endblock %}

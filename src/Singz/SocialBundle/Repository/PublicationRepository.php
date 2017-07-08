@@ -9,24 +9,7 @@ use Singz\SocialBundle\Entity\Publication;
  * repository methods below.
  */
 class PublicationRepository extends \Doctrine\ORM\EntityRepository
-{
-    public function getNewsFeed($user) {
-        return $this->createQueryBuilder('p')
-            ->leftJoin('p.user', 'u')->addSelect('u')
-            ->leftJoin('p.owner', 'o')->addSelect('o')
-            ->leftJoin('u.leaders', 'leaders')->addSelect('leaders')
-            ->leftJoin('p.loves', 'l')->addSelect('l')
-            ->where('(leaders.follower = :follower AND leaders.isPending = :pending) OR p.user = :user')
-            ->setParameter('follower', $user)
-            ->setParameter('user', $user)
-            ->setParameter('pending', false)
-            ->andWhere('p.state = :state')->setParameter('state', Publication::STATE_VISIBLE)
-            ->andWhere('u.enabled = :isEnabled')->setParameter('isEnabled', true)
-            ->andWhere('o.enabled = :isEnabled')->setParameter('isEnabled', true)
-            ->orderBy('p.date', 'DESC')
-            ->getQuery()
-            ->getResult();
-    }
+{    
     public function getPublicationById($id) {
         return $this->createQueryBuilder('p')
             ->innerJoin('p.user', 'u')->addSelect('u')
@@ -40,6 +23,7 @@ class PublicationRepository extends \Doctrine\ORM\EntityRepository
             ->getQuery()
             ->getOneOrNullResult();
     }
+    
     public function getPublicationByHashtag($user, $tag) {
         return $this->createQueryBuilder('p')
             ->leftJoin('p.user', 'u')->addSelect('u')
@@ -55,67 +39,7 @@ class PublicationRepository extends \Doctrine\ORM\EntityRepository
             ->getQuery()
             ->getResult();
     }
-    public function getBrowseAll($offset, $limit, $interval, $user) {
-        return $this->createQueryBuilder('p')
-            ->innerJoin('p.user', 'u')->addSelect('u')
-            ->innerJoin('p.owner', 'o')->addSelect('o')
-            ->leftJoin('u.followers', 'f')->addSelect('f')
-            ->leftJoin('p.loves', 'l')->addSelect('l')
-            //->where('p.date > :interval')
-            ->where('u.isPrivate = :private OR (f.follower = :follower AND f.isPending = :pending)')
-            //->setParameter('interval', $interval)
-            ->setParameter('private', false)
-            ->setParameter('follower', $user)
-            ->setParameter('pending', false)
-            ->andWhere('p.state = :state')->setParameter('state', Publication::STATE_VISIBLE)
-            ->andWhere('u.enabled = :isEnabled')->setParameter('isEnabled', true)
-            ->andWhere('o.enabled = :isEnabled')->setParameter('isEnabled', true)
-            ->orderBy('p.numLoves', 'DESC')
-            ->addOrderBy('p.date', 'DESC')
-            //->setFirstResult($offset)
-            //->setMaxResults($limit)
-            ->getQuery()
-            ->getResult();
-    }
-    public function getBrowseStarz($offset, $limit, $interval) {
-        return $this->createQueryBuilder('p')
-            ->innerJoin('p.user', 'u')->addSelect('u')
-            ->innerJoin('p.owner', 'o')->addSelect('o')
-            ->leftJoin('p.loves', 'l')->addSelect('l')
-            //->where('p.date > :interval')->setParameter('interval', $interval)
-            ->where('u.roles LIKE :starz')->setParameter('starz', '%STARZ%')
-            ->andWhere('p.state = :state')->setParameter('state', Publication::STATE_VISIBLE)
-            ->andWhere('u.enabled = :isEnabled')->setParameter('isEnabled', true)
-            ->andWhere('o.enabled = :isEnabled')->setParameter('isEnabled', true)
-            ->orderBy('p.numLoves', 'DESC')
-            ->addOrderBy('p.date', 'DESC')
-            //->setFirstResult($offset)
-            //->setMaxResults($limit)
-            ->getQuery()
-            ->getResult();
-    }
-    public function getBrowseSingzers($offset, $limit, $interval, $user) {
-        return $this->createQueryBuilder('p')
-            ->innerJoin('p.user', 'u')->addSelect('u')
-            ->innerJoin('p.owner', 'o')->addSelect('o')
-            ->leftJoin('u.followers', 'f')->addSelect('f')
-            ->leftJoin('p.loves', 'l')->addSelect('l')
-            //->where('p.date > :interval')->setParameter('interval', $interval)
-            ->where('u.roles LIKE :singzer')->setParameter('singzer', '%SINGZER%')
-            ->andWhere('u.isPrivate = :private OR (f.follower = :follower AND f.isPending = :pending)')
-            ->setParameter('private', false)
-            ->setParameter('follower', $user)
-            ->setParameter('pending', false)
-            ->andWhere('p.state = :state')->setParameter('state', Publication::STATE_VISIBLE)
-            ->andWhere('u.enabled = :isEnabled')->setParameter('isEnabled', true)
-            ->andWhere('o.enabled = :isEnabled')->setParameter('isEnabled', true)
-            ->orderBy('p.numLoves', 'DESC')
-            ->addOrderBy('p.date', 'DESC')
-            //->setFirstResult($offset)
-            //->setMaxResults($limit)
-            ->getQuery()
-            ->getResult();
-    }
+    
     public function getResingz($video) {
         return $this->createQueryBuilder('p')
             ->innerJoin('p.user', 'u')->addSelect('u')
@@ -129,6 +53,89 @@ class PublicationRepository extends \Doctrine\ORM\EntityRepository
             ->getQuery()
             ->getResult();
     }
+    
+	public function getPublications($user, $filter = 'all', $offset = 0, $limit = 0, $userId = null){
+		$queryBuilder = $this->createQueryBuilder('p')
+			// only enabled users
+			->leftJoin('p.user', 'user', 'WITH', 'user.enabled = :userIsEnabled')
+				->setParameter('userIsEnabled', true)
+				->addSelect('user')
+			// get user's image
+			->leftJoin('user.image', 'image')
+				->addSelect('image')
+			// only enabled owners
+			->leftJoin('p.owner', 'owner', 'WITH', 'owner.enabled = :ownerIsEnabled')
+				->setParameter('ownerIsEnabled', true)
+				->addSelect('owner')
+			// get loves
+			->leftJoin('p.loves', 'loves')
+				->addSelect('loves')
+			// get thread
+			->leftJoin('p.thread', 'thread')
+				->addSelect('thread')
+			// get video
+			->leftJoin('p.video', 'video')
+				->addSelect('video')
+			// only visible publications
+			->andWhere('p.state = :state')
+				->setParameter('state', Publication::STATE_VISIBLE)
+			->groupBy('p.id')
+			// set max result
+			->setFirstResult($offset)
+		    ->setMaxResults($limit)
+		;
+		// Apply filters
+		if($filter == 'starz' || $filter == 'singzer' || $filter == 'all'){
+			$queryBuilder
+				->orderBy('p.numLoves', 'DESC')
+				->addOrderBy('p.date', 'DESC')
+			;
+		}
+		if($filter == 'starz'){
+			$queryBuilder
+				->andWhere('user.roles LIKE :starz')
+					->setParameter('starz', '%STARZ%')
+			;
+		}
+		if($filter == 'singzer'){
+			$queryBuilder
+				->andWhere('user.roles LIKE :singzer')
+					->setParameter('singzer', '%SINGZER%')
+			;
+		}
+		if($filter == 'singzer' || $filter == 'all'){
+			$queryBuilder
+				->leftJoin('user.followers', 'f')->addSelect('f')
+					->andWhere('user.isPrivate = :private OR (f.follower = :follower AND f.isPending = :pending)')
+						->setParameter('private', false)
+						->setParameter('follower', $user)
+						->setParameter('pending', false)
+			;
+		}
+		if($filter == 'feed'){
+			$queryBuilder
+				->leftJoin('user.leaders', 'leaders')
+					->addSelect('leaders')
+				->andWhere('(leaders.follower = :follower AND leaders.isPending = :pending) OR p.user = :user')
+					->setParameter('follower', $user)
+					->setParameter('user', $user)
+					->setParameter('pending', false)
+				->orderBy('p.date', 'DESC')
+			;
+		}
+		if($filter ='user' && $userId != null){
+			$queryBuilder
+				->andWhere('user.id = :userId')
+					->setParameter('userId', $userId)
+			;
+		}
+		
+		return $queryBuilder
+			->getQuery()
+			->getResult()
+		;
+	}
+	
     public function findAllPublicationsInfo(){
         return $this->createQueryBuilder('p')
             ->leftJoin('p.user', 'u')->addSelect('u')
@@ -137,6 +144,4 @@ class PublicationRepository extends \Doctrine\ORM\EntityRepository
             ->getResult();
         ;
     }
-
-
 }

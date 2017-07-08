@@ -1,0 +1,72 @@
+{# Publication card #}
+<div class="grid-item col-sm-12 col-md-4 mini-publication animated bounceInUp" data-id-publication="{{ publication.id }}">
+    <div class="card">
+    	{# Video's preview #}
+        <div class="overlay">
+    		<img class="card-img-top preview" src="{{ asset(publication.video.previewPath) }}">
+        	<a href="#" class="playWrapper" data-toggle="modal" data-target=".modal[data-id-publication='{{ publication.id }}']" style='background-image:url("{{ asset("bundles/singzvideo/img/play-button-icon.png") }}")'>
+            
+            </a>
+        </div>
+        <div class="card-block">
+        	{# User profile picture #}
+            <figure class="profile">
+            	<a href="{{ path('singz_user_bundle_homepage', {'username': publication.user.username}) }}">
+                	<img src="{{ asset(publication.user.image.realPath) }}" class="profile-avatar" alt="">
+                </a>
+            </figure>
+            {# Username #}
+            <h4 class="card-title">
+            	<a href="{{ path('singz_user_bundle_homepage', {'username': publication.user.username}) }}">
+            		{{ publication.user.username }}
+            	</a>
+            </h4>
+            {# Loves and comments #}
+            <div class="card-loves-comments">
+            	<p>
+					<i class="fa fa-fw fa-heart" aria-hidden="true"></i><span class="nbloves-{{ publication.id }}"> {{ publication.numLoves }} </span>
+					<i class="fa fa-fw fa-comments" aria-hidden="true"></i><span class="nbcomments-{{ publication.id }}"> {{ publication.thread.numComments }} </span>
+				</p>
+            </div>
+            {# Starz or Singzer #}
+            <div class="meta">
+                {% if 'ROLE_STARZ' in publication.user.roles %} 
+                	<p>&#9733; Starz </p>
+                {% else %}
+                	<p>Singzer</p>
+                {% endif %}
+            </div>
+            {# Description #}
+            <div class="card-text">
+                {{ publication.description }}
+            </div>
+        </div>
+        <div class="card-footer">
+            <small>{{ publication.date|time_diff }}</small>
+        </div>
+    </div>
+</div>
+
+{# Modal #}
+<div class="modal modal-publication fade" tabindex="-1" role="dialog" data-id-publication="{{ publication.id }}" data-href="{{ path('singz_social_bundle_publication_extra_info') }}">
+	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		<i class="fa fa-times-circle" aria-hidden="true"></i>
+	</button>
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body row">
+        		{# Video #}
+        		<div class="video col-xs-12 col-md-7">
+                	<video class="js-player" controls>
+    					<source src="{{ asset(publication.video.videoPath) }}">
+    					Your browser does not support HTML5 video.
+    				</video>
+    			</div>
+    			{# Comments #}
+        		<div class="extra-publication col-xs-12 col-md-5">
+					<img class="loading-comments" src="{{ asset('bundles/singzcore/img/loading-comments.svg') }}">
+    			</div>
+            </div>
+        </div>
+	</div>
+</div>

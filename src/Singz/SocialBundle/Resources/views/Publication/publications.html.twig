@@ -1,0 +1,5 @@
+{% for publication in publications %}
+	{% include 'SingzSocialBundle:Publication:publication.html.twig' with {
+        'publication': publication
+    } %}
+{% endfor %}
