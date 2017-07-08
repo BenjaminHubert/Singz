@@ -10,4 +10,11 @@ namespace Singz\CoreBundle\Repository;
  */
 class ProjectRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function getProjectByHashtag($tag){
+        return $this->createQueryBuilder('p')
+            ->where('REGEXP(p.description, :regexp) = true')
+            ->setParameter('regexp', '(#'.$tag.')[^a-zA-Z0-9]')
+            ->getQuery()
+            ;
+    }
 }

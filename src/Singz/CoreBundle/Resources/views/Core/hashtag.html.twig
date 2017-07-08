@@ -6,11 +6,20 @@
 
 {% block body %}
     <h1>#{{ hashtag|capitalize }}</h1>
+    <h2>Publications</h2>
     {% if publications %}
         {% include 'SingzSocialBundle::publications.html.twig' with {
         'publications': publications
         } %}
     {% else %}
         Aucune publication à afficher
+    {% endif %}
+    <h2>Projets</h2>
+    {% if projects %}
+        {% include 'SingzCoreBundle:Project:project-mini.html.twig' with {
+        'projects': projects
+        } %}
+    {% else %}
+        Aucun projet à afficher
     {% endif %}
 {% endblock %}

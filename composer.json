@@ -26,7 +26,8 @@
         "twig/extensions": "^1.4",
         "pulse00/ffmpeg-bundle": "^0.6",
         "lexik/maintenance-bundle": "dev-master",
-        "jasny/twig-extensions": "^1.0"
+        "jasny/twig-extensions": "^1.0",
+        "beberlei/DoctrineExtensions": "^1.0"
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",
