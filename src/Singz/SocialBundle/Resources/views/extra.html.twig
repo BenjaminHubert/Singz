@@ -70,17 +70,18 @@
 </p>
 {# love button #}
 {% if app.user %}
-    <button id="love-{{ publication.id }}" onclick="lovethis(path, {{ publication.id }}, {{ app.user.id }})" class="btn btn-default">
-        {% set ilove = 0 %}
-        {% for love in publication.loves if ilove == 0 %}
-            {% if love.user.id == app.user.id  %}
-                {% set ilove = 1 %}
-                Je ne love plus
-            {% endif %}
-        {% endfor %}
-        {% if ilove == 0 %}
-            Je love !
+    {% set ilove = 'false' %}
+    {% for love in app.user.loves %}
+        {% if love.publication == publication  %}
+            {% set ilove = 'true' %}
         {% endif %}
+    {% endfor %}
+    <button id="love-{{ publication.id }}" class="btn-love" data-publication-id="{{ publication.id }}" data-user-id="{{ app.user.id }}"  data-is-loved="{{ ilove }}">
+    	{% if ilove == 'true' %}
+    		<i class="fa fa-heart" aria-hidden="true"></i>
+    	{% else %}
+    		<i class="fa fa-heart-o" aria-hidden="true"></i>
+    	{% endif %}
     </button>
 	{# Resingz button #}
 	{% if publication.isresingz == false or hasResingz == false or publication.user != app.user %}
