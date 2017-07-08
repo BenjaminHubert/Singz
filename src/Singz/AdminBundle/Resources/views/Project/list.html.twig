@@ -21,7 +21,6 @@
             <th>Crée le</th>
             <th>Etat</th>
             <th>Taux</th>
-            <th>Réussi</th>
         </tr>
         </thead>
         <tbody>
@@ -60,14 +59,13 @@
                         </span>
                     {% endif %}
                 </td>
-                <td>
-                    {{ project.amountReachedPercentage }}
-                </td>
                 <td style="text-align: center">
-                    {% if project.amountReachedPercentage < 100 %}
+                    {{ project.amountReachedPercentage }} % <br>
+
+                    {% if project.amountReachedPercentage == 0 %}
+                        <i class="fa fa-times-circle" aria-hidden="true" style="color:red"></i>
+                    {% elseif project.amountReachedPercentage < 100 %}
                         <i class="fa fa-check-circle" aria-hidden="true" style="color:orange"></i>
-                    {% elseif project.amountReachedPercentage == 0 %}
-                        <i class="fa fa-check-circle" aria-hidden="true" style="color:red"></i>
                     {% else %}
                         <i class="fa fa-check-circle" aria-hidden="true" style="color:green"></i>
                     {% endif %}
