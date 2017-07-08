@@ -24,4 +24,11 @@ class ProjectRepository extends \Doctrine\ORM\EntityRepository
 			->getOneOrNullResult()
 		;
 	}
+
+    public function findAllProjectsInfo(){
+        return $this->createQueryBuilder('p')
+            ->leftJoin('p.requester', 'u')->addSelect('u')
+            ->getQuery()
+            ->getResult();
+    }
 }
