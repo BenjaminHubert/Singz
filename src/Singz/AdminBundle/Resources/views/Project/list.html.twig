@@ -63,11 +63,11 @@
                     {{ project.amountReachedPercentage }} % <br>
 
                     {% if project.amountReachedPercentage == 0 %}
-                        <i class="fa fa-times-circle" aria-hidden="true" style="color:red"></i>
+                        <i class="fa fa-times-circle" aria-hidden="true" style="color:#d9534f"></i>
                     {% elseif project.amountReachedPercentage < 100 %}
-                        <i class="fa fa-check-circle" aria-hidden="true" style="color:orange"></i>
+                        <i class="fa fa-check-circle" aria-hidden="true" style="color:#f0ad4e"></i>
                     {% else %}
-                        <i class="fa fa-check-circle" aria-hidden="true" style="color:green"></i>
+                        <i class="fa fa-check-circle" aria-hidden="true" style="color:#5cb85c"></i>
                     {% endif %}
                 </td>
             </tr>
