@@ -288,6 +288,17 @@
 {% endblock %}
 
 {% block end_javascripts %}
+    {% set isPending = true %}
+	{% set requested = false %}
+	{% for leader in user.leaders %}
+		{% if leader.leader == user %}
+			{% set requested = true %}
+			{% if leader.isPending == false %}
+	            {% set isPending = false %}
+		    {% endif %}
+		{% endif %}
+	{% endfor %}
+	
 	<script>
     	$(function(){
         	// List of leaders
@@ -319,7 +330,9 @@
 			var offset = 0
 			var limit = $('.publications').data('default-limit');
 			// Display the first publications
-			getPublications($('.publications').data('href'), $('.publications'), undefined, offset, limit);
+			{% if user.isPrivate == false or (user.isPrivate == true and isPending == false) or user == app.user %}
+				getPublications($('.publications').data('href'), $('.publications'), undefined, offset, limit);
+			{% endif %}
 			// Display the next publications through infinite scroll				
             $(window).scroll(function(){
                 if(($(window).scrollTop() + $(window).height()) == $(document).height() ) {
