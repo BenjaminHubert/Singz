@@ -170,6 +170,7 @@
     {# Publications #}
     <div class="row">
         <div class="col-md-12">
+        	<br><br><br>
             {# Check if is pending #}
         	{% set isPending = true %}
         	{% set requested = false %}
@@ -182,7 +183,7 @@
         		{% endif %}
         	{% endfor %}
         	{# Publications #}
-        	{% if user.isPrivate == false or (user.isPrivate == true and isPending == false) or user == app.user %}
+            {% if (user == app.user) or (user.isPrivate == false) or (user.isPrivate == true and isPending == false and following == true) %}
                 {# Publication purpose #}
                 <div class="container-fluid">
                     <div class="publications grid" data-default-limit="{{ default_publications_to_retrieve }}" data-href="{{ path('singz_social_bundle_get_publications', { 'filter': 'user', 'userId': user.id }) }}">
@@ -214,7 +215,7 @@
                     	<span aria-hidden="true">&times;</span>
                     </button>
 
-                    {% if app.user == user or user.isPrivate == false  or (app.user and following) %}
+                        {% if (user == app.user) or (user.isPrivate == false) or (user.isPrivate == true and isPending == false and following == true) %}
                     	<div>
                             {# Nav tabs #}
                             <ul class="nav nav-tabs" role="tablist">
@@ -288,6 +289,20 @@
 {% endblock %}
 
 {% block end_javascripts %}
+    {# Check if is following or pending #}
+    {% set following = false %}
+    {% set ispending = false %}
+    {% for f in followers %}
+        {% if f.follower == app.user %}
+            {% set following = true %}
+        {% endif %}
+    {% endfor %}
+    {% for p in pending %}
+        {% if p.follower == app.user %}
+            {% set ispending = true %}
+        {% endif %}
+    {% endfor %}
+    {# Check if is pending #}
     {% set isPending = true %}
 	{% set requested = false %}
 	{% for leader in user.leaders %}
@@ -330,23 +345,23 @@
 			var offset = 0
 			var limit = $('.publications').data('default-limit');
 			// Display the first publications
-			{% if user.isPrivate == false or (user.isPrivate == true and isPending == false) or user == app.user %}
+            {% if (user == app.user) or (user.isPrivate == false) or (user.isPrivate == true and isPending == false and following == true) %}
 				getPublications($('.publications').data('href'), $('.publications'), undefined, offset, limit);
+    			// Display the next publications through infinite scroll				
+                $(window).scroll(function(){
+                    if(($(window).scrollTop() + $(window).height()) == $(document).height() ) {
+        				// Increase the offset
+        				offset += limit;
+        				// Get next publications
+        				getPublications($('.publications').data('href'), $('.grid'), undefined, offset, limit);
+                    }
+                });
+             	// Setup masonry grid layout
+                $('.grid').masonry({
+                	itemSelector: '.grid-item',
+                	columnWidth: '.grid-sizer'
+                });
 			{% endif %}
-			// Display the next publications through infinite scroll				
-            $(window).scroll(function(){
-                if(($(window).scrollTop() + $(window).height()) == $(document).height() ) {
-    				// Increase the offset
-    				offset += limit;
-    				// Get next publications
-    				getPublications($('.publications').data('href'), $('.grid'), undefined, offset, limit);
-                }
-            });
-         	// Setup masonry grid layout
-            $('.grid').masonry({
-            	itemSelector: '.grid-item',
-            	columnWidth: '.grid-sizer'
-            });
 		});
     </script>
 {% endblock %}
