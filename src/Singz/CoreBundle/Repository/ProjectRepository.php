@@ -1,7 +1,7 @@
 <?php
 
 namespace Singz\CoreBundle\Repository;
-
+use Singz\CoreBundle\Entity\Project;
 /**
  * ProjectRepository
  *
@@ -10,11 +10,13 @@ namespace Singz\CoreBundle\Repository;
  */
 class ProjectRepository extends \Doctrine\ORM\EntityRepository
 {
-    public function getProjectByHashtag($tag){
+    public function getProjectByHashtag($hashtag){
         return $this->createQueryBuilder('p')
-            ->where('REGEXP(p.description, :regexp) = true')
-            ->setParameter('regexp', '(#'.$tag.')[^a-zA-Z0-9]')
+            ->where('REGEXP(p.description, :regexp) = true')->setParameter('regexp', '#'.$hashtag.'\b')
+            ->andWhere('p.state = :state')
+            ->setParameter('state', Project::STATE_VISIBLE)
+            ->orderBy('p.amountReached', 'DESC')
             ->getQuery()
-            ;
+            ->getResult();
     }
 }
