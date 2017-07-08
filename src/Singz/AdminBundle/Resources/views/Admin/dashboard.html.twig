@@ -3,5 +3,236 @@
 
 
 {% block title_page %}
-Dashboard
+    Dashboard
+{% endblock %}
+
+{% block body %}
+<div class="row">
+    <div class="col-lg-6 col-md-6">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-xs-3">
+                        <i class="fa fa-users fa-5x"></i>
+                    </div>
+                    <div class="col-xs-9 text-right">
+                        <div class="huge">{{ users }}</div>
+                        <div>Utilisateurs inscrits</div>
+                    </div>
+                </div>
+            </div>
+            <a href="{{ path('singz_admin_user_list') }}">
+                <div class="panel-footer">
+                    <span class="pull-left">Voir les détails</span>
+                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                    <div class="clearfix"></div>
+                </div>
+            </a>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-6">
+        <div class="panel panel-green">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-xs-3">
+                        <i class="fa fa-star fa-5x"></i>
+                    </div>
+                    <div class="col-xs-9 text-right">
+                        <div class="huge">{{ starz }}</div>
+                        <div>Starz</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-6">
+        <div class="panel panel-yellow">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-xs-3">
+                        <i class="fa fa-user fa-5x"></i>
+                    </div>
+                    <div class="col-xs-9 text-right">
+                        <div class="huge">{{ singzers }}</div>
+                        <div>Singzers</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-3 col-md-6">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-xs-3">
+                        <i class="fa fa-video-camera fa-5x"></i>
+                    </div>
+                    <div class="col-xs-9 text-right">
+                        <div class="huge">{{ publications }}</div>
+                        <div>Publications</div>
+                    </div>
+                </div>
+            </div>
+            <a href="{{ path('singz_admin_publication_list') }}">
+                <div class="panel-footer">
+                    <span class="pull-left">Voir les détails</span>
+                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                    <div class="clearfix"></div>
+                </div>
+            </a>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-6">
+        <div class="panel panel-green">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-xs-3">
+                        <i class="fa fa-comments fa-5x"></i>
+                    </div>
+                    <div class="col-xs-9 text-right">
+                        <div class="huge">{{ comments }}</div>
+                        <div>Commentaires postés</div>
+                    </div>
+                </div>
+            </div>
+            <a href="{{ path('singz_admin_comment_list') }}">
+                <div class="panel-footer">
+                    <span class="pull-left">Voir les détails</span>
+                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                    <div class="clearfix"></div>
+                </div>
+            </a>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-6">
+        <div class="panel panel-yellow">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-xs-3">
+                        <i class="fa fa-retweet fa-5x"></i>
+                    </div>
+                    <div class="col-xs-9 text-right">
+                        <div class="huge">{{ resingz }}</div>
+                        <div>Resingz</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-6">
+        <div class="panel panel-red">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-xs-3">
+                        <i class="fa fa-heart fa-5x"></i>
+                    </div>
+                    <div class="col-xs-9 text-right">
+                        <div class="huge">{{ loves }}</div>
+                        <div>Loves lachés</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-6 col-md-6">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-xs-3">
+                        <i class="fa fa-headphones fa-5x"></i>
+                    </div>
+                    <div class="col-xs-9 text-right">
+                        <div class="huge">{{ projects }}</div>
+                        <div>Projets créés</div>
+                    </div>
+                </div>
+            </div>
+            <a href="{{ path('singz_admin_user_list') }}">
+                <div class="panel-footer">
+                    <span class="pull-left">Voir les détails</span>
+                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                    <div class="clearfix"></div>
+                </div>
+            </a>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-6">
+        <div class="panel panel-yellow">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-xs-3">
+                        <i class="fa fa-spinner fa-5x"></i>
+                    </div>
+                    <div class="col-xs-9 text-right">
+                        <div class="huge">{{ currentProjects }}</div>
+                        <div>Projets en cours</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-6">
+        <div class="panel panel-green">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-xs-3">
+                        <i class="fa fa-check fa-5x"></i>
+                    </div>
+                    <div class="col-xs-9 text-right">
+                        <div class="huge">{{ doneProjects }}</div>
+                        <div>Projets aboutis</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <i class="fa fa-bar-chart-o fa-fw"></i> Area Chart Example
+                    <div class="pull-right">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+                                Actions
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu pull-right" role="menu">
+                                <li><a href="#">Action</a>
+                                </li>
+                                <li><a href="#">Another action</a>
+                                </li>
+                                <li><a href="#">Something else here</a>
+                                </li>
+                                <li class="divider"></li>
+                                <li><a href="#">Separated link</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.panel-heading -->
+                <div class="panel-body">
+                    <div id="morris-area-chart" style="position: relative;"><svg height="347.20001220703125" version="1.1" width="764" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="overflow: hidden; position: relative; left: -0.600006px; top: -0.149994px;"><desc>Created with Raphaël 2.2.0</desc><defs></defs><text style="text-anchor: end; font-family: sans-serif; font-size: 12px; font-weight: normal;" x="50.099998474121094" y="312.9999942779541" text-anchor="end" font-family="sans-serif" font-size="12px" stroke="none" fill="#888888" font-weight="normal"><tspan dy="4.000006675720215">0</tspan></text><path style="" fill="none" stroke="#aaaaaa" d="M62.599998474121094,312.9999942779541H739" stroke-width="0.5"></path><text style="text-anchor: end; font-family: sans-serif; font-size: 12px; font-weight: normal;" x="50.099998474121094" y="240.99999570846558" text-anchor="end" font-family="sans-serif" font-size="12px" stroke="none" fill="#888888" font-weight="normal"><tspan dy="3.999992847442627">7,500</tspan></text><path style="" fill="none" stroke="#aaaaaa" d="M62.599998474121094,240.99999570846558H739" stroke-width="0.5"></path><text style="text-anchor: end; font-family: sans-serif; font-size: 12px; font-weight: normal;" x="50.099998474121094" y="168.99999713897705" text-anchor="end" font-family="sans-serif" font-size="12px" stroke="none" fill="#888888" font-weight="normal"><tspan dy="3.9999942779541016">15,000</tspan></text><path style="" fill="none" stroke="#aaaaaa" d="M62.599998474121094,168.99999713897705H739" stroke-width="0.5"></path><text style="text-anchor: end; font-family: sans-serif; font-size: 12px; font-weight: normal;" x="50.099998474121094" y="96.99999856948853" text-anchor="end" font-family="sans-serif" font-size="12px" stroke="none" fill="#888888" font-weight="normal"><tspan dy="3.999995708465576">22,500</tspan></text><path style="" fill="none" stroke="#aaaaaa" d="M62.599998474121094,96.99999856948853H739" stroke-width="0.5"></path><text style="text-anchor: end; font-family: sans-serif; font-size: 12px; font-weight: normal;" x="50.099998474121094" y="25" text-anchor="end" font-family="sans-serif" font-size="12px" stroke="none" fill="#888888" font-weight="normal"><tspan dy="4">30,000</tspan></text><path style="" fill="none" stroke="#aaaaaa" d="M62.599998474121094,25H739" stroke-width="0.5"></path><text style="text-anchor: middle; font-family: sans-serif; font-size: 12px; font-weight: normal;" x="614.1034982752832" y="325.4999942779541" text-anchor="middle" font-family="sans-serif" font-size="12px" stroke="none" fill="#888888" font-weight="normal" transform="matrix(1,0,0,1,0,7.2)"><tspan dy="4.000006675720215">2012</tspan></text><text style="text-anchor: middle; font-family: sans-serif; font-size: 12px; font-weight: normal;" x="314.1053202910445" y="325.4999942779541" text-anchor="middle" font-family="sans-serif" font-size="12px" stroke="none" fill="#888888" font-weight="normal" transform="matrix(1,0,0,1,0,7.2)"><tspan dy="4.000006675720215">2011</tspan></text><path style="fill-opacity: 1;" fill="#7cb57c" stroke="none" d="M62.599998474121094,261.9951952913284C81.49543165937266,256.71519539623256,119.28629802987578,245.75688965698967,138.18173121512734,240.87519571094512C157.08572599221637,235.99128985101473,194.8937155463944,229.61560221737565,213.79771032348341,222.93279606742857C232.50478848831108,216.31960248154343,269.9189448179664,189.66448556615507,288.6260229827941,187.69119676761625C307.11906135168556,185.74048564411794,344.10513808946837,205.80161069678022,362.59817645835983,207.23679637928007C381.4936096436114,208.70321063913062,419.2844760141145,198.3210178021738,438.1799091993661,199.2975965370178C457.0839039764551,200.27461776335923,494.8918935306332,232.3866848848323,513.7958883077222,215.0511962240219C532.5029664725498,197.896285570095,569.9171228022052,69.704314058017,588.6242009670328,61.33599927806853C607.3227175400231,52.97151439046786,644.7197506860034,135.8498073170838,663.4182672589936,148.11999755382536C682.3137004442452,160.51940682694288,720.1045668147484,157.040797376585,739,160.0143973175049L739,312.9999942779541L62.599998474121094,312.9999942779541Z" fill-opacity="1"></path><path style="" fill="none" stroke="#4da74d" d="M62.599998474121094,261.9951952913284C81.49543165937266,256.71519539623256,119.28629802987578,245.75688965698967,138.18173121512734,240.87519571094512C157.08572599221637,235.99128985101473,194.8937155463944,229.61560221737565,213.79771032348341,222.93279606742857C232.50478848831108,216.31960248154343,269.9189448179664,189.66448556615507,288.6260229827941,187.69119676761625C307.11906135168556,185.74048564411794,344.10513808946837,205.80161069678022,362.59817645835983,207.23679637928007C381.4936096436114,208.70321063913062,419.2844760141145,198.3210178021738,438.1799091993661,199.2975965370178C457.0839039764551,200.27461776335923,494.8918935306332,232.3866848848323,513.7958883077222,215.0511962240219C532.5029664725498,197.896285570095,569.9171228022052,69.704314058017,588.6242009670328,61.33599927806853C607.3227175400231,52.97151439046786,644.7197506860034,135.8498073170838,663.4182672589936,148.11999755382536C682.3137004442452,160.51940682694288,720.1045668147484,157.040797376585,739,160.0143973175049" stroke-width="3"></path><circle cx="62.599998474121094" cy="261.9951952913284" r="2" fill="#4da74d" stroke="#ffffff" style="" stroke-width="1"></circle><circle cx="138.18173121512734" cy="240.87519571094512" r="2" fill="#4da74d" stroke="#ffffff" style="" stroke-width="1"></circle><circle cx="213.79771032348341" cy="222.93279606742857" r="2" fill="#4da74d" stroke="#ffffff" style="" stroke-width="1"></circle><circle cx="288.6260229827941" cy="187.69119676761625" r="2" fill="#4da74d" stroke="#ffffff" style="" stroke-width="1"></circle><circle cx="362.59817645835983" cy="207.23679637928007" r="2" fill="#4da74d" stroke="#ffffff" style="" stroke-width="1"></circle><circle cx="438.1799091993661" cy="199.2975965370178" r="2" fill="#4da74d" stroke="#ffffff" style="" stroke-width="1"></circle><circle cx="513.7958883077222" cy="215.0511962240219" r="2" fill="#4da74d" stroke="#ffffff" style="" stroke-width="1"></circle><circle cx="588.6242009670328" cy="61.33599927806853" r="2" fill="#4da74d" stroke="#ffffff" style="" stroke-width="1"></circle><circle cx="663.4182672589936" cy="148.11999755382536" r="2" fill="#4da74d" stroke="#ffffff" style="" stroke-width="1"></circle><circle cx="739" cy="160.0143973175049" r="2" fill="#4da74d" stroke="#ffffff" style="" stroke-width="1"></circle><path style="fill-opacity: 1;" fill="#a8b4bd" stroke="none" d="M62.599998474121094,287.40639478645323C81.49543165937266,281.6319949011803,119.28629802987578,269.36564950502657,138.18173121512734,264.30879524536135C157.08572599221637,259.24964970601343,194.8937155463944,249.70719553546905,213.79771032348341,246.94239559040068C232.50478848831108,244.2063956447601,269.9189448179664,244.52992060956356,288.6260229827941,242.30559568252562C307.11906135168556,240.10672069744464,344.10513808946837,232.33482967957363,362.59817645835983,229.24959594192507C381.4936096436114,226.0972298035036,419.2844760141145,217.22442580711777,438.1799091993661,217.35519617824554C457.0839039764551,217.48602580192025,494.8918935306332,243.65798937293346,513.7958883077222,230.29599592113493C532.5029664725498,217.07318990112597,569.9171228022052,118.85619223000349,588.6242009670328,111.01599829101562C607.3227175400231,103.17939254147352,644.7197506860034,159.3581364332537,663.4182672589936,167.58879716701506C682.3137004442452,175.90613610447448,720.1045668147484,174.80319702367782,739,177.20799697589874L739,312.9999942779541L62.599998474121094,312.9999942779541Z" fill-opacity="1"></path><path style="" fill="none" stroke="#7a92a3" d="M62.599998474121094,287.40639478645323C81.49543165937266,281.6319949011803,119.28629802987578,269.36564950502657,138.18173121512734,264.30879524536135C157.08572599221637,259.24964970601343,194.8937155463944,249.70719553546905,213.79771032348341,246.94239559040068C232.50478848831108,244.2063956447601,269.9189448179664,244.52992060956356,288.6260229827941,242.30559568252562C307.11906135168556,240.10672069744464,344.10513808946837,232.33482967957363,362.59817645835983,229.24959594192507C381.4936096436114,226.0972298035036,419.2844760141145,217.22442580711777,438.1799091993661,217.35519617824554C457.0839039764551,217.48602580192025,494.8918935306332,243.65798937293346,513.7958883077222,230.29599592113493C532.5029664725498,217.07318990112597,569.9171228022052,118.85619223000349,588.6242009670328,111.01599829101562C607.3227175400231,103.17939254147352,644.7197506860034,159.3581364332537,663.4182672589936,167.58879716701506C682.3137004442452,175.90613610447448,720.1045668147484,174.80319702367782,739,177.20799697589874" stroke-width="3"></path><circle cx="62.599998474121094" cy="287.40639478645323" r="2" fill="#7a92a3" stroke="#ffffff" style="" stroke-width="1"></circle><circle cx="138.18173121512734" cy="264.30879524536135" r="2" fill="#7a92a3" stroke="#ffffff" style="" stroke-width="1"></circle><circle cx="213.79771032348341" cy="246.94239559040068" r="2" fill="#7a92a3" stroke="#ffffff" style="" stroke-width="1"></circle><circle cx="288.6260229827941" cy="242.30559568252562" r="2" fill="#7a92a3" stroke="#ffffff" style="" stroke-width="1"></circle><circle cx="362.59817645835983" cy="229.24959594192507" r="2" fill="#7a92a3" stroke="#ffffff" style="" stroke-width="1"></circle><circle cx="438.1799091993661" cy="217.35519617824554" r="2" fill="#7a92a3" stroke="#ffffff" style="" stroke-width="1"></circle><circle cx="513.7958883077222" cy="230.29599592113493" r="2" fill="#7a92a3" stroke="#ffffff" style="" stroke-width="1"></circle><circle cx="588.6242009670328" cy="111.01599829101562" r="2" fill="#7a92a3" stroke="#ffffff" style="" stroke-width="1"></circle><circle cx="663.4182672589936" cy="167.58879716701506" r="2" fill="#7a92a3" stroke="#ffffff" style="" stroke-width="1"></circle><circle cx="739" cy="177.20799697589874" r="2" fill="#7a92a3" stroke="#ffffff" style="" stroke-width="1"></circle><path style="fill-opacity: 1;" fill="#2677b5" stroke="none" d="M62.599998474121094,287.40639478645323C81.49543165937266,287.13759479179384,119.28629802987578,289.0257842899527,138.18173121512734,286.33119480781556C157.08572599221637,283.63538439705036,194.8937155463944,267.0378088037062,213.79771032348341,265.84479521484377C232.50478848831108,264.66420885086535,269.9189448179664,279.12749966900685,288.6260229827941,276.83679499645234C307.11906135168556,274.57229975951054,344.10513808946837,249.88301820200098,362.59817645835983,247.62399557685853C381.4936096436114,245.31581829274307,419.2844760141145,256.1805362902075,438.1799091993661,258.56799535942076C457.0839039764551,260.9565361953169,494.8918935306332,278.070671411728,513.7958883077222,266.72799519729614C532.5029664725498,255.50347186009796,569.9171228022052,175.3412084572549,588.6242009670328,168.2991971529007C607.3227175400231,161.26040873701527,644.7197506860034,202.47733903817817,663.4182672589936,210.40479631633758C682.3137004442452,218.4157387215106,720.1045668147484,226.64079599375725,739,232.05279588623046L739,312.9999942779541L62.599998474121094,312.9999942779541Z" fill-opacity="1"></path><path style="" fill="none" stroke="#0b62a4" d="M62.599998474121094,287.40639478645323C81.49543165937266,287.13759479179384,119.28629802987578,289.0257842899527,138.18173121512734,286.33119480781556C157.08572599221637,283.63538439705036,194.8937155463944,267.0378088037062,213.79771032348341,265.84479521484377C232.50478848831108,264.66420885086535,269.9189448179664,279.12749966900685,288.6260229827941,276.83679499645234C307.11906135168556,274.57229975951054,344.10513808946837,249.88301820200098,362.59817645835983,247.62399557685853C381.4936096436114,245.31581829274307,419.2844760141145,256.1805362902075,438.1799091993661,258.56799535942076C457.0839039764551,260.9565361953169,494.8918935306332,278.070671411728,513.7958883077222,266.72799519729614C532.5029664725498,255.50347186009796,569.9171228022052,175.3412084572549,588.6242009670328,168.2991971529007C607.3227175400231,161.26040873701527,644.7197506860034,202.47733903817817,663.4182672589936,210.40479631633758C682.3137004442452,218.4157387215106,720.1045668147484,226.64079599375725,739,232.05279588623046" stroke-width="3"></path><circle cx="62.599998474121094" cy="287.40639478645323" r="2" fill="#0b62a4" stroke="#ffffff" style="" stroke-width="1"></circle><circle cx="138.18173121512734" cy="286.33119480781556" r="2" fill="#0b62a4" stroke="#ffffff" style="" stroke-width="1"></circle><circle cx="213.79771032348341" cy="265.84479521484377" r="2" fill="#0b62a4" stroke="#ffffff" style="" stroke-width="1"></circle><circle cx="288.6260229827941" cy="276.83679499645234" r="2" fill="#0b62a4" stroke="#ffffff" style="" stroke-width="1"></circle><circle cx="362.59817645835983" cy="247.62399557685853" r="2" fill="#0b62a4" stroke="#ffffff" style="" stroke-width="1"></circle><circle cx="438.1799091993661" cy="258.56799535942076" r="2" fill="#0b62a4" stroke="#ffffff" style="" stroke-width="1"></circle><circle cx="513.7958883077222" cy="266.72799519729614" r="2" fill="#0b62a4" stroke="#ffffff" style="" stroke-width="1"></circle><circle cx="588.6242009670328" cy="168.2991971529007" r="2" fill="#0b62a4" stroke="#ffffff" style="" stroke-width="1"></circle><circle cx="663.4182672589936" cy="210.40479631633758" r="2" fill="#0b62a4" stroke="#ffffff" style="" stroke-width="1"></circle><circle cx="739" cy="232.05279588623046" r="2" fill="#0b62a4" stroke="#ffffff" style="" stroke-width="1"></circle></svg><div class="morris-hover morris-default-style" style="left: 159.798px; top: 162px; display: none;"><div class="morris-hover-row-label">2010 Q3</div><div class="morris-hover-point" style="color: #0b62a4">
+                                iPhone:
+                                4,912
+                            </div><div class="morris-hover-point" style="color: #7A92A3">
+                                iPad:
+                                1,969
+                            </div><div class="morris-hover-point" style="color: #4da74d">
+                                iPod Touch:
+                                2,501
+                            </div></div></div>
+                </div>
+                <!-- /.panel-body -->
+            </div>
+            <!-- /.panel .chat-panel -->
+        </div>
+        <!-- /.col-lg-4 -->
+    </div>
 {% endblock %}
