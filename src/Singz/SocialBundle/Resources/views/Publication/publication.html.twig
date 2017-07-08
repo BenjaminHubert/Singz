@@ -54,21 +54,17 @@
 	</button>
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <div class="modal-body">
-            	<div class="row">
-            		{# Video #}
-            		<div class="video col-xs-12 col-md-7">
-                    	<video class="js-player" controls>
-        					<source src="{{ asset(publication.video.videoPath) }}">
-        					Your browser does not support HTML5 video.
-        				</video>
-        			</div>
-        			{# Comments #}
-            		<div class="col-xs-12 col-md-5">
-						<div class="extra-publication">
-							<img class="loading-comments" src="{{ asset('bundles/singzcore/img/loading-comments.svg') }}">
-						</div>
-        			</div>
+            <div class="modal-body row">
+        		{# Video #}
+        		<div class="video col-xs-12 col-md-7">
+                	<video class="js-player" controls>
+    					<source src="{{ asset(publication.video.videoPath) }}">
+    					Your browser does not support HTML5 video.
+    				</video>
+    			</div>
+    			{# Comments #}
+        		<div class="extra-publication col-xs-12 col-md-5">
+					<img class="loading-comments" src="{{ asset('bundles/singzcore/img/loading-comments.svg') }}">
     			</div>
             </div>
         </div>

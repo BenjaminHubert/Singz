@@ -155,17 +155,35 @@
 *	Modal
 */
 .modal-publication .modal-dialog{
+	position: absolute;
 	width:100%;
+	margin-top: 70px;
+  	padding: 0;
+  	top: 0;
+    bottom: 0;
 }
 .modal-publication .modal-content{
-    background-color: transparent;
     border: none;
     box-shadow: none;
+  	border-radius: 0;
+ 	margin: 0 2%;
+ 	background-color: transparent;
+ 	
+ 	position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
 }
 .modal-publication .modal-body{
-	background-color: white;
-	margin: 15px;
+	background-color: black;
     padding: 0px;
+    
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
 }
 .modal-publication [data-dismiss="modal"]{
 	position: absolute;
@@ -178,20 +196,37 @@
     font-size: 50px;
     padding: 10px;
 }
-.modal-publication .modal-dialog{
-    margin: 60px auto auto auto;
+
+/*
+*	Video
+*/
+.modal-publication .video{
+    height: 100%;
 }
+.modal-publication .plyr--video, .modal-publication .plyr__video-wrapper, .modal-publication .js-player{
+	height: 100%;
+}
+
 
 /*
 *	Extra publication
 */
-.modal-publication .right-side{
-	
-    height:0;
+@media (max-width: 991px) {
+	.modal-publication .extra-publication{
+	    overflow: initial;
+	    overflow-x: initial;
+	    height: auto;
+	}
+}
+@media (min-width: 992px) {
+	.modal-publication .extra-publication{
+	    overflow: scroll;
+	    overflow-x: hidden;
+	    height: 100%;
+	}
 }
 .modal-publication .extra-publication{
-    overflow:scroll;
-    overflow-x:hidden;
+    background-color: white;
 }
 .modal-publication .extra-publication .loading-comments{
 	display:block;

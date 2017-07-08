@@ -121,14 +121,5 @@ $(function(){
 	$(document).on('click', '.confirmation-alert', function(){
 		return confirm('Êtes-vous sûr?');
 	});
-	
-	$('.publications').on('shown.bs.modal', '.modal-publication', function(){
-		var videoHeight = $(this).find('.video').height();
-		$(this).find('.extra-publication').height(videoHeight);
-	});
-	$(document).resize(function(){
-		var videoHeight = $('.modal-publication .video').height();
-		$('.modal-publication .extra-publication').height(videoHeight);
-	})
 })
 
