@@ -75,7 +75,7 @@
                             <p class="message">{{ notification.message|raw }}</p>
 							<p>
 								{# If it's a pending follow, display buttons #}
-								{% if isFollow is defined and pending_followers is not empty %}
+								{% if isFollow is defined and isFollow and pending_followers is not empty %}
 									{% for follow in pending_followers %}
 										{% if follow.follower == notification.userFrom %}
 											{# Accept follow #}
@@ -86,6 +86,7 @@
 											<a href="{{ path('singz_social_bundle_follow_pending', {'status':'deny', 'id':follow.id}) }}">
 												<button class="btn btn-xs btn-danger">Refuser</button>
 											</a>
+											{% set isFollow = false %}
 										{% endif %}
 									{% endfor %}
 								{% endif %}
