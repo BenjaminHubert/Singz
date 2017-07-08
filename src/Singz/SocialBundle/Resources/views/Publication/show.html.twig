@@ -28,9 +28,11 @@
     <script src="{{ asset('bundles/singzsocial/js/comment.js') }}"></script>
     <script src="{{ asset('bundles/singzsocial/js/resingz.js') }}"></script>
     <script>
+		var path = '{{ path('singz_social_bundle_publication_love') }}';
 		$(function(){
 			// Create video player
 			plyr.setup();
+			$('.modal').modal('show')
 		});
     </script>
 {% endblock %}
