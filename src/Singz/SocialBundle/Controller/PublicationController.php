@@ -278,7 +278,7 @@ class PublicationController extends Controller
         }
         // Check if the owner is private
         $owner = $publication->getOwner();
-        if($owner->getIsPrivate() === true){
+        if($owner->getIsPrivate() === true && $owner != $this->getUser()){
             throw new AccessDeniedHttpException("Vous n'êtes pas autorisé à resingzer cette publication");
         }
         // Check if the resingz already exists
