@@ -4,7 +4,7 @@
     	{# Video's preview #}
         <div class="overlay">
     		<img class="card-img-top preview" src="{{ asset(publication.video.previewPath) }}">
-        	<a href="#" class="playWrapper" data-toggle="modal" data-target=".modal[data-id-publication='{{ publication.id }}']">
+        	<a href="#" class="playWrapper" data-toggle="modal" data-target=".modal[data-id-publication='{{ publication.id }}']" style='background-image:url("{{ asset("bundles/singzvideo/img/play-button-icon.png") }}")'>
             
             </a>
         </div>
