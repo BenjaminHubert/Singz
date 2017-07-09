@@ -68,8 +68,9 @@
 <p>
     {{ publication.description|preg_replace('/#+([a-zA-Z0-9]+)/', '<a href="'~path('singz_hashtagz')~'?k=$1">$0</a>')|raw }}
 </p>
-{# love button #}
+
 {% if app.user %}
+	{# love button #}
     {% set ilove = 'false' %}
     {% for love in app.user.loves %}
         {% if love.publication == publication  %}
@@ -83,14 +84,14 @@
     		<i class="fa fa-heart-o" aria-hidden="true"></i>
     	{% endif %}
     </button>
-        {# Resingz button #}
+    {# Resingz button #}
 	{% if (publication.isresingz == false or hasResingz == false) and (publication.user.isprivate == false or publication.user == app.user) %}
-        <a class="btn-resingz {{ (hasResingz == true)? 'isResingz' : '' }}" data-id-publication="{{ publication.id }}" data-href="{{ path('singz_social_bundle_publication_resingz', {'id': publication.id}) }}">
+        <button class="btn-resingz {{ (hasResingz == true)? 'isResingz' : '' }}" data-id-publication="{{ publication.id }}" data-href="{{ path('singz_social_bundle_publication_resingz', {'id': publication.id}) }}">
             <i class="fa fa-retweet fa-fw" aria-hidden="true"></i>
     	    <span class="has-resingz">
     	        {{ (hasResingz == true)? 'Annuler' : 'Resingzer' }}
     	    </span>
-        </a>
+        </button>
      {% endif %}
 {% else %}
 	<a href="{{ path('fos_user_security_login') }}">Se connecter</a>
