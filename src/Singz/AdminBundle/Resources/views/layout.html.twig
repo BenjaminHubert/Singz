@@ -17,6 +17,8 @@
         <link href="{{ asset('bundles/singzadmin/css/sb-admin-2.min.css') }}" rel="stylesheet">
         <!-- Custom Fonts -->
         <link href="{{ asset('bundles/singzadmin/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css">
+        <!-- Morris graphs -->
+        <link href="{{ asset('bundles/singzadmin/css/morris.css') }}" rel="stylesheet" type="text/css">
         <style>
             .sidebar .arrow {
                 content: "\f105";
@@ -36,6 +38,12 @@
             <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
             <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
         <![endif]-->
+
+        <!-- jQuery -->
+        <script src="{{ asset('bundles/singzadmin/js/jquery.min.js') }}"></script>
+        <!-- Charts -->
+        <script src="{{ asset('bundles/singzadmin/js/raphael.min.js') }}"></script>
+        <script src="{{ asset('bundles/singzadmin/js/morris.min.js') }}"></script>
     </head>
     <body>
         <div id="wrapper">
@@ -71,16 +79,14 @@
     
         </div>
         <!-- /#wrapper -->
-    
-        <!-- jQuery -->
-        <script src="{{ asset('bundles/singzadmin/js/jquery.min.js') }}"></script>
+
         <!-- Bootstrap Core JavaScript -->
         <script src="{{ asset('bundles/singzcore/bootstrap-3.3.7/js/bootstrap.min.js') }}"></script>
         <!-- Metis Menu Plugin JavaScript -->
         <script src="{{ asset('bundles/singzadmin/js/metisMenu.min.js') }}"></script>
         <!-- Custom Theme JavaScript -->
         <script src="{{ asset('bundles/singzadmin/js/sb-admin-2.min.js') }}"></script>
-        
+
         {% block javascripts %}{% endblock %}
     </body>
 </html>

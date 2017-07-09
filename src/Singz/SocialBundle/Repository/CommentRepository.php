@@ -26,4 +26,13 @@ class CommentRepository extends \Doctrine\ORM\EntityRepository
 			->getResult()
 		;
 	}
+
+    public function getLastWeekComments($lastweek){
+        return $this->createQueryBuilder('c')
+            ->where('c.createdAt > :lastweek')
+            ->setParameter('lastweek', $lastweek)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 }

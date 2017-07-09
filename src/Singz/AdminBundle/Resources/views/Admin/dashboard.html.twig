@@ -3,5 +3,245 @@
 
 
 {% block title_page %}
-Dashboard
+    Dashboard
+{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-lg-6 col-md-6">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-3">
+                            <i class="fa fa-users fa-5x"></i>
+                        </div>
+                        <div class="col-xs-9 text-right">
+                            <div class="huge">{{ users }}</div>
+                            <div>Utilisateurs inscrits</div>
+                        </div>
+                    </div>
+                </div>
+                <a href="{{ path('singz_admin_user_list') }}">
+                    <div class="panel-footer">
+                        <span class="pull-left">Voir les détails</span>
+                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                        <div class="clearfix"></div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6">
+            <div class="panel panel-yellow">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-3">
+                            <i class="fa fa-star fa-5x"></i>
+                        </div>
+                        <div class="col-xs-9 text-right">
+                            <div class="huge">{{ starz }}</div>
+                            <div>Starz</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6">
+            <div class="panel panel-green">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-3">
+                            <i class="fa fa-user fa-5x"></i>
+                        </div>
+                        <div class="col-xs-9 text-right">
+                            <div class="huge">{{ singzers }}</div>
+                            <div>Singzers</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-3 col-md-6">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-3">
+                            <i class="fa fa-video-camera fa-5x"></i>
+                        </div>
+                        <div class="col-xs-9 text-right">
+                            <div class="huge">{{ publications }}</div>
+                            <div>Publications</div>
+                        </div>
+                    </div>
+                </div>
+                <a href="{{ path('singz_admin_publication_list') }}">
+                    <div class="panel-footer">
+                        <span class="pull-left">Voir les détails</span>
+                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                        <div class="clearfix"></div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6">
+            <div class="panel panel-green">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-3">
+                            <i class="fa fa-comments fa-5x"></i>
+                        </div>
+                        <div class="col-xs-9 text-right">
+                            <div class="huge">{{ comments }}</div>
+                            <div>Commentaires postés</div>
+                        </div>
+                    </div>
+                </div>
+                <a href="{{ path('singz_admin_comment_list') }}">
+                    <div class="panel-footer">
+                        <span class="pull-left">Voir les détails</span>
+                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                        <div class="clearfix"></div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6">
+            <div class="panel panel-yellow">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-3">
+                            <i class="fa fa-retweet fa-5x"></i>
+                        </div>
+                        <div class="col-xs-9 text-right">
+                            <div class="huge">{{ resingz }}</div>
+                            <div>Resingz</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6">
+            <div class="panel panel-red">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-3">
+                            <i class="fa fa-heart fa-5x"></i>
+                        </div>
+                        <div class="col-xs-9 text-right">
+                            <div class="huge">{{ loves }}</div>
+                            <div>Loves lachés</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-6 col-md-6">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-3">
+                            <i class="fa fa-headphones fa-5x"></i>
+                        </div>
+                        <div class="col-xs-9 text-right">
+                            <div class="huge">{{ projects }}</div>
+                            <div>Projets créés</div>
+                        </div>
+                    </div>
+                </div>
+                <a href="{{ path('singz_admin_project_list') }}">
+                    <div class="panel-footer">
+                        <span class="pull-left">Voir les détails</span>
+                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                        <div class="clearfix"></div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6">
+            <div class="panel panel-yellow">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-3">
+                            <i class="fa fa-spinner fa-5x"></i>
+                        </div>
+                        <div class="col-xs-9 text-right">
+                            <div class="huge">{{ currentProjects }}</div>
+                            <div>Projets en cours</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6">
+            <div class="panel panel-green">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-3">
+                            <i class="fa fa-check fa-5x"></i>
+                        </div>
+                        <div class="col-xs-9 text-right">
+                            <div class="huge">{{ doneProjects }}</div>
+                            <div>Projets aboutis</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Interactions de la semaine passée</h3>
+                </div>
+                <div class="panel-body">
+                    <div id="myfirstchart" style="height: 250px;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        new Morris.Area({
+            // ID of the element in which to draw the chart.
+            element: 'myfirstchart',
+            // Chart data records -- each entry in this array corresponds to a point on
+            // the chart.
+            data: [
+                {% for day in dates %}
+                    {% set nb_pub, nb_com, nb_lov = 0, 0, 0 %}
+                    {% for pub in graphPub %}
+                        {% set split = pub.date.date|split(' ') %}
+                        {% if split|first == day %}
+                            {% set nb_pub = nb_pub+1 %}
+                        {% endif %}
+                    {% endfor %}
+                    {% for com in graphCom %}
+                        {% set split = com.createdAt.date|split(' ') %}
+                        {% if split|first == day %}
+                            {% set nb_com = nb_com+1 %}
+                        {% endif %}
+                    {% endfor %}
+                    {% for lov in graphLov %}
+                        {% set split = lov.date.date|split(' ') %}
+                        {% if split|first == day %}
+                            {% set nb_lov = nb_lov+1 %}
+                        {% endif %}
+                    {% endfor %}
+                    { day: '{{ day }}', pub: {{ nb_pub }}, com: {{ nb_com }}, lov: {{ nb_lov }} }{% if day != dates|last %},{% endif %}
+                {% endfor %}
+            ],
+            // The name of the data record attribute that contains x-values.
+            xkey: 'day',
+            // A list of names of data record attributes that contain y-values.
+            ykeys: ['pub', 'com', 'lov'],
+            // Labels for the ykeys -- will be displayed when you hover over the
+            // chart.
+            labels: ['Publications', 'Commentaires', 'Loves'],
+            lineColors: ['#337ab7', '#5cb85c', '#d9534f'],
+            behaveLikeLine: true
+        });
+    </script>
 {% endblock %}

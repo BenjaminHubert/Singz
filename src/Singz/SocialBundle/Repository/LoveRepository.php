@@ -10,4 +10,12 @@ namespace Singz\SocialBundle\Repository;
  */
 class LoveRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function getLastWeekLoves($lastweek){
+        return $this->createQueryBuilder('l')
+            ->where('l.date > :lastweek')
+            ->setParameter('lastweek', $lastweek)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 }
