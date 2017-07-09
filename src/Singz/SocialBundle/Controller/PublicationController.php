@@ -246,6 +246,8 @@ class PublicationController extends Controller
 		    		->createView();
 	    	}
     	}
+    	// Get publication's lovers
+        $lovers = $em->getRepository('SingzSocialBundle:Love')->getLovers($publication);
     	// Render the view
     	$html = $this->renderView('SingzSocialBundle::extra.html.twig', array(
     		'publication' => $publication,
@@ -254,7 +256,8 @@ class PublicationController extends Controller
     		'thread' => $thread,
     		'main_form' => $mainForm,
     		'forms' => $forms,
-    		'hasResingz' => $hasResingz
+    		'hasResingz' => $hasResingz,
+            'lovers' => $lovers
     	));
     	
     	return new JsonResponse(array(
