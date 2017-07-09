@@ -24,6 +24,8 @@ class AppKernel extends Kernel
         	new Dubture\FFmpegBundle\DubtureFFmpegBundle(),
         	new Lexik\Bundle\MaintenanceBundle\LexikMaintenanceBundle(),
             new Singz\PaypalBundle\SingzPaypalBundle(),
+        	new Gos\Bundle\WebSocketBundle\GosWebSocketBundle(),
+        	new Gos\Bundle\PubSubRouterBundle\GosPubSubRouterBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

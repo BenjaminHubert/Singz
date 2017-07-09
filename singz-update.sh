@@ -2,9 +2,13 @@
 
 
 composer install --no-scripts \
-     && bin/console cache:clear \
+     && rm -rf var/cache/prod/ var/cache/dev/ \
      && bin/console doctrine:schema:update --dump-sql \
      && bin/console doctrine:schema:update --force \
      && bin/console asset:install \
      && bin/console singz:setting:create \
-     && bin/console cache:clear \
+     && rm -rf var/cache/prod/ var/cache/dev/ 
+     
+rm nohup.out
+sleep 2
+nohup bin/console gos:websocket:server &

@@ -21,3 +21,6 @@ parameters:
     # Paypal credentials
     paypal_client_id: ~
     paypal_secret: ~
+    # Websocket server
+    websocket_port: ~
+    websocket_host: ~

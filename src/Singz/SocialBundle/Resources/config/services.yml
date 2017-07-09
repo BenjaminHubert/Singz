@@ -21,3 +21,10 @@ services:
         class: Singz\SocialBundle\EventListener\ReportSubscriber
         tags:
             - { name: doctrine.event_subscriber, connection: default }
+    singz.social.notification:
+        class: Singz\SocialBundle\EventListener\NotificationSubscriber
+        arguments: ["%websocket_host%", "%websocket_port%"]
+        tags:
+            - { name: doctrine.event_subscriber, connection: default }
+    singz.notifiation.topic:
+        class: Singz\SocialBundle\Topic\NotificationTopic

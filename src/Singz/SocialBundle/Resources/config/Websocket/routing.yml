@@ -1,0 +1,7 @@
+notification_topic:
+    channel: notification_topic/{user_id}
+    handler:
+        callback: 'singz.topic' #related to the getName() of your topic
+    requirements:
+        user_id:
+            pattern: '\d+'
