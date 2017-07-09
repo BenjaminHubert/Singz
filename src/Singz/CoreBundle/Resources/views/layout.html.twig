@@ -109,6 +109,7 @@
                 })
                 webSocket.on("socket/disconnect", function(error){
                     console.error("Disconnected for " + error.reason + " with code " + error.code);
+                    isConnected = false;
                 })
                 
                 function increaseNotificationNumber(){

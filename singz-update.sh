@@ -9,4 +9,6 @@ composer install --no-scripts \
      && bin/console singz:setting:create \
      && rm -rf var/cache/prod/ var/cache/dev/ 
      
-bin/console gos:websocket:server
+rm nohup.out
+sleep 2
+nohup bin/console gos:websocket:server &
