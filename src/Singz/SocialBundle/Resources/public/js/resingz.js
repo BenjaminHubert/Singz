@@ -9,6 +9,8 @@ $(function(){
 		var idPub = $btn.data('id-publication');
 		var path = $btn.data('href');
 		var isResingz = $btn.hasClass('isResingz');
+		// Set the opacity lower
+		$btn.css('opacity', '0.5');
 		// Add rotation to the icon
 		$btn.find('i.fa').addClass('fa-spin');
 	    // Update the database
@@ -38,6 +40,9 @@ $(function(){
 	    	$btn.toggleClass('isResingz'); 
 	    }).fail(function(jqXHR, textStatus, errorThrown){
 	        toastr.error('Erreur lors du resingzage :(');
+	    }).always(function(){
+			// Set the opacity higher
+	        $btn.css('opacity', '1');
 	    });
 	});
 })

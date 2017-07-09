@@ -1,7 +1,40 @@
-.btn-resingz{
+/*
+*	Resingz
+*/
+.modal-publication .btn-resingz {
+	background: #c94e50;
+	border-radius: 3px;
+	box-shadow: 0 10px 20px -8px #c94e50;
+	padding: 7px 15px;
+	font-size: 18px;
 	cursor: pointer;
-	color: inherit;
+	border: none;
+	outline: none;
+	color: #ffffff;
+	text-decoration: none;
+	-webkit-transition: 0.3s ease;
+	transition: 0.3s ease;
 }
-.btn-resingz.isResingz{
-	color: #c94e50;
+.modal-publication .btn-resingz i{
+	display: none;
+}
+.modal-publication .btn-resingz.isResingz i{
+	display: inline-block;
+}
+.modal-publication .btn-resingz:hover {
+	transform: translateY(-3px);
+}
+.modal-publication .animate-like {
+	animation-name: likeAnimation;
+	animation-iteration-count: 1;
+	animation-fill-mode: forwards;
+	animation-duration: 0.65s;
+}
+@keyframes likeAnimation {
+	0% {
+		transform: scale(30);
+	}
+	100% {
+		transform: scale(1);
+	}
 }
