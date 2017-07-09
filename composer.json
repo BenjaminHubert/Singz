@@ -29,7 +29,8 @@
         "jasny/twig-extensions": "^1.0",
         "beberlei/DoctrineExtensions": "^1.0",
         "paypal/rest-api-sdk-php": "^1.11",
-        "gos/web-socket-bundle": "^1.8"
+        "gos/web-socket-bundle": "^1.8",
+        "gos/websocket-client": "^0.1.2"
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",

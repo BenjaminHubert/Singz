@@ -68,7 +68,49 @@
     	<script src="{{ asset('bundles/singzcore/nprogress-0.2.0/js/nprogress.js') }}"></script>
 		{# Toasts #}
 		<script src="{{ asset('bundles/singzcore/toastr-2.1.3/js/toastr.min.js') }}"></script>
-
+		<script>
+			toastr.options = {
+				  "closeButton": true,
+				  "debug": false,
+				  "newestOnTop": true,
+				  "progressBar": true,
+				  "positionClass": "toast-bottom-right",
+				  "preventDuplicates": false,
+				  "onclick": null,
+				  "showDuration": "300",
+				  "hideDuration": "1000",
+				  "timeOut": "5000",
+				  "extendedTimeOut": "1000",
+				  "showEasing": "swing",
+				  "hideEasing": "linear",
+				  "showMethod": "fadeIn",
+				  "hideMethod": "fadeOut"
+				}
+		</script>
+		{# WebSocketBundle #}
+		{% if app.user %}
+    		<script src="{{ asset('bundles/goswebsocket/js/vendor/autobahn.min.js') }}"></script>
+    		<script src="{{ asset('bundles/goswebsocket/js/gos_web_socket_client.js') }}"></script>
+    		<script type="text/javascript">
+                var _WS_URI = "ws://{{ gos_web_socket_server_host }}:{{ gos_web_socket_server_port }}";
+                var currentUserId = "{{ app.user.id }}";
+                var webSocket  = WS.connect(_WS_URI);
+                var isConnected = false;
+                webSocket.on("socket/connect", function(session){
+                    console.info("Successfully Connected!");
+                    session.subscribe('notification_topic/'+currentUserId, function(uri, data){
+                        if(isConnected == false){
+							isConnected = true;
+							return;
+                        }
+                        toastr.info(data.msg);
+                    });
+                })
+                webSocket.on("socket/disconnect", function(error){
+                    console.error("Disconnected for " + error.reason + " with code " + error.code);
+                })
+            </script>
+		{% endif %}
 		<script>
     		$(function () {
 				$('[data-toggle="tooltip"]').tooltip();

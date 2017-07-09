@@ -119,7 +119,7 @@ lexik_maintenance:
 
          # File driver
         class: '\Lexik\Bundle\MaintenanceBundle\Drivers\FileDriver'                # class for file driver
-        options: {file_path: %kernel.root_dir%/../var/cache/lock}                         # file_path is the complete path for create the file
+        options: {file_path: '%kernel.root_dir%/../var/cache/lock'}                         # file_path is the complete path for create the file
 
          # Shared memory driver
         class: '\Lexik\Bundle\MaintenanceBundle\Drivers\ShmDriver'                 # class for shared memory driver
@@ -151,3 +151,9 @@ gos_web_socket:
     server:
         port: "%websocket_port%"   #The port the socket server will listen on
         host: "%websocket_host%"   #The host ip to bind to
+        router:
+            resources:
+                - '@SingzSocialBundle/Resources/config/Websocket/routing.yml'
+    topics:
+        - '@singz.notifiation.topic'
+    
