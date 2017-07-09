@@ -141,7 +141,16 @@ class PublicationRepository extends \Doctrine\ORM\EntityRepository
             ->leftJoin('p.user', 'u')->addSelect('u')
             ->orderBy('p.date', 'DESC')
             ->getQuery()
-            ->getResult();
+            ->getResult()
+        ;
+    }
+
+    public function getLastWeekPublications($lastweek){
+        return $this->createQueryBuilder('p')
+            ->where('p.date > :lastweek')
+            ->setParameter('lastweek', $lastweek)
+            ->getQuery()
+            ->getResult()
         ;
     }
 }

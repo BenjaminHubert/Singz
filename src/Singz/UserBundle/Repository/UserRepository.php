@@ -52,4 +52,6 @@ class UserRepository extends \Doctrine\ORM\EntityRepository
 			->getOneOrNullResult()
 		;
 	}
+
+
 }
