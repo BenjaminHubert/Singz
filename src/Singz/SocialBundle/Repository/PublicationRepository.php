@@ -24,24 +24,6 @@ class PublicationRepository extends \Doctrine\ORM\EntityRepository
             ->getOneOrNullResult();
     }
     
-    public function getPublicationByHashtag($user, $tag) {
-        return $this->createQueryBuilder('p')
-            ->leftJoin('p.user', 'u')->addSelect('u')
-            ->leftJoin('p.owner', 'o')->addSelect('o')
-            ->leftJoin('u.leaders', 'leaders')->addSelect('leaders')
-            ->where('REGEXP(p.description, :regexp) = true')
-            ->setParameter('regexp', '#'.$tag.'\b')
-            ->andWhere('leaders.follower = :follower AND leaders.isPending = :pending')
-            ->setParameter('follower', $user)
-            ->setParameter('pending', false)
-            ->andWhere('p.state = :state')->setParameter('state', Publication::STATE_VISIBLE)
-            ->andWhere('u.enabled = :isEnabled')->setParameter('isEnabled', true)
-            ->andWhere('o.enabled = :isEnabled')->setParameter('isEnabled', true)
-            ->orderBy('p.date', 'DESC')
-            ->getQuery()
-            ->getResult();
-    }
-    
     public function getResingz($video) {
         return $this->createQueryBuilder('p')
             ->innerJoin('p.user', 'u')->addSelect('u')
@@ -56,7 +38,7 @@ class PublicationRepository extends \Doctrine\ORM\EntityRepository
             ->getResult();
     }
     
-	public function getPublications($user, $filter = 'all', $offset = 0, $limit = 0, $userId = null){
+	public function getPublications($user, $filter = 'all', $offset = 0, $limit = 0, $userId = null, $hashtag = null){
 		$queryBuilder = $this->createQueryBuilder('p')
 			// only enabled users
 			->leftJoin('p.user', 'user', 'WITH', 'user.enabled = :userIsEnabled')
@@ -129,6 +111,13 @@ class PublicationRepository extends \Doctrine\ORM\EntityRepository
 			$queryBuilder
 				->andWhere('user.id = :userId')
 					->setParameter('userId', $userId)
+			;
+		}
+		if($hashtag != null){
+			$queryBuilder
+				->andWhere('REGEXP(p.description, :regexp) = true')
+					->setParameter('regexp', '#'.$hashtag.'\b')
+            	->orderBy('p.date', 'DESC')
 			;
 		}
 		
