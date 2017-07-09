@@ -38,7 +38,7 @@
             </div>
             {# Description #}
             <div class="card-text">
-                {{ publication.description }}
+                {{ publication.description|preg_replace('/#+([a-zA-Z0-9]+)/', '<a href="'~path('singz_hashtagz')~'?k=$1">$0</a>')|raw }}
             </div>
         </div>
         <div class="card-footer">
