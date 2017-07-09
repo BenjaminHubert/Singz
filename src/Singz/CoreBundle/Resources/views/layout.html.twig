@@ -104,11 +104,21 @@
 							return;
                         }
                         toastr.info(data.msg);
+                        increaseNotificationNumber();
                     });
                 })
                 webSocket.on("socket/disconnect", function(error){
                     console.error("Disconnected for " + error.reason + " with code " + error.code);
                 })
+                
+                function increaseNotificationNumber(){
+					var currentNb = $('nav.cd-nav .notification-link .badge').html();
+					if(currentNb == undefined){
+						$('nav.cd-nav .notification-link').append('<span class="badge badge-notify">1</span>');
+					}else{
+						$('nav.cd-nav .notification-link .badge').text(++currentNb);
+					}
+                }
             </script>
 		{% endif %}
 		<script>
