@@ -18,4 +18,13 @@ class LoveRepository extends \Doctrine\ORM\EntityRepository
             ->getResult()
         ;
     }
+
+    public function getLovers($publication){
+        return $this->createQueryBuilder('l')
+            ->where('l.publication = :publication')
+            ->setParameter('publication', $publication)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 }

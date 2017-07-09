@@ -49,11 +49,23 @@
         <p>{{ publication.date|time_diff }}</p>
         {# Number of love & comments #}
         <p>
-            <i class="fa fa-fw fa-heart" aria-hidden="true"></i> <span id="nbloves-{{ publication.id }}">{{ publication.numLoves }}</span>
+            <a data-toggle="collapse" {% if lovers|length != 0 %}href="#collapseLovers"{% endif %} aria-expanded="false" aria-controls="collapseLovers">
+                <i class="fa fa-fw fa-heart" aria-hidden="true"></i> <span id="nbloves-{{ publication.id }}">{{ publication.numLoves }}</span>
+            </a>
             <i class="fa fa-fw fa-comments" aria-hidden="true"></i> <span class="nbcomments-{{ publication.id }}" id="nbcomments-{{ publication.id }}">{{ publication.thread.numComments }}</span>
             <span {% if resingz|length == 0 %} style="display: none" {% endif %}>
                 <i class="fa fa-fw fa-retweet" aria-hidden="true"></i> <span class="nbresingz-{{ publication.id }}" id="nbresingz-{{ publication.id }}">{{ resingz|length }}</span>
             </span>
+            <div class="collapse" id="collapseLovers">
+                <div class="well">
+                    {% set iterator = 0 %}
+                    {% for lover in lovers %}
+                        {% set iterator = iterator+1 %}
+                        <a href="{{ path('singz_user_bundle_homepage', {'username':lover.user.username}) }}">{{ lover.user.username }}</a>{% if iterator == lovers|length -1 %} et {% elseif iterator != lovers|length %}, {% endif %}
+                    {% endfor %}
+                    love{% if lovers|length >1 %}nt{% endif %} cette publication.
+                </div>
+            </div>
         </p>
     </div>
 </div>
