@@ -58,3 +58,6 @@
 #MAC hidden files
 .DS_Store
 */.DS_Store
+
+#Websocket processus
+nohup.out

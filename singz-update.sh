@@ -7,4 +7,9 @@ composer install --no-scripts \
      && bin/console doctrine:schema:update --force \
      && bin/console asset:install \
      && bin/console singz:setting:create \
-     && rm -rf var/cache/prod/ var/cache/dev/ \
+     && rm -rf var/cache/prod/ var/cache/dev/  
+
+rm nohup.out > /dev/null 2>&1
+nohup bin/console gos:websocket:server &
+sleep 2
+cat nohup.out

@@ -145,3 +145,9 @@ lexik_maintenance:
 singz_paypal:
     paypal_client_id: "%paypal_client_id%"
     paypal_secret: "%paypal_secret%"       
+
+# Websocket bundle
+gos_web_socket:
+    server:
+        port: "%websocket_port%"   #The port the socket server will listen on
+        host: "%websocket_host%"   #The host ip to bind to
