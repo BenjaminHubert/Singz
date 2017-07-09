@@ -2,6 +2,7 @@
 
 namespace Singz\AdminBundle\Controller;
 
+use Faker\Provider\ka_GE\DateTime;
 use Singz\CoreBundle\Entity\Project;
 use Singz\SocialBundle\Entity\Publication;
 use Singz\UserBundle\Entity\User;
@@ -50,6 +51,20 @@ class AdminController extends Controller
         }
         $users = count($users);
 
+        // Get last week's publications, comments and loves
+        $lastweek = new \DateTime('-1 week');
+        $graphPub = $em->getRepository('SingzSocialBundle:Publication')->getLastWeekPublications($lastweek);
+        $graphCom = $em->getRepository('SingzSocialBundle:Comment')->getLastWeekComments($lastweek);
+        $graphLov = $em->getRepository('SingzSocialBundle:Love')->getLastWeekLoves($lastweek);
+
+        // Get last week's days
+        $dates = [];
+        $now = new \DateTime( 'now' );
+        $interval = \DateInterval::createFromDateString('1 day');
+        $period = new \DatePeriod($lastweek, $interval, $now);
+        foreach ($period as $dt)
+            $dates[] = $dt->format("Y-m-d");
+
         return $this->render('SingzAdminBundle:Admin:dashboard.html.twig', array(
             'publications' => $publications,
             'resingz' => $resingz,
@@ -60,7 +75,11 @@ class AdminController extends Controller
             'doneProjects' => $doneProjects,
             'users' => $users,
             'starz' => $starz,
-            'singzers' =>$singzers
+            'singzers' =>$singzers,
+            'graphPub' => $graphPub,
+            'graphCom' => $graphCom,
+            'graphLov' => $graphLov,
+            'dates' => $dates
         ));
     }
 
