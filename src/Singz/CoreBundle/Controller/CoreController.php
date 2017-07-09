@@ -79,8 +79,6 @@ class CoreController extends Controller
         $em = $this->getDoctrine()->getManager();
         $publications = $em->getRepository('SingzSocialBundle:Publication')->getPublicationByHashtag($user, $hashtag);
         $projects = $em->getRepository('SingzCoreBundle:Project')->getProjectByHashtag($hashtag);
-        dump($projects);
-        dump($publications);
         return $this->render('SingzCoreBundle:Core:hashtag.html.twig', array(
             "publications" => $publications,
             "projects" => $projects,
