@@ -1,0 +1,15 @@
+{% for project in projects %}
+<div>
+    <h3>
+        <a href="{{ path('singz_core_bundle_project_show', {'id': project.id}) }}" style="display:inline">
+            {{ project.name }}
+        </a>
+        par
+        <a href="{{ path('singz_user_bundle_homepage', {'username': project.requester.username}) }}" style="display:inline">
+            {{ project.requester.username }}
+        </a>
+    </h3>
+    Projet financé à {{ project.amountReachedPercentage }}%<br>
+    {{ project.description }}
+</div>
+{% endfor %}

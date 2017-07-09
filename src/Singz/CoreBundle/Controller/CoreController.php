@@ -5,7 +5,6 @@ namespace Singz\CoreBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Singz\SocialBundle\Entity\Publication;
 
 class CoreController extends Controller
 {
@@ -40,18 +39,16 @@ class CoreController extends Controller
     }
 
     public function hashtagzAction(Request $request) {
-        $user = $this->getUser();
         $hashtag = $request->get('k');
         if($hashtag == null) {
             throw $this->createNotFoundException();
         }
 
         $em = $this->getDoctrine()->getManager();
-        $publications = $em->getRepository('SingzSocialBundle:Publication')->getPublicationByHashtag($user, $hashtag);
-        dump($publications);
+        $projects = $em->getRepository('SingzCoreBundle:Project')->getProjectByHashtag($hashtag);
         return $this->render('SingzCoreBundle:Core:hashtag.html.twig', array(
-            "publications" => $publications,
-            "hashtag" => $hashtag
+            'projects' => $projects,
+            'hashtag' => $hashtag
         ));
     }
 }
