@@ -20,6 +20,17 @@
             border-color: #f5f5f5;
             color: inherit;
         }
+        .no-notifications{
+        	text-align: center;
+    	    padding: 50px;
+        }
+        .no-notifications i{
+            font-size: 6em;
+        }
+        .no-notifications p{
+    	    font-size: 120%;
+    		font-weight: bold;
+        }
 	 </style>
 {% endblock %}
 {% block body %}
@@ -50,6 +61,7 @@
                     {% endset %}
                 {% endif %}
                 {% if notification.publication is null and notification.project is null %}
+					{% set isFollow = true %}
                     {% set href %}
                         {{ path('singz_user_bundle_homepage', {'username':notification.userFrom.username}) }}
                     {% endset %}
@@ -61,7 +73,26 @@
                         </div>
                         <div class="media-body">
                             <p class="message">{{ notification.message|raw }}</p>
+							<p>
+								{# If it's a pending follow, display buttons #}
+								{% if isFollow is defined and isFollow and pending_followers is not empty %}
+									{% for follow in pending_followers %}
+										{% if follow.follower == notification.userFrom %}
+											{# Accept follow #}
+											<a href="{{ path('singz_social_bundle_follow_pending', {'status':'accept', 'id':follow.id}) }}">
+												<button class="btn btn-xs btn-success">Accepter</button>
+											</a>
+											{# Deny follow #}
+											<a href="{{ path('singz_social_bundle_follow_pending', {'status':'deny', 'id':follow.id}) }}">
+												<button class="btn btn-xs btn-danger">Refuser</button>
+											</a>
+											{% set isFollow = false %}
+										{% endif %}
+									{% endfor %}
+								{% endif %}
+							</p>
                             <small>
+								{# Date and details #}
                                 {{ notification.date|time_diff }}
                                 {% if notification.isRead == false %} 
                                 	<span>&#8226; Non lu</span>
@@ -72,7 +103,10 @@
     			</a>
 			</div>
 		{% else %}
-			Aucune notification
+			<div class="no-notifications">
+            	<p><i class="fa fa-wpexplorer" aria-hidden="true"></i></p>
+        		<p>Aucune notification</p>
+            </div>
 		{% endfor %}
 	</div>
 {% endblock %}

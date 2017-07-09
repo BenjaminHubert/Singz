@@ -7,8 +7,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Singz\SocialBundle\Entity\Publication;
-use Singz\CoreBundle\Entity\Project;
 
 class DefaultController extends Controller
 {
@@ -17,39 +15,21 @@ class DefaultController extends Controller
     	//Get entity manager
         $em = $this->getDoctrine()->getManager();
 		//Get the requested user
-        $userManager = $this->get('fos_user.user_manager');
-        $user = $userManager->findUserBy(array(
-        	'username' => $username,
-        	'enabled' => true
-        ));
+        $user = $em->getRepository('SingzUserBundle:User')->getUser($username, true);
         if(!$user){
         	throw $this->createNotFoundException('Utilisateur non trouvé');
         }
-		//Get user's publications
-        $publications = $em->getRepository('SingzSocialBundle:Publication')->findBy(array(
-        	'user' => $user,
-        	'state' => Publication::STATE_VISIBLE,
-        ));
-        //Get user's project
-        $project = $em->getRepository('SingzCoreBundle:Project')->findOneBy(array(
-        	'requester' => $user,
-        	'state' => Project::STATE_VISIBLE
-        ));
 		//Get user's followers
-        $followers = $em->getRepository('SingzSocialBundle:Follow')->findBy(array(
-        	'follower' => $user,
-        ));
+        $followers = $em->getRepository('SingzSocialBundle:Follow')->getFollowers($user);
+        $pending = $em->getRepository('SingzSocialBundle:Follow')->getPendingFollowers($user);
 		//Get user's leaders
-        $leaders = $em->getRepository('SingzSocialBundle:Follow')->findBy(array(
-        	'leader' => $user,
-        ));
+        $leaders = $em->getRepository('SingzSocialBundle:Follow')->getSubscriptions($user);
 		//Display view
         return $this->render('SingzUserBundle:Default:index.html.twig', array(
-			'publications' => $publications,
             'user' => $user,
             'followers' => $followers,
+            'pending' => $pending,
             'leaders' => $leaders,
-        	'project' => $project
         ));
     }
 

@@ -4,15 +4,35 @@
     {{ publication.user.username ~' - '~ parent() }}
 {% endblock %}
 
+{% block stylesheets %}
+    {# Publication purpose #}
+    <link rel="stylesheet" href="{{ asset('bundles/singzvideo/css/plyr.min.css') }}">
+	<link rel="stylesheet" href="{{ asset('bundles/singzsocial/css/publication.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/singzsocial/css/comments.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/singzsocial/css/resingz.css') }}">
+{% endblock %}
+
 {% block body %}
-    {% include 'SingzSocialBundle::publication.html.twig' with {
-        'publication': publication
-    } %}
+    {# Publication purpose #}
+	<div class="publications row">
+        {% include 'SingzSocialBundle:Publication:publication.html.twig' with {
+            'publication': publication
+        } %}
+	</div>
 {% endblock %}
 {% block end_javascripts %}
-	<script>
-		$(document).ready(function(){
-			$('#sz_video_003_4_col').modal('show')
+    {# Publication purpose #}
+    <script src="{{ asset('bundles/singzvideo/js/plyr.min.js') }}"></script>
+    <script src="{{ asset('bundles/singzsocial/js/getPublications.js') }}"></script>
+    <script src="{{ asset('bundles/singzsocial/js/script.js') }}"></script>
+    <script src="{{ asset('bundles/singzsocial/js/comment.js') }}"></script>
+    <script src="{{ asset('bundles/singzsocial/js/resingz.js') }}"></script>
+    <script>
+		var path = '{{ path('singz_social_bundle_publication_love') }}';
+		$(function(){
+			// Create video player
+			plyr.setup();
+			$('.modal').modal('show')
 		});
-	</script>
+    </script>
 {% endblock %}

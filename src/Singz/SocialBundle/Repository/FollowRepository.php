@@ -10,4 +10,33 @@ namespace Singz\SocialBundle\Repository;
  */
 class FollowRepository extends \Doctrine\ORM\EntityRepository
 {
+    // Gets an user's followers
+    public function getFollowers($user){
+        return $this->createQueryBuilder('f')
+            ->where('f.leader = :leader AND f.isPending = :pending')
+            ->setParameter('leader', $user)
+            ->setParameter('pending', false)
+            ->getQuery()
+            ->getResult();
+    }
+
+    // Gets an user's subscriptions
+    public function getSubscriptions($user){
+        return $this->createQueryBuilder('f')
+            ->where('f.follower = :follower AND f.isPending = :pending')
+            ->setParameter('follower', $user)
+            ->setParameter('pending', false)
+            ->getQuery()
+            ->getResult();
+    }
+
+    // Gets an user's pending followers
+    public function getPendingFollowers($user){
+        return $this->createQueryBuilder('f')
+            ->where('f.leader = :leader AND f.isPending = :pending')
+            ->setParameter('leader', $user)
+            ->setParameter('pending', true)
+            ->getQuery()
+            ->getResult();
+    }
 }

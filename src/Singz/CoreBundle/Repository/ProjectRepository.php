@@ -2,6 +2,7 @@
 
 namespace Singz\CoreBundle\Repository;
 use Singz\CoreBundle\Entity\Project;
+
 /**
  * ProjectRepository
  *
@@ -16,6 +17,30 @@ class ProjectRepository extends \Doctrine\ORM\EntityRepository
             ->andWhere('p.state = :state')
             ->setParameter('state', Project::STATE_VISIBLE)
             ->orderBy('p.amountReached', 'DESC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+    
+	public function getProject($id){
+		return $this->createQueryBuilder('p')
+			// contributions
+			->leftJoin('p.contributions', 'c', 'WITH', 'c.isValidated = :contributionValidated')
+				->addSelect('c')
+				->setParameter('contributionValidated', true)
+			// id project
+			->andWhere('p.id = :id')
+				->setParameter('id', $id)
+		
+			->getQuery()
+			->getOneOrNullResult()
+		;
+	}
+
+    public function findAllProjectsInfo(){
+        return $this->createQueryBuilder('p')
+            ->leftJoin('p.requester', 'r')->addSelect('r')
+            ->orderBy('p.createdAt', 'DESC')
             ->getQuery()
             ->getResult();
     }

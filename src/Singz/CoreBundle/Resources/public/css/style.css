@@ -5,9 +5,15 @@
    top: -10px;
    left: -15px;
 }
-/* RESPONSIVE VIDEO */
-.modal .item.active video{
-    height: 29em;
-    display: block;
-    margin: 0 auto;
+
+/* override NProgress */
+#nprogress .bar {
+	background: #d94f5c
+}
+#nprogress .peg {
+	box-shadow: 0 0 10px #d94f5c, 0 0 5px #d94f5c;
+}
+#nprogress .spinner-icon {
+	border-top-color: #d94f5c;
+  	border-left-color: #d94f5c;
 }

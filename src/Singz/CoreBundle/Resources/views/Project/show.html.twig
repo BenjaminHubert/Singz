@@ -4,6 +4,48 @@
     "{{ project.name }}" de {{ project.requester.username }} - {{ parent() }}
 {% endblock %}
 
+{% block stylesheets %}
+	<style>
+        .btn-crowdfunding {
+          -webkit-box-flex: 1;
+              -ms-flex: 1 1 auto;
+                  flex: 1 1 auto;
+          margin: 10px;
+          padding: 20px;
+          border: 2px solid #f7f7f7;
+          text-align: center;
+          text-transform: uppercase;
+          position: relative;
+          overflow: hidden;
+          -webkit-transition: .3s;
+          transition: .3s;
+          color: #f7f7f7;
+        }
+        .btn-crowdfunding:after {
+          position: absolute;
+          -webkit-transition: .3s;
+          transition: .3s;
+          content: '';
+          width: 0;
+          bottom: 0;
+          background: #f7f7f7;
+          height: 120%;
+          left: -10%;
+          -webkit-transform: skewX(15deg);
+          transform: skewX(15deg);
+          z-index: -1;
+        }
+        .btn-crowdfunding:hover {
+          cursor: pointer;
+          color: #c94e50;
+        }
+        .btn-crowdfunding:hover:after {
+          left: -10%;
+          width: 120%;
+        }    
+	</style>
+{% endblock %}
+
 {% block body %}
 	<div class="row">
 		{# Options #}
@@ -52,6 +94,30 @@
 		<div class="col-xs-12 col-sm-6" style="text-align:center">
 			<i class="fa fa-clock-o fa-fw fa-lg" aria-hidden="true"></i> {{ project.createdAt|localizeddate('full', 'none', locale) }}
 		</div>
+		{# Crowdfunding button #}
+		{% if app.user is not null and (project.state is constant('STATE_VISIBLE', project) or project.state is constant('STATE_DONE', project)) %}
+    		<div class="col-xs-8 col-xs-offset-2 col-sm-4 col-sm-offset-4">
+    			<a href="#" class="show-contribution-form">
+                    <div class="btn-crowdfunding">
+        				Participer au projet
+        			</div>
+        		</a>
+    		</div>
+    		{# Crowdfunding form #}
+        	<div class="col-xs-8 col-xs-offset-2 col-sm-4 col-sm-offset-4 contribution-form" style="display:none">
+                {% include 'SingzCoreBundle:Project:contribution-form.html.twig' with {'form': form} %}
+        	</div>
+    	{% endif %}
+    	{# Login button #}
+		{% if app.user is null and (project.state is constant('STATE_VISIBLE', project) or project.state is constant('STATE_DONE', project)) %}
+    		<div class="col-xs-8 col-xs-offset-2 col-sm-4 col-sm-offset-4">
+    			<a href="{{ path('fos_user_security_login') }}">
+                    <div class="btn-crowdfunding">
+        				Participer au projet
+        			</div>
+        		</a>
+    		</div>
+    	{% endif %}
 		{# Description #}
 		<div class="col-xs-12">
 			<hr>
@@ -64,6 +130,37 @@
                 	{{ project.amountReachedPercentage }}%
               	</div>
             </div>
+		</div>
+		{# Contributions #}
+		<div class="col-xs-12">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h2 class="panel-title">Personnes ayant contribué au projet</h2>
+				</div>
+    			<div class="panel-body">
+        			{% for contribution in project.contributions %}
+            			<div class="media">
+                            <div class="media-left">
+                                <a href="{{ path('singz_user_bundle_homepage', {'username': contribution.contributer.username}) }}">
+                                	<img width="50px" class="media-object" src="{{ asset(contribution.contributer.image.getRealPath) }}" alt="{{ contribution.contributer.username }}">
+                                </a>
+                            </div>
+                            <div class="media-body">
+                            	<h5 class="media-heading">
+                            	    <a href="{{ path('singz_user_bundle_homepage', {'username': contribution.contributer.username}) }}">
+                            	        {{ contribution.contributer.username }}
+                            	    </a>
+                            	    <small>{{ contribution.createdAt|default("now"|date("Y-m-d H:i:s"))|time_diff }}</small></h5>
+            					{% if contribution.isPrivate == false %}
+            						<p>{{ contribution.amount }} €</p>
+            					{% endif %}
+                            </div>
+                        </div>
+                    {% else %}
+                    	<p style="font-style: italic">Aucune contribution</p>
+        			{% endfor %}
+        		</div>
+    		</div>
 		</div>
 	</div>
 {% endblock %}
@@ -78,6 +175,16 @@
 				}
 				return false;
         	});
+        	// Display contribution form
+        	$('a.show-contribution-form').click(function(e){
+				e.preventDefault();
+				// hide the button
+				$(this).fadeOut('fast', function(){
+					// show form
+					$('.contribution-form').fadeIn('slow');
+				});
+				
+            });
     	});
 	</script>
 {% endblock %}

@@ -19,12 +19,14 @@
             <link href="{{ asset('bundles/singzcore/font-awesome-4.7.0/css/font-awesome.min.css') }}" rel="stylesheet">
         	{# Bootstrap #}
             <link rel="stylesheet" href="{{ asset('bundles/singzcore/bootstrap-3.3.7/css/bootstrap.min.css') }}">
-            {# Responsive Bootstrap Portfolio And Lightbox Main Style Sheet #}
-            <link href="{{ asset('bundles/singzcore/lightbox/css/sz_video_003.css') }}" rel="stylesheet">
             {# Navigation style #}
             <link href="{{ asset('bundles/singzcore/css/mega-site-navigation.css') }}" rel="stylesheet">
 			{# Toasts #}
 			<link href="{{ asset('bundles/singzcore/toastr-2.1.3/css/toastr.min.css') }}" rel="stylesheet">
+			{# Animate css #}
+			<link href="{{ asset('bundles/singzcore/animatecss-3.5.2/animate.min.css') }}" rel="stylesheet">
+			{# NProgress #}
+			<link href="{{ asset('bundles/singzcore/nprogress-0.2.0/css/nprogress.css') }}" rel="stylesheet">
             {# Others #}
             <link href="{{ asset('bundles/singzcore/css/style.css') }}" rel="stylesheet">
         {# Custom style one shot #}
@@ -62,10 +64,8 @@
     	<script src="{{ asset('bundles/singzcore/js/mega-site-navigation.js') }}"></script>
     	{# Bootstrap #}
     	<script src="{{ asset('bundles/singzcore/bootstrap-3.3.7/js/bootstrap.min.js') }}"></script>
-    	{# TouchSwipe JS file #}
-    	<script src="{{ asset('bundles/singzcore/lightbox/js/jquery.touchSwipe.js') }}"></script>
-    	{# Responsive Bootstrap Portfolio And Lightbox Main JS File #}
-    	<script src="{{ asset('bundles/singzcore/lightbox/js/sz_portfolio_lightbox.js') }}"></script>
+    	{# NProgress #}
+    	<script src="{{ asset('bundles/singzcore/nprogress-0.2.0/js/nprogress.js') }}"></script>
 		{# Toasts #}
 		<script src="{{ asset('bundles/singzcore/toastr-2.1.3/js/toastr.min.js') }}"></script>
 
@@ -78,18 +78,6 @@
 					return false;
 				});
     		})
-    		
-    		/*responsive video*/
-    		$(window).resize(function(){
-    			responsiveVideo();
-            });
-            function responsiveVideo(){
-            	var height = $(".modal .item.active .sz_video_003_slf_host").css("padding-bottom");
-        		$(".modal .item.active video").css("height", height);
-            }
-            $('.modal').on('shown.bs.modal', function (e) {
-            	responsiveVideo();
-        	})
     	</script>
         {% block end_javascripts %}{% endblock %}
     </body>

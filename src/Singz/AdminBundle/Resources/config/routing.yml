@@ -2,12 +2,18 @@
 singz_admin_admin_routing:
     resource: "@SingzAdminBundle/Resources/config/Admin/routing.yml"
     prefix:   /
-  
+### PUBLICATION CONTROLLER ###
+singz_admin_publication_routing:
+    resource: "@SingzAdminBundle/Resources/config/Publication/routing.yml"
+    prefix:   /publication/
 ### COMMENT CONTROLLER ###
 singz_admin_comment_routing:
     resource: "@SingzAdminBundle/Resources/config/Comment/routing.yml"
     prefix:   /comment/
-        
+### PROJECT CONTROLLER ###
+singz_admin_project_routing:
+    resource: "@SingzAdminBundle/Resources/config/Project/routing.yml"
+    prefix:   /project/
 ### USER CONTROLLER ###
 singz_admin_user_routing:
     resource: "@SingzAdminBundle/Resources/config/User/routing.yml"

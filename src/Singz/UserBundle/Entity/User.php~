@@ -105,6 +105,13 @@ class User extends BaseUser
      */
     private $projects;
     
+    /**
+     * @var Contribution
+     *
+     * @ORM\OneToMany(targetEntity="Singz\CoreBundle\Entity\Contribution", mappedBy="contributer")
+     */
+    private $contributions;
+    
     
     public static function getAllRoles() {
     	$oClass = new \ReflectionClass(__CLASS__);
