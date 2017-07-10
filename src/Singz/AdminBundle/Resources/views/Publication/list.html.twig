@@ -44,6 +44,19 @@
                 </td>
                 <td>
                     {% if publication.state == constant('Singz\\SocialBundle\\Entity\\Publication::STATE_VISIBLE') %}
+                        <div class="dropdown pull-right">
+                            <button style="color: black" class="btn btn-link dropdown-toggle btn-xs" type="button" id="dropdownMenuPost" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                Actions <i class="fa fa-caret-down fa-fw" aria-hidden="true"></i>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuPost">
+                                {# Delete button #}
+                                <li>
+                                    <a href="{{ path('singz_social_bundle_publication_delete', {'id': publication.id}) }}" class="confirmation-alert">
+                                        <i class="fa fa-trash-o fa-fw" aria-hidden="true"></i> Supprimer
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
                         <span class="label label-success">
     					        En ligne
                         </span>
@@ -52,10 +65,36 @@
     					        Supprimé
                         </span>
                     {% elseif publication.state == constant('Singz\\SocialBundle\\Entity\\Publication::STATE_SPAM') %}
+                        <div class="dropdown pull-right">
+                            <button style="color: black" class="btn btn-link dropdown-toggle btn-xs" type="button" id="dropdownMenuPost" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                Actions <i class="fa fa-caret-down fa-fw" aria-hidden="true"></i>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuPost">
+                                {# Delete button #}
+                                <li>
+                                    <a href="{{ path('singz_social_bundle_publication_delete', {'id': publication.id}) }}" class="confirmation-alert">
+                                        <i class="fa fa-trash-o fa-fw" aria-hidden="true"></i> Supprimer
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
                         <span class="label label-warning">
     					        Spam
                         </span>
                     {% else %}
+                        <div class="dropdown pull-right">
+                            <button style="color: black" class="btn btn-link dropdown-toggle btn-xs" type="button" id="dropdownMenuPost" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                Actions <i class="fa fa-caret-down fa-fw" aria-hidden="true"></i>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuPost">
+                                {# Delete button #}
+                                <li>
+                                    <a href="{{ path('singz_social_bundle_publication_delete', {'id': publication.id}) }}" class="confirmation-alert">
+                                        <i class="fa fa-trash-o fa-fw" aria-hidden="true"></i> Supprimer
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
                         <span class="label label-default">
     					        Etat inconnu
                         </span>
