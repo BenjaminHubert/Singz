@@ -119,8 +119,8 @@ class PublicationController extends Controller
     	$em->flush();
     	//on affiche un message
     	$this->addFlash('success', 'Publication supprimée avec succès.');
-    	// On redirige vers la page de visualisation de la publication nouvellement créée
-    	return $this->redirectToRoute('singz_feed');
+    	// On redirige vers la liste des publications
+        return $this->redirectToRoute('singz_admin_publication_list');
     }
     
     public function showAction(Request $request, $id)
