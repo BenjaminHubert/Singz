@@ -240,8 +240,8 @@
                             </ul>
                             {# Tab panes #}
                             <div class="tab-content" style="padding:10px">
-                            	{# Leaders #}
-                                <div role="tabpanel" class="tab-pane" id="leaders">
+                            	{# Followers #}
+                                <div role="tabpanel" class="tab-pane" id="followers">
         							<ul class="list-group">
             							{% for user in followers %}
                                         	<a href="{{ path('singz_user_bundle_homepage', {'username': user.follower.username}) }}" class="list-group-item">
@@ -251,8 +251,8 @@
                                         {% endfor %}
                                     </ul>
         						</div>
-                            	{# Followers #}
-                                <div role="tabpanel" class="tab-pane" id="followers">
+                            	{# Leaders #}
+                                <div role="tabpanel" class="tab-pane" id="leaders">
         							<ul class="list-group">
             							{% for user in leaders %}
                                         	<a href="{{ path('singz_user_bundle_homepage', {'username': user.leader.username}) }}" class="list-group-item">
