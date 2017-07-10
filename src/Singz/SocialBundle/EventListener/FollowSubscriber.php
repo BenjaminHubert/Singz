@@ -77,6 +77,7 @@ class FollowSubscriber implements EventSubscriber
         $oldNotif = $em->getRepository('SingzSocialBundle:Notification')->findOneBy(array('userFrom'=>$follow->getFollower(), 'userTo'=>$follow->getLeader()));
         $message = sprintf(Notification::NEW_FOLLOWER, $follow->getFollower()->getUsername());
         $oldNotif->setMessage($message);
+        $oldNotif->setIsRead(true);
         $em->persist($oldNotif);
         $em->flush($oldNotif);
         //create a notification
