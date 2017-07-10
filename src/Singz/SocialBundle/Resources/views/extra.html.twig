@@ -49,14 +49,14 @@
         <p>{{ publication.date|time_diff }}</p>
         {# Number of love & comments #}
         <p>
-            <a data-toggle="collapse" {% if lovers|length != 0 %}href="#collapseLovers"{% endif %} aria-expanded="false" aria-controls="collapseLovers">
+            <a data-toggle="collapse" {% if lovers|length != 0 %}href="#collapseLovers-{{ publication.id }}"{% endif %} aria-expanded="false" aria-controls="collapseLovers">
                 <i class="fa fa-fw fa-heart" aria-hidden="true"></i> <span id="nbloves-{{ publication.id }}">{{ publication.numLoves }}</span>
             </a>
             <i class="fa fa-fw fa-comments" aria-hidden="true"></i> <span class="nbcomments-{{ publication.id }}" id="nbcomments-{{ publication.id }}">{{ publication.thread.numComments }}</span>
             <span {% if resingz|length == 0 %} style="display: none" {% endif %}>
                 <i class="fa fa-fw fa-retweet" aria-hidden="true"></i> <span class="nbresingz-{{ publication.id }}" id="nbresingz-{{ publication.id }}">{{ resingz|length }}</span>
             </span>
-            <div class="collapse" id="collapseLovers">
+            <div class="collapse" id="collapseLovers-{{ publication.id }}">
                 <div class="well">
                     {% set iterator = 0 %}
                     {% for lover in lovers %}
