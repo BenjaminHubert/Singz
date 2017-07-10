@@ -51,4 +51,21 @@ class CoreController extends Controller
             'hashtag' => $hashtag
         ));
     }
+
+    public function searchAction(Request $request) {
+        $search = $request->get('s');
+        if($search == null) {
+            throw $this->createNotFoundException();
+        }
+
+        $em = $this->getDoctrine()->getManager();
+        $projects = $em->getRepository('SingzCoreBundle:Project')->findBySearchTerm($search);
+        $users = $em->getRepository('SingzUserBundle:User')->findBySearchTerm($search);
+
+        return $this->render('SingzCoreBundle:Core:search.html.twig', array(
+            'projects' => $projects,
+            'users' => $users,
+            'search' => $search
+        ));
+    }
 }
