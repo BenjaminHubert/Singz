@@ -10,6 +10,19 @@
 	<link rel="stylesheet" href="{{ asset('bundles/singzsocial/css/publication.css') }}">
     <link rel="stylesheet" href="{{ asset('bundles/singzsocial/css/comments.css') }}">
     <link rel="stylesheet" href="{{ asset('bundles/singzsocial/css/resingz.css') }}">
+    <style>
+    	.no-project{
+        	text-align: center;
+        	padding: 50px;
+        }
+        .no-project i{
+        	font-size: 6em;
+        }
+        .no-project p{
+        	font-size: 120%;
+        	font-weight: bold;
+        }
+    </style>
 {% endblock %}
 
 {% block body %}
@@ -40,7 +53,10 @@
                 'projects': projects
                 } %}
             {% else %}
-                Aucun projet à afficher
+                <div class="no-project">
+                  	<i class="fa fa-headphones" aria-hidden="true"></i>
+                  	<p>Aucun projet</p>
+              	</div>
             {% endif %}
         </div>
 	</div>
