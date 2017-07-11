@@ -18,8 +18,8 @@
         {
             border:2px solid #eee;
             transform:rotate(360deg);
-            -ms-transform:rotate(360deg);  
-            -webkit-transform:rotate(360deg);  
+            -ms-transform:rotate(360deg);
+            -webkit-transform:rotate(360deg);
         }
         .is-private{
         	text-align: center;
@@ -49,7 +49,7 @@
             <div class="media user-profile">
             	{# Options #}
             	{% if user == app.user %}
-                    <div class="dropdown pull-right">
+                    <div class="dropdown user-profile-dropdown">
                       	<button style="color: black" class="btn btn-default dropdown-toggle btn-xs" type="button" id="dropdownMenuProfile" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                 			Options <i class="fa fa-caret-down fa-fw" aria-hidden="true"></i>
                 		</button>
@@ -78,7 +78,7 @@
                 	</div>
                 {% endif %}
             	{# Image #}
-                <a class="pull-left" href="{{ path('singz_user_bundle_homepage', {'username':user.username}) }}">
+                <a class="" href="{{ path('singz_user_bundle_homepage', {'username':user.username}) }}">
                     <img class="media-object dp img-circle" src="{{ asset(user.image.realPath) }}" style="width: 100px;height:100px;">
                 </a>
                 <div class="media-body">
@@ -185,15 +185,13 @@
         	{# Publications #}
             {% if (user == app.user) or (user.isPrivate == false) or (user.isPrivate == true and isPending == false and following == true) %}
                 {# Publication purpose #}
-                <div class="container-fluid">
-                    <div class="publications grid" data-default-limit="{{ default_publications_to_retrieve }}" data-href="{{ path('singz_social_bundle_get_publications', { 'filter': 'user', 'userId': user.id }) }}">
+                    <div class="publications columns grid" data-default-limit="{{ default_publications_to_retrieve }}" data-href="{{ path('singz_social_bundle_get_publications', { 'filter': 'user', 'userId': user.id }) }}">
                     	<div class="grid-sizer col-sm-12 col-md-4"></div>
                     </div>
                     <div class="no-publication">
                     	<i class="fa fa-video-camera" aria-hidden="true"></i>
                     	<p>Aucune publication</p>
                     </div>
-				</div>
             {% else %}
                 <div class="is-private">
                 	<p><i class="fa fa-lock" aria-hidden="true"></i></p>
@@ -313,7 +311,7 @@
 		    {% endif %}
 		{% endif %}
 	{% endfor %}
-	
+
 	<script>
     	$(function(){
         	// List of leaders
@@ -347,7 +345,7 @@
 			// Display the first publications
             {% if (user == app.user) or (user.isPrivate == false) or (user.isPrivate == true and isPending == false and following == true) %}
 				getPublications($('.publications').data('href'), $('.publications'), undefined, offset, limit);
-    			// Display the next publications through infinite scroll				
+    			// Display the next publications through infinite scroll
                 $(window).scroll(function(){
                     if(($(window).scrollTop() + $(window).height()) == $(document).height() ) {
         				// Increase the offset

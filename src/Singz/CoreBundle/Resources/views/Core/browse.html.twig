@@ -39,15 +39,13 @@
     </section>
 
     {# Publication purpose #}
-    <div class="container-fluid">
-        <div class="publications grid" data-default-limit="{{ default_publications_to_retrieve }}" data-href="{{ path('singz_social_bundle_get_publications', app.request.attributes.get('_route_params')) }}">
-        	<div class="grid-sizer col-sm-12 col-md-4"></div>
-        </div>
-        <div class="no-publication">
-        	<i class="fa fa-video-camera" aria-hidden="true"></i>
-        	<p>Aucune publication</p>
-        </div>
-	</div>
+      <div class="publications columns grid" data-default-limit="{{ default_publications_to_retrieve }}" data-href="{{ path('singz_social_bundle_get_publications', app.request.attributes.get('_route_params')) }}">
+      	<div class="grid-sizer col-sm-12 col-md-4"></div>
+      </div>
+      <div class="no-publication">
+      	<i class="fa fa-video-camera" aria-hidden="true"></i>
+      	<p>Aucune publication</p>
+      </div>
 {% endblock %}
 
 {% block end_javascripts %}
@@ -69,7 +67,7 @@
 			var limit = $('.publications').data('default-limit');
 			// Display the first publications
 			getPublications($('.publications').data('href'), $('.publications'), undefined, offset, limit);
-			// Display the next publications through infinite scroll				
+			// Display the next publications through infinite scroll
             $(window).scroll(function(){
                 if(($(window).scrollTop() + $(window).height()) == $(document).height() ) {
     				// Increase the offset

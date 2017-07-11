@@ -155,21 +155,19 @@
 *	Modal
 */
 .modal-publication .modal-dialog{
-	position: absolute;
-	width:100%;
-	margin-top: 70px;
+  	position: absolute;
+  	width:100%;
   	padding: 0;
   	top: 0;
     bottom: 0;
+    margin: auto !important;
 }
 .modal-publication .modal-content{
     border: none;
     box-shadow: none;
   	border-radius: 0;
- 	margin: 0 2%;
- 	background-color: transparent;
- 	
- 	position: absolute;
+ 	  background-color: transparent;
+ 	  position: absolute;
     top: 0;
     bottom: 0;
     left: 0;
@@ -178,7 +176,7 @@
 .modal-publication .modal-body{
 	background-color: black;
     padding: 0px;
-    
+
     position: absolute;
     top: 0;
     bottom: 0;
@@ -186,14 +184,17 @@
     left: 0;
 }
 .modal-publication [data-dismiss="modal"]{
-	position: absolute;
+	  position: fixed;
     z-index: 2;
     opacity: 1;
-    top: 0;
-    right: 0;
+    top: -7px;
+    left: -7px;
+    border: solid 1px #e94f5b;
+    border-bottom-right-radius: 33px;
+        background: #fff;
     text-shadow: none;
-  	color: #c94e50;
-    font-size: 50px;
+  	color: #e94f5b;
+    font-size: 30px;
     padding: 10px;
 }
 
@@ -216,6 +217,9 @@
 	    overflow: initial;
 	    overflow-x: initial;
 	    height: auto;
+      padding-top: 10px;
+      padding-right: 30px;
+      padding-left: 30px;
 	}
 }
 @media (min-width: 992px) {
@@ -223,6 +227,8 @@
 	    overflow: scroll;
 	    overflow-x: hidden;
 	    height: 100%;
+      padding-top: 60px;
+      padding-right: 30px;
 	}
 }
 .modal-publication .extra-publication{
@@ -234,4 +240,61 @@
 	margin-right: auto;
 	width:30%;
 	height:100%
+}
+
+.new-publication {
+  width: 80%;
+  margin: auto;
+}
+
+.new-publication h1{
+  text-align: center;
+  font-weight: bold;
+  font-size: 20px;
+  color: #e94f5b;
+  margin-bottom: 50px;
+}
+
+.new-publication .form-group.input-button {
+  margin-top: 50px;
+  text-align: center;
+}
+
+.new-publication .form-group.input-button button {
+  width: 100%;
+}
+
+.new-publication .form-horizontal .control-label {
+  text-align: left;
+}
+
+.new-publication #singz_socialbundle_publication_video_file {
+  width: 0.1px;
+	height: 0.1px;
+	opacity: 0;
+	overflow: hidden;
+	position: absolute;
+	z-index: -1;
+}
+
+.label-file-input {
+    font-size: 1.25em;
+    font-weight: 700;
+    color: #e94f5b;
+    background-color: #fff;
+    display: inline-block;
+    border: solid 1px #e94f5b;
+    border-radius: 3px;
+    width: 100%;
+    text-align: center;
+}
+
+.label-file-input  svg {
+  fill: #e94f5b;
+}
+
+
+.new-publication #singz_socialbundle_publication_video_file:focus + .label-file-input,
+.label-file-input:hover {
+    opacity: 0.7;
 }
