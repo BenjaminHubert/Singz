@@ -989,12 +989,12 @@ Main components
 }
 @media only screen and (min-width: 1320px) {
   .cd-search {
-    height: 120px;
-    top: 80px;
+    height: 65px;
+    top: 49px;
   }
   .cd-search input {
     padding: 0 2em;
-    font-size: 3.2rem;
+    font-size: 2.2rem;
     font-weight: 300;
   }
 }
