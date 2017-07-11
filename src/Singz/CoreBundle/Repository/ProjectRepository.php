@@ -24,8 +24,8 @@ class ProjectRepository extends \Doctrine\ORM\EntityRepository
 
     public function findBySearchTerm($search){
         return $this->createQueryBuilder('p')
-            ->where('REGEXP(p.name, :regexp) = true')->setParameter('regexp', '^'.$search.'\b')
-            ->where('REGEXP(p.description, :regexp) = true')->setParameter('regexp', '^'.$search.'\b')
+            ->where('REGEXP(p.name, :regexp) = true')->setParameter('regexp', $search.'\b')
+            ->where('REGEXP(p.description, :regexp) = true')->setParameter('regexp', $search.'\b')
             ->andWhere('p.state = :state')
             ->setParameter('state', Project::STATE_VISIBLE)
             ->orderBy('p.amountReached', 'DESC')
