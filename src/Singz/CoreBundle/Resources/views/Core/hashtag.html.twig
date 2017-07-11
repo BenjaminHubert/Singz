@@ -22,20 +22,18 @@
         <li role="presentation"><a href="#projects" aria-controls="projects" role="tab" data-toggle="tab">Projets</a></li>
     </ul>
 
-	<div class="tab-content" style="margin-top:30px">
-		{# Publications #}
+	   <div class="tab-content" style="margin-top:30px">
+		 {# Publications #}
         <div role="tabpanel" class="tab-pane fade in active" id="publications">
-			{# Publication purpose #}
-            <div class="container-fluid">
-                <div class="publications grid" data-default-limit="{{ default_publications_to_retrieve }}" data-href="{{ path('singz_social_bundle_get_publications', { hashtag: hashtag }) }}">
-                	<div class="grid-sizer col-sm-12 col-md-4"></div>
-                </div>
-                <div class="no-publication">
-                	<i class="fa fa-video-camera" aria-hidden="true"></i>
-                	<p>Aucune publication</p>
-                </div>
-        	</div>
-		</div>
+			    {# Publication purpose #}
+          <div class="publications columns grid" data-default-limit="{{ default_publications_to_retrieve }}" data-href="{{ path('singz_social_bundle_get_publications', { hashtag: hashtag }) }}">
+            	<div class="grid-sizer col-sm-12 col-md-4"></div>
+          </div>
+          <div class="no-publication">
+          	<i class="fa fa-video-camera" aria-hidden="true"></i>
+          	<p>Aucune publication</p>
+          </div>
+		   </div>
         {# Projects #}
         <div role="tabpanel" class="tab-pane fade" id="projects">
         	{% if projects %}
