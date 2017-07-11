@@ -1,0 +1,102 @@
+{% extends "SingzCoreBundle::layout.html.twig" %}
+
+{% block title %}
+    Recherche {{ search }} sur Singz
+{% endblock %}
+
+{% block stylesheets %}
+    {# Publication purpose #}
+    <link rel="stylesheet" href="{{ asset('bundles/singzvideo/css/plyr.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/singzsocial/css/publication.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/singzsocial/css/comments.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/singzsocial/css/resingz.css') }}">
+{% endblock %}
+
+{% block body %}
+    {# Hashtag #}
+    <h1>{{ search|capitalize }}</h1>
+
+    {# Tabs #}
+    <ul class="nav nav-tabs" role="tablist">
+        <li role="presentation" class="active"><a href="#publications" aria-controls="publications" role="tab" data-toggle="tab">Publications</a></li>
+        <li role="presentation"><a href="#projects" aria-controls="projects" role="tab" data-toggle="tab">Projets</a></li>
+        <li role="presentation"><a href="#users" aria-controls="users" role="tab" data-toggle="tab">Utilisateurs</a></li>
+    </ul>
+
+    <div class="tab-content" style="margin-top:30px">
+        {# Publications #}
+        <div role="tabpanel" class="tab-pane fade in active" id="publications">
+            {#Publication purpose#}
+			<div class="container-fluid">
+                <div class="publications grid" data-default-limit="{{ default_publications_to_retrieve }}" data-href="{{ path('singz_social_bundle_get_publications', { search: search }) }}">
+                    <div class="grid-sizer col-sm-12 col-md-4"></div>
+                </div>
+                <div class="no-publication">
+                    <i class="fa fa-video-camera" aria-hidden="true"></i>
+                    <p>Aucune publication</p>
+                </div>
+            </div>
+        </div>
+        {# Projects #}
+        <div role="tabpanel" class="tab-pane fade" id="projects">
+            {% if projects %}
+                {% include 'SingzCoreBundle:Project:project-mini.html.twig' with {
+                'projects': projects
+                } %}
+            {% else %}
+                Aucun projet à afficher
+            {% endif %}
+        </div>
+        {# Users #}
+        <div role="tabpanel" class="tab-pane fade" id="users">
+            {% if users %}
+                {% for user in users %}
+                <div>
+                    <a href="{{ path('singz_user_bundle_homepage', {'username': user.username}) }}">
+
+                        <h3><img style="width:42px;height:42px" class="img-circle" src="{{ asset(user.image.realPath)}}" alt="{{ user.username }}"> {{ user.username }}</h3>
+                    </a>
+                    <p style="color:#000000">{{ user.biography }}</p>
+                </div>
+                {% endfor %}
+            {% else %}
+                Aucun utilisateur à afficher
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block end_javascripts %}
+    {# Publication purpose #}
+    <script src="{{ asset('bundles/singzsocial/imagesLoaded-4.1.3/imagesloaded.pkgd.min.js') }}"></script>
+    <script src="{{ asset('bundles/singzsocial/masonry-4.2.0/masonry.pkgd.min.js') }}"></script>
+    <script src="{{ asset('bundles/singzvideo/js/plyr.min.js') }}"></script>
+    <script src="{{ asset('bundles/singzsocial/js/getPublications.js') }}"></script>
+    <script src="{{ asset('bundles/singzsocial/js/script.js') }}"></script>
+    <script src="{{ asset('bundles/singzsocial/js/comment.js') }}"></script>
+    <script src="{{ asset('bundles/singzsocial/js/resingz.js') }}"></script>
+    <script>
+        var path = '{{ path('singz_social_bundle_publication_love') }}';
+        $(function(){
+            // Set the offset and limit values
+            var offset = 0
+            var limit = $('.publications').data('default-limit');
+            // Display the first publications
+            getPublications($('.publications').data('href'), $('.publications'), undefined, offset, limit);
+            // Display the next publications through infinite scroll
+            $(window).scroll(function(){
+                if(($(window).scrollTop() + $(window).height()) == $(document).height() ) {
+                    // Increase the offset
+                    offset += limit;
+                    // Get next publications
+                    getPublications($('.publications').data('href'), $('.grid'), undefined, offset, limit);
+                }
+            });
+            // Setup masonry grid layout
+            $('.grid').masonry({
+                itemSelector: '.grid-item',
+                columnWidth: '.grid-sizer'
+            });
+        });
+    </script>
+{% endblock %}
