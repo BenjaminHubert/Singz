@@ -1,4 +1,4 @@
-/* -------------------------------- 
+/* --------------------------------
 
 Primary style
 
@@ -53,9 +53,9 @@ input[type="search"]::-webkit-search-results-decoration {
   display: none;
 }
 
-/* -------------------------------- 
+/* --------------------------------
 
-Main components 
+Main components
 
 -------------------------------- */
 /*.cd-main-content,*/ .cd-main-header {
@@ -98,7 +98,7 @@ Main components
 
 .cd-main-header {
   height: 50px;
-  background: #373a47;
+  background: #fff;
   z-index: 3;
 }
 .nav-is-fixed .cd-main-header {
@@ -134,7 +134,7 @@ Main components
     left: auto;
     right: 5%;
   }
-  
+
   .cd-logo img{
   	width: 4em;
   }
@@ -169,7 +169,6 @@ Main components
 }
 @media only screen and (min-width: 1170px) {
   .cd-header-buttons {
-    top: 18px;
     right: 4em;
   }
 }
@@ -535,8 +534,8 @@ Main components
 
 @media only screen and (min-width: 1170px) {
   .cd-primary-nav {
-    position: static;
-    padding: 0 150px 0 0;
+    padding: 0 0 0 0;
+    margin-right: 120px;
     height: auto;
     width: auto;
     float: right;
@@ -584,14 +583,11 @@ Main components
   }
   .cd-primary-nav > li {
     float: left;
-    margin-left: 3em;
   }
   .cd-primary-nav > li > a {
     /* main navigation buttons style */
     position: relative;
     display: inline-block;
-    height: 80px;
-    line-height: 80px;
     padding: 0 10px;
     color: #b8b7ad;
     overflow: visible;
@@ -1052,9 +1048,9 @@ Main components
   }
 }
 
-/* -------------------------------- 
+/* --------------------------------
 
-support for no js 
+support for no js
 
 -------------------------------- */
 .no-js .cd-primary-nav {
@@ -1087,7 +1083,9 @@ support for no js
   .no-js .nav-is-fixed .cd-primary-nav {
     position: fixed;
   }
-  
-  
-  
+
+  .cd-nav {
+    z-index: 10001;
+    position: fixed;
+  }
 }

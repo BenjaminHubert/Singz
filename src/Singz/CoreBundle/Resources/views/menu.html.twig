@@ -1,10 +1,19 @@
-<header class="cd-main-header">
-	<a class="cd-logo" href="{{ path('singz_index') }}"><img src="{{ asset('bundles/singzcore/img/logo-singz.png') }}" alt="{{ appname }}"></a>
+<!-- Header -->
+<header id="header" class="hide">
+	<div class="inner">
+		<div class="content">
+			<a href="{{ path('singz_index') }}">
+				<img src="{{ asset('bundles/singzcore/img/logo-singz.png') }}" alt="{{ appname }}">
+			</a>
+		</div>
+	</div>
 	<ul class="cd-header-buttons">
 		<li><a class="cd-search-trigger" href="#cd-search">Search<span></span></a></li>
 		<li><a class="cd-nav-trigger" href="#cd-primary-nav">Menu<span></span></a></li>
 	</ul>
 </header>
+
+
 <div class="cd-overlay"></div>
 <nav class="cd-nav">
 	<ul id="cd-primary-nav" class="cd-primary-nav is-fixed">
@@ -21,7 +30,7 @@
     		</li>
     		<li>
     			<a class="notification-link" title="Notifications" data-placement="bottom" data-toggle="tooltip" href="{{ path('singz_social_bundle_notification_list') }}">
-    				<i class="fa fa-fw fa-bell-o"></i> 
+    				<i class="fa fa-fw fa-bell-o"></i>
     				{% if notificationsUnseen > 0 %}
     					<span class="badge badge-notify">{{ notificationsUnseen }}</span>
     				{% endif %}

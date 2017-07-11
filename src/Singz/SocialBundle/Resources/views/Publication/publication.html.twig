@@ -1,11 +1,11 @@
-{# Publication card #}
+<!-- {# Publication card #}
 <div class="grid-item col-sm-12 col-md-4 mini-publication animated bounceInUp" data-id-publication="{{ publication.id }}">
     <div class="card">
     	{# Video's preview #}
         <div class="overlay">
     		<img class="card-img-top preview" src="{{ asset(publication.video.previewPath) }}">
         	<a href="#" class="playWrapper" data-toggle="modal" data-target=".modal[data-id-publication='{{ publication.id }}']" style='background-image:url("{{ asset("bundles/singzvideo/img/play-button-icon.png") }}")'>
-            
+
             </a>
         </div>
         <div class="card-block">
@@ -30,7 +30,7 @@
             </div>
             {# Starz or Singzer #}
             <div class="meta">
-                {% if 'ROLE_STARZ' in publication.user.roles %} 
+                {% if 'ROLE_STARZ' in publication.user.roles %}
                 	<p>&#9733; Starz </p>
                 {% else %}
                 	<p>Singzer</p>
@@ -45,6 +45,12 @@
             <small>{{ publication.date|time_diff }}</small>
         </div>
     </div>
+</div> -->
+
+<div class="image fit" data-id-publication="{{ publication.id }}">
+		<a href="#" class="playWrapper" data-toggle="modal" data-target=".modal[data-id-publication='{{ publication.id }}']" style='background-image:url("{{ asset("bundles/singzvideo/img/play-button-icon.png") }}")'>
+      <img class="card-img-top preview" src="{{ asset(publication.video.previewPath) }}">
+    </a>
 </div>
 
 {# Modal #}

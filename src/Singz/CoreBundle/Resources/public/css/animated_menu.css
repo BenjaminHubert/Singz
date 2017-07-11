@@ -143,6 +143,7 @@
 }
 
 section.menu-container{
+	width: 100%;
 	display: -webkit-flex;
 	display: flex;
 	-webkit-flex-direction: column;
