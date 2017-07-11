@@ -306,30 +306,6 @@
 
 /* Button */
 
-	input[type="submit"],
-	input[type="reset"],
-	input[type="button"],
-	button,
-	.button {
-		-moz-appearance: none;
-		-webkit-appearance: none;
-		-ms-appearance: none;
-		appearance: none;
-		-moz-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
-		-webkit-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
-		-ms-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
-		transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
-		border-radius: 4px;
-		border: 0;
-		cursor: pointer;
-		display: inline-block;
-		font-weight: 300;
-		padding: 0 2.5em;
-		text-align: center;
-		text-decoration: none;
-		white-space: nowrap;
-	}
-
 		input[type="submit"].icon,
 		input[type="reset"].icon,
 		input[type="button"].icon,
@@ -395,18 +371,6 @@
 			-ms-pointer-events: none;
 			pointer-events: none;
 			opacity: 0.25;
-		}
-
-		@media screen and (max-width: 480px) {
-
-			input[type="submit"],
-			input[type="reset"],
-			input[type="button"],
-			button,
-			.button {
-				padding: 0;
-			}
-
 		}
 
 /* Form */
@@ -491,20 +455,6 @@
 
 	textarea {
 		padding: 0.75em 1em;
-	}
-
-	input[type="checkbox"],
-	input[type="radio"] {
-		-moz-appearance: none;
-		-webkit-appearance: none;
-		-ms-appearance: none;
-		appearance: none;
-		display: block;
-		float: left;
-		margin-right: -2em;
-		opacity: 0;
-		width: 1em;
-		z-index: -1;
 	}
 
 		input[type="checkbox"] + label,
@@ -1402,7 +1352,7 @@
 		-ms-transition: bottom 0.2s ease;
 		transition: bottom 0.2s ease;
 		position: fixed;
-		bottom: -20em;
+		bottom: -19em;
 		color: #FFF;
 		left: 0;
 		width: 100%;
@@ -1569,4 +1519,20 @@
 	font-size: 30px;
 	text-align: center;
 	color: #e94f5b;
+}
+
+.btn {
+	width: 100%;
+}
+
+.input-group-addon.fa {
+	display: table-cell;
+}
+
+.checkbox label{
+	padding-left: 0px;
+}
+
+.checkbox label input {
+	visibility: hidden;
 }
