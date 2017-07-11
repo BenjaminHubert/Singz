@@ -52,6 +52,15 @@ class UserRepository extends \Doctrine\ORM\EntityRepository
 			->getOneOrNullResult()
 		;
 	}
-
+    public function findBySearchTerm($search){
+        return $this->createQueryBuilder('u')
+            ->where('REGEXP(u.username, :regexp) = true')->setParameter('regexp', $search.'\b')
+            ->orWhere('REGEXP(u.biography, :regexp) = true')->setParameter('regexp', $search.'\b')
+            ->andWhere('u.enabled = :enabled')
+            ->setParameter('enabled', true)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
 
 }

@@ -29,6 +29,11 @@ singz_hashtagz:
     defaults:
         _controller: SingzCoreBundle:Core:hashtagz
 
+singz_search:
+    path: /search
+    defaults:
+        _controller: SingzCoreBundle:Core:search
+
 ### PROJECT CONTROLLER ###
 singz_core_project_routing:
     resource: "@SingzCoreBundle/Resources/config/Project/routing.yml"
