@@ -1430,26 +1430,7 @@
 
 		@media screen and (max-width: 980px) {
 
-			#footer {
-				position: relative;
-			}
-
-				#footer .inner {
-					height: auto;
-					display: block;
-				}
-
-					#footer .inner .content,
-					#footer .inner .copyright {
-						display: block;
-						width: 100%;
-						text-align: center;
-					}
-
-				#footer .info {
-					display: none;
-				}
-
+			
 		}
 
 		@media screen and (max-width: 480px) {
