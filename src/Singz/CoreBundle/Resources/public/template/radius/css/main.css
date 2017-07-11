@@ -837,14 +837,13 @@
 /* Columns */
 
 	.columns {
-		position: relative;
-		width: 100%;
-		-moz-column-count: 3;
-		-webkit-column-count: 3;
-		column-count: 3;
-		-moz-column-gap: 1em;
-		-webkit-column-gap: 1em;
-		column-gap: 1em;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		flex-direction: row;
+		flex-wrap: wrap;
+		flex-flow: row wrap;
+		align-content: flex-end;
 	}
 
 	.columns-1 {
@@ -862,8 +861,8 @@
 		.columns .image {
 			position: relative;
 			break-inside: avoid-column;
-			margin: 0 0 .5em;
-			width: 100%;
+			margin: 0.5em 0.5em;
+			width: 24em;
 			overflow: hidden;
 		}
 
@@ -1358,7 +1357,7 @@
 			display: inline-block;
 			text-decoration: none;
 			border-radius: 50% 50% 0 0;
-			background: #e74c3c;
+			background: #e94f5b;
 			width: 3em;
 			height: 3em;
 			margin-bottom: -1.75em;
@@ -1389,7 +1388,7 @@
 			-ms-flex-pack: center;
 			position: relative;
 			z-index: 10003;
-			background: #e74c3c;
+			background: #e94f5b;
 			padding: 2em;
 			height: 20em;
 		}
@@ -1524,4 +1523,30 @@
 
 .checkbox label input {
 	visibility: hidden;
+}
+
+@media screen and (max-width: 1280px) {
+	.columns .image {
+		position: relative;
+		break-inside: avoid-column;
+		margin: 0.5em 0.5em;
+		width: 48%;
+		overflow: hidden;
+	}
+}
+
+@media screen and (max-width: 800px) {
+	.columns .image {
+		position: relative;
+		break-inside: avoid-column;
+		margin: 10px auto;
+		width: 100%;
+		overflow: hidden;
+	}
+}
+
+@media screen and (max-width: 1380px) {
+	.container {
+		width: auto !important;
+	}
 }
