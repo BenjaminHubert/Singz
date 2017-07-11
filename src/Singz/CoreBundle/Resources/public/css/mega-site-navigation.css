@@ -937,7 +937,7 @@ Main components
   width: 100%;
   top: 50px;
   left: 0;
-  z-index: 3;
+  z-index: 10000;
   opacity: 0;
   visibility: hidden;
   -webkit-transition: opacity .3s 0s, visibility 0s .3s;
@@ -1002,7 +1002,7 @@ Main components
 .cd-overlay {
   /* shadow layer visible when navigation is active */
   position: fixed;
-  z-index: 2;
+  z-index: 10000;
   height: 100%;
   width: 100%;
   top: 0;

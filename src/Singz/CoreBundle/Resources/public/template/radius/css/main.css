@@ -1430,7 +1430,7 @@
 
 		@media screen and (max-width: 980px) {
 
-			
+
 		}
 
 		@media screen and (max-width: 480px) {
@@ -1481,7 +1481,6 @@
 }
 
 .title-hashtag {
-	width: 20%;
 	margin: auto;
 	margin-bottom: 40px;
 	font-weight: bold;
