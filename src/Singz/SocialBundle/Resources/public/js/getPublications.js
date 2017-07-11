@@ -11,7 +11,7 @@ function getPublications(url, $grid, filter, offset, limit){
 	if(limit != 'undefined'){
 		dataToSend['limit'] = limit;
 	}
-	
+
 	if(loadingPublications == false){
 		loadingPublications = true;
 		NProgress.start();
@@ -32,10 +32,7 @@ function getPublications(url, $grid, filter, offset, limit){
 	    	}
 	    	// Add publications
 	    	var $html = $(data.html);
-	    	$grid.append($html)
-	    		.imagesLoaded(function(){
-	    			$grid.masonry('appended', $html);
-	    		})
+	    	$grid.append($html);
 	        // Create video players
 			plyr.setup();
 			// Allow load again
