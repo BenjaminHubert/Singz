@@ -101,14 +101,14 @@ Main components
   z-index: 3;
 }
 .nav-is-fixed .cd-main-header {
-  /* add .nav-is-fixed class to body if you want a fixed navigation on > 1320px */
+  /* add .nav-is-fixed class to body if you want a fixed navigation on > 3000px */
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   font-size: 1.6rem;
 }
-@media only screen and (min-width: 1320px) {
+@media only screen and (min-width: 3000px) {
   .cd-main-header {
     height: 80px;
   }
@@ -141,7 +141,7 @@ Main components
     top: 4px;
   }
 }
-@media only screen and (min-width: 1320px) {
+@media only screen and (min-width: 3000px) {
   .cd-logo {
     top: 8px;
     left: 4em;
@@ -166,7 +166,7 @@ Main components
     float: right;
   }
 }
-@media only screen and (min-width: 1320px) {
+@media only screen and (min-width: 3000px) {
   .cd-header-buttons {
     right: 4em;
   }
@@ -366,7 +366,7 @@ Main components
   -o-transform: translateX(4px) translateY(2px) rotate(-45deg);
   transform: translateX(4px) translateY(2px) rotate(-45deg);
 }
-@media only screen and (min-width: 1320px) {
+@media only screen and (min-width: 3000px) {
   .cd-nav-trigger {
     display: none;
   }
@@ -515,7 +515,7 @@ Main components
 .cd-primary-nav .cd-nav-icons .cd-nav-item.item-8::before {
   background-image: url("../img/line-icon-8.svg");
 }
-@media only screen and (max-width: 1320px) {
+@media only screen and (max-width: 3000px) {
   .cd-primary-nav {
     /* by default .cd-primary-nav is hidden - trick for iOS devices where you can see the navigation if you pull down */
     visibility: hidden;
@@ -532,7 +532,7 @@ Main components
   }
 }
 
-@media only screen and (min-width: 1320px) {
+@media only screen and (min-width: 3000px) {
   .cd-primary-nav {
     padding: 0 0 0 0;
     margin-right: 120px;
@@ -837,7 +837,7 @@ Main components
   -o-transform: rotate(-45deg);
   transform: rotate(-45deg);
 }
-@media only screen and (min-width: 1320px) {
+@media only screen and (min-width: 3000px) {
   .has-children > a::before, .has-children > a::after, .go-back a::before, .go-back a::after {
     background: #c9cbc4;
   }
@@ -872,7 +872,7 @@ Main components
   transform-origin: 1px 50%;
 }
 
-@media only screen and (min-width: 1320px) {
+@media only screen and (min-width: 3000px) {
   .has-children > a::before, .has-children > a::after {
     right: 15%;
   }
@@ -987,7 +987,7 @@ Main components
 .nav-is-fixed .cd-search {
   position: fixed;
 }
-@media only screen and (min-width: 1320px) {
+@media only screen and (min-width: 3000px) {
   .cd-search {
     height: 65px;
     top: 49px;
@@ -1069,7 +1069,7 @@ support for no js
   visibility: visible;
 }
 
-@media only screen and (min-width: 1320px) {
+@media only screen and (min-width: 3000px) {
   .no-js .cd-primary-nav {
     position: absolute;
     z-index: 3;
