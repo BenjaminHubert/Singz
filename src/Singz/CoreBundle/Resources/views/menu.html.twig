@@ -76,7 +76,7 @@
 </nav>
 
 <div id="cd-search" class="cd-search">
-	<form id="search-form">
-		<input type="search" placeholder="Search...">
+	<form id="search-form" action="{{ path('singz_search') }}" method="GET">
+		<input id="search-input" type="search" placeholder="Search..." autocomplete="off" name="s">
 	</form>
 </div>

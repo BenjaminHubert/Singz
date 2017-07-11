@@ -38,7 +38,7 @@ class PublicationRepository extends \Doctrine\ORM\EntityRepository
             ->getResult();
     }
     
-	public function getPublications($user, $filter = 'all', $offset = 0, $limit = 0, $userId = null, $hashtag = null){
+	public function getPublications($user, $filter = 'all', $offset = 0, $limit = 0, $userId = null, $hashtag = null, $search = null){
 		$queryBuilder = $this->createQueryBuilder('p')
 			// only enabled users
 			->leftJoin('p.user', 'user', 'WITH', 'user.enabled = :userIsEnabled')
@@ -120,6 +120,13 @@ class PublicationRepository extends \Doctrine\ORM\EntityRepository
             	->orderBy('p.date', 'DESC')
 			;
 		}
+		if($search != null){
+			$queryBuilder
+				->andWhere('REGEXP(p.description, :search) = true')
+					->setParameter('search', $search.'\b')
+			;
+		}
+		
 		
 		return $queryBuilder
 			->getQuery()
