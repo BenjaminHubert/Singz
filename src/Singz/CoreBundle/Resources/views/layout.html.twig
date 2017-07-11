@@ -44,17 +44,21 @@
     	{# Navbar #}
 		{{ render(controller('SingzCoreBundle:Core:menu')) }}
 		{# Content #}
-		<div id="main">
-				<div class="inner">
-          {# Error message #}
-  				<div class="col-md-12">
-  					{{ include('SingzCoreBundle::flash-messages.html.twig') }}
-  				</div>
-          {# Body #}
-          {% block body %}{% endblock %}
-			</div>
-		</div>
 
+    <div class="container">
+      <div class="row">
+                {# Error message #}
+        <div class="col-md-12">
+          {{ include('SingzCoreBundle::flash-messages.html.twig') }}
+        </div>
+                {# Body #}
+        <div class="col-md-12">
+          <main class="cd-main-content">
+                        {% block body %}{% endblock %}
+                    </main>
+                </div>
+      </div>
+    </div>
     <!-- Footer -->
 		<footer id="footer">
 			<a href="#" class="info fa fa-info-circle"><span>About</span></a>
