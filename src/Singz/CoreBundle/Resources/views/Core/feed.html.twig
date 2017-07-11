@@ -27,7 +27,6 @@
 {% block end_javascripts %}
     {# Publication purpose #}
     <script src="{{ asset('bundles/singzsocial/imagesLoaded-4.1.3/imagesloaded.pkgd.min.js') }}"></script>
-    <script src="{{ asset('bundles/singzsocial/masonry-4.2.0/masonry.pkgd.min.js') }}"></script>
     <script src="{{ asset('bundles/singzvideo/js/plyr.min.js') }}"></script>
     <script src="{{ asset('bundles/singzsocial/js/getPublications.js') }}"></script>
     <script src="{{ asset('bundles/singzsocial/js/script.js') }}"></script>
@@ -49,11 +48,6 @@
     				// Get next publications
     				getPublications($('.publications').data('href'), $('.grid'), undefined, offset, limit);
                 }
-            });
-         	// Setup masonry grid layout
-            $('.grid').masonry({
-            	itemSelector: '.grid-item',
-            	columnWidth: '.grid-sizer'
             });
 		});
     </script>
