@@ -116,14 +116,14 @@ class PublicationRepository extends \Doctrine\ORM\EntityRepository
 		if($hashtag != null){
 			$queryBuilder
 				->andWhere('REGEXP(p.description, :regexp) = true')
-					->setParameter('regexp', '#'.$hashtag.'\b')
+					->setParameter('regexp', '#'.$hashtag)
             	->orderBy('p.date', 'DESC')
 			;
 		}
 		if($search != null){
 			$queryBuilder
 				->andWhere('REGEXP(p.description, :search) = true')
-					->setParameter('search', $search.'\b')
+					->setParameter('search', $search)
 			;
 		}
 		
