@@ -29,10 +29,11 @@ function getPublications(url, $grid, filter, offset, limit){
 	    	if(offset != '0' && data.html == ''){
 	    		$('.no-publication').html('<i class="fa fa-music fa-fw animated shake" aria-hidden="true"></i>');
 	    		$('.no-publication').show();
+	    		return;
 	    	}
 	    	// Add publications
-	    	var $html = $(data.html);
-	    	$grid.append($html);
+	    	var html = data.html;
+	    	$grid.append(html);
 	        // Create video players
 			plyr.setup();
 			// Allow load again
