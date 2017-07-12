@@ -1628,3 +1628,19 @@
 	opacity: 0.8;
 	padding: 7px 10px;
 }
+
+.publication-resingz {
+	position: absolute;
+	top: 5px;
+	right: 6em;
+}
+
+.publication-resingz i {
+	font-size: 30px;
+	color: #e94f5b;
+	text-shadow: 0px 2px 2px #000;
+}
+
+.publication-resingz p {
+	margin: 0;
+}

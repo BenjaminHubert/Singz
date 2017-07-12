@@ -24,6 +24,14 @@
 						</a>
 				</figure>
 			</div>
+			{% if publication.isResingz == true %}
+			<div class="publication-resingz">
+				<p>
+					<i class="fa fa-fw fa-retweet" aria-hidden="true"></i>
+				</p>
+			</div>
+			{% endif %}
+
 			<div class="publication-comments-loves">
 				<p>
 					<i class="fa fa-fw fa-heart" aria-hidden="true"></i><span class="nbloves-{{ publication.id }}"> {{ publication.numLoves }} </span>
