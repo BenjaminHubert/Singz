@@ -15,7 +15,8 @@ $authorizedIps = array(
 	'92.95.76.230', //Younes
 	'78.245.163.1', //Benjamin
 	'82.226.8.144', //Thibault
-	'77.136.86.218' // ESGI
+	'77.136.86.218', // Younes' phone 
+	'94.228.190.38' // ESGI
 );
 if (isset($_SERVER['HTTP_CLIENT_IP'])
     || isset($_SERVER['HTTP_X_FORWARDED_FOR'])
