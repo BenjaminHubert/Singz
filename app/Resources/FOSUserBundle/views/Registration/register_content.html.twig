@@ -1,6 +1,6 @@
 {% trans_default_domain 'FOSUserBundle' %}
 <div class="row">
-	<div class="col-xs-12 col-sm-6 col-sm-offset-3 col-md-4 col-md-offset-4">        
+	<div class="col-xs-12 col-sm-6 col-sm-offset-3 col-md-4 col-md-offset-4">
         {{ form_start(form, {'method': 'post', 'action': path('fos_user_registration_register'), 'attr': {'class': 'fos_user_registration_register'}}) }}
         	{# Email #}
         	<div class="form-group">
@@ -40,7 +40,7 @@
             </div>
             {{ form_rest(form) }}
             <div class="form-group">
-                <input type="submit" class="btn btn-default" value="{{ 'registration.submit'|trans }}" />
+                <input type="submit" class="btn btn-default" value="{{ 'registration.submit'|trans }}" style="width: 100%;" />
             </div>
         {{ form_end(form) }}
 	</div>

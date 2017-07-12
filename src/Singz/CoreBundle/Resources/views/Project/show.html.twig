@@ -12,14 +12,14 @@
                   flex: 1 1 auto;
           margin: 10px;
           padding: 20px;
-          border: 2px solid #f7f7f7;
+          border: 2px solid #e74c3c;
           text-align: center;
           text-transform: uppercase;
           position: relative;
           overflow: hidden;
           -webkit-transition: .3s;
           transition: .3s;
-          color: #f7f7f7;
+          color: #e74c3c;
         }
         .btn-crowdfunding:after {
           position: absolute;
@@ -42,7 +42,7 @@
         .btn-crowdfunding:hover:after {
           left: -10%;
           width: 120%;
-        }    
+        }
 	</style>
 {% endblock %}
 
@@ -71,7 +71,7 @@
 		{# Name #}
 		<div class="col-xs-12" style="text-align:center">
 			<h2>
-			    {{ project.name }} 
+			    {{ project.name }}
 			</h2>
 	    	{% if project.state is constant('STATE_VISIBLE', project) %}
 	        	<span class="label label-info">En cours</span>
@@ -183,7 +183,7 @@
 					// show form
 					$('.contribution-form').fadeIn('slow');
 				});
-				
+
             });
     	});
 	</script>

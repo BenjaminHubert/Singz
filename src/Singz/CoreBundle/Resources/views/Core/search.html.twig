@@ -10,11 +10,24 @@
     <link rel="stylesheet" href="{{ asset('bundles/singzsocial/css/publication.css') }}">
     <link rel="stylesheet" href="{{ asset('bundles/singzsocial/css/comments.css') }}">
     <link rel="stylesheet" href="{{ asset('bundles/singzsocial/css/resingz.css') }}">
+    <style>
+    	.no-project, .no-user{
+        	text-align: center;
+        	padding: 50px;
+        }
+        .no-project i, .no-user i{
+        	font-size: 6em;
+        }
+        .no-project p, .no-user p{
+        	font-size: 120%;
+        	font-weight: bold;
+        }
+    </style>
 {% endblock %}
 
 {% block body %}
     {# Hashtag #}
-    <h1>{{ search|capitalize }}</h1>
+    <h1 class="title-hashtag">{{ search|capitalize }}</h1>
 
     {# Tabs #}
     <ul class="nav nav-tabs" role="tablist">
@@ -27,14 +40,11 @@
         {# Publications #}
         <div role="tabpanel" class="tab-pane fade in active" id="publications">
             {#Publication purpose#}
-			<div class="container-fluid">
-                <div class="publications grid" data-default-limit="{{ default_publications_to_retrieve }}" data-href="{{ path('singz_social_bundle_get_publications', { search: search }) }}">
-                    <div class="grid-sizer col-sm-12 col-md-4"></div>
-                </div>
-                <div class="no-publication">
-                    <i class="fa fa-video-camera" aria-hidden="true"></i>
-                    <p>Aucune publication</p>
-                </div>
+            <div class="publications columns grid" data-default-limit="{{ default_publications_to_retrieve }}" data-href="{{ path('singz_social_bundle_get_publications', { search: search }) }}">
+            </div>
+            <div class="no-publication">
+                <i class="fa fa-video-camera" aria-hidden="true"></i>
+                <p>Aucune publication</p>
             </div>
         </div>
         {# Projects #}
@@ -44,7 +54,10 @@
                 'projects': projects
                 } %}
             {% else %}
-                Aucun projet à afficher
+                <div class="no-project">
+                  	<i class="fa fa-headphones" aria-hidden="true"></i>
+                  	<p>Aucun projet</p>
+              	</div>
             {% endif %}
         </div>
         {# Users #}
@@ -60,7 +73,10 @@
                 </div>
                 {% endfor %}
             {% else %}
-                Aucun utilisateur à afficher
+                <div class="no-user">
+                  	<i class="fa fa-users" aria-hidden="true"></i>
+                  	<p>Aucun utilisateur</p>
+              	</div>
             {% endif %}
         </div>
     </div>

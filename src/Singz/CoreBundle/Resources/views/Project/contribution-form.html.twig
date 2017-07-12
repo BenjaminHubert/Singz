@@ -18,12 +18,12 @@
                 'type': 'number'
             }) }}
             <i class="input-group-addon fa fa-eur" aria-hidden="true"></i>
-            
+
         </div>
     </div>
 	{# is private #}
 	<div>
-		
+
 		<div class="checkbox {% if form_errors(form.isPrivate) != "" %}has-error{% endif %}">
 		    {{ form_errors(form.isPrivate) }}
             <label>
@@ -38,6 +38,7 @@
             {{ form_widget(form.save, {
                 'attr': {
                     'class': 'btn btn-default',
+										'style': 'width: 100%',
                 }
             }) }}
         </div>

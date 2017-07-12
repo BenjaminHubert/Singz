@@ -1,54 +1,40 @@
 {# Publication card #}
-<div class="grid-item col-sm-12 col-md-4 mini-publication animated bounceInUp" data-id-publication="{{ publication.id }}">
-    <div class="card">
-    	{# Video's preview #}
-        <div class="overlay">
-    		<img class="card-img-top preview" src="{{ asset(publication.video.previewPath) }}">
-        	<a href="#" class="playWrapper" data-toggle="modal" data-target=".modal[data-id-publication='{{ publication.id }}']" style='background-image:url("{{ asset("bundles/singzvideo/img/play-button-icon.png") }}")'>
-            
-            </a>
-        </div>
-        <div class="card-block">
-        	{# User profile picture #}
-            <figure class="profile">
-            	<a href="{{ path('singz_user_bundle_homepage', {'username': publication.user.username}) }}">
-                	<img src="{{ asset(publication.user.image.realPath) }}" class="profile-avatar" alt="">
-                </a>
-            </figure>
-            {# Username #}
-            <h4 class="card-title">
-            	<a href="{{ path('singz_user_bundle_homepage', {'username': publication.user.username}) }}">
-            		{{ publication.user.username }}
-            	</a>
-            </h4>
-            {# Loves and comments #}
-            <div class="card-loves-comments">
-            	<p>
+<div class="image fit" data-id-publication="{{ publication.id }}">
+		<a href="#" class="playWrapper" data-toggle="modal" data-target=".modal[data-id-publication='{{ publication.id }}']" style='background-image:url("{{ asset("bundles/singzvideo/img/play-button-icon.png") }}")'>
+      <img class="card-img-top preview" src="{{ asset(publication.video.previewPath) }}">
+			<div class="publication-date">
+				<small>{{ publication.date|time_diff }}</small>
+			</div>
+			<div class="publication-user-status">
+				{% if 'ROLE_STARZ' in publication.user.roles %}
+					<p>&#9733; Starz </p>
+				{% else %}
+					<p>Singzer</p>
+				{% endif %}
+			</div>
+			<div class="publication-user-details">
+				<h4 class="publication-username">
+					<a href="{{ path('singz_user_bundle_homepage', {'username': publication.user.username}) }}">
+						{{ publication.user.username }}
+					</a>
+				</h4>
+				<figure class="publication-profile">
+					<a href="{{ path('singz_user_bundle_homepage', {'username': publication.user.username}) }}">
+							<img src="{{ asset(publication.user.image.realPath) }}" class="profile-avatar" alt="">
+						</a>
+				</figure>
+			</div>
+			<div class="publication-comments-loves">
+				<p>
 					<i class="fa fa-fw fa-heart" aria-hidden="true"></i><span class="nbloves-{{ publication.id }}"> {{ publication.numLoves }} </span>
 					<i class="fa fa-fw fa-comments" aria-hidden="true"></i><span class="nbcomments-{{ publication.id }}"> {{ publication.thread.numComments }} </span>
 				</p>
-            </div>
-            {# Starz or Singzer #}
-            <div class="meta">
-                {% if 'ROLE_STARZ' in publication.user.roles %} 
-                	<p>&#9733; Starz </p>
-                {% else %}
-                	<p>Singzer</p>
-                {% endif %}
-            </div>
-            {# Description #}
-            <div class="card-text">
-                {{ publication.description|preg_replace('/#+([a-zA-Z0-9]+)/', '<a href="'~path('singz_hashtagz')~'?k=$1">$0</a>')|raw }}
-            </div>
-        </div>
-        <div class="card-footer">
-            <small>{{ publication.date|time_diff }}</small>
-        </div>
-    </div>
+			</div>
+		</a>
 </div>
 
 {# Modal #}
-<div class="modal modal-publication fade" tabindex="-1" role="dialog" data-id-publication="{{ publication.id }}" data-href="{{ path('singz_social_bundle_publication_extra_info') }}">
+<div class="modal modal-publication fade" role="dialog" data-id-publication="{{ publication.id }}" data-href="{{ path('singz_social_bundle_publication_extra_info') }}">
 	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 		<i class="fa fa-times-circle" aria-hidden="true"></i>
 	</button>

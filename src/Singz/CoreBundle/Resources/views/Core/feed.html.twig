@@ -14,21 +14,18 @@
 
 {% block body %}
     {# Publication purpose #}
-    <div class="container-fluid">
-        <div class="publications grid" data-default-limit="{{ default_publications_to_retrieve }}" data-href="{{ path('singz_social_bundle_get_publications', { filter: 'feed' }) }}">
-        	<div class="grid-sizer col-sm-12 col-md-4"></div>
-        </div>
-        <div class="no-publication">
-        	<i class="fa fa-video-camera" aria-hidden="true"></i>
-        	<p>Aucune publication</p>
-        </div>
-	</div>
+      <section class="menu-container"></section>
+      <div class="publications columns" data-default-limit="{{ default_publications_to_retrieve }}" data-href="{{ path('singz_social_bundle_get_publications', { filter: 'feed' }) }}">
+      </div>
+      <div class="no-publication">
+      	<i class="fa fa-video-camera" aria-hidden="true"></i>
+      	<p>Aucune publication</p>
+      </div>
 {% endblock %}
 
 {% block end_javascripts %}
     {# Publication purpose #}
     <script src="{{ asset('bundles/singzsocial/imagesLoaded-4.1.3/imagesloaded.pkgd.min.js') }}"></script>
-    <script src="{{ asset('bundles/singzsocial/masonry-4.2.0/masonry.pkgd.min.js') }}"></script>
     <script src="{{ asset('bundles/singzvideo/js/plyr.min.js') }}"></script>
     <script src="{{ asset('bundles/singzsocial/js/getPublications.js') }}"></script>
     <script src="{{ asset('bundles/singzsocial/js/script.js') }}"></script>
@@ -42,7 +39,7 @@
 			var limit = $('.publications').data('default-limit');
 			// Display the first publications
 			getPublications($('.publications').data('href'), $('.publications'), undefined, offset, limit);
-			// Display the next publications through infinite scroll				
+			// Display the next publications through infinite scroll
             $(window).scroll(function(){
                 if(($(window).scrollTop() + $(window).height()) == $(document).height() ) {
     				// Increase the offset
@@ -50,11 +47,6 @@
     				// Get next publications
     				getPublications($('.publications').data('href'), $('.grid'), undefined, offset, limit);
                 }
-            });
-         	// Setup masonry grid layout
-            $('.grid').masonry({
-            	itemSelector: '.grid-item',
-            	columnWidth: '.grid-sizer'
             });
 		});
     </script>
