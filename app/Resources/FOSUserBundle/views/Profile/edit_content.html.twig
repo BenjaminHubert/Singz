@@ -84,7 +84,7 @@
     </div>
 	{# isPrivate #}
 	<div>
-		<div class="form-group {% if form_errors(form.isPrivate) != "" %}has-error{% endif %}">
+		<div class="form-group checkbox {% if form_errors(form.isPrivate) != "" %}has-error{% endif %}">
             {{ form_widget(form.isPrivate) }}
             {{ form_label(form.isPrivate, null, {
                 'label_attr': {

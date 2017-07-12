@@ -645,11 +645,16 @@
 			display: block;
 			margin: 0 0 2em 0;
 			width: 100%;
+			height: 15em;
 		}
 
 			.image.fit img {
 				width: 100%;
 				height: 100%;
+			}
+
+			.image.fit img.preview {
+				height: auto;
 			}
 
 		.image.main {
@@ -865,6 +870,7 @@
 			margin: 0.5em 0.5em;
 			width: 24em;
 			overflow: hidden;
+			height: 20em;
 		}
 
 			.columns .image img {
@@ -1508,7 +1514,7 @@
 	padding-left: 0px;
 }
 
-.checkbox label input {
+.checkbox input {
 	visibility: hidden;
 }
 
