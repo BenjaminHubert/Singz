@@ -650,7 +650,8 @@
 
 			.image.fit img {
 				width: 100%;
-				height: 100%;
+				min-height: 100%;
+				height: auto;
 			}
 
 			.image.fit img.preview {
@@ -1631,8 +1632,8 @@
 
 .publication-resingz {
 	position: absolute;
-	top: 5px;
-	right: 6em;
+	top: 42px;
+	right: 4px;
 }
 
 .publication-resingz i {
