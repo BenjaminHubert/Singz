@@ -61,7 +61,7 @@
     </div>
     <!-- Footer -->
 		<footer id="footer">
-			<a href="#" class="info fa fa-music"><span>About</span></a>
+			<a href="#" class="info"><img src="{{ asset('bundles/singzcore/img/singz-white.png') }}" alt="footer"></a>
 			<div class="inner">
 				<div class="content">
 					<h3>Singz</h3>
@@ -145,7 +145,7 @@
                     console.error("Disconnected for " + error.reason + " with code " + error.code);
                     isConnected = false;
                 })
-                
+
                 function increaseNotificationNumber(){
 					var currentNb = $('nav.cd-nav .notification-link .badge').html();
 					if(currentNb == undefined){

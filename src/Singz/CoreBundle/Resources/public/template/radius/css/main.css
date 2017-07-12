@@ -1364,12 +1364,18 @@
 			margin-bottom: -1.75em;
 			color: #FFF;
 			font-size: 1.25em;
-			padding-top: .35em;
+			padding-top: .05em;
 		}
 
-			#footer .info span {
-				display: none;
-			}
+
+		#footer .info img {
+			width: 23px;
+			height: 23px;
+		}
+
+		#footer .info span {
+			display: none;
+		}
 
 		#footer .inner {
 			display: -moz-flex;
@@ -1548,6 +1554,10 @@
 	position: absolute;
 	top: -1px;
 	left: -1px;
+}
+
+.publication-profile img{
+	height: 100%;
 }
 
 .publication-user-status p {
