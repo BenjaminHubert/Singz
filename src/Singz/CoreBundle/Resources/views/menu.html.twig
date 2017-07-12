@@ -20,12 +20,12 @@
 		{% if app.user %}
     		<li>
     			<a href="{{ path('singz_user_bundle_homepage', {'username': app.user.username}) }}">
-    				<img style="width:42px;height:42px" class="img-circle" src="{{ asset(app.user.image.realPath)}}" alt="{{ app.user.username }}">
+    				<img style="width:42px;height:42px" class="img-circle" src="{{ asset(app.user.image.realPath)}}" alt="{{ app.user.username }}"> {{ app.user.username }}
     			</a>
     		</li>
     		<li>
     			<a title="Ajouter une vidéo" data-placement="bottom" data-toggle="tooltip" href="{{ path('singz_social_bundle_publication_new') }}">
-    				<i class="fa fa-fw fa-plus"></i>
+    				<i class="fa fa-fw fa-plus"></i> Ajouter une vidéo
     			</a>
     		</li>
     		<li>
@@ -34,19 +34,20 @@
     				{% if notificationsUnseen > 0 %}
     					<span class="badge badge-notify">{{ notificationsUnseen }}</span>
     				{% endif %}
+					Notifications
     			</a>
     		</li>
     			{% if is_granted('ROLE_ADMIN') %}
     				<li>
         				<a title="Administration" data-placement="bottom" data-toggle="tooltip" href="{{ path('singz_admin_dashboard') }}">
-        					<i class="fa fa-fw fa-cogs" aria-hidden="true"></i>
+        					<i class="fa fa-fw fa-cogs" aria-hidden="true"></i> Administration
         				</a>
     				</li>
     			{% endif %}
     		<li>
     			<a href="{{ path('fos_user_security_logout') }}">
     				<button title="Se déconnecter" data-placement="bottom" data-toggle="tooltip" class="btn btn-danger">
-    					<i class="fa fa-sign-out" aria-hidden="true"></i>
+    					<i class="fa fa-sign-out" aria-hidden="true"></i> Se déconnecter
     				</button>
     			</a>
     		</li>
