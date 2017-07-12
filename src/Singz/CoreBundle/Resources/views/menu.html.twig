@@ -40,8 +40,11 @@
     				<i class="fa fa-fw fa-bell-o"></i>
     				{% if notificationsUnseen > 0 %}
     					<span class="badge badge-notify">{{ notificationsUnseen }}</span>
+						Notifications
+                    {% else %}
+						Notifications
     				{% endif %}
-					Notifications
+
     			</a>
     		</li>
     			{% if is_granted('ROLE_ADMIN') %}
