@@ -32,7 +32,9 @@
                     </a>
                 </td>
                 <td>
-                    {{ project.name }}
+                    <a href="{{ path('singz_core_bundle_project_show', {'id': project.id}) }}" style="display:inline">
+                        {{ project.name }}
+                    </a>
                 </td>
                 <td>
                     {{ project.description }}
