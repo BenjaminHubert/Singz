@@ -89,11 +89,12 @@ class PublicationRepository extends \Doctrine\ORM\EntityRepository
 		}
 		if($filter == 'singzer' || $filter == 'all'){
 			$queryBuilder
-				->leftJoin('user.followers', 'f')->addSelect('f')
-					->andWhere('user.isPrivate = :private OR (f.follower = :follower AND f.isPending = :pending)')
-						->setParameter('private', false)
-						->setParameter('follower', $user)
-						->setParameter('pending', false)
+				->leftJoin('user.leaders', 'leaders')
+                    ->addSelect('leaders')
+                ->andWhere('user.isPrivate = :private OR (leaders.follower = :follower AND leaders.isPending = :pending)')
+                    ->setParameter('private', false)
+                    ->setParameter('follower', $user)
+                    ->setParameter('pending', false)
 			;
 		}
 		if($filter == 'feed'){
