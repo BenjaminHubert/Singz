@@ -186,7 +186,7 @@
             {% if (user == app.user) or (user.isPrivate == false) or (user.isPrivate == true and isPending == false and following == true) %}
                 {# Publication purpose #}
                     <div class="publications columns grid" data-default-limit="{{ default_publications_to_retrieve }}" data-href="{{ path('singz_social_bundle_get_publications', { 'filter': 'user', 'userId': user.id }) }}">
-s                    </div>
+                    </div>
                     <div class="no-publication">
                     	<i class="fa fa-video-camera" aria-hidden="true"></i>
                     	<p>Aucune publication</p>
